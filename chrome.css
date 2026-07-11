@@ -1,0 +1,222 @@
+/* ============================================================
+   chrome.css — shared PDP chrome: mega-menu dropdown
+   ------------------------------------------------------------
+   Grabbed verbatim from PLP/plp.css (lines 884–1090).
+   The topbar / header / nav strip / mobile-nav / footer styles
+   already live in ../Home/styles-v2.css (the design system) and
+   are reused as-is. This file only carries the mega-menu, which
+   was the one chrome piece defined outside the design system.
+
+   Desktop-only (≥1024px); tablet/mobile keep the #mobileNav.
+   NOTE: `.header__nav ul/li/a` from the home design system have
+   specificity (0,1,1) and would force the inner lists horizontal
+   + nowrap — every inner rule below is scoped `.mega-panel …`
+   (≥ 0,2,0) so it wins and the lists stack/wrap correctly.
+   ============================================================ */
+.header__nav { position: relative; }          /* positioning context for the panel */
+.hnav-item   { position: static; }             /* panel anchors to .header__nav, not the li */
+
+/* ── Drop-panel: full nav width, GPU-friendly hide/show ── */
+.mega-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--white);
+  border-top: 1px solid var(--graphite-300);
+  box-shadow: var(--shadow-lg);
+  /* Never taller than the space below the header → won't block the page on short laptops;
+     overflow scrolls internally when the content is taller. */
+  max-height: calc(100vh - 170px);
+  overflow-y: auto;
+  /* Hidden state: animatable (no display:block jump). visibility + aria-hidden
+     keep it out of the a11y tree and tab order; transitions ride opacity/transform only. */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
+  will-change: opacity, transform;
+}
+.mega-panel.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition: opacity .2s ease, transform .2s ease, visibility 0s;
+}
+/* Invisible bridge over the nav→panel seam — kills diagonal hover-tunneling */
+.mega-panel::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: -8px;
+  height: 8px;
+}
+/* Keep the trigger visually active while its panel is open */
+[data-mega-trigger][aria-expanded="true"] {
+  color: var(--teal);
+  border-bottom-color: var(--teal);
+}
+
+/* ── Asymmetric 75/25 split ──
+   Left zone = subcategory tile grid; right zone = persistent featured promo.
+   align-items:stretch makes the promo card full-height regardless of row count. */
+.mega-panel .mega-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(280px, 24%, 340px);   /* ~75 / ~25 */
+  gap: 46px;                      /* tuned so the tiles→Konfigurator gap reads ~62px */
+  align-items: stretch;
+  padding-block: var(--sp-6);   /* keep .container's horizontal gutter so content isn't flush to the panel edges */
+}
+
+/* ── Left zone: live-style image-tile grid ──
+   Fixed column COUNT per breakpoint, so tiles (and the product images
+   inside them) get visibly LARGER as the screen widens.
+   `.mega-grid` is scoped-reset because it's a <ul> inside `.header__nav`. */
+.mega-panel .mega-grid {
+  display: grid;
+  /* 5-up, fixed-width columns distributed edge-to-edge so the first tile sits flush
+     with the header's left edge and the last with the zone's right — gaps auto-adjust
+     with the viewport (minmax shrinks the tiles on narrower screens). */
+  grid-template-columns: repeat(5, minmax(0, 146px));
+  justify-content: space-between;
+  column-gap: var(--sp-4);        /* minimum inner gap; space-between distributes the rest */
+  row-gap: var(--sp-5);          /* minimum row gap; space-between grows it so the last row's bottom meets the promo card's bottom */
+  align-items: start;        /* override inherited `.header__nav ul{align-items:center}` so all tiles top-align */
+  align-content: space-between;  /* grid is stretched to the taller feature card → top-align row 1, bottom-align row 2, gap auto-fills so tile-grid bottom aligns with the promo's */
+  overflow: visible;         /* override inherited `.header__nav ul{overflow:auto}` so hover-lifted first-row cards aren't clipped */
+  height: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mega-panel .mega-grid > li { display: block; margin: 0; padding: 0; }
+
+/* ── Tile: large product image on top, centered caption beneath ── */
+.mega-panel .mega-card {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;                                  /* reset inherited `.header__nav a{padding:6px 0}` (added 12px slack/row) */
+  border: 0;                                   /* drop inherited nav underline */
+  white-space: normal;                         /* override inherited nowrap */
+  text-align: center;
+  color: var(--schwarz);
+}
+.mega-card__media {
+  position: relative;
+  display: block;
+  align-self: center;
+  width: 100%;
+  max-width: 146px;                            /* keep the menu compact so it doesn't fill the screen */
+  aspect-ratio: 1 / 1;                         /* square frame */
+  margin-bottom: var(--sp-3);
+  padding: var(--sp-3);                        /* breathing room around the product cut-out */
+  border-radius: var(--r-l);
+  background: var(--white);                    /* product photos sit on white, like the live menu */
+  box-shadow: inset 0 0 0 1px var(--graphite-100);  /* faint frame so white tiles stay defined */
+  overflow: hidden;
+  transition: box-shadow 0.22s ease;
+}
+.mega-card__media img {
+  width: 100%; height: 100%;
+  object-fit: contain;                         /* show the whole product, no crop */
+  display: block;
+}
+/* Hover — consistent with .pcard/.subtile: teal frame + shadow only, no lift, no zoom */
+.mega-card:hover .mega-card__media,
+.mega-card:focus-visible .mega-card__media { box-shadow: inset 0 0 0 1px rgba(1,82,83,0.3), var(--shadow-md); }
+.mega-card__label {
+  /* DS Body SM Medium — labels / nav items: 0.875rem · 500 · line-height 1.5 */
+  min-height: 3em;              /* reserve 2 lines (1.5 × 2) so 1- and 2-line tiles are equal height → uniform rows */
+  font-size: var(--text-body-sm);
+  font-weight: 500;
+  line-height: 1.5;
+  transition: color .14s ease;
+}
+.mega-card:hover .mega-card__label,
+.mega-card:focus-visible .mega-card__label { color: var(--teal); }
+
+/* Both dropdowns: cards fill their 5 columns with a fixed 20px gap, and the
+   Sprechanlage cards match the Briefkasten ones (its 8 tiles → 5+3). The tile media
+   is capped (max-width) so the square tiles don't balloon on wide monitors — without
+   the cap, a 1fr column on a 2560px screen makes each square ~264px tall (the whole
+   menu reads "stretched"). align-content:start packs the rows to the top so a taller
+   poster doesn't spread them apart vertically (the grid still stretches to the
+   poster's height, leaving empty space below rather than gapping the rows). */
+#mm-panel-briefkasten .mega-grid,
+#mm-panel-sprechanlagen .mega-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); column-gap: var(--sp-5); align-content: start; }
+#mm-panel-briefkasten .mega-card__media,
+#mm-panel-sprechanlagen .mega-card__media { max-width: 176px; }
+
+/* ── Right-zone variant: XDM10 product POSTER (Sprechanlage) ──
+   Premium split layout: scaled device photo in the UPPER section, copy on a solid
+   dark panel BELOW (fully legible — no text over the image). No pills/paragraph/seal. */
+.mega-panel .mega-poster {
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column;
+  /* Anchor the device image to the top and the copy/CTA to the bottom. When the
+     poster stretches taller than its content (tile column taller than the poster —
+     e.g. a narrower browser window), the leftover height becomes a gap BETWEEN the
+     image and the copy instead of piling up under the button, so the banner's top
+     and bottom padding stay small and equal. */
+  justify-content: space-between;
+  height: 100%; min-height: 360px;
+  border-radius: var(--r-l);
+  /* premium surface: soft cool gradient + faint teal hairline + depth */
+  background: linear-gradient(165deg, #F8F9FC 0%, #E8EFEF 100%);
+  color: var(--schwarz);
+  border: 1px solid rgba(1,82,83,0.10);
+  box-shadow: 0 1px 2px rgba(26,23,27,0.05);
+  transition: box-shadow .35s ease, border-color .22s ease;
+}
+.mega-panel .mega-poster:hover { box-shadow: 0 14px 30px rgba(26,23,27,0.13); border-color: rgba(1,82,83,0.25); }
+/* Upper section: scaled-down device photo.
+   flex:1 1 0 + min-height:0 lets it grow to fill the space ABOVE the copy; the img is
+   absolutely positioned so its (very tall) intrinsic size can't drive the poster height. */
+.mega-panel .mega-poster__media {
+  position: relative; flex: 0 0 auto; overflow: hidden;   /* height hugs the (square) image — no forced square box. A fixed 1/1 box was taller than the contained image and centred it, so the gap above the device came out larger than the copy's bottom padding; letting the box hug the image makes the banner's top gap == bottom gap. */
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(14px, 6%, 22px) clamp(14px, 6%, 22px) 0;   /* no bottom padding → image sits close to the copy */
+  background: radial-gradient(ellipse 76% 64% at 50% 44%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 72%);   /* soft spotlight behind the device */
+}
+.mega-panel .mega-poster__bg {
+  display: block;
+  max-width: 100%; max-height: 100%; width: auto; height: auto;   /* whole image fits — never clipped */
+  object-fit: contain;
+  border-radius: var(--r-m);                    /* subtly rounded photo corners (4px) */
+}
+/* Both poster images are square (1024²), so the shared `contain` rule fills the
+   square media identically on both dropdowns — no panel-specific override needed. */
+/* Lower section: copy on solid dark, vertically centred so it stays balanced
+   whatever height the poster stretches to (matching the tile grid). */
+.mega-panel .mega-poster__content {
+  flex: 0 0 auto;
+  display: flex; flex-direction: column;
+  padding: var(--sp-2) var(--sp-5) var(--sp-5);   /* tighter top gap to the image */
+}
+.mega-panel .mega-poster__eyebrow {
+  margin-bottom: 8px;
+  font-size: 0.6875rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--teal);                           /* brand teal accent on the grey panel */
+}
+.mega-panel .mega-poster__title {
+  margin: 0; font-size: 1.25rem; font-weight: 600; line-height: 1.22; letter-spacing: -0.01em; color: var(--schwarz);
+}
+.mega-panel .mega-poster__features {
+  margin: 10px 0 0; font-size: 0.6875rem; font-weight: 600; letter-spacing: .02em; color: var(--ink-60);
+}
+/* Full-width filled teal CTA */
+.mega-panel .mega-poster__cta {
+  margin-top: var(--sp-4); width: 100%;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0.72rem 1.15rem;
+  border: 0; border-radius: var(--r-m);
+  background: var(--teal); color: #fff;
+  font-size: var(--text-body-sm); font-weight: 600; line-height: 1; white-space: nowrap;
+  box-shadow: 0 1px 2px rgba(1,82,83,0.25);
+  transition: background .18s ease, box-shadow .18s ease;
+}
+.mega-panel .mega-poster__cta:hover,
+.mega-panel .mega-poster__cta:focus-visible { background: var(--teal-600); box-shadow: 0 4px 12px rgba(1,82,83,0.30); }

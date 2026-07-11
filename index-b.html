@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Metzler PDP — Version B (Inline-Konfiguration)</title>
+<meta name="description" content="Neue Produktdetailseite (PDP) — geteilte Kopf-/Navigations-/Fußzeilen-Komponenten aus dem Metzler Design System." />
+<!-- Design system (topbar · header · nav strip · mobile-nav · footer) — reused as-is -->
+<link rel="stylesheet" href="../Home/styles-v2.css?v=9" />
+<!-- Mega-menu dropdown, grabbed from the PLP -->
+<link rel="stylesheet" href="chrome.css?v=1" />
+<!-- New PDP sections -->
+<link rel="stylesheet" href="pdp.css?v=10" />
+<!-- Version B — inline build panel -->
+<link rel="stylesheet" href="pdp-b.css?v=4" />
+</head>
+<body class="plp">
+
+<!-- ===== SVG ICON SPRITE (from home design system) ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
+    <symbol id="i-search-m" viewBox="0 0 19 20" fill="currentColor"><path d="M16.625 8.86618C16.6247 4.81893 13.2882 1.49999 9.125 1.49999C4.96183 1.49999 1.62525 4.81893 1.625 8.86618C1.625 12.9136 4.96168 16.2333 9.125 16.2333V17.7333L8.66211 17.7216C3.90667 17.4843 0.125 13.6101 0.125 8.86618C0.125251 3.96948 4.15459 0 9.125 0C14.0954 0 18.1248 3.96948 18.125 8.86618C18.125 13.7631 14.0956 17.7333 9.125 17.7333V16.2333C13.2883 16.2333 16.625 12.9136 16.625 8.86618Z"/><path d="M18.659 19.6237C18.3683 19.9188 17.8935 19.9222 17.5984 19.6316L13.4441 15.5398L14.4969 14.4704L18.6511 18.5632C18.9462 18.8539 18.9496 19.3287 18.659 19.6237Z"/></symbol>
+    <symbol id="i-menu-m" viewBox="0 0 21 17" fill="currentColor"><path d="M0 0.8C0 0.358172 0.358172 0 0.8 0H20.2C20.6418 0 21 0.358172 21 0.8C21 1.24183 20.6418 1.6 20.2 1.6H0.799999C0.358171 1.6 0 1.24183 0 0.8Z"/><path d="M0 8.4C0 7.95817 0.358172 7.6 0.8 7.6H14.2C14.6418 7.6 15 7.95817 15 8.4C15 8.84183 14.6418 9.2 14.2 9.2H0.8C0.358172 9.2 0 8.84183 0 8.4Z"/><path d="M0 16C0 15.5582 0.358172 15.2 0.8 15.2H20.2C20.6418 15.2 21 15.5582 21 16C21 16.4418 20.6418 16.8 20.2 16.8H0.799999C0.358171 16.8 0 16.4418 0 16Z"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M1 4h13v11H1zM14 8h4l3 3v4h-7z"/><circle cx="6" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></symbol>
+    <symbol id="i-receipt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M5 2h14v20l-3-2-2 2-2-2-2 2-2-2-3 2z"/><path d="M8 7h8M8 11h8M8 15h5"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3l2.7 5.46 6.03.88-4.36 4.25 1.03 6.01L12 16.9 6.57 19.6l1.03-6.01L3.24 9.34l6.03-.88z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3.3 2.5-5.7 5.5-5.7s5.5 2.4 5.5 5.7"/><path d="M16 5.4a3.2 3.2 0 010 5.6"/><path d="M17 14.5c2 .6 3.5 2.6 3.5 5.5"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2" fill="#fff"/><circle cx="15" cy="12" r="2" fill="#fff"/><circle cx="8" cy="18" r="2" fill="#fff"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></symbol>
+    <symbol id="i-facebook" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5h2.5l.5-3h-3V8.5c0-.9.3-1.5 1.5-1.5H17V4.2c-.5-.1-1.5-.2-2.5-.2-2.4 0-4 1.4-4 4v2.5H8v3h2.5V21h3z"/></symbol>
+    <symbol id="i-youtube" viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2c-.2-.9-.9-1.6-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4c-.9.2-1.6.9-1.8 1.8C2 8.8 2 12 2 12s0 3.2.4 4.8c.2.9.9 1.6 1.8 1.8 1.6.4 7.8.4 7.8.4s6.2 0 7.8-.4c.9-.2 1.6-.9 1.8-1.8.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8zM10 15V9l5.2 3-5.2 3z"/></symbol>
+    <symbol id="i-pinterest" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-3.6 19.3c-.1-.8-.2-2 0-2.9.2-.8 1.2-5 1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.5 1.9-2.5.9 0 1.3.7 1.3 1.5 0 .9-.6 2.2-.9 3.5-.2 1 .5 1.9 1.6 1.9 1.9 0 3.4-2 3.4-5 0-2.6-1.9-4.4-4.5-4.4-3.1 0-4.9 2.3-4.9 4.7 0 .9.4 1.9.8 2.5.1.1.1.2.1.3l-.3 1.2c-.1.2-.2.3-.4.2-1.4-.7-2.3-2.7-2.3-4.4 0-3.6 2.6-6.9 7.5-6.9 3.9 0 7 2.8 7 6.6 0 3.9-2.5 7.1-5.9 7.1-1.2 0-2.3-.6-2.6-1.3l-.7 2.7c-.3 1-1 2.3-1.4 3.1A10 10 0 1012 2z"/></symbol>
+    <symbol id="i-x-social" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21l-6.54 7.47L22 22h-6.86l-4.39-5.74L5.6 22H2.84l7.01-8.01L2 2h7.04l3.97 5.25L18.244 2zm-2.4 18h1.79L7.24 4H5.34l10.5 16z"/></symbol>
+  </defs>
+</svg>
+
+<!-- ===== TOPBAR ===== -->
+<div class="topbar">
+  <div class="container topbar__inner">
+    <ul class="topbar__claims">
+      <li>Original Metzler Qualität seit 2013</li>
+      <li>über 1,8 Mio. zufriedene Kunden</li>
+      <li><a href="https://edelstahl-tuerklingel.de/metzler-garantieerklaerung" target="_blank" rel="noopener">10 Jahre Metzler Garantie</a></li>
+      <li>Trusted Shops Käuferschutz</li>
+      <li>Kauf auf Rechnung</li>
+    </ul>
+    <div class="topbar__links">
+      <a href="#">Kontaktiere uns</a>
+      <a href="#">Zahlung &amp; Versand</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <div class="container">
+    <div class="header__main">
+      <div class="header__left-actions">
+        <button class="header__burger" id="navBurger" data-nav-toggle aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobileNav"><svg><use href="#i-menu-m"/></svg></button>
+        <button class="header__search-icon" id="searchIcon" aria-label="Suchen" type="button"><svg><use href="#i-search-m"/></svg></button>
+      </div>
+      <a href="../Home/index.html" class="header__logo" aria-label="Metzler Startseite">
+        <img src="../Home/Logo/Metzler_Logo-rot-schwarz.svg" alt="Metzler" />
+      </a>
+      <button class="header__kategorien" type="button" data-nav-toggle aria-controls="mobileNav" aria-expanded="false" aria-label="Kategorien">
+        <img class="header__kategorien-icon" src="../Home/ICONS/menu.svg" alt="" aria-hidden="true" />
+        <span class="header__kategorien-label">Kategorien</span>
+      </button>
+      <div class="header__search">
+        <svg><use href="#i-search"/></svg>
+        <input type="search" placeholder="Suchen — Türklingel, Briefkasten, Sprechanlage…" />
+      </div>
+      <div class="header__icons">
+        <a class="icon-btn" href="#" aria-label="Mein Konto"><img src="../Home/ICONS/profile.svg" alt="" /></a>
+        <a class="icon-btn" href="#" aria-label="Warenkorb"><img src="../Home/ICONS/cart.svg" alt="" /><span class="badge">0</span></a>
+      </div>
+    </div>
+  </div>
+  <nav class="header__nav" aria-label="Hauptnavigation">
+    <div class="container">
+      <button class="header__nav-all" type="button" data-nav-toggle aria-controls="mobileNav" aria-expanded="false" aria-label="Alle Kategorien">
+        <img class="header__nav-all-icon" src="../Home/ICONS/menu.svg" alt="" aria-hidden="true" />
+        <span class="header__nav-all-label">Alle</span>
+      </button>
+      <ul>
+        <li class="hnav-item" data-mega-item>
+          <a href="#" class="is-featured"
+             id="mm-trigger-briefkasten" data-mega-trigger
+             aria-haspopup="true" aria-expanded="false" aria-controls="mm-panel-briefkasten">Briefkästen</a>
+
+          <!-- Drop-panel spans the full nav width; inner .container realigns content to the page grid -->
+          <div class="mega-panel" id="mm-panel-briefkasten" data-mega-panel
+               role="region" aria-label="Briefkästen – Unterkategorien" aria-hidden="true">
+            <!-- Asymmetric 75/25 split: subcategory grid (left) + persistent featured promo (right) -->
+            <div class="container mega-layout">
+
+              <!-- LEFT ZONE (~75%): standard subcategories as image tiles -->
+              <ul class="mega-grid">
+                <li><a class="mega-card" href="#">
+                  <span class="mega-card__media"><img src="../PLP/Product%20Image/einfamilien-briefkasten.png" alt="Einfamilien-Briefkasten" loading="lazy"></span>
+                  <span class="mega-card__label">Einfamilien-Briefkasten</span></a></li>
+
+                <li><a class="mega-card" href="#">
+                  <span class="mega-card__media"><img src="../PLP/Product%20Image/briefkasten-ohne-gravur.webp" alt="Briefkasten ohne Gravur" loading="lazy"></span>
+                  <span class="mega-card__label">Briefkasten ohne Gravur</span></a></li>
+
+                <li><a class="mega-card" href="#">
+                  <span class="mega-card__media"><img src="../PLP/Product%20Image/standbriefkaesten.webp" alt="Standbriefkästen" loading="lazy"></span>
+                  <span class="mega-card__label">Standbriefkästen</span></a></li>
+
+                <li><a class="mega-card" href="#">
+                  <span class="mega-card__media"><img src="../PLP/Product%20Image/briefkasten-klingel-sprechanlage.webp" alt="Briefkasten mit Klingel & Sprechanlage" loading="lazy"></span>
+                  <span class="mega-card__label">Mit Klingel &amp; Sprechanlage</span></a></li>
+
+                <li><a class="mega-card" href="#">
+                  <span class="mega-card__media"><img src="../PLP/Product%20Image/mehrfamilien-briefkaesten.webp" alt="Mehrfamilien Briefkästen" loading="lazy"></span>
+                  <span class="mega-card__label">Mehrfamilien Briefkästen</span></a></li>
+
+                <li><a class="mega-card" href="#">
+                  <span class="mega-card__media"><img src="../PLP/Product%20Image/unterputz-briefkaesten.webp" alt="Unterputz Briefkästen" loading="lazy"></span>
+                  <span class="mega-card__label">Unterputz Briefkästen</span></a></li>
+
+                <li><a class="mega-card" href="#">
+                  <span class="mega-card__media"><img src="../PLP/Product%20Image/paketboxen.webp" alt="Paketboxen" loading="lazy"></span>
+                  <span class="mega-card__label">Paketboxen</span></a></li>
+
+                <li><a class="mega-card" href="#">
+                  <span class="mega-card__media"><img src="../PLP/Product%20Image/briefkastenschilder.webp" alt="Briefkastenschilder" loading="lazy"></span>
+                  <span class="mega-card__label">Briefkastenschilder</span></a></li>
+
+                <li><a class="mega-card" href="#">
+                  <span class="mega-card__media"><img src="../PLP/Product%20Image/briefkastenstaender.webp" alt="Briefkastenständer" loading="lazy"></span>
+                  <span class="mega-card__label">Briefkastenständer</span></a></li>
+
+                <li><a class="mega-card" href="#">
+                  <span class="mega-card__media"><img src="../PLP/Product%20Image/ersatzteile-zubehoer.webp" alt="Ersatzteile & Zubehör" loading="lazy"></span>
+                  <span class="mega-card__label">Ersatzteile &amp; Zubehör</span></a></li>
+              </ul>
+
+              <!-- RIGHT ZONE (~25%): featured Konfigurator poster -->
+              <aside class="mega-poster" aria-label="Briefkastenanlagen Konfigurator">
+                <div class="mega-poster__media">
+                  <img class="mega-poster__bg" src="../PLP/Poster/poster-briefkasten2.png" alt="Briefkastenanlage – 3D Konfigurator" loading="lazy">
+                </div>
+                <div class="mega-poster__content">
+                  <span class="mega-poster__eyebrow">3D Konfigurator</span>
+                  <h3 class="mega-poster__title">Briefkastenanlage individuell gestalten</h3>
+                  <p class="mega-poster__features">Design · Farbe · Montageart</p>
+                  <a class="mega-poster__cta" href="#">Jetzt konfigurieren</a>
+                </div>
+              </aside>
+
+            </div>
+          </div>
+        </li>
+        <li><a href="#">Paketboxen</a></li>
+        <li><a href="#">Mülltonnenboxen</a></li>
+        <li class="hnav-item" data-mega-item>
+          <a href="../PLP/sprechanlage.html"
+             id="mm-trigger-sprechanlagen" data-mega-trigger
+             aria-haspopup="true" aria-expanded="false" aria-controls="mm-panel-sprechanlagen">Sprechanlagen</a>
+
+          <!-- Drop-panel: subcategory grid (left) + XDM10 poster (right) -->
+          <div class="mega-panel" id="mm-panel-sprechanlagen" data-mega-panel
+               role="region" aria-label="Türsprechanlagen – Unterkategorien" aria-hidden="true">
+            <div class="container mega-layout">
+
+              <ul class="mega-grid">
+                <li><a class="mega-card" href="../PLP/sprechanlage.html">
+                  <span class="mega-card__media"><img src="../PLP/Product%20Image/Sprechanlage/video-station.png" alt="Video-Sprechanlagen" loading="lazy"></span>
+                  <span class="mega-card__label">Video-Sprechanlagen</span></a></li>
+
+                <li><a class="mega-card" href="../PLP/sprechanlage.html">
+                  <span class="mega-card__media"><img src="../PLP/Product%20Image/Sprechanlage/audio-station.png" alt="Audio-Sprechanlagen" loading="lazy"></span>
+                  <span class="mega-card__label">Audio-Sprechanlagen</span></a></li>
+
+                <li><a class="mega-card" href="../PLP/sprechanlage.html">
+                  <span class="mega-card__media"><img src="../PLP/Product%20Image/Sprechanlage/mehrfamilien-anlage.png" alt="Mehrfamilien-Anlagen" loading="lazy"></span>
+                  <span class="mega-card__label">Mehrfamilien-Anlagen</span></a></li>
+
+                <li><a class="mega-card" href="../PLP/sprechanlage.html">
+                  <span class="mega-card__media"><img src="../PLP/Product%20Image/Sprechanlage/touch-display-station.png" alt="Mit Gesichtserkennung" loading="lazy"></span>
+                  <span class="mega-card__label">Mit Gesichtserkennung</span></a></li>
+
+                <li><a class="mega-card" href="../PLP/sprechanlage.html">
+                  <span class="mega-card__media"><img src="../PLP/Product%20Image/Sprechanlage/briefkasten-paketbox.png" alt="Mit Briefkasten/Paketbox" loading="lazy"></span>
+                  <span class="mega-card__label">Mit Briefkasten/Paketbox</span></a></li>
+
+                <li><a class="mega-card" href="../PLP/sprechanlage.html">
+                  <span class="mega-card__media"><img src="../PLP/Product%20Image/Sprechanlage/innenstation.png" alt="Innenstationen" loading="lazy"></span>
+                  <span class="mega-card__label">Innenstationen</span></a></li>
+
+                <li><a class="mega-card" href="../PLP/sprechanlage.html">
+                  <span class="mega-card__media"><img src="../PLP/Product%20Image/Sprechanlage/bus-xdm10.png" alt="2-Draht-BUS (XDM10)" loading="lazy"></span>
+                  <span class="mega-card__label">2-Draht-BUS (XDM10)</span></a></li>
+
+                <li><a class="mega-card" href="../PLP/sprechanlage.html">
+                  <span class="mega-card__media"><img src="../PLP/Product%20Image/Sprechanlage/zubehoer.png" alt="Zubehör" loading="lazy"></span>
+                  <span class="mega-card__label">Zubehör</span></a></li>
+              </ul>
+
+              <aside class="mega-poster" aria-label="XDM10 Video-Türsprechanlage">
+                <div class="mega-poster__media">
+                  <img class="mega-poster__bg" src="../PLP/Poster/poster-sprechanlage-xdm10.png" alt="XDM10 Video-Türsprechanlage – Red Dot Award Winner 2026" loading="lazy">
+                </div>
+                <div class="mega-poster__content">
+                  <span class="mega-poster__eyebrow">Video-Türsprechanlage</span>
+                  <h3 class="mega-poster__title">XDM10 – nachrüsten ohne neue Kabel</h3>
+                  <p class="mega-poster__features">2-Draht-BUS · App-Anbindung · HD-Video</p>
+                  <a class="mega-poster__cta" href="../PLP/sprechanlage.html">Mehr erfahren</a>
+                </div>
+              </aside>
+
+            </div>
+          </div>
+        </li>
+        <li><a href="#">Sicherheitstechnik</a></li>
+        <li><a href="#">Türklingeln</a></li>
+        <li><a href="#">Hausnummern</a></li>
+        <li><a href="#">Außenleuchten</a></li>
+        <li><a href="#">Garten</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<!-- ===== MOBILE SLIDE-IN NAV ===== -->
+<div class="mobile-nav" id="mobileNav" aria-hidden="true">
+  <div class="mobile-nav__backdrop" data-close></div>
+  <aside class="mobile-nav__panel" role="dialog" aria-label="Mobile Navigation">
+    <div class="mobile-nav__head">
+      <img src="../Home/Logo/Metzler_Logo-rot-schwarz.svg" alt="Metzler" />
+      <button class="mobile-nav__close" data-close aria-label="Menü schließen">×</button>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="../PLP/briefkasten.html">Briefkästen</a></li>
+        <li><a href="#">Paketboxen</a></li>
+        <li><a href="#">Mülltonnenboxen</a></li>
+        <li><a href="../PLP/sprechanlage.html">Sprechanlagen</a></li>
+        <li><a href="#">Sicherheitstechnik</a></li>
+        <li><a href="#">Türklingeln</a></li>
+        <li><a href="#">Hausnummern</a></li>
+        <li><a href="#">Außenleuchten</a></li>
+        <li><a href="#">Garten</a></li>
+      </ul>
+    </nav>
+  </aside>
+</div>
+
+<main class="pdp pdp-b">
+
+  <!-- ===== SECTION 1 · ABOVE-THE-FOLD HERO ===== -->
+  <section class="pdp-hero" id="ueberblick" aria-label="Produktübersicht">
+    <div class="container pdp-hero__grid">
+
+      <!-- LEFT · Media -->
+      <div class="pdp-media">
+        <div class="pdp-media__stage">
+          <div class="pdp-media__toggle" role="group" aria-label="Ansicht wählen">
+            <button type="button" aria-pressed="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 17l-5-5-4 4"/></svg>
+              Fotos
+            </button>
+            <button type="button" aria-pressed="false">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 12l9-5M12 12v10M12 12L3 7"/></svg>
+              3D
+            </button>
+          </div>
+          <img class="pdp-media__img" id="pdpMainImg"
+               src="Product Image/Sprechanlage/video-station.png"
+               alt="Metzler VDM10 2.0 Video-Türsprechanlage Colson in Anthrazit" />
+          <span class="pdp-media__engrave" id="bEngrave"></span>
+        </div>
+
+        <ul class="pdp-thumbs" id="pdpThumbs" aria-label="Weitere Ansichten">
+          <li><button type="button" aria-current="true"><img src="Product Image/Sprechanlage/video-station.png" alt="Türstation Frontansicht"></button></li>
+          <li><button type="button" aria-current="false"><img src="Product Image/Sprechanlage/touch-display-station.png" alt="Innenstation Touch-Display"></button></li>
+          <li><button type="button" aria-current="false"><img src="Product Image/Sprechanlage/innenstation.png" alt="Innenstation"></button></li>
+          <li><button type="button" aria-current="false"><img src="Product Image/Sprechanlage/audio-station-namensschild.png" alt="Namensschild mit Gravur"></button></li>
+          <li><button type="button" aria-current="false"><img src="Product Image/Sprechanlage/briefkasten-paketbox.png" alt="Kombination mit Briefkasten"></button></li>
+          <li><button type="button" aria-current="false"><img src="Product Image/Sprechanlage/bus-xdm10.png" alt="Anschluss / BUS"></button></li>
+        </ul>
+      </div>
+
+      <!-- RIGHT · Buy box -->
+      <div class="pdp-buybox">
+
+        <p class="pdp-eyebrow">Video-Türsprechanlage · nach Maß</p>
+
+        <div class="pdp-badges">
+          <span class="pdp-badge pdp-badge--primary">Neue Version 2.0</span>
+          <span class="pdp-badge pdp-badge--neutral">Powered by Hikvision</span>
+        </div>
+
+        <h1 class="pdp-title">Metzler VDM10 2.0 Video-Türsprechanlage <span class="pdp-title__sep">|</span> 1 Klingeltaster <span class="pdp-title__sep">|</span> Colson</h1>
+
+        <div class="pdp-rate">
+          <span class="pdp-rate__stars">
+            <span class="pdp-stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6L12 17.8 6.6 19.6l1-6L3.3 9.4l6-.9z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6L12 17.8 6.6 19.6l1-6L3.3 9.4l6-.9z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6L12 17.8 6.6 19.6l1-6L3.3 9.4l6-.9z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6L12 17.8 6.6 19.6l1-6L3.3 9.4l6-.9z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6L12 17.8 6.6 19.6l1-6L3.3 9.4l6-.9z"/></svg>
+            </span>
+            <span class="pdp-rate__count">4,5 (63 Bewertungen)</span>
+          </span>
+          <button type="button" class="pdp-share" id="pdpShare">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>
+            Produkt teilen
+          </button>
+        </div>
+
+        <dl class="pdp-specs">
+          <div class="pdp-spec"><span class="pdp-spec__text"><dt>Hersteller</dt><dd>Metzler</dd></span></div>
+          <div class="pdp-spec"><span class="pdp-spec__text"><dt>Breite × Höhe</dt><dd>13,3 × 27,4 cm</dd></span></div>
+          <div class="pdp-spec"><span class="pdp-spec__text"><dt>Artikelnummer</dt><dd id="bArticle">31101</dd></span></div>
+        </dl>
+
+        <div class="pdp-price">
+          <div class="pdp-price__row">
+            <span class="pdp-price__ab">ab</span>
+            <span class="pdp-price__amount">699,00 €</span>
+            <span class="pdp-price__monthly">oder ab <span class="ph">29 €*</span>/Monat</span>
+          </div>
+          <p class="pdp-price__meta">inkl. 19% USt. · <a href="#">Versandkostenfreie Lieferung</a> · <span style="color:var(--color-graphite-500)">*Ratenwert Platzhalter</span></p>
+          <div class="pdp-avail">
+            <span class="pdp-avail__dot" aria-hidden="true"></span>
+            <span class="pdp-avail__status">Sofort verfügbar</span>
+            <span class="pdp-avail__ship">· Lieferdatum <span class="ph">TT.MM. – TT.MM.</span></span>
+          </div>
+        </div>
+
+        <!-- ===== FARBE — VARIANTE (ändert die Artikelnummer; nicht Teil der Konfiguration) ===== -->
+        <div class="pdp-color" id="bFarbe">
+          <div class="pdp-color__head">
+            <span class="pdp-color__label">Farbe: <b id="pdpFinishName">Anthrazit RAL 7016</b></span>
+            <span class="pdp-color__note">eigene Variante · Art.-Nr. <b id="bArticleInline">31101</b></span>
+          </div>
+          <div class="pdp-swatches" id="pdpSwatches" role="group" aria-label="Farbe wählen — jede Farbe ist eine eigene Variante">
+            <button type="button" class="pdp-swatch" aria-pressed="true"  data-finish="Anthrazit RAL 7016" data-delta="0" data-article="31101"><img src="assets/swatches/anthrazit-ral7016.jpg" alt="Anthrazit RAL 7016"></button>
+            <button type="button" class="pdp-swatch" aria-pressed="false" data-finish="Verkehrsweiß RAL 9016" data-delta="0" data-article="31102"><img src="assets/swatches/verkehrsweiss-ral9016.jpg" alt="Verkehrsweiß RAL 9016"></button>
+            <button type="button" class="pdp-swatch" aria-pressed="false" data-finish="Graualuminium RAL 9007" data-delta="0" data-article="31103"><img src="assets/swatches/graualuminium-ral9007.jpg" alt="Graualuminium RAL 9007"></button>
+            <button type="button" class="pdp-swatch" aria-pressed="false" data-finish="Eisenglimmer DB 703" data-delta="0" data-article="31104"><img src="assets/swatches/eisenglimmer-db703.jpg" alt="Eisenglimmer DB 703"></button>
+            <button type="button" class="pdp-swatch" aria-pressed="false" data-finish="Tiefschwarz RAL 9005" data-delta="0" data-article="31105"><img src="assets/swatches/tiefschwarz-ral9005.jpg" alt="Tiefschwarz RAL 9005"></button>
+            <button type="button" class="pdp-swatch" aria-pressed="false" data-finish="Edelstahl gebürstet" data-delta="0" data-article="31106"><img src="assets/swatches/edelstahl-gebuerstet.jpg" alt="Edelstahl gebürstet"></button>
+            <button type="button" class="pdp-swatch" aria-pressed="false" data-finish="Linen Tex Black" data-delta="0" data-article="31107"><img src="assets/swatches/linen-tex-black.jpg" alt="Linen Tex Black"></button>
+            <button type="button" class="pdp-swatch" aria-pressed="false" data-finish="Wunschfarbe nach RAL" data-delta="49" data-article="31108"><img src="assets/swatches/wunschfarbe-nach-ral.jpg" alt="Wunschfarbe nach RAL"></button>
+          </div>
+        </div>
+
+        <!-- ===== OPTIONALE KONFIGURATION — Progressive Disclosure (ändert die Artikelnummer NICHT) ===== -->
+        <div class="cfgb" id="cfgbPanel">
+          <div class="cfgb-optlabel"><span class="cfgb-optlabel__t">Konfiguration</span><span class="cfgb-optlabel__tag">erforderlich</span></div>
+
+          <ol class="stepr" id="cfgbSteps">
+
+            <!-- Gravur -->
+            <li class="stepr__item is-active" data-step="1">
+              <button class="stepr__head" type="button" aria-expanded="true">
+                <span class="stepr__node"><b>2</b><svg class="stepr__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+                <span class="stepr__titles"><span class="stepr__title">Gravur</span><span class="stepr__pick" id="bPickGravur">Bitte wählen</span></span>
+                <span class="stepr__edit">Ändern</span>
+                <svg class="stepr__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="stepr__body"><div class="stepr__inner"><div class="stepr__pad">
+                <div class="cfgb-seg" id="bGravurSeg" role="group" aria-label="Gravur wählen">
+                  <button type="button" data-gravur="off" aria-pressed="false">Ohne Gravur</button>
+                  <button type="button" data-gravur="on" aria-pressed="false">Mit Namensgravur</button>
+                </div>
+                <div class="cfgb-field" id="bGravurField">
+                  <input class="cfg-input" id="bGravurText" type="text" maxlength="20" placeholder="Ihr Name (z. B. Vossberg)" aria-label="Gravurtext">
+                  <div class="cfg-fonts" id="bFonts" aria-label="Schriftart">
+                    <button class="cfg-font is-selected" data-font="Serif" type="button" style="font-family:Georgia,'Times New Roman',serif">Vossberg</button>
+                    <button class="cfg-font" data-font="Grotesk" type="button" style="font-family:Arial,Helvetica,sans-serif;font-weight:700">Vossberg</button>
+                    <button class="cfg-font" data-font="Mono" type="button" style="font-family:'Courier New',monospace;letter-spacing:.06em">Vossberg</button>
+                  </div>
+                </div>
+              </div></div></div>
+            </li>
+
+            <!-- 3 · Innenstation -->
+            <li class="stepr__item" data-step="2">
+              <button class="stepr__head" type="button" aria-expanded="false">
+                <span class="stepr__node"><b>3</b><svg class="stepr__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+                <span class="stepr__titles"><span class="stepr__title">Innenstation</span><span class="stepr__pick" id="bPickInnen">Bitte wählen</span></span>
+                <span class="stepr__edit">Ändern</span>
+                <svg class="stepr__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="stepr__body"><div class="stepr__inner"><div class="stepr__pad">
+                <div class="cfg-opts" id="bInnen">
+                  <button class="cfg-opt" data-innen="Nur App" data-delta="0" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Nur Smartphone-App</span><span class="cfg-opt__desc">Kostenlos &amp; abofrei · iOS und Android</span></span><span class="cfg-opt__price is-incl">kostenlos</span></button>
+                  <button class="cfg-opt" data-innen="Innenstation Home" data-delta="149" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/innenstation.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Innenstation Home</span><span class="cfg-opt__desc">Touch-Display · Live-Video · WLAN</span></span><span class="cfg-opt__price">+149 €*</span></button>
+                  <button class="cfg-opt" data-innen="Innenstation Pro" data-delta="249" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/touch-display-station.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Innenstation Pro</span><span class="cfg-opt__desc">Größeres Display · Playback</span></span><span class="cfg-opt__price">+249 €*</span></button>
+                </div>
+                <div class="cfg-field" id="bInnenQtyWrap">
+                  <div class="cfg-opt" style="cursor:default"><span class="cfg-opt__body"><span class="cfg-opt__name">Anzahl Innenstationen</span><span class="cfg-opt__desc">Jederzeit erweiterbar</span></span><span class="cfg-opt__qty"><button data-q="-1" type="button" aria-label="weniger">−</button><span id="bInnenQty">1</span><button data-q="1" type="button" aria-label="mehr">+</button></span></div>
+                </div>
+              </div></div></div>
+            </li>
+
+            <!-- 4 · Zubehör -->
+            <li class="stepr__item" data-step="3">
+              <button class="stepr__head" type="button" aria-expanded="false">
+                <span class="stepr__node"><b>4</b><svg class="stepr__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+                <span class="stepr__titles"><span class="stepr__title">Zubehör &amp; Sicherheit</span><span class="stepr__pick" id="bPickExtras">Bitte wählen</span></span>
+                <span class="stepr__edit">Ändern</span>
+                <svg class="stepr__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="stepr__body"><div class="stepr__inner"><div class="stepr__pad">
+                <div class="cfg-opts">
+                  <button class="cfg-opt cfg-opt--check" data-extra="Sicherheitsmodul" data-delta="39" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Sicherheitsmodul für Türöffner</span><span class="cfg-opt__desc">Getrennte, sichere Türsteuerung</span></span><span class="cfg-opt__price">+39 €*</span></button>
+                  <button class="cfg-opt cfg-opt--check" data-extra="Ersatz-Namensschild" data-delta="34.99" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Ersatz-Namensschild mit Gravur</span><span class="cfg-opt__desc">Selbstklebend · 1 Klingeltaster</span></span><span class="cfg-opt__price">+34,99 €</span></button>
+                </div>
+                <button type="button" class="cfgb-none" id="bNoExtras">Kein Zubehör benötigt</button>
+              </div></div></div>
+            </li>
+
+          </ol>
+
+        </div>
+
+        <!-- ===== PRIMARY CTA — always "In den Warenkorb", prominent & persistent ===== -->
+        <div class="cfgb-checkout" id="bCheckout">
+          <div class="cfgb-checkout__row">
+            <div class="cfgb-total"><span class="cfgb-total__label">Gesamt</span><b class="cfgb-total__amount" id="bTotal" aria-live="polite">699,00 €</b></div>
+            <button type="button" class="pdp-cta is-locked" id="bCart" aria-disabled="true">
+              In den Warenkorb
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 002 1.6h9.7a2 2 0 002-1.6L23 6H6"/></svg>
+            </button>
+          </div>
+          <p class="cfgb-guide" id="bGuide">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4m0 4h.01M12 3l9 16H3z"/></svg>
+            <span id="bGuideText">Bitte Konfiguration abschließen — noch: Gravur, Innenstation, Zubehör</span>
+          </p>
+          <p class="cfgb-meta">inkl. USt. · Versandkostenfreie Lieferung · Lieferung <span class="ph">TT.MM. – TT.MM.</span></p>
+        </div>
+
+        <div class="pdp-trust">
+          <span class="pdp-trust__item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+            <span><a href="https://edelstahl-tuerklingel.de/metzler-garantieerklaerung" target="_blank" rel="noopener">10 Jahre Metzler Garantie</a></span>
+          </span>
+          <span class="pdp-trust__item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            <span>Designed in Germany</span>
+          </span>
+          <span class="pdp-trust__item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>
+            <span>Trusted Shops Käuferschutz</span>
+          </span>
+        </div>
+
+        <div class="pdp-pay" aria-label="Zahlungsarten">
+          <img src="../Home/Paymentshipping%20logos/payment/PAYPAL.png" alt="PayPal">
+          <img src="../Home/Paymentshipping%20logos/payment/KLARNA.png" alt="Klarna">
+          <img src="../Home/Paymentshipping%20logos/payment/VISA.png" alt="Visa">
+          <img src="../Home/Paymentshipping%20logos/payment/MASTER%20CARD.png" alt="Mastercard">
+          <img src="../Home/Paymentshipping%20logos/payment/APPLE%20PAY.png" alt="Apple Pay">
+          <img src="../Home/Paymentshipping%20logos/payment/AMAZON.png" alt="Amazon Pay">
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- placeholder for the next sections (built one at a time) -->
+  <div class="container" style="padding:5rem 0;color:var(--color-graphite-500);border-top:1px solid var(--color-graphite-200);font-size:0.875rem">
+    Nächste Sektion folgt … (Feature-Bar → 9 Features → Feature-Details → …)
+  </div>
+
+</main>
+
+<!-- ===== STICKY PURCHASE BAR (reveals on scroll past the hero CTA) ===== -->
+<div class="pdp-stickybar" id="pdpStickyBar" aria-hidden="true">
+  <div class="container pdp-stickybar__inner">
+    <img class="pdp-stickybar__thumb" src="Product Image/Sprechanlage/video-station.png" alt="">
+    <div class="pdp-stickybar__info">
+      <span class="pdp-stickybar__name">Metzler VDM10 2.0 | Colson · <span id="pdpStickyFinish">Anthrazit RAL 7016</span></span>
+      <span class="pdp-stickybar__price" id="bStickyPrice">konfiguriert · <b>699,00 €</b></span>
+    </div>
+    <button type="button" class="pdp-stickybar__cta is-locked" id="pdpStickyCta" aria-disabled="true">
+      In den Warenkorb
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ===== FOOTER (from home design system) ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="../Home/Logo/Metzler_Logo-rot-Wei%C3%9F.svg" alt="Metzler" class="footer__brand-logo" />
+        <p class="footer__brand-line">Edelstahl-Tuerklingel.de ist ein Unternehmen der <a href="#" class="footer__brand-link">Metzler Gruppe</a></p>
+        <p class="footer__brand-strong">Der Anbieter für Briefkästen, Sprechanlagen, Türklingeln und Hausnummern.</p>
+      </div>
+      <div class="footer__hotline">
+        <div class="footer__hotline-item">
+          <strong class="footer__hotline-label">Allgemeine Hotline:</strong>
+          <a class="footer__hotline-num" href="tel:+4971213177310">+49 (0) 7121 / 317 7310</a>
+          <em>(Mo-Fr.: 09:00-16:00 Uhr)</em>
+        </div>
+        <div class="footer__hotline-item">
+          <strong class="footer__hotline-label">Sprechanlagen Hotline:</strong>
+          <a class="footer__hotline-num" href="tel:+4971213177333">+49 (0) 7121 / 317 7333</a>
+          <em>(Mo-Fr.: 09:00-16:00 Uhr)</em>
+        </div>
+        <div class="footer__hotline-item">
+          <strong class="footer__hotline-label">E-Mail Support:</strong>
+          <a class="footer__hotline-num" href="mailto:service@metzlergmbh.de">service@metzlergmbh.de</a>
+        </div>
+      </div>
+      <details class="footer__details" open>
+        <summary><h4>Informationen</h4></summary>
+        <ul class="footer__links">
+          <li><a href="#">Auszeichnungen</a></li>
+          <li><a href="#">Fotowettbewerb</a></li>
+          <li><a href="#">Kundenbilder</a></li>
+          <li><a href="#">Stellenangebote</a></li>
+          <li><a href="#">News</a></li>
+          <li><a href="#">Zahlung und Versand</a></li>
+        </ul>
+      </details>
+      <details class="footer__details" open>
+        <summary><h4>Service</h4></summary>
+        <ul class="footer__links">
+          <li><a href="#">Begriffserklärung</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Geschäftskunden</a></li>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">VDM10 FAQ</a></li>
+        </ul>
+      </details>
+      <div class="footer__follow">
+        <h4>Follow us</h4>
+        <div class="footer__social">
+          <a href="#" aria-label="Pinterest"><svg><use href="#i-pinterest"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg><use href="#i-facebook"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg><use href="#i-instagram"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg><use href="#i-youtube"/></svg></a>
+          <a href="#" aria-label="X"><svg><use href="#i-x-social"/></svg></a>
+        </div>
+        <h4 class="footer__labels-title">Qualität</h4>
+        <div class="footer__labels" aria-label="Top Shop Auszeichnungen">
+          <img src="../Home/Trust%20badges/Top%20SHOP/Label1.png" alt="Top Shop 2023" />
+          <img src="../Home/Trust%20badges/Top%20SHOP/Label2.png" alt="Top Shop 2024" />
+          <img src="../Home/Trust%20badges/Top%20SHOP/Label3.png" alt="Top Shop 2025" />
+          <img src="../Home/Trust%20badges/Top%20SHOP/Labels4.png" alt="Top Shop 3 Jahre" />
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__partners">
+      <div class="footer__partners-block">
+        <span class="footer__partners-label">Unsere Versandpartners:</span>
+        <div class="footer__partners-logos">
+          <img src="../Home/Paymentshipping%20logos/DPD.png" alt="DPD" />
+          <img src="../Home/Paymentshipping%20logos/DHL.png" alt="DHL" />
+          <img src="../Home/Paymentshipping%20logos/GOGREEN.png" alt="GoGreen" />
+        </div>
+      </div>
+      <div class="footer__partners-block">
+        <span class="footer__partners-label">Einfach bezahlen:</span>
+        <div class="footer__partners-logos">
+          <img src="../Home/Paymentshipping%20logos/payment/SEPA.png" alt="SEPA" />
+          <img src="../Home/Paymentshipping%20logos/payment/AMEX.png" alt="Amex" />
+          <img src="../Home/Paymentshipping%20logos/payment/VISA.png" alt="Visa" />
+          <img src="../Home/Paymentshipping%20logos/payment/KLARNA.png" alt="Klarna" />
+          <img src="../Home/Paymentshipping%20logos/payment/PAYPAL.png" alt="PayPal" />
+          <img src="../Home/Paymentshipping%20logos/payment/MASTER%20CARD.png" alt="Mastercard" />
+          <img src="../Home/Paymentshipping%20logos/payment/APPLE%20PAY.png" alt="Apple Pay" />
+          <img src="../Home/Paymentshipping%20logos/payment/GOOGLE%20PAY.png" alt="Google Pay" />
+          <img src="../Home/Paymentshipping%20logos/payment/AMAZON.png" alt="Amazon Pay" />
+          <img src="../Home/Paymentshipping%20logos/payment/VORKASEE.png" alt="Vorkasse" />
+        </div>
+      </div>
+    </div>
+
+    <nav class="footer__legal-links" aria-label="Rechtliches">
+      <a href="#">Geprüfte Kundenbewertungen</a>
+      <a href="https://edelstahl-tuerklingel.de/metzler-garantieerklaerung" target="_blank" rel="noopener">Metzler Garantieerklärung</a>
+      <a href="#">Datenschutz</a>
+      <a href="#">AGB</a>
+      <a href="#">Sitemap</a>
+      <a href="#">Impressum</a>
+      <a href="#">Batterieentsorgungsgesetz</a>
+      <a href="#">Widerrufsrecht</a>
+      <a href="#">Hinweise zur Elektroaltgeräteentsorgung</a>
+      <a href="#">Cookie-Einstellungen</a>
+    </nav>
+
+    <div class="footer__copy">
+      Alle Preise inkl. gesetzliche MwSt., zzgl. <a href="#">Versand</a>
+      <span class="footer__copy-sep">·</span>
+      © 2013 - 2026 | Metzler GmbH
+    </div>
+  </div>
+</footer>
+
+<!-- ===== CONFIGURATOR OVERLAY (immersive, guided) ===== -->
+<div class="cfg" id="pdpConfigurator" role="dialog" aria-modal="true" aria-label="VDM10 konfigurieren" aria-hidden="true" tabindex="-1">
+  <div class="cfg-head">
+    <div class="container cfg-head__row">
+      <div class="cfg-head__title">
+        <span class="cfg-head__eyebrow">Konfigurator · nach Maß</span>
+        <span class="cfg-head__name">Metzler VDM10 2.0 <span class="pdp-title__sep">|</span> Colson</span>
+      </div>
+      <div class="cfg-head__actions">
+        <button class="cfg-save" id="cfgSave" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+          Konfiguration speichern
+        </button>
+        <button class="cfg-close" id="cfgClose" type="button" aria-label="Konfigurator schließen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="container">
+      <div class="cfg-rail" id="cfgRail">
+        <button class="cfg-rail__step is-done" data-goto="0" type="button"><b>1</b> Farbe</button>
+        <button class="cfg-rail__step is-active" data-goto="1" type="button"><b>2</b> Gravur <span class="opt">optional</span></button>
+        <button class="cfg-rail__step" data-goto="2" type="button"><b>3</b> Innenstation</button>
+        <button class="cfg-rail__step" data-goto="3" type="button"><b>4</b> Taster-LED <span class="opt">optional</span></button>
+        <button class="cfg-rail__step" data-goto="4" type="button"><b>5</b> Zubehör <span class="opt">optional</span></button>
+        <button class="cfg-rail__step" data-goto="5" type="button"><b>6</b> Übersicht</button>
+        <span class="cfg-rail__ind" id="cfgRailInd" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cfg-body">
+    <div class="container cfg-body__grid">
+
+      <!-- Context-aware preview -->
+      <div class="cfg-preview">
+        <div class="cfg-preview__stage">
+          <img class="cfg-preview__img" id="cfgPreviewImg" src="Product Image/Sprechanlage/video-station.png" alt="Vorschau Ihrer Konfiguration">
+          <span class="cfg-preview__engrave" id="cfgEngrave"></span>
+        </div>
+        <div class="cfg-preview__meta">
+          <span class="cfg-preview__chip">Farbe: <b id="cfgPrevFinish">Anthrazit RAL 7016</b></span>
+          <span class="cfg-preview__chip" id="cfgPrevInnen" hidden>Innenstation: <b>—</b></span>
+        </div>
+      </div>
+
+      <!-- Steps -->
+      <div class="cfg-steps">
+
+        <!-- 1 Farbe -->
+        <section class="cfg-step" data-step="0">
+          <div class="cfg-step__head"><span class="cfg-step__n">Schritt 1</span></div>
+          <h2>Farbe wählen</h2>
+          <p class="cfg-step__sub">Pulverbeschichtet in Ihrer Wunschfarbe — jede Oberfläche wird in Handarbeit in Süddeutschland gefertigt.</p>
+          <div class="cfg-swatches" id="cfgSwatches">
+            <button class="cfg-swatch" data-finish="Anthrazit RAL 7016" data-delta="0" aria-pressed="true" type="button"><img src="assets/swatches/anthrazit-ral7016.jpg" alt="Anthrazit RAL 7016"></button>
+            <button class="cfg-swatch" data-finish="Verkehrsweiß RAL 9016" data-delta="0" aria-pressed="false" type="button"><img src="assets/swatches/verkehrsweiss-ral9016.jpg" alt="Verkehrsweiß RAL 9016"></button>
+            <button class="cfg-swatch" data-finish="Graualuminium RAL 9007" data-delta="0" aria-pressed="false" type="button"><img src="assets/swatches/graualuminium-ral9007.jpg" alt="Graualuminium RAL 9007"></button>
+            <button class="cfg-swatch" data-finish="Eisenglimmer DB 703" data-delta="0" aria-pressed="false" type="button"><img src="assets/swatches/eisenglimmer-db703.jpg" alt="Eisenglimmer DB 703"></button>
+            <button class="cfg-swatch" data-finish="Tiefschwarz RAL 9005" data-delta="0" aria-pressed="false" type="button"><img src="assets/swatches/tiefschwarz-ral9005.jpg" alt="Tiefschwarz RAL 9005"></button>
+            <button class="cfg-swatch" data-finish="Edelstahl gebürstet" data-delta="0" aria-pressed="false" type="button"><img src="assets/swatches/edelstahl-gebuerstet.jpg" alt="Edelstahl gebürstet"></button>
+            <button class="cfg-swatch" data-finish="Linen Tex Black" data-delta="0" aria-pressed="false" type="button"><img src="assets/swatches/linen-tex-black.jpg" alt="Linen Tex Black"></button>
+            <button class="cfg-swatch" data-finish="Wunschfarbe nach RAL" data-delta="49" aria-pressed="false" type="button"><img src="assets/swatches/wunschfarbe-nach-ral.jpg" alt="Wunschfarbe nach RAL"></button>
+          </div>
+          <div class="cfg-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg><span>Jede Oberfläche wird pulverbeschichtet und in Handarbeit veredelt — mit <a href="https://edelstahl-tuerklingel.de/metzler-garantieerklaerung" target="_blank" rel="noopener">10 Jahren Metzler Garantie</a>.</span></div>
+        </section>
+
+        <!-- 2 Gravur -->
+        <section class="cfg-step is-active" data-step="1">
+          <div class="cfg-step__head"><span class="cfg-step__n">Schritt 2</span><span class="cfg-step__opt">optional</span></div>
+          <h2>Gravur</h2>
+          <p class="cfg-step__sub">Individuelles Namensschild per Lasergravur — kein Verblassen oder Verwischen, selbst nach Jahren.</p>
+          <div class="cfg-opts">
+            <button class="cfg-opt is-selected" data-gravur="off" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Ohne Gravur</span><span class="cfg-opt__desc">Neutrales Namensschild</span></span><span class="cfg-opt__price is-incl">inklusive</span></button>
+            <button class="cfg-opt" data-gravur="on" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Mit Namensgravur</span><span class="cfg-opt__desc">Ihr Name in gewählter Schriftart</span></span><span class="cfg-opt__price is-incl">inklusive</span></button>
+          </div>
+          <div class="cfg-field" id="cfgGravurField">
+            <input class="cfg-input" id="cfgGravurText" type="text" maxlength="20" placeholder="Ihr Name (z. B. Vossberg)" aria-label="Gravurtext">
+            <div class="cfg-fonts" id="cfgFonts" aria-label="Schriftart">
+              <button class="cfg-font is-selected" data-font="Serif" type="button" style="font-family:Georgia,'Times New Roman',serif">Vossberg</button>
+              <button class="cfg-font" data-font="Grotesk" type="button" style="font-family:Arial,Helvetica,sans-serif;font-weight:700">Vossberg</button>
+              <button class="cfg-font" data-font="Mono" type="button" style="font-family:'Courier New',monospace;letter-spacing:.06em">Vossberg</button>
+            </div>
+          </div>
+          <div class="cfg-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg><span>Ihre Gravur erscheint sofort in der Vorschau links — dauerhaft lasergraviert, UV- und witterungsbeständig.</span></div>
+          <button type="button" data-skip class="cfg-skip">Diesen Schritt überspringen</button>
+        </section>
+
+        <!-- 3 Innenstation -->
+        <section class="cfg-step" data-step="2">
+          <div class="cfg-step__head"><span class="cfg-step__n">Schritt 3</span></div>
+          <h2>Innenstation</h2>
+          <p class="cfg-step__sub">Sehen, sprechen, öffnen — per Touch-Display im Haus oder kostenlos über die Metzler-App.</p>
+          <div class="cfg-opts" id="cfgInnen">
+            <button class="cfg-opt is-selected" data-innen="Nur App" data-delta="0" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M11 18.5h2"/></svg></span><span class="cfg-opt__body"><span class="cfg-opt__name">Nur Smartphone-App</span><span class="cfg-opt__desc">Kostenlos &amp; abofrei · iOS und Android</span></span><span class="cfg-opt__price is-incl">kostenlos</span></button>
+            <button class="cfg-opt" data-innen="Innenstation Home" data-delta="149" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/innenstation.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Innenstation Home</span><span class="cfg-opt__desc">Touch-Display · Live-Video · WLAN</span></span><span class="cfg-opt__price">+149 €*</span></button>
+            <button class="cfg-opt" data-innen="Innenstation Pro" data-delta="249" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/touch-display-station.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Innenstation Pro</span><span class="cfg-opt__desc">Größeres Display · Playback</span></span><span class="cfg-opt__price">+249 €*</span></button>
+            <button class="cfg-opt" data-innen="Innenstation Ultra" data-delta="349" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/touch-display-station.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Innenstation Ultra</span><span class="cfg-opt__desc">Top-Display · weitere IP-Kameras</span></span><span class="cfg-opt__price">+349 €*</span></button>
+          </div>
+          <div class="cfg-field" id="cfgInnenQtyWrap">
+            <div class="cfg-opt" style="cursor:default"><span class="cfg-opt__body"><span class="cfg-opt__name">Anzahl Innenstationen</span><span class="cfg-opt__desc">Für mehrere Räume erweiterbar</span></span><span class="cfg-opt__qty"><button data-q="-1" type="button" aria-label="weniger">−</button><span id="cfgInnenQty">1</span><button data-q="1" type="button" aria-label="mehr">+</button></span></div>
+          </div>
+          <div class="cfg-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg><span>Alle Innenstationen lassen sich kombinieren und jederzeit erweitern — auch nachträglich.</span></div>
+        </section>
+
+        <!-- 4 Taster-LED -->
+        <section class="cfg-step" data-step="3">
+          <div class="cfg-step__head"><span class="cfg-step__n">Schritt 4</span><span class="cfg-step__opt">optional</span></div>
+          <h2>Klingeltaster-LED</h2>
+          <p class="cfg-step__sub">Die Beleuchtung des Klingeltasters passt sich Ihrem Eingang an — jederzeit einstellbar, inklusive.</p>
+          <div class="cfg-led" id="cfgLed">
+            <button class="is-selected" data-led="Weiß" style="background:#fff" title="Weiß" aria-label="Weiß" type="button"></button>
+            <button data-led="Grün" style="background:#22c55e" title="Grün" aria-label="Grün" type="button"></button>
+            <button data-led="Rot" style="background:#ef4444" title="Rot" aria-label="Rot" type="button"></button>
+            <button data-led="Blau" style="background:#2563eb" title="Blau" aria-label="Blau" type="button"></button>
+            <button data-led="Hellblau" style="background:#7dd3fc" title="Hellblau" aria-label="Hellblau" type="button"></button>
+            <button data-led="Lila" style="background:#a855f7" title="Lila" aria-label="Lila" type="button"></button>
+            <button data-led="Gelb" style="background:#facc15" title="Gelb" aria-label="Gelb" type="button"></button>
+            <button data-led="Aus" style="background:#1a171b" title="Aus" aria-label="Aus" type="button"></button>
+          </div>
+          <div class="cfg-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg><span>Die LED-Farbe können Sie später jederzeit direkt am Gerät oder in der App ändern.</span></div>
+          <button type="button" data-skip class="cfg-skip">Diesen Schritt überspringen</button>
+        </section>
+
+        <!-- 5 Zubehör -->
+        <section class="cfg-step" data-step="4">
+          <div class="cfg-step__head"><span class="cfg-step__n">Schritt 5</span><span class="cfg-step__opt">optional</span></div>
+          <h2>Zubehör &amp; Sicherheit</h2>
+          <p class="cfg-step__sub">Ergänzen Sie Ihre Anlage — alles vorkonfiguriert und aufeinander abgestimmt geliefert.</p>
+          <div class="cfg-opts">
+            <button class="cfg-opt cfg-opt--check" data-extra="Sicherheitsmodul für Türöffner" data-delta="39" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Sicherheitsmodul für Türöffner</span><span class="cfg-opt__desc">Getrennte, sichere Türsteuerung</span></span><span class="cfg-opt__price">+39 €*</span></button>
+            <button class="cfg-opt cfg-opt--check" data-extra="Zusätzliche IP-Kamera" data-delta="99" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Zusätzliche IP-Kamera</span><span class="cfg-opt__desc">Erweitert das Sichtfeld · RTSP</span></span><span class="cfg-opt__price">+99 €*</span></button>
+            <button class="cfg-opt cfg-opt--check" data-extra="Ersatz-Namensschild" data-delta="34.99" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Ersatz-Namensschild mit Gravur</span><span class="cfg-opt__desc">Selbstklebend · 1 Klingeltaster</span></span><span class="cfg-opt__price">+34,99 €</span></button>
+            <button class="cfg-opt cfg-opt--check" data-extra="PoE-Netzteil" data-delta="29" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">PoE-Netzteil</span><span class="cfg-opt__desc">Stromversorgung über Netzwerk</span></span><span class="cfg-opt__price">+29 €*</span></button>
+          </div>
+          <div class="cfg-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg><span>Alles wird aufeinander abgestimmt und anschlussfertig vorkonfiguriert geliefert.</span></div>
+          <button type="button" data-skip class="cfg-skip">Ohne Zubehör fortfahren</button>
+        </section>
+
+        <!-- 6 Übersicht -->
+        <section class="cfg-step" data-step="5">
+          <div class="cfg-step__head"><span class="cfg-step__n">Schritt 6</span></div>
+          <h2>Ihre Konfiguration</h2>
+          <p class="cfg-step__sub">Alles geprüft? Ihre individuell gefertigte VDM10 — bereit für den Warenkorb.</p>
+          <div class="cfg-summary" id="cfgSummary"></div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="cfg-bar">
+    <div class="container cfg-bar__row">
+      <div class="cfg-bar__summary">
+        <div class="cfg-bar__label">Gesamt</div>
+        <div class="cfg-bar__total" id="cfgTotal" aria-live="polite">699,00 €</div>
+        <div class="cfg-bar__meta">inkl. USt. · Lieferung <span class="ph">TT.MM. – TT.MM.</span></div>
+      </div>
+      <div class="cfg-bar__chips" id="cfgChips" aria-hidden="true"></div>
+      <div class="cfg-bar__actions">
+        <span class="cfg-bar__stepno" id="cfgStepNo">Schritt 2 von 6</span>
+        <button class="cfg-btn cfg-btn--ghost" id="cfgPrev" type="button">Zurück</button>
+        <button class="cfg-btn cfg-btn--next" id="cfgNext" type="button">Weiter <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></button>
+        <button class="cfg-btn cfg-btn--cart" id="cfgCart" type="button" hidden>In den Warenkorb <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cfg-toast" id="cfgToast" role="status" aria-live="polite">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+  <span id="cfgToastMsg">In den Warenkorb gelegt</span>
+</div>
+
+<!-- A/B version switcher -->
+<nav class="vswitch" aria-label="Prototyp-Version">
+  <a href="index.html">A <small>Overlay</small></a>
+  <a href="index-b.html" class="is-current">B <small>Inline</small></a>
+</nav>
+
+<script src="chrome.js?v=1"></script>
+<script src="pdp-b.js?v=4"></script>
+</body>
+</html>

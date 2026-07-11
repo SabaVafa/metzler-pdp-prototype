@@ -1,0 +1,141 @@
+/* ============================================================
+   chrome.js — shared PDP chrome behaviour
+   ------------------------------------------------------------
+   Grabbed from PLP/briefkasten.html's inline <script>.
+   Five self-contained IIFEs:
+     1. Mobile / tablet slide-in nav toggle (#mobileNav)
+     2. Scroll-shrink → body.is-scrolled (desktop Kategorien pill)
+     3. Tablet nav fit (hide overflowing category links)
+     4. Rich mega-menu (intent hover, click/touch, keyboard, ARIA)
+     5. Three-tier responsive search placeholder
+   No dependencies beyond the markup in index.html.
+   ============================================================ */
+
+/* ===== Mobile / tablet nav toggle ===== */
+(function(){
+  var toggles = document.querySelectorAll('[data-nav-toggle]');
+  var panel   = document.getElementById('mobileNav');
+  if (!toggles.length || !panel) return;
+  function setExpanded(v){ toggles.forEach(function(t){ t.setAttribute('aria-expanded', v?'true':'false'); }); }
+  function syncTop(){
+    var header = document.querySelector('.header');
+    var inner = panel.querySelector('.mobile-nav__panel');
+    if (header && inner) inner.style.top = Math.max(0, header.getBoundingClientRect().bottom) + 'px';
+  }
+  function open(){ syncTop(); panel.classList.add('is-open'); panel.setAttribute('aria-hidden','false'); setExpanded(true); document.body.style.overflow='hidden'; }
+  function close(){ panel.classList.remove('is-open'); panel.setAttribute('aria-hidden','true'); setExpanded(false); document.body.style.overflow=''; }
+  function toggle(){ panel.classList.contains('is-open') ? close() : open(); }
+  toggles.forEach(function(t){ t.addEventListener('click', toggle); });
+  panel.querySelectorAll('[data-close], a').forEach(function(el){ el.addEventListener('click', close); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+})();
+
+/* ===== Scroll-shrink: body.is-scrolled at any scroll position ===== */
+(function(){
+  var ticking = false;
+  function update(){ document.body.classList.toggle('is-scrolled', window.scrollY > 0); ticking = false; }
+  window.addEventListener('scroll', function(){ if(!ticking){ window.requestAnimationFrame(update); ticking = true; } }, { passive:true });
+  update();
+})();
+
+/* ===== Tablet nav fit: hide category links that don't fit on one line ===== */
+(function(){
+  var nav = document.querySelector('.header__nav'); if(!nav) return;
+  var ul = nav.querySelector('ul'); if(!ul) return;
+  var items = Array.prototype.slice.call(ul.children);
+  var tabletMq = window.matchMedia('(min-width: 768px) and (max-width: 1023px)');
+  function reset(){ items.forEach(function(li){ li.hidden = false; }); }
+  function fit(){
+    reset(); if(!tabletMq.matches) return;
+    for (var i = items.length - 1; i >= 0; i--){ if (ul.scrollWidth <= ul.clientWidth + 1) break; items[i].hidden = true; }
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit); else window.addEventListener('load', fit);
+  fit();
+  var raf; window.addEventListener('resize', function(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(fit); });
+})();
+
+/* ===== Rich mega-menu: intent-based hover, click/touch, keyboard, ARIA ===== */
+(function(){
+  var DESKTOP     = window.matchMedia('(min-width: 768px)');   /* mega is active on tablet+ (≤767 uses the slide-in nav) */
+  var OPEN_DELAY  = 100;   /* ms — ignore incidental pass-through hovers */
+  var CLOSE_DELAY = 150;   /* ms — grace period that bridges diagonal cursor paths (anti-tunneling) */
+
+  var items = [].slice.call(document.querySelectorAll('[data-mega-item]'));
+  if (!items.length) return;
+
+  var openTimer, closeTimer, current = null;
+  var panelOf   = function(i){ return i.querySelector('[data-mega-panel]'); };
+  var triggerOf = function(i){ return i.querySelector('[data-mega-trigger]'); };
+
+  /* Single source of truth: class drives the CSS transition, ARIA drives assistive tech */
+  function setState(item, isOpen){
+    panelOf(item).classList.toggle('is-open', isOpen);
+    panelOf(item).setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+    triggerOf(item).setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  }
+  function open(item){
+    if (current === item) return;
+    if (current) setState(current, false);     /* instant switch — no reopen delay */
+    setState(item, true);
+    current = item;
+  }
+  function close(item){
+    setState(item, false);
+    if (current === item) current = null;
+  }
+
+  items.forEach(function(item){
+    var trig = triggerOf(item);
+
+    /* Pointer: delayed open, grace-delayed close */
+    item.addEventListener('mouseenter', function(){
+      if (!DESKTOP.matches) return;
+      clearTimeout(closeTimer);
+      if (current && current !== item) { open(item); return; }   /* already browsing → switch now */
+      openTimer = setTimeout(function(){ open(item); }, OPEN_DELAY);
+    });
+    item.addEventListener('mouseleave', function(){
+      if (!DESKTOP.matches) return;
+      clearTimeout(openTimer);
+      closeTimer = setTimeout(function(){ close(item); }, CLOSE_DELAY);
+    });
+
+    /* Click / Enter / touch: a real href navigates (cross-page tab); else toggle */
+    trig.addEventListener('click', function(e){
+      if (!DESKTOP.matches) return;            /* mobile uses the slide-in nav */
+      var href = trig.getAttribute('href');
+      if (href && href !== '#') return;        /* follow the link to the other page */
+      e.preventDefault();
+      (current === item) ? close(item) : open(item);
+    });
+
+    /* Keyboard: close once focus leaves the item's subtree */
+    item.addEventListener('focusout', function(e){
+      if (!item.contains(e.relatedTarget)) close(item);
+    });
+  });
+
+  /* Escape closes the active panel and restores focus to its trigger */
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && current){ var t = triggerOf(current); close(current); if (t) t.focus(); }
+  });
+  /* Click outside closes */
+  document.addEventListener('click', function(e){
+    if (current && !current.contains(e.target)) close(current);
+  });
+  /* Dropping below desktop collapses any open panel */
+  DESKTOP.addEventListener('change', function(){ if (!DESKTOP.matches && current) close(current); });
+})();
+
+/* ===== Three-tier responsive search placeholder ===== */
+(function(){
+  var input = document.querySelector('.header__search input'); if(!input) return;
+  var mobileMq = window.matchMedia('(max-width: 720px)');
+  var tabletMq = window.matchMedia('(min-width: 768px) and (max-width: 1023px)');
+  function set(){
+    if (mobileMq.matches) input.placeholder = 'Produkte suchen…';
+    else if (tabletMq.matches) input.placeholder = 'Suchen — Türklingel, Briefkasten…';
+    else input.placeholder = 'Suchen — Türklingel, Briefkasten, Sprechanlage…';
+  }
+  set(); mobileMq.addEventListener('change', set); tabletMq.addEventListener('change', set);
+})();
