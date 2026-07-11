@@ -76,6 +76,12 @@
       eng.style.fontFamily = FONTS[state.font] || '';
       eng.style.setProperty('--engrave-ink', LIGHT_FINISHES[state.finish] ? 'rgba(20,22,25,0.7)' : 'rgba(255,255,255,0.92)');
     }
+    // inline per-product qty displays
+    setTxt('bMainQtyVal', state.mainQty);
+    setTxt('bInnenQty', state.innenQty);
+    var iqw = $('bInnenQtyWrap'); if (iqw) iqw.classList.toggle('is-shown', hasInnen());
+    document.querySelectorAll('[data-qtyfor]').forEach(function (s) { var n = s.getAttribute('data-qtyfor'); s.textContent = state.extras[n] ? state.extras[n].qty : 1; });
+    document.querySelectorAll('.cfg-choice').forEach(function (c) { var o = c.querySelector('.cfg-opt'); c.classList.toggle('is-open', !!(o && o.classList.contains('is-selected'))); });
     markDone();
     updateDock();
     renderSummary();
@@ -91,6 +97,7 @@
 
   function updateDock() {
     var cur = curIndex(); if (cur < 0) cur = 0;
+    var track = $('bSeg'); if (track) track.style.setProperty('--prog', ((cur + 0.5) / STEPS.length * 100).toFixed(1) + '%');
     document.querySelectorAll('#bSeg .cfgb-bar__step').forEach(function (s, i) {
       s.classList.toggle('is-filled', i <= reached);
       s.classList.toggle('is-current', i === cur);
@@ -113,6 +120,7 @@
       + '<button type="button" data-qd="1" data-target="' + target + '" aria-label="mehr">+</button>'
       + '</span>';
   }
+  function roQty(q) { return '<span class="sum-qty-ro">×&nbsp;' + q + '</span>'; }
   function row(name, sub, qtyHtml, price, cls) {
     return '<div class="sum-row ' + (cls || '') + '">'
       + '<span class="sum-row__name">' + name + (sub ? '<span class="sum-sub">' + sub + '</span>' : '') + '</span>'
@@ -123,12 +131,12 @@
   function renderSummary() {
     var el = $('bSummary'); if (!el) return;
     var h = '';
-    h += row('<b>Metzler VDM10 2.0</b>', esc(state.finish), qtyCtrl('main', state.mainQty), euro(state.mainQty * (BASE + state.finishDelta)));
+    h += row('<b>Metzler VDM10 2.0</b>', esc(state.finish), roQty(state.mainQty), euro(state.mainQty * (BASE + state.finishDelta)));
     if (state.anschluss) h += row('Anschluss', esc(state.anschluss), null, 'inklusive');
     if (state.gravurOn) h += row('Gravur', state.gravurText ? '„' + esc(state.gravurText) + '" · ' + state.font : 'Mit Namensgravur', null, 'inklusive');
-    if (hasInnen()) h += row(esc(state.innen), null, qtyCtrl('innen', state.innenQty), euro(state.innenDelta * state.innenQty));
-    if (hasStrom()) h += row(esc(state.strom), null, qtyCtrl('strom', state.stromQty), euro(state.stromDelta * state.stromQty));
-    for (var k in state.extras) { var x = state.extras[k]; h += row(esc(x.label || k), null, qtyCtrl('extra:' + k, x.qty), euro(x.price * x.qty)); }
+    if (hasInnen()) h += row(esc(state.innen), null, roQty(state.innenQty), euro(state.innenDelta * state.innenQty));
+    if (hasStrom()) h += row(esc(state.strom), null, null, euro(state.stromDelta * state.stromQty));
+    for (var k in state.extras) { var x = state.extras[k]; h += row(esc(x.label || k), null, roQty(x.qty), euro(x.price * x.qty)); }
     document.querySelectorAll('.cfgb-summary').forEach(function (x) { x.innerHTML = h; });
     var n = el.querySelectorAll('.sum-row').length;
     setTxt('bSheetTotal', euro(total()));
@@ -143,7 +151,8 @@
   }
   /* qty steppers work in BOTH the inline accordion and the sheet */
   document.addEventListener('click', function (e) {
-    var b = e.target.closest('.cfgb-summary button[data-qd]'); if (!b) return;
+    var b = e.target.closest('button[data-qd]'); if (!b) return;
+    e.stopPropagation();
     applyQty(b.getAttribute('data-target'), parseInt(b.getAttribute('data-qd'), 10));
   });
 
@@ -248,9 +257,9 @@
   /* ── 2 · Gravur ── */
   var seg = $('bGravurSeg');
   if (seg) seg.addEventListener('click', function (e) {
-    var b = e.target.closest('button'); if (!b) return;
-    this.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
-    b.setAttribute('aria-pressed', 'true');
+    var b = e.target.closest('.cfg-opt'); if (!b) return;
+    this.querySelectorAll('.cfg-opt').forEach(function (x) { x.classList.remove('is-selected'); });
+    b.classList.add('is-selected');
     state.gravurOn = b.getAttribute('data-gravur') === 'on';
     $('bGravurField').classList.toggle('is-shown', state.gravurOn);
     refresh();

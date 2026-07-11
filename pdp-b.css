@@ -16,7 +16,7 @@
 .pdp-b .pdp-eyebrow { font-size: 0.6875rem; letter-spacing: 0.22em; }
 .pdp-b .pdp-title {
   font-size: clamp(1.4rem, 1.9vw, 1.8rem); line-height: 1.42; letter-spacing: 0; font-weight: 700;
-  max-width: none; margin: 0; text-wrap: balance;
+  max-width: none; margin: 0; text-wrap: pretty;
 }
 .pdp-b .pdp-title .pdp-title__sep { color: var(--color-graphite-300); font-weight: 300; margin: 0 0.3em; }
 
@@ -103,35 +103,36 @@
 .cfgb-bar__count b { font-size: 0.9375rem; }
 .cfgb-bar.is-ready .cfgb-bar__count { color: var(--color-green); }
 
-.cfgb-bar__track { display: flex; gap: 0; padding: 0.25rem 0 0.1rem; }
-/* each step = icon node + label; connector line runs behind the nodes */
-.cfgb-bar__step { flex: 1; min-width: 0; position: relative; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+.cfgb-bar__track { display: flex; gap: 0; padding: 0.5rem 0 1.15rem; position: relative; }
+/* one continuous progress bar (replaces the old between-node line) */
+.cfgb-bar__track::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0.2rem; height: 4px; border-radius: 999px; background: var(--color-graphite-200); }
+.cfgb-bar__track::after { content: ""; position: absolute; left: 0; bottom: 0.2rem; height: 4px; border-radius: 999px; width: var(--prog, 0%);
+  background: linear-gradient(90deg, #013e3f, #017d7e); box-shadow: 0 1px 4px rgba(1,82,83,0.35); transition: width .5s cubic-bezier(.2,.8,.2,1); }
+/* each step = icon tile + label (no connecting line) */
+.cfgb-bar__step { flex: 1; min-width: 0; position: relative; display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
   background: none; border: 0; padding: 0; font-family: inherit; cursor: pointer; }
-/* connector to the previous node */
-.cfgb-bar__step::before { content: ""; position: absolute; top: 1rem; right: 50%; width: 100%; height: 2px;
-  background: var(--color-graphite-200); z-index: 0; transition: background .45s ease; }
-.cfgb-bar__step:first-child::before { display: none; }
-.cfgb-bar__step.is-filled::before { background: var(--color-teal); }
-/* icon node */
-.cfgb-bar__node { position: relative; z-index: 1; width: 2rem; height: 2rem; border-radius: 50%;
+/* icon tile — rounded square (squircle), tactile depth */
+.cfgb-bar__node { position: relative; z-index: 1; width: 2.1rem; height: 2.1rem; border-radius: 30%;
   border: 1.5px solid var(--color-graphite-200); background: var(--color-white); display: grid; place-items: center;
-  transition: border-color .3s ease, background .3s ease, box-shadow .3s ease; }
+  box-shadow: 0 1px 2px rgba(10,20,20,0.06);
+  transition: border-color .35s ease, background .35s ease, box-shadow .35s ease, transform .35s cubic-bezier(.2,.7,.2,1); }
 .cfgb-bar__node > * { grid-area: 1 / 1; }
-.cfgb-bar__ico { width: 1.05rem; height: 1.05rem; color: var(--color-graphite-400); transition: color .3s ease; }
+.cfgb-bar__ico { width: 1.05rem; height: 1.05rem; color: var(--color-graphite-400); transition: color .35s ease; }
 .cfgb-bar__check { width: 1rem; height: 1rem; color: #fff; display: none; }
-/* completed → teal fill + check */
-.cfgb-bar__step.is-filled:not(.is-current) .cfgb-bar__node { background: var(--color-teal); border-color: var(--color-teal); }
-/* completed keeps its OWN icon (white on teal) — consistent with empty/current, no checkmark swap */
+/* completed → deep teal gradient + soft lift + white icon (same icon, no checkmark swap) */
+.cfgb-bar__step.is-filled:not(.is-current) .cfgb-bar__node { border-color: transparent;
+  background: linear-gradient(145deg, #017d7e 0%, #013e3f 100%); box-shadow: 0 4px 10px -3px rgba(1,82,83,0.45); }
 .cfgb-bar__step.is-filled:not(.is-current) .cfgb-bar__ico { color: #fff; }
-/* current → tinted node, teal ring + soft STATIC glow, teal icon */
-.cfgb-bar__step.is-current .cfgb-bar__node { border-color: var(--color-teal); background: var(--color-teal-50); box-shadow: 0 0 0 4px rgba(1,82,83,0.10); }
+/* current → white node lifted, teal icon, crisp ring (no fuzzy glow) */
+.cfgb-bar__step.is-current .cfgb-bar__node { border-color: var(--color-teal); transform: scale(1.08);
+  box-shadow: 0 0 0 4px var(--color-teal-50), 0 8px 16px -6px rgba(1,82,83,0.35); }
 .cfgb-bar__step.is-current .cfgb-bar__ico { color: var(--color-teal); }
 .cfgb-bar__step:hover .cfgb-bar__node { border-color: var(--color-teal); }
 /* labels */
-.cfgb-bar__label { font-size: 0.625rem; font-weight: 600; line-height: 1.2; text-align: center; max-width: 100%;
-  color: var(--color-graphite-400); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .3s ease; }
-.cfgb-bar__step.is-filled:not(.is-current) .cfgb-bar__label { color: var(--color-graphite-600); }
-.cfgb-bar__step.is-current .cfgb-bar__label { color: var(--color-teal); font-weight: 700; }
+.cfgb-bar__label { font-size: 0.625rem; font-weight: 600; line-height: 1.2; letter-spacing: 0.02em; text-align: center; max-width: 100%;
+  color: var(--color-graphite-400); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .35s ease; }
+.cfgb-bar__step.is-filled:not(.is-current) .cfgb-bar__label { color: var(--color-graphite-700); }
+.cfgb-bar__step.is-current .cfgb-bar__label { color: var(--color-teal); font-weight: 800; }
 .cfgb-bar__step:hover .cfgb-bar__label { color: var(--color-teal); }
 .cfgb-bar.is-ready .cfgb-bar__step .cfgb-bar__node { background: var(--color-green); border-color: var(--color-green); }
 .cfgb-bar.is-ready .cfgb-bar__step::before { background: var(--color-green); }
@@ -216,7 +217,7 @@
 
 /* "Preis wie konfiguriert" price line */
 .cfgb-price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.15rem 0.7rem; }
-.cfgb-price__label { flex-basis: 100%; font-size: 0.625rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-graphite-500); }
+.cfgb-price__label { flex-basis: 100%; font-size: 0.625rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(0,0,0,0.6); }
 .cfgb-price__meta { font-size: 0.8125rem; color: var(--color-graphite-600); }
 .cfgb-price__meta a { color: var(--color-teal); text-decoration: underline; }
 
@@ -274,8 +275,7 @@
 .pdp-b .bx-color__note,
 .pdp-b .pdp-trust,
 .cfgb-next,
-.cfgb-hint,
-#bInnenQtyWrap { display: none !important; }
+.cfgb-hint { display: none !important; }
 .pdp-stickybar__cta svg { display: none; }          /* remove arrow from sticky CTA */
 
 /* A/B prototype switcher — hidden on B so it never covers the fixed purchase bar */
@@ -331,7 +331,7 @@
 .sheet .cfgb-summary { border: 0; background: none; padding: 0 1.25rem; margin: 0; overflow-y: auto; }
 .sheet__foot { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; border-top: 1px solid var(--color-graphite-200); margin-top: 0.5rem; }
 .sheet__price { display: flex; flex-direction: column; flex-shrink: 0; }
-.sheet__pricelabel { font-size: 0.625rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-graphite-500); }
+.sheet__pricelabel { font-size: 0.625rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(0,0,0,0.6); }
 .sheet__foot .pdp-cta { flex: 1; background: var(--color-teal); box-shadow: 0 0.75rem 1.5rem rgba(1,82,83,0.28); }
 .sheet__foot .pdp-cta:hover { background: var(--color-teal-hover); }
 /* full-width bottom drawer — inner content comfortably centered on wide screens */
@@ -392,7 +392,7 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 .bx-color__label b { font-size: 1.0625rem; color: var(--color-digital-black); font-weight: 800; }
 
 /* ── Payment methods — maximized, tidy wrap ── */
-.pdp-b .pdp-pay { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.pdp-b .pdp-pay { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.55rem; max-width: 27rem; margin: 0 auto; }
 .pdp-b .pdp-pay img { height: 2.1rem; width: auto; opacity: 1; border: 1px solid var(--color-graphite-200); border-radius: var(--radius);
   background: #fff; padding: 0.3rem 0.45rem; box-sizing: border-box; }
 
@@ -411,6 +411,30 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 .cfgb-acc.is-open .cfgb-acc__body { grid-template-rows: 1fr; }
 .cfgb-acc__inner { overflow: hidden; min-height: 0; }
 .cfgb-acc .cfgb-summary { border: 0; background: none; padding: 0.35rem 0.9rem 0.75rem; margin: 0; }
+
+/* ── Inline per-product quantity (in the configuration, next to each entry) ── */
+.cfg-choice { display: flex; flex-direction: column; }
+.cfg-choice__qty { display: none; align-items: center; justify-content: space-between; gap: 0.75rem;
+  margin: 0.4rem 0 0.3rem; padding: 0.5rem 0.8rem; background: var(--color-teal-50); border-radius: var(--radius); }
+.cfg-choice.is-open .cfg-choice__qty { display: flex; }
+.cfg-choice__qtyl { font-size: 0.8125rem; font-weight: 700; color: var(--color-digital-black); }
+.cfgb-mainqty { display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 0.6rem 0.9rem; border: 1px solid var(--color-graphite-200); border-radius: var(--radius); }
+.cfgb-mainqty__l { font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black); }
+/* read-only qty in the price detail */
+.sum-qty-ro { font-size: 0.8125rem; font-weight: 700; color: var(--color-graphite-600); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+
+/* ── Product option cards → vertical tiles (image on top, text + price below) ── */
+.cfgb .cfg-opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr)); gap: 0.6rem; }
+.cfgb .cfg-opt { position: relative; flex-direction: column; align-items: stretch; gap: 0.5rem; padding: 0.85rem; text-align: left; height: 100%; }
+.cfgb .cfg-opt__mark { position: absolute; top: 0.65rem; right: 0.65rem; margin: 0; z-index: 2; background: var(--color-white); }
+.cfgb .cfg-opt__thumb { width: 100%; height: 5.5rem; }
+.cfgb .cfg-opt__body { flex: 0 0 auto; min-width: 0; padding-right: 1.5rem; }
+.cfgb .cfg-opt__price { align-self: flex-start; margin-top: auto; padding-top: 0.15rem; text-align: left; }
+.cfgb .cfg-choice { height: 100%; }
+.cfgb .cfg-choice .cfg-opt { height: auto; }
+.cfgb .cfg-opt__thumb--icon { background: var(--color-paper); }
+.cfgb .cfg-opt__thumb svg { width: 2.4rem; height: 2.4rem; color: var(--color-graphite-400); }
 
 /* ── Price-details summary (itemized cart with qty steppers) ── */
 .cfgb-summary { display: flex; flex-direction: column; padding: 0.5rem 0.9rem; margin-bottom: 0.2rem;

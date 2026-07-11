@@ -12,7 +12,7 @@
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=10" />
 <!-- Version B — inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=17" />
+<link rel="stylesheet" href="pdp-b.css?v=25" />
 </head>
 <body class="plp">
 
@@ -292,7 +292,7 @@
 
         <p class="pdp-eyebrow">Video-Türsprechanlage · nach Maß</p>
 
-        <h1 class="pdp-title">Metzler VDM10 2.0 Video-Türsprechanlage <span class="pdp-title__sep">|</span> 1 Klingeltaster <span class="pdp-title__sep">|</span> RAL 7016 Anthrazitgrau <span class="pdp-title__sep">|</span> Colson</h1>
+        <h1 class="pdp-title">Metzler VDM10&nbsp;2.0 Video&#8209;Türsprechanlage&nbsp;<span class="pdp-title__sep">|</span> 1&nbsp;Klingeltaster&nbsp;<span class="pdp-title__sep">|</span> RAL&nbsp;7016 Anthrazitgrau&nbsp;<span class="pdp-title__sep">|</span> Colson</h1>
 
         <div class="bx-cred">
           <a href="#bewertungen" class="pdp-rate bx-cred__rate" aria-label="4,5 von 5 · 63 Bewertungen">
@@ -405,9 +405,9 @@
                 <svg class="stepr__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
               </button>
               <div class="stepr__body"><div class="stepr__inner"><div class="stepr__pad">
-                <div class="cfgb-seg" id="bGravurSeg" role="group" aria-label="Gravur wählen">
-                  <button type="button" data-gravur="off" aria-pressed="true">Ohne Gravur</button>
-                  <button type="button" data-gravur="on" aria-pressed="false">Mit Namensgravur</button>
+                <div class="cfg-opts" id="bGravurSeg" role="radiogroup" aria-label="Gravur wählen">
+                  <button class="cfg-opt is-selected" data-gravur="off" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Ohne Gravur</span><span class="cfg-opt__desc">Neutrales Namensschild</span></span><span class="cfg-opt__price is-incl">inklusive</span></button>
+                  <button class="cfg-opt" data-gravur="on" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Mit Namensgravur</span><span class="cfg-opt__desc">Ihr Name per Lasergravur — UV- &amp; witterungsbeständig</span></span><span class="cfg-opt__price is-incl">inklusive</span></button>
                 </div>
                 <div class="cfgb-field" id="bGravurField">
                   <input class="cfg-input" id="bGravurText" type="text" maxlength="20" placeholder="Ihr Name (z. B. Vossberg)" aria-label="Gravurtext">
@@ -417,7 +417,6 @@
                     <button class="cfg-font" data-font="Script" type="button" style="font-family:'Segoe Script','Brush Script MT',cursive">Vossberg</button>
                     <button class="cfg-font" data-font="Mono" type="button" style="font-family:'Courier New',monospace;letter-spacing:.06em">Vossberg</button>
                   </div>
-                  <button class="cfg-opt cfg-opt--check" id="bGravurDraft" data-extra="Entwurf vor Fertigung" data-delta="4.95" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Entwurf vor Fertigung</span><span class="cfg-opt__desc">Freigabe der Gravur per E-Mail vor der Produktion</span></span><span class="cfg-opt__price">+4,95 €</span></button>
                 </div>
                 <button type="button" class="cfgb-next" data-next>Weiter</button>
               </div></div></div>
@@ -433,13 +432,13 @@
               </button>
               <div class="stepr__body"><div class="stepr__inner"><div class="stepr__pad">
                 <div class="cfg-opts" id="bInnen" role="radiogroup" aria-label="Innenstation wählen">
-                  <button class="cfg-opt is-selected" data-innen="Ohne Innenstation" data-conn="both" data-delta="0" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Ohne Innenstation</span><span class="cfg-opt__desc">Nutzung über SIP / Fritz!Box &amp; Fritz!Fon (Smartphone-App nur über Innenstation)</span></span><span class="cfg-opt__price is-incl">0,00 €</span></button>
+                  <button class="cfg-opt is-selected" data-innen="Ohne Innenstation" data-conn="both" data-delta="0" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb cfg-opt__thumb--icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="2" width="11" height="20" rx="2.5"/><line x1="10.5" y1="18.5" x2="13.5" y2="18.5"/></svg></span><span class="cfg-opt__body"><span class="cfg-opt__name">Ohne Innenstation</span><span class="cfg-opt__desc">Nutzung über SIP / Fritz!Box &amp; Fritz!Fon (Smartphone-App nur über Innenstation)</span></span><span class="cfg-opt__price is-incl">0,00 €</span></button>
                   <button class="cfg-opt" data-innen="Innenstation Home" data-conn="both" data-delta="199" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/innenstation.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Innenstation Home <span class="cfg-opt__tag">beliebt</span></span><span class="cfg-opt__desc">7″ Touchscreen · weiß oder schwarz</span></span><span class="cfg-opt__price">+199,00 €</span></button>
                   <button class="cfg-opt" data-innen="Innenstation Pro" data-conn="lan" data-delta="439" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/innenstation.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Innenstation Pro</span><span class="cfg-opt__desc">7″ IPS-Touchscreen · grau · nur LAN/PoE</span></span><span class="cfg-opt__price">+439,00 €</span></button>
                   <button class="cfg-opt" data-innen="Innenstation Ultra" data-conn="lan" data-delta="449" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Innenstation/metzler-intercom-innenstation-ultra-10-zoll-touchscreen-lan-poe-schwarz.webp" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Innenstation Ultra</span><span class="cfg-opt__desc">10″ Touchscreen · schwarz · nur LAN/PoE</span></span><span class="cfg-opt__price">+449,00 €</span></button>
                 </div>
                 <div class="cfg-field" id="bInnenQtyWrap">
-                  <div class="cfg-opt" style="cursor:default"><span class="cfg-opt__body"><span class="cfg-opt__name">Anzahl Innenstationen</span><span class="cfg-opt__desc">Bis zu 11 pro Wohneinheit · jederzeit erweiterbar</span></span><span class="cfg-opt__qty"><button data-q="-1" type="button" aria-label="weniger">−</button><span id="bInnenQty">1</span><button data-q="1" type="button" aria-label="mehr">+</button></span></div>
+                  <div class="cfg-opt" style="cursor:default"><span class="cfg-opt__body"><span class="cfg-opt__name">Anzahl Innenstationen</span><span class="cfg-opt__desc">Bis zu 11 pro Wohneinheit · jederzeit erweiterbar</span></span><span class="cfg-opt__qty"><button type="button" data-qd="-1" data-target="innen" aria-label="weniger">−</button><span id="bInnenQty">1</span><button type="button" data-qd="1" data-target="innen" aria-label="mehr">+</button></span></div>
                 </div>
                 <button type="button" class="cfgb-next" data-next>Weiter</button>
               </div></div></div>
@@ -474,12 +473,30 @@
               </button>
               <div class="stepr__body"><div class="stepr__inner"><div class="stepr__pad">
                 <div class="cfg-opts">
-                  <button class="cfg-opt cfg-opt--check" data-extra="Sicherheitsmodul" data-delta="129.99" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/zubehoer.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Sicherheitsmodul mit Hutschienenhalter</span><span class="cfg-opt__desc">Getrennte, sichere Türsteuerung</span></span><span class="cfg-opt__price">+129,99 €</span></button>
-                  <button class="cfg-opt cfg-opt--check" data-extra="HiLook Funk-Alarmanlage" data-delta="239" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/hilook-alarm.webp" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">HiLook by Hikvision Funk-Alarmanlage</span><span class="cfg-opt__desc">6-teiliges Komplettset · Hub, Melder, Sirene, Fernbedienung</span></span><span class="cfg-opt__price">+239,00 €</span></button>
-                  <button class="cfg-opt cfg-opt--check" data-extra="Montagewinkel Edelstahl" data-delta="69.99" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/zubehoer.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Montagewinkel für Türstation</span><span class="cfg-opt__desc">Aus Edelstahl</span></span><span class="cfg-opt__price">+69,99 €</span></button>
-                  <button class="cfg-opt cfg-opt--check" data-extra="Tischhalter Aluminium" data-delta="29.99" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/zubehoer.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Tischhalter aus Aluminium</span><span class="cfg-opt__desc">Für Innenstation Home / Pro</span></span><span class="cfg-opt__price">+29,99 €</span></button>
-                  <button class="cfg-opt cfg-opt--check" data-extra="Netzteil 3m Kabel" data-delta="19.99" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Anschluss/metzler-patchkabel-flach-cat6-weiss.webp" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Netzteil mit 3 m Kabel</span><span class="cfg-opt__desc">Für Innenstationen Home + Ultra</span></span><span class="cfg-opt__price">+19,99 €</span></button>
-                  <button class="cfg-opt cfg-opt--check" data-extra="Pflege-Reiniger" data-delta="9.99" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/zubehoer.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Reiniger für Edelstahl &amp; Pulverbeschichtung</span><span class="cfg-opt__desc">Werterhalt der Oberfläche</span></span><span class="cfg-opt__price">+9,99 €</span></button>
+                  <div class="cfg-choice">
+                    <button class="cfg-opt cfg-opt--check" data-extra="Sicherheitsmodul" data-delta="129.99" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/zubehoer.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Sicherheitsmodul mit Hutschienenhalter</span><span class="cfg-opt__desc">Getrennte, sichere Türsteuerung</span></span><span class="cfg-opt__price">+129,99 €</span></button>
+                    <div class="cfg-choice__qty"><span class="cfg-choice__qtyl">Menge</span><span class="cfg-opt__qty"><button type="button" data-qd="-1" data-target="extra:Sicherheitsmodul" aria-label="weniger">−</button><span data-qtyfor="Sicherheitsmodul">1</span><button type="button" data-qd="1" data-target="extra:Sicherheitsmodul" aria-label="mehr">+</button></span></div>
+                  </div>
+                  <div class="cfg-choice">
+                    <button class="cfg-opt cfg-opt--check" data-extra="HiLook Funk-Alarmanlage" data-delta="239" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/hilook-alarm.webp" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">HiLook by Hikvision Funk-Alarmanlage</span><span class="cfg-opt__desc">6-teiliges Komplettset · Hub, Melder, Sirene, Fernbedienung</span></span><span class="cfg-opt__price">+239,00 €</span></button>
+                    <div class="cfg-choice__qty"><span class="cfg-choice__qtyl">Menge</span><span class="cfg-opt__qty"><button type="button" data-qd="-1" data-target="extra:HiLook Funk-Alarmanlage" aria-label="weniger">−</button><span data-qtyfor="HiLook Funk-Alarmanlage">1</span><button type="button" data-qd="1" data-target="extra:HiLook Funk-Alarmanlage" aria-label="mehr">+</button></span></div>
+                  </div>
+                  <div class="cfg-choice">
+                    <button class="cfg-opt cfg-opt--check" data-extra="Montagewinkel Edelstahl" data-delta="69.99" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/zubehoer.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Montagewinkel für Türstation</span><span class="cfg-opt__desc">Aus Edelstahl</span></span><span class="cfg-opt__price">+69,99 €</span></button>
+                    <div class="cfg-choice__qty"><span class="cfg-choice__qtyl">Menge</span><span class="cfg-opt__qty"><button type="button" data-qd="-1" data-target="extra:Montagewinkel Edelstahl" aria-label="weniger">−</button><span data-qtyfor="Montagewinkel Edelstahl">1</span><button type="button" data-qd="1" data-target="extra:Montagewinkel Edelstahl" aria-label="mehr">+</button></span></div>
+                  </div>
+                  <div class="cfg-choice">
+                    <button class="cfg-opt cfg-opt--check" data-extra="Tischhalter Aluminium" data-delta="29.99" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/zubehoer.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Tischhalter aus Aluminium</span><span class="cfg-opt__desc">Für Innenstation Home / Pro</span></span><span class="cfg-opt__price">+29,99 €</span></button>
+                    <div class="cfg-choice__qty"><span class="cfg-choice__qtyl">Menge</span><span class="cfg-opt__qty"><button type="button" data-qd="-1" data-target="extra:Tischhalter Aluminium" aria-label="weniger">−</button><span data-qtyfor="Tischhalter Aluminium">1</span><button type="button" data-qd="1" data-target="extra:Tischhalter Aluminium" aria-label="mehr">+</button></span></div>
+                  </div>
+                  <div class="cfg-choice">
+                    <button class="cfg-opt cfg-opt--check" data-extra="Netzteil 3m Kabel" data-delta="19.99" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Anschluss/metzler-patchkabel-flach-cat6-weiss.webp" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Netzteil mit 3 m Kabel</span><span class="cfg-opt__desc">Für Innenstationen Home + Ultra</span></span><span class="cfg-opt__price">+19,99 €</span></button>
+                    <div class="cfg-choice__qty"><span class="cfg-choice__qtyl">Menge</span><span class="cfg-opt__qty"><button type="button" data-qd="-1" data-target="extra:Netzteil 3m Kabel" aria-label="weniger">−</button><span data-qtyfor="Netzteil 3m Kabel">1</span><button type="button" data-qd="1" data-target="extra:Netzteil 3m Kabel" aria-label="mehr">+</button></span></div>
+                  </div>
+                  <div class="cfg-choice">
+                    <button class="cfg-opt cfg-opt--check" data-extra="Pflege-Reiniger" data-delta="9.99" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/zubehoer.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Reiniger für Edelstahl &amp; Pulverbeschichtung</span><span class="cfg-opt__desc">Werterhalt der Oberfläche</span></span><span class="cfg-opt__price">+9,99 €</span></button>
+                    <div class="cfg-choice__qty"><span class="cfg-choice__qtyl">Menge</span><span class="cfg-opt__qty"><button type="button" data-qd="-1" data-target="extra:Pflege-Reiniger" aria-label="weniger">−</button><span data-qtyfor="Pflege-Reiniger">1</span><button type="button" data-qd="1" data-target="extra:Pflege-Reiniger" aria-label="mehr">+</button></span></div>
+                  </div>
                 </div>
               </div></div></div>
             </li>
@@ -503,6 +520,10 @@
               <svg class="cfgb-detailsbtn__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
             </button>
             <div class="cfgb-acc__body" id="bAccBody"><div class="cfgb-acc__inner"><div class="cfgb-summary" id="bSummaryInline" aria-label="Preisdetails · konfigurierte Positionen"></div></div></div>
+          </div>
+          <div class="cfgb-mainqty">
+            <span class="cfgb-mainqty__l">Menge · VDM10&nbsp;Türstation</span>
+            <span class="cfg-opt__qty"><button type="button" data-qd="-1" data-target="main" aria-label="weniger">−</button><span id="bMainQtyVal">1</span><button type="button" data-qd="1" data-target="main" aria-label="mehr">+</button></span>
           </div>
           <div class="cfgb-price">
             <span class="cfgb-price__label">Preis wie konfiguriert</span>
@@ -550,11 +571,6 @@
       </div>
     </div>
   </section>
-
-  <!-- placeholder for the next sections (built one at a time) -->
-  <div class="container" style="padding:5rem 0;color:var(--color-graphite-500);border-top:1px solid var(--color-graphite-200);font-size:0.875rem">
-    Nächste Sektion folgt … (Feature-Bar → 9 Features → Feature-Details → …)
-  </div>
 
 </main>
 
@@ -887,6 +903,6 @@
 </nav>
 
 <script src="chrome.js?v=1"></script>
-<script src="pdp-b.js?v=16"></script>
+<script src="pdp-b.js?v=19"></script>
 </body>
 </html>
