@@ -1,85 +1,204 @@
 /* ============================================================
-   pdp-b.js — VERSION B
-   • Farbe = VARIANT (changes article number), outside config
-   • Gravur / Innenstation / Zubehör = REQUIRED (each must be
-     answered before checkout) — progressive-disclosure accordion
-   • "In den Warenkorb" = always VISIBLE; locked (Ghost & Guide)
-     until the required steps are answered
+   pdp-b.js — VERSION B · inline 5-step configurator
+   • Farbe = VARIANTE (eigene Art.-Nr.), outside the flow.
+   • Steps: 1 Anschluss (required · drives 3+4) · 2 Gravurdaten ·
+            3 Innenstationen · 4 Stromversorgung · 5 Zubehör
+   • Smart navigation: selecting an option AUTO-ADVANCES to the
+     next step (no "Weiter" button). Steps stay reachable via the
+     stepper nodes and the accordion headers.
+   • Price details: an itemized summary with a quantity stepper on
+     the product and on every added item.
+   • "In den Warenkorb" always live; validates (never locks).
    ============================================================ */
 (function () {
   'use strict';
   var $ = function (id) { return document.getElementById(id); };
   var BASE = 699;
-  var FONTS = { Serif: "Georgia,'Times New Roman',serif", Grotesk: "Arial,Helvetica,sans-serif", Mono: "'Courier New',monospace" };
-  var STEP_NAMES = ['Gravur', 'Innenstation', 'Zubehör'];
-  var state = { finish: 'Anthrazit RAL 7016', finishDelta: 0, article: '31101',
-    gravurOn: false, gravurText: '', font: 'Serif',
-    innen: null, innenDelta: 0, innenQty: 1, extras: {} };
-  var answered = { gravur: false, innen: false, extras: false };
+  var FONTS = { Serif: "Georgia,'Times New Roman',serif", Grotesk: "Arial,Helvetica,sans-serif", Script: "'Segoe Script','Brush Script MT',cursive", Mono: "'Courier New',monospace" };
+  var STEPS = [
+    { key: 'anschluss', name: 'Anschluss' },
+    { key: 'gravur', name: 'Gravurdaten' },
+    { key: 'innen', name: 'Innenstationen' },
+    { key: 'strom', name: 'Stromversorgung' },
+    { key: 'zubehoer', name: 'Erweiterungen & Zubehör' }
+  ];
+  var LIGHT_FINISHES = { 'Verkehrsweiß RAL 9016': 1, 'Edelstahl gebürstet': 1 };
+  var CONN = { 'LAN / PoE': 'lan', '2-Draht IP': '2draht' };
 
-  function euro(n) { return n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €'; }
-  function total() { var t = BASE + state.finishDelta + state.innenDelta * state.innenQty; for (var k in state.extras) t += state.extras[k]; return t; }
-  function setTxt(id, txt) { var el = $(id); if (el) el.textContent = txt; }
+  var state = {
+    finish: 'Anthrazit RAL 7016', finishDelta: 0, article: '31101', mainQty: 1,
+    anschluss: null, conn: null,
+    gravurOn: false, gravurText: '', font: 'Serif',
+    innen: 'Ohne Innenstation', innenDelta: 0, innenQty: 1,
+    strom: 'Standard', stromDelta: 0, stromQty: 1,
+    extras: {}   /* name -> { price, qty, label } */
+  };
 
   var items = [].slice.call(document.querySelectorAll('#cfgbSteps .stepr__item'));
+  var reached = 0;
 
-  /* ── Central refresh: outputs + done markers + lock state ── */
+  function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
+  function euro(n) { return n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €'; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function hasInnen() { return state.innen && state.innen !== 'Ohne Innenstation'; }
+  function hasStrom() { return state.strom && state.strom !== 'Standard'; }
+  function extrasCount() { return Object.keys(state.extras).length; }
+  function extrasSum() { var s = 0; for (var k in state.extras) s += state.extras[k].price * state.extras[k].qty; return s; }
+  function total() {
+    var t = state.mainQty * (BASE + state.finishDelta);
+    if (hasInnen()) t += state.innenDelta * state.innenQty;
+    if (hasStrom()) t += state.stromDelta * state.stromQty;
+    return t + extrasSum();
+  }
+  function setTxt(id, t) { var el = $(id); if (el) el.textContent = t; }
+  function curIndex() { for (var i = 0; i < items.length; i++) if (items[i].classList.contains('is-active')) return i; return -1; }
+
+  /* ── Central refresh ── */
   function refresh() {
     var t = euro(total());
     var el = $('bTotal');
     if (el && el.textContent !== t) { el.textContent = t; el.classList.remove('is-bump'); void el.offsetWidth; el.classList.add('is-bump'); }
     var sp = $('bStickyPrice'); if (sp) sp.innerHTML = 'konfiguriert · <b>' + t + '</b>';
-    // variant
+
     setTxt('pdpFinishName', state.finish);
-    setTxt('bArticle', state.article);
     setTxt('bArticleInline', state.article);
     var sf = $('pdpStickyFinish'); if (sf) sf.textContent = state.finish;
-    // step summaries
-    setTxt('bPickGravur', !answered.gravur ? 'Bitte wählen' : (state.gravurOn ? (state.gravurText ? '„' + state.gravurText + '" · ' + state.font : 'Mit Gravur') : 'Ohne Gravur'));
-    setTxt('bPickInnen', !answered.innen ? 'Bitte wählen' : (state.innen === 'Nur App' ? 'Nur App · kostenlos' : state.innen + (state.innenQty > 1 ? ' ×' + state.innenQty : '') + ' · +' + euro(state.innenDelta * state.innenQty)));
-    var nx = Object.keys(state.extras).length;
-    setTxt('bPickExtras', !answered.extras ? 'Bitte wählen' : (nx ? nx + ' ausgewählt · +' + euro(Object.keys(state.extras).reduce(function (a, k) { return a + state.extras[k]; }, 0)) : 'Kein Zubehör'));
-    // engraving preview
-    var eng = $('bEngrave'); if (eng) { eng.textContent = (state.gravurOn && state.gravurText) ? state.gravurText : ''; eng.style.fontFamily = FONTS[state.font] || ''; }
+
+    setTxt('bPickAnschluss', state.anschluss || 'Bitte wählen');
+    setTxt('bPickGravur', state.gravurOn ? (state.gravurText ? '„' + state.gravurText + '" · ' + state.font : 'Mit Gravur') : 'Ohne Gravur');
+    setTxt('bPickInnen', hasInnen() ? state.innen + (state.innenQty > 1 ? ' ×' + state.innenQty : '') + ' · +' + euro(state.innenDelta * state.innenQty) : 'Ohne Innenstation');
+    setTxt('bPickStrom', hasStrom() ? state.strom + ' · +' + euro(state.stromDelta * state.stromQty) : 'Standard · inklusive');
+    setTxt('bPickExtras', extrasCount() ? extrasCount() + ' ausgewählt · +' + euro(extrasSum()) : 'Kein Zubehör');
+
+    var eng = $('bEngrave');
+    if (eng) {
+      eng.textContent = (state.gravurOn && state.gravurText) ? state.gravurText : '';
+      eng.style.fontFamily = FONTS[state.font] || '';
+      eng.style.setProperty('--engrave-ink', LIGHT_FINISHES[state.finish] ? 'rgba(20,22,25,0.7)' : 'rgba(255,255,255,0.92)');
+    }
     markDone();
-    updateLock();
+    updateDock();
+    renderSummary();
   }
 
   function markDone() {
-    var d = [answered.gravur, answered.innen, answered.extras];
-    items.forEach(function (it, i) { if (!it.classList.contains('is-active')) it.classList.toggle('is-done', !!d[i]); });
-  }
-
-  function remaining() {
-    var r = []; if (!answered.gravur) r.push(STEP_NAMES[0]); if (!answered.innen) r.push(STEP_NAMES[1]); if (!answered.extras) r.push(STEP_NAMES[2]); return r;
-  }
-  function updateLock() {
-    var rem = remaining(), ready = rem.length === 0;
-    [$('bCart'), $('pdpStickyCta')].forEach(function (b) { if (b) { b.classList.toggle('is-locked', !ready); b.setAttribute('aria-disabled', ready ? 'false' : 'true'); } });
-    var g = $('bGuide'), gt = $('bGuideText');
-    if (g) g.classList.toggle('is-ready', ready);
-    if (gt) gt.textContent = ready ? 'Konfiguration vollständig — bereit für den Warenkorb.' : 'Bitte Konfiguration abschließen — noch: ' + rem.join(', ');
-    if (g) { var svg = g.querySelector('svg'); if (svg) svg.innerHTML = ready ? '<path d="M20 6L9 17l-5-5"/>' : '<path d="M12 8v4m0 4h.01M12 3l9 16H3z"/>'; }
-  }
-
-  /* ── Accordion (one open at a time) + guided auto-advance ── */
-  function openStep(i) {
-    items.forEach(function (it, ix) {
-      var active = ix === i;
-      it.classList.toggle('is-active', active);
-      it.querySelector('.stepr__head').setAttribute('aria-expanded', active ? 'true' : 'false');
+    items.forEach(function (it, i) {
+      var done = i < reached && !it.classList.contains('is-active');
+      if (STEPS[i].key === 'anschluss') done = !!state.anschluss && !it.classList.contains('is-active');
+      it.classList.toggle('is-done', done);
     });
-    markDone();
-    if (i > -1 && items[i]) window.setTimeout(function () { items[i].querySelector('.stepr__head').scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 120);
   }
-  function firstUnanswered() { var d = [answered.gravur, answered.innen, answered.extras]; for (var i = 0; i < d.length; i++) if (!d[i]) return i; return -1; }
-  function advance() { window.setTimeout(function () { openStep(firstUnanswered()); }, 420); }
 
-  items.forEach(function (it, ix) {
-    it.querySelector('.stepr__head').addEventListener('click', function () { openStep(it.classList.contains('is-active') ? -1 : ix); });
+  function updateDock() {
+    var cur = curIndex(); if (cur < 0) cur = 0;
+    document.querySelectorAll('#bSeg .cfgb-bar__step').forEach(function (s, i) {
+      s.classList.toggle('is-filled', i <= reached);
+      s.classList.toggle('is-current', i === cur);
+      s.setAttribute('aria-selected', i === cur ? 'true' : 'false');
+    });
+    setTxt('bStepN', 'Schritt ' + (cur + 1) + ' von 5');
+    setTxt('bStepName', STEPS[cur].name);
+    var flag = $('bStepFlag');
+    if (flag) { var opt = STEPS[cur].key === 'zubehoer'; flag.textContent = 'optional'; flag.classList.add('is-opt'); flag.hidden = !opt; }
+    var back = $('bBack'), fwd = $('bFwd');
+    if (back) back.hidden = cur === 0;
+    if (fwd) fwd.hidden = cur === STEPS.length - 1;
+  }
+
+  /* ── Price-details summary (itemized cart) ── */
+  function qtyCtrl(target, q) {
+    return '<span class="sum-qty">'
+      + '<button type="button" data-qd="-1" data-target="' + target + '" aria-label="weniger">−</button>'
+      + '<span>' + q + '</span>'
+      + '<button type="button" data-qd="1" data-target="' + target + '" aria-label="mehr">+</button>'
+      + '</span>';
+  }
+  function row(name, sub, qtyHtml, price, cls) {
+    return '<div class="sum-row ' + (cls || '') + '">'
+      + '<span class="sum-row__name">' + name + (sub ? '<span class="sum-sub">' + sub + '</span>' : '') + '</span>'
+      + (qtyHtml || '<span></span>')
+      + '<span class="sum-row__price' + (price === 'inklusive' ? ' is-incl' : '') + '">' + price + '</span>'
+      + '</div>';
+  }
+  function renderSummary() {
+    var el = $('bSummary'); if (!el) return;
+    var h = '';
+    h += row('<b>Metzler VDM10 2.0</b>', esc(state.finish), qtyCtrl('main', state.mainQty), euro(state.mainQty * (BASE + state.finishDelta)));
+    if (state.anschluss) h += row('Anschluss', esc(state.anschluss), null, 'inklusive');
+    if (state.gravurOn) h += row('Gravur', state.gravurText ? '„' + esc(state.gravurText) + '" · ' + state.font : 'Mit Namensgravur', null, 'inklusive');
+    if (hasInnen()) h += row(esc(state.innen), null, qtyCtrl('innen', state.innenQty), euro(state.innenDelta * state.innenQty));
+    if (hasStrom()) h += row(esc(state.strom), null, qtyCtrl('strom', state.stromQty), euro(state.stromDelta * state.stromQty));
+    for (var k in state.extras) { var x = state.extras[k]; h += row(esc(x.label || k), null, qtyCtrl('extra:' + k, x.qty), euro(x.price * x.qty)); }
+    document.querySelectorAll('.cfgb-summary').forEach(function (x) { x.innerHTML = h; });
+    var n = el.querySelectorAll('.sum-row').length;
+    setTxt('bSheetTotal', euro(total()));
+    var dn = $('bDetailsN'); if (dn) dn.textContent = n + (n === 1 ? ' Position' : ' Positionen');
+  }
+  function applyQty(target, d) {
+    if (target === 'main') state.mainQty = clamp(state.mainQty + d, 1, 20);
+    else if (target === 'innen') state.innenQty = clamp(state.innenQty + d, 1, 11);
+    else if (target === 'strom') state.stromQty = clamp(state.stromQty + d, 1, 10);
+    else if (target.indexOf('extra:') === 0) { var n = target.slice(6); if (state.extras[n]) state.extras[n].qty = clamp(state.extras[n].qty + d, 1, 20); }
+    refresh();
+  }
+  /* qty steppers work in BOTH the inline accordion and the sheet */
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('.cfgb-summary button[data-qd]'); if (!b) return;
+    applyQty(b.getAttribute('data-target'), parseInt(b.getAttribute('data-qd'), 10));
   });
 
-  /* ── Farbe = VARIANT (changes article number) ── */
+  /* ── Connection dependency ── */
+  function applyConn() {
+    ['bInnen', 'bStrom'].forEach(function (id) {
+      var box = $(id); if (!box) return;
+      var opts = [].slice.call(box.querySelectorAll('.cfg-opt'));
+      var selHidden = false;
+      opts.forEach(function (o) {
+        var c = o.getAttribute('data-conn');
+        var ok = !state.conn || c === 'both' || c === state.conn;
+        o.classList.toggle('is-hidden', !ok);
+        if (!ok && o.classList.contains('is-selected')) { o.classList.remove('is-selected'); selHidden = true; }
+      });
+      if (selHidden) {
+        var def = opts.filter(function (o) { return !o.classList.contains('is-hidden'); })[0];
+        if (def) { def.classList.add('is-selected'); syncGroupState(id, def); }
+      }
+    });
+  }
+  function syncGroupState(id, btn) {
+    if (id === 'bInnen') { state.innen = btn.getAttribute('data-innen'); state.innenDelta = parseFloat(btn.getAttribute('data-delta')) || 0; }
+    else if (id === 'bStrom') { state.strom = btn.getAttribute('data-strom'); state.stromDelta = parseFloat(btn.getAttribute('data-delta')) || 0; }
+  }
+
+  /* ── Single-step navigation (step-dock + Weiter/Zurück) ── */
+  function openStep(i) {
+    if (i < 0) i = 0; if (i > STEPS.length - 1) i = STEPS.length - 1;
+    items.forEach(function (it, ix) { it.classList.toggle('is-active', ix === i); });
+    if (i > reached) reached = i;
+    refresh();
+    var dock = document.querySelector('.cfgb-dock');
+    if (dock) window.setTimeout(function () { dock.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 60);
+  }
+  function idxByKey(k) { for (var i = 0; i < STEPS.length; i++) if (STEPS[i].key === k) return i; return -1; }
+  function autoAdvance(fromKey) {
+    var i = idxByKey(fromKey);
+    if (i > -1 && i < STEPS.length - 1) window.setTimeout(function () { openStep(i + 1); }, 340);
+  }
+  function flashStep(i) { var it = items[i]; if (!it) return; var p = it.querySelector('.stepr__pad') || it; p.classList.remove('is-flash'); void p.offsetWidth; p.classList.add('is-flash'); }
+  function fwdStep() {
+    var cur = curIndex();
+    if (cur === 0 && !state.anschluss) { flashStep(0); toast('Bitte zuerst die Anschlussart wählen.'); return; }
+    if (cur === 1 && state.gravurOn && !state.gravurText) { flashStep(1); toast('Bitte Ihren Gravurtext eingeben.'); return; }
+    if (cur < STEPS.length - 1) openStep(cur + 1);
+  }
+  function backStep() { var cur = curIndex(); if (cur > 0) openStep(cur - 1); }
+  var fwdB = $('bFwd'); if (fwdB) fwdB.addEventListener('click', fwdStep);
+  var backB = $('bBack'); if (backB) backB.addEventListener('click', backStep);
+  document.querySelectorAll('#bSeg .cfgb-bar__step').forEach(function (b) {
+    b.addEventListener('click', function () { openStep(parseInt(b.getAttribute('data-goto'), 10)); });
+  });
+
+  /* ── Farbe = VARIANTE ── */
   var sw = $('pdpSwatches');
   if (sw) sw.addEventListener('click', function (e) {
     var b = e.target.closest('.pdp-swatch'); if (!b) return;
@@ -90,14 +209,24 @@
     var img = $('pdpMainImg'); if (img) { img.style.opacity = '0.35'; window.setTimeout(function () { img.style.opacity = '1'; }, 200); }
     refresh();
   });
+  /* preview any colour's full name in the prominent label on hover/focus (no click needed) */
+  if (sw) {
+    var previewName = function (e) { var b = e.target.closest('.pdp-swatch'); if (b) setTxt('pdpFinishName', b.getAttribute('data-finish')); };
+    var restoreName = function () { setTxt('pdpFinishName', state.finish); };
+    sw.addEventListener('mouseover', previewName);
+    sw.addEventListener('mouseout', restoreName);
+    sw.addEventListener('focusin', previewName);
+    sw.addEventListener('focusout', restoreName);
+  }
 
-  /* ── Hero: thumbnails + toggle ── */
+  /* ── Hero: thumbnails + view toggle ── */
   var thumbs = $('pdpThumbs'), mainImg = $('pdpMainImg');
   if (thumbs && mainImg) thumbs.addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
     this.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-current', 'false'); });
     b.setAttribute('aria-current', 'true');
-    var im = b.querySelector('img'); if (im) { mainImg.style.opacity = '0'; window.setTimeout(function () { mainImg.src = im.getAttribute('src'); mainImg.alt = im.getAttribute('alt') || mainImg.alt; mainImg.style.opacity = '1'; }, 160); }
+    var im = b.querySelector('img');
+    if (im) { mainImg.style.opacity = '0'; window.setTimeout(function () { mainImg.src = im.getAttribute('src'); mainImg.alt = im.getAttribute('alt') || mainImg.alt; mainImg.style.opacity = '1'; }, 160); }
   });
   var mtoggle = document.querySelector('.pdp-media__toggle');
   if (mtoggle) mtoggle.addEventListener('click', function (e) {
@@ -106,7 +235,17 @@
     b.setAttribute('aria-pressed', 'true');
   });
 
-  /* ── Gravur (required) ── */
+  /* ── 1 · Anschluss (required) → auto-advance ── */
+  var ansch = $('bAnschluss');
+  if (ansch) ansch.addEventListener('click', function (e) {
+    var b = e.target.closest('.cfg-opt'); if (!b) return;
+    this.querySelectorAll('.cfg-opt').forEach(function (x) { x.classList.remove('is-selected'); });
+    b.classList.add('is-selected');
+    state.anschluss = b.getAttribute('data-anschluss'); state.conn = CONN[state.anschluss] || null;
+    applyConn(); refresh(); autoAdvance('anschluss');
+  });
+
+  /* ── 2 · Gravur ── */
   var seg = $('bGravurSeg');
   if (seg) seg.addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
@@ -114,74 +253,99 @@
     b.setAttribute('aria-pressed', 'true');
     state.gravurOn = b.getAttribute('data-gravur') === 'on';
     $('bGravurField').classList.toggle('is-shown', state.gravurOn);
-    if (state.gravurOn) { answered.gravur = state.gravurText.length > 0; refresh(); if (answered.gravur) advance(); else $('bGravurText').focus(); }
-    else { answered.gravur = true; refresh(); advance(); }
+    refresh();
+    if (state.gravurOn) { var gtf = $('bGravurText'); if (gtf) gtf.focus(); }
+    else autoAdvance('gravur');   /* only auto-advance when nothing more to enter */
   });
-  var gt = $('bGravurText'); if (gt) gt.addEventListener('input', function () { state.gravurText = this.value; answered.gravur = state.gravurOn ? this.value.length > 0 : answered.gravur; refresh(); });
+  var gt = $('bGravurText'); if (gt) gt.addEventListener('input', function () { state.gravurText = this.value; refresh(); });
   var fonts = $('bFonts');
   if (fonts) fonts.addEventListener('click', function (e) {
     var b = e.target.closest('.cfg-font'); if (!b) return;
     this.querySelectorAll('.cfg-font').forEach(function (x) { x.classList.remove('is-selected'); });
-    b.classList.add('is-selected'); state.font = b.getAttribute('data-font'); if (gt) gt.style.fontFamily = FONTS[state.font] || ''; refresh();
+    b.classList.add('is-selected'); state.font = b.getAttribute('data-font');
+    if (gt) gt.style.fontFamily = FONTS[state.font] || ''; refresh();
   });
 
-  /* ── Innenstation (required) ── */
+  /* ── 3 · Innenstationen → auto-advance ── */
   var innen = $('bInnen');
   if (innen) innen.addEventListener('click', function (e) {
-    var b = e.target.closest('.cfg-opt'); if (!b) return;
+    var b = e.target.closest('.cfg-opt'); if (!b || b.classList.contains('is-hidden')) return;
     this.querySelectorAll('.cfg-opt').forEach(function (x) { x.classList.remove('is-selected'); });
-    b.classList.add('is-selected');
-    state.innen = b.getAttribute('data-innen'); state.innenDelta = parseFloat(b.getAttribute('data-delta')) || 0;
-    $('bInnenQtyWrap').classList.toggle('is-shown', state.innen !== 'Nur App');
-    answered.innen = true; refresh(); advance();
-  });
-  var qw = $('bInnenQtyWrap');
-  if (qw) qw.addEventListener('click', function (e) {
-    var q = e.target.closest('[data-q]'); if (!q) return;
-    state.innenQty = Math.max(1, Math.min(6, state.innenQty + parseInt(q.getAttribute('data-q'), 10)));
-    $('bInnenQty').textContent = state.innenQty; refresh();
+    b.classList.add('is-selected'); syncGroupState('bInnen', b);
+    if (!hasInnen()) state.innenQty = 1;
+    refresh(); autoAdvance('innen');
   });
 
-  /* ── Zubehör (required — either pick add-ons or confirm "kein Zubehör") ── */
-  var noExtras = $('bNoExtras');
-  document.querySelectorAll('.cfgb .cfg-opt--check').forEach(function (b) {
+  /* ── 4 · Stromversorgung → auto-advance ── */
+  var strom = $('bStrom');
+  if (strom) strom.addEventListener('click', function (e) {
+    var b = e.target.closest('.cfg-opt'); if (!b || b.classList.contains('is-hidden')) return;
+    this.querySelectorAll('.cfg-opt').forEach(function (x) { x.classList.remove('is-selected'); });
+    b.classList.add('is-selected'); syncGroupState('bStrom', b);
+    if (!hasStrom()) state.stromQty = 1;
+    refresh(); autoAdvance('strom');
+  });
+
+  /* ── 2 & 5 · optional add-ons (checkboxes, own qty) ── */
+  document.querySelectorAll('#cfgbSteps .cfg-opt--check').forEach(function (b) {
     b.addEventListener('click', function () {
       var name = b.getAttribute('data-extra'), d = parseFloat(b.getAttribute('data-delta')) || 0;
-      if (b.classList.toggle('is-selected')) state.extras[name] = d; else delete state.extras[name];
-      if (noExtras) noExtras.classList.remove('is-selected');
-      answered.extras = true; refresh();
+      var label = (b.querySelector('.cfg-opt__name') || {}).textContent || name;
+      if (b.classList.toggle('is-selected')) state.extras[name] = { price: d, qty: 1, label: label.trim() };
+      else delete state.extras[name];
+      refresh();
     });
   });
-  if (noExtras) noExtras.addEventListener('click', function () {
-    state.extras = {};
-    document.querySelectorAll('.cfgb .cfg-opt--check.is-selected').forEach(function (x) { x.classList.remove('is-selected'); });
-    noExtras.classList.add('is-selected');
-    answered.extras = true; refresh(); advance();
-  });
 
-  /* ── Toast + add to cart (guarded by lock) ── */
+  /* ── Toast + validate-on-cart (never lock) ── */
   var toastEl = $('cfgToast'), toastMsg = $('cfgToastMsg'), toastTimer;
   function toast(msg) { if (!toastEl) return; toastMsg.textContent = msg; toastEl.classList.add('is-shown'); clearTimeout(toastTimer); toastTimer = window.setTimeout(function () { toastEl.classList.remove('is-shown'); }, 2800); }
-  function tryCart() {
-    if (remaining().length) { // Ghost & Guide: locked → guide to the next open item
-      openStep(firstUnanswered());
-      var g = $('bGuide'); if (g) { g.style.transition = 'none'; g.style.opacity = '0.4'; void g.offsetWidth; g.style.transition = 'opacity .3s'; g.style.opacity = '1'; }
+  function firstInvalid() { if (!state.anschluss) return 0; if (state.gravurOn && !state.gravurText) return 1; return -1; }
+  function addToCart() {
+    var iv = firstInvalid();
+    if (iv > -1) {
+      openStep(iv);
+      var it = items[iv]; if (it) { it.classList.remove('is-flash'); void it.offsetWidth; it.classList.add('is-flash'); }
+      toast(iv === 0 ? 'Bitte zuerst die Anschlussart wählen.' : 'Bitte Ihren Gravurtext eingeben.');
       return;
     }
     toast('In den Warenkorb gelegt · ' + euro(total()));
     var badge = document.querySelector('.header .badge'); if (badge) badge.textContent = (parseInt(badge.textContent, 10) || 0) + 1;
   }
-  var cart = $('bCart'); if (cart) cart.addEventListener('click', tryCart);
-  var stickyCta = $('pdpStickyCta'); if (stickyCta) stickyCta.addEventListener('click', tryCart);
-  var share = $('pdpShare'); if (share) share.addEventListener('click', function () { if (navigator.share) navigator.share({ title: document.title, url: location.href }).catch(function () {}); });
+  var cart = $('bCart'); if (cart) cart.addEventListener('click', addToCart);
+  var stickyCta = $('pdpStickyCta'); if (stickyCta) { var sl = $('pdpStickyLabel'); if (sl) sl.textContent = 'In den Warenkorb'; stickyCta.addEventListener('click', addToCart); }
+  var share = $('pdpShare'); if (share) share.addEventListener('click', function () { if (navigator.share) navigator.share({ title: document.title, url: location.href }).catch(function () {}); else toast('Link kopiert'); });
 
-  /* ── Sticky bar: visible whenever the in-flow CTA is off-screen ── */
+  /* ── Sticky bar visibility ── */
   var bar = $('pdpStickyBar');
   if (cart && bar && 'IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) { var show = !en.isIntersecting; bar.classList.toggle('is-visible', show); bar.setAttribute('aria-hidden', show ? 'false' : 'true'); });
     }, { threshold: 0 });
     io.observe(cart);
+  }
+
+  /* ── Bottom-up price sheet (accessible page-wide) ── */
+  var sheet = $('bSheet');
+  function openSheet() { if (!sheet) return; renderSummary(); sheet.classList.add('is-open'); sheet.setAttribute('aria-hidden', 'false'); document.body.classList.add('cfg-sheet-open'); }
+  function closeSheet() { if (!sheet) return; sheet.classList.remove('is-open'); sheet.setAttribute('aria-hidden', 'true'); document.body.classList.remove('cfg-sheet-open'); }
+  /* buy-block trigger → inline accordion (expand in place) */
+  var acc = $('bAcc'), dBtn = $('bDetailsBtn');
+  if (dBtn && acc) dBtn.addEventListener('click', function () {
+    var open = acc.classList.toggle('is-open'); dBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  /* sticky-bar Details → bottom-up window */
+  var sDet = $('bStickyDetails'); if (sDet) sDet.addEventListener('click', openSheet);
+  if (sheet) sheet.addEventListener('click', function (e) { if (e.target.closest('[data-sheet-close]')) closeSheet(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSheet(); });
+  var sheetCart = $('bSheetCart'); if (sheetCart) sheetCart.addEventListener('click', function () { closeSheet(); addToCart(); });
+
+  /* ── Sticky progress bar: flag "stuck" to cap the bleed gap above it ── */
+  var sentinel = document.querySelector('.cfgb-sentinel'), barEl = document.querySelector('.cfgb-bar');
+  if (sentinel && barEl && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { barEl.classList.toggle('is-stuck', !en.isIntersecting); });
+    }, { rootMargin: '-104px 0px 0px 0px', threshold: 0 }).observe(sentinel);
   }
 
   refresh();
