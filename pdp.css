@@ -13,6 +13,9 @@
   --color-digital-black: #1A171B; --color-metzler-rot: #D42924;
   --color-white: #FFFFFF;        --color-paper: #F5F6FA;
   --color-green: #009951;        --color-star: #FFC041;
+  --color-graphite-100: #F0F0F0; --color-graphite-450: #CCCCCC;
+  --color-teal-75: #E3F2F0;
+  --ink-60: rgba(0, 0, 0, 0.6);   /* dividers / separators (also used by chrome.css) */
   --color-graphite-200: #E6E6E8; --color-graphite-300: #DADADA;
   --color-graphite-400: #BFBFC2; --color-graphite-500: #A1A1A1;
   --color-graphite-600: #7A7A82; --color-graphite-700: #54545C;

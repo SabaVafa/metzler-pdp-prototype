@@ -9,16 +9,18 @@
    • CTA = immer aktiv & morphend: „Weiter …" → „In den Warenkorb".
    ============================================================ */
 
-/* ── Fold rhythm: fewer, larger beats ── */
-.pdp-b .pdp-buybox { gap: 1rem; }
+/* ── Fold rhythm: fewer, larger beats — more air between the stacked blocks ── */
+.pdp-b .pdp-buybox { gap: 1.6rem; }
+/* extra separation before the configurator, so product info reads apart from it */
+.pdp-b .cfgb { margin-top: 0.4rem; }
 
 /* ── Identity ── */
 .pdp-b .pdp-eyebrow { font-size: 0.6875rem; letter-spacing: 0.22em; }
 .pdp-b .pdp-title {
-  font-size: clamp(1.4rem, 1.9vw, 1.8rem); line-height: 1.42; letter-spacing: 0; font-weight: 700;
-  max-width: none; margin: 0; text-wrap: pretty;
+  font-size: clamp(1.15rem, 1.5vw, 1.45rem); line-height: 1.35; letter-spacing: 0; font-weight: 700;
+  max-width: none; margin: 0; text-wrap: wrap;   /* greedy fill (not "pretty", which shortens lines) */
 }
-.pdp-b .pdp-title .pdp-title__sep { color: var(--color-graphite-300); font-weight: 300; margin: 0 0.3em; }
+.pdp-b .pdp-title .pdp-title__sep { color: var(--ink-60); font-weight: 300; margin: 0 0.3em; }
 
 /* Credential line — one calm row replaces two loud badges */
 .bx-cred { display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem 0.9rem; margin-top: 0.15rem; }
@@ -38,13 +40,41 @@
 .bx-share {
   margin-left: auto; flex-shrink: 0; display: inline-flex; align-items: center; gap: 0.45rem;
   padding: 0.5rem 0.95rem; border: 1px solid var(--color-graphite-300); background: var(--color-white);
-  border-radius: var(--radius-pill); cursor: pointer; color: var(--color-graphite-700);
+  border-radius: var(--radius-lg); cursor: pointer; color: var(--color-graphite-700);   /* same radius as the menu — one shape language */
   font-family: inherit; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.01em;
-  transition: color .16s, border-color .16s, background .16s;
+  /* no colour transition: inside the transformed .bx-cred it strands at the start
+     value, leaving the open/hover teal accent stuck grey — snap instead */
 }
 .bx-share svg { width: 1.05rem; height: 1.05rem; }
 .bx-share__t { line-height: 1; }
-.bx-share:hover { color: var(--color-teal); border-color: var(--color-teal); background: var(--color-teal-50); }
+/* teal accent via text + fill; border stays graphite-300 to match the menu */
+.bx-share:hover, .bx-share[aria-expanded="true"] { color: var(--color-teal); background: var(--color-teal-50); }
+
+/* ── Share popover ── */
+.bx-share-wrap { position: relative; margin-left: auto; flex-shrink: 0; }
+/* .bx-cred carries an entrance transform → its own stacking context, which traps
+   the menu behind later siblings. Lift it above them while the menu is open. */
+.bx-cred.is-sharing { position: relative; z-index: 60; }
+.bx-share-menu { position: absolute; top: calc(100% + 0.4rem); right: 0; z-index: 1;
+  min-width: 13rem; padding: 0.4rem; display: flex; flex-direction: column; gap: 0.1rem;
+  background: var(--color-white); border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg);
+  box-shadow: 0 0.5rem 1.25rem rgba(26,23,27,0.16), 0 0.15rem 0.4rem rgba(26,23,27,0.08);
+  transform-origin: top right; animation: shareIn .16s cubic-bezier(.2,.8,.2,1); }
+.bx-share-menu[hidden] { display: none; }
+/* caret centred under the "Teilen" button — same graphite-300 border as button + menu */
+.bx-share-menu::before { content: ""; position: absolute; top: -0.33rem; right: 2.65rem; width: 0.62rem; height: 0.62rem;
+  background: var(--color-white); border-left: 1px solid var(--color-graphite-300); border-top: 1px solid var(--color-graphite-300);
+  transform: rotate(45deg); }
+@keyframes shareIn { from { opacity: 0; transform: translateY(-0.4rem) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.bx-share-menu__item { position: relative; display: flex; align-items: center; gap: 0.7rem; width: 100%;
+  padding: 0.6rem 0.7rem; border: 0; background: none; border-radius: var(--radius); cursor: pointer;
+  font-family: inherit; font-size: 0.8125rem; font-weight: 600; color: var(--color-digital-black);
+  text-align: left; text-decoration: none; transition: background .14s ease, color .14s ease; }
+.bx-share-menu__item:hover, .bx-share-menu__item:focus-visible { background: var(--color-teal-50); color: var(--color-teal); outline: none; }
+.bx-share-menu__item svg { width: 1.1rem; height: 1.1rem; color: var(--color-graphite-500); flex: none; transition: color .14s ease; }
+.bx-share-menu__item:hover svg, .bx-share-menu__item:focus-visible svg { color: var(--color-teal); }
+.bx-share-menu__item.is-copied, .bx-share-menu__item.is-copied svg { color: var(--color-green); background: none; }
+@media (prefers-reduced-motion: reduce) { .bx-share-menu { animation: none; } }
 /* maximize the rating stars */
 .bx-cred .pdp-stars svg { width: 1.4rem; height: 1.4rem; }
 .bx-cred__rate .pdp-rate__count { font-size: 0.875rem; }
@@ -57,6 +87,9 @@
 }
 .pdp-b .pdp-media__img { filter: drop-shadow(0 1.5rem 2.5rem rgba(26,23,27,0.12)); }
 .pdp-b .pdp-thumbs button { width: 4.5rem; height: 4.5rem; border-radius: var(--radius); }
+/* selection ring drawn INSET — the selected swatch keeps the exact footprint
+   of the deselected ones (the base outer box-shadow grew it ~2px) */
+.pdp-b .pdp-thumbs button[aria-current="true"] { box-shadow: inset 0 0 0 2px var(--color-teal); }
 
 /* Live engraving overlay on the hero media */
 .pdp-b .pdp-media__engrave {
@@ -67,6 +100,17 @@
   pointer-events: none; white-space: nowrap; transition: opacity .25s ease, color .25s ease;
 }
 .pdp-b .pdp-media__engrave:empty { display: none; }
+
+/* ── Key facts: brand · dimensions · article no. — minimal, iconless, no box
+   (.pdp-b scope beats the base .pdp-specs dt/dd rules in pdp.css) ── */
+.pdp-b .pdp-specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: 0.8rem 1.5rem;
+  align-items: start; margin: 0.6rem 0 0.35rem; padding: 0; border: 0; background: none; }
+.pdp-b .pdp-specs__item { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+.pdp-b .pdp-specs__item:last-child { align-items: flex-end; text-align: right; }   /* article no. aligns to the right edge */
+.pdp-b .pdp-specs__label { margin: 0; font-size: 0.625rem; font-weight: 600; letter-spacing: 0.09em;
+  text-transform: uppercase; color: var(--color-graphite-600); }   /* match the "Bewertungen" grey */
+.pdp-b .pdp-specs__value { margin: 0; font-size: 0.875rem; font-weight: 600; color: var(--color-digital-black);
+  font-variant-numeric: tabular-nums; }
 
 /* ── AUSFÜHRUNG · Farbe (Variante) ── */
 .bx-color { display: flex; flex-direction: column; gap: 0.7rem; }
@@ -79,9 +123,19 @@
   padding: 0.2rem 0.5rem; border-radius: var(--radius); font-variant-numeric: tabular-nums;
 }
 .bx-color__art b { color: var(--color-digital-black); }
-.bx-swatches { gap: 0.55rem; }
-.pdp-b .pdp-swatch { width: 3rem; height: 3rem; border-radius: var(--radius); transition: transform .16s, border-color .16s, box-shadow .16s; }
-.pdp-b .pdp-swatch[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px var(--color-teal); border-color: transparent; }
+/* Colour variants as a labelled grid — every name is visible at once (mobile has
+   no hover). One single row of 8, so the swatches scale down to fit. */
+.bx-swatches { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 0.45rem; overflow: visible; }
+.pdp-b .pdp-swatch { width: auto; height: auto; padding: 0; border: 0; background: none; border-radius: 0;
+  overflow: visible; box-shadow: none; display: flex; flex-direction: column; align-items: center; gap: 0.3rem; transition: none; }
+/* square, no grey fill, no frame border — image covers edge-to-edge */
+.pdp-b .pdp-swatch img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; padding: 0;
+  background: var(--color-white); border: 1px solid var(--color-graphite-300); border-radius: var(--radius); box-sizing: border-box; }
+/* selection shown by a clean OUTER teal ring — doesn't cut into the image, keeps
+   every frame identical in size (outline adds no layout box) */
+/* selection recolours the existing border to the brand teal — no extra ring */
+.pdp-b .pdp-swatch:hover img { border-color: var(--color-graphite-400); }
+.pdp-b .pdp-swatch[aria-pressed="true"] img { border-width: 2px; border-color: var(--color-teal); }
 .bx-color__note { font-size: 0.75rem; line-height: 1.5; color: var(--color-graphite-500); margin: 0; max-width: 46ch; }
 .bx-color__note b { color: var(--color-graphite-700); font-weight: 600; }
 
@@ -103,40 +157,9 @@
 .cfgb-bar__count b { font-size: 0.9375rem; }
 .cfgb-bar.is-ready .cfgb-bar__count { color: var(--color-green); }
 
-.cfgb-bar__track { display: flex; gap: 0; padding: 0.5rem 0 1.15rem; position: relative; }
-/* one continuous progress bar (replaces the old between-node line) */
-.cfgb-bar__track::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0.2rem; height: 4px; border-radius: 999px; background: var(--color-graphite-200); }
-.cfgb-bar__track::after { content: ""; position: absolute; left: 0; bottom: 0.2rem; height: 4px; border-radius: 999px; width: var(--prog, 0%);
-  background: linear-gradient(90deg, #013e3f, #017d7e); box-shadow: 0 1px 4px rgba(1,82,83,0.35); transition: width .5s cubic-bezier(.2,.8,.2,1); }
-/* each step = icon tile + label (no connecting line) */
-.cfgb-bar__step { flex: 1; min-width: 0; position: relative; display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
-  background: none; border: 0; padding: 0; font-family: inherit; cursor: pointer; }
-/* icon tile — rounded square (squircle), tactile depth */
-.cfgb-bar__node { position: relative; z-index: 1; width: 2.1rem; height: 2.1rem; border-radius: 30%;
-  border: 1.5px solid var(--color-graphite-200); background: var(--color-white); display: grid; place-items: center;
-  box-shadow: 0 1px 2px rgba(10,20,20,0.06);
-  transition: border-color .35s ease, background .35s ease, box-shadow .35s ease, transform .35s cubic-bezier(.2,.7,.2,1); }
-.cfgb-bar__node > * { grid-area: 1 / 1; }
-.cfgb-bar__ico { width: 1.05rem; height: 1.05rem; color: var(--color-graphite-400); transition: color .35s ease; }
-.cfgb-bar__check { width: 1rem; height: 1rem; color: #fff; display: none; }
-/* completed → deep teal gradient + soft lift + white icon (same icon, no checkmark swap) */
-.cfgb-bar__step.is-filled:not(.is-current) .cfgb-bar__node { border-color: transparent;
-  background: linear-gradient(145deg, #017d7e 0%, #013e3f 100%); box-shadow: 0 4px 10px -3px rgba(1,82,83,0.45); }
-.cfgb-bar__step.is-filled:not(.is-current) .cfgb-bar__ico { color: #fff; }
-/* current → white node lifted, teal icon, crisp ring (no fuzzy glow) */
-.cfgb-bar__step.is-current .cfgb-bar__node { border-color: var(--color-teal); transform: scale(1.08);
-  box-shadow: 0 0 0 4px var(--color-teal-50), 0 8px 16px -6px rgba(1,82,83,0.35); }
-.cfgb-bar__step.is-current .cfgb-bar__ico { color: var(--color-teal); }
-.cfgb-bar__step:hover .cfgb-bar__node { border-color: var(--color-teal); }
-/* labels */
-.cfgb-bar__label { font-size: 0.625rem; font-weight: 600; line-height: 1.2; letter-spacing: 0.02em; text-align: center; max-width: 100%;
-  color: var(--color-graphite-400); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .35s ease; }
-.cfgb-bar__step.is-filled:not(.is-current) .cfgb-bar__label { color: var(--color-graphite-700); }
-.cfgb-bar__step.is-current .cfgb-bar__label { color: var(--color-teal); font-weight: 800; }
-.cfgb-bar__step:hover .cfgb-bar__label { color: var(--color-teal); }
-.cfgb-bar.is-ready .cfgb-bar__step .cfgb-bar__node { background: var(--color-green); border-color: var(--color-green); }
-.cfgb-bar.is-ready .cfgb-bar__step::before { background: var(--color-green); }
-.cfgb-bar.is-ready .cfgb-bar__label { color: var(--color-green); }
+/* (The old icon-and-line stepper styles lived here. That component is retired
+   — .cfgb-bar is display:none — and its rules leaked label/node colors into
+   the dock ribbon, which reuses the same class names. Deleted, not overridden.) */
 
 /* ── Step cards (progressive disclosure, refined) ── */
 .stepr { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
@@ -212,7 +235,8 @@
 .cfgb-total { display: flex; flex-direction: column; flex-shrink: 0; gap: 0.1rem; }
 .cfgb-total__label { font-size: 0.625rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-graphite-500); }
 .cfgb-total__amount { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.025em; color: var(--color-digital-black); font-variant-numeric: tabular-nums; }
-.cfgb-total__amount.is-bump { animation: cfg-bump .4s ease; }
+.cfgb-total__amount.is-bump,
+.pdp-price__amount.is-bump { animation: cfg-bump .4s ease; }
 @keyframes cfg-bump { 0%{transform:none} 30%{transform:translateY(-2px) scale(1.04)} 100%{transform:none} }
 
 /* "Preis wie konfiguriert" price line */
@@ -221,13 +245,31 @@
 .cfgb-price__meta { font-size: 0.8125rem; color: var(--color-graphite-600); }
 .cfgb-price__meta a { color: var(--color-teal); text-decoration: underline; }
 
-/* Primary action — full-width, always live (validate on click, never lock) */
+/* Primary action — always live (validate on click, never lock) */
 .cfgb-cta { width: 100%; gap: 0.55rem; background: var(--color-teal); box-shadow: 0 0.75rem 1.5rem rgba(1,82,83,0.28); }
 .cfgb-cta:hover { background: var(--color-teal-hover); }
 
+/* quantity box sits beside the CTA, matched to its height */
+.cfgb-buyrow { display: flex; align-items: stretch; gap: 0.6rem; }
+.cfgb-buyrow .cfgb-cta { flex: 1 1 auto; width: auto; }
+/* premium stepper: teal glyphs, hairline-divided segments, tactile states */
+.cfgb-buyrow__qty { flex: none; display: inline-flex; align-items: stretch; gap: 0; height: 3.5rem;
+  border: 1px solid var(--color-graphite-300); border-radius: var(--radius); overflow: hidden;
+  background: var(--color-white); box-shadow: 0 1px 2px rgba(26,23,27,0.06); }
+.cfgb-buyrow__qty button { width: 2.75rem; height: 100%; border: 0; background: none; cursor: pointer;
+  display: grid; place-items: center; font-size: 1.4rem; font-weight: 400; line-height: 1;
+  color: var(--color-teal); transition: background .15s, color .15s; }
+.cfgb-buyrow__qty button:hover { background: var(--color-teal-50); }
+.cfgb-buyrow__qty button:active { background: var(--color-teal-75); }
+.cfgb-buyrow__qty button:disabled { color: var(--color-graphite-400); background: none; cursor: not-allowed; }
+.cfgb-buyrow__qty > span { min-width: 2.1rem; display: grid; place-items: center; padding: 0 0.2rem;
+  font-size: 1rem; font-weight: 700; color: var(--color-digital-black); font-variant-numeric: tabular-nums;
+  border-left: 1px solid var(--color-graphite-200); border-right: 1px solid var(--color-graphite-200); }
+
 .cfgb-reassure { display: flex; align-items: center; gap: 0.55rem; margin: 0; font-size: 0.8125rem; color: var(--color-graphite-600); }
 .cfgb-reassure svg { width: 1.05rem; height: 1.05rem; flex-shrink: 0; color: var(--color-teal); }
-.cfgb-reassure .ph { color: var(--color-graphite-500); }
+.cfgb-reassure .ph { color: var(--color-graphite-700); }
+.pdp-b .pdp-avail__ship .ph { color: var(--color-graphite-700); }
 
 /* Sticky bar CTA also morphs */
 .pdp-stickybar__cta[data-mode="configure"] { background: var(--color-digital-black); }
@@ -281,19 +323,11 @@
 /* A/B prototype switcher — hidden on B so it never covers the fixed purchase bar */
 .vswitch { display: none !important; }
 
-/* ── Color-swatch labels: full name on hover/focus (accessible; no click needed) ── */
-.bx-swatches { overflow: visible; }
-.bx-swatches .pdp-swatch { position: relative; overflow: visible; }
-.bx-swatches .pdp-swatch::after { content: attr(data-finish); position: absolute; bottom: calc(100% + 0.55rem); left: 50%;
-  transform: translateX(-50%) translateY(0.25rem); background: var(--color-digital-black); color: #fff;
-  font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.01em; white-space: nowrap; padding: 0.34rem 0.62rem;
-  border-radius: var(--radius); box-shadow: 0 0.5rem 1rem rgba(26,23,27,0.22); opacity: 0; pointer-events: none; z-index: 40;
-  transition: opacity .15s ease, transform .15s ease; }
-.bx-swatches .pdp-swatch::before { content: ""; position: absolute; bottom: calc(100% + 0.2rem); left: 50%;
-  transform: translateX(-50%) translateY(0.25rem); border: 5px solid transparent; border-top-color: var(--color-digital-black);
-  opacity: 0; pointer-events: none; z-index: 40; transition: opacity .15s ease, transform .15s ease; }
-.bx-swatches .pdp-swatch:hover::after, .bx-swatches .pdp-swatch:focus-visible::after,
-.bx-swatches .pdp-swatch:hover::before, .bx-swatches .pdp-swatch:focus-visible::before { opacity: 1; transform: translateX(-50%) translateY(0); }
+/* Swatch names are NOT printed under every swatch (that crowded the page) —
+   the selected name shows in the "Ausführung — …" header, and each swatch's
+   name stays available via its img alt / hover preview. */
+.bx-swatches .pdp-swatch::before,
+.bx-swatches .pdp-swatch::after { display: none; }
 
 /* ── Preisdetails trigger (buy block) ── */
 .cfgb-detailsbtn { display: flex; align-items: center; gap: 0.6rem; width: 100%; padding: 0.75rem 0.9rem;
@@ -301,9 +335,7 @@
   cursor: pointer; font-family: inherit; font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black);
   transition: border-color .16s, background .16s; }
 .cfgb-detailsbtn:hover { border-color: var(--color-teal); background: var(--color-white); }
-.cfgb-detailsbtn > svg:first-child { width: 1.05rem; height: 1.05rem; color: var(--color-teal); flex-shrink: 0; }
-.cfgb-detailsbtn__n { margin-left: auto; font-size: 0.75rem; font-weight: 600; color: var(--color-graphite-500); }
-.cfgb-detailsbtn__chev { width: 1rem; height: 1rem; color: var(--color-graphite-400); flex-shrink: 0; }
+.cfgb-detailsbtn__chev { width: 1rem; height: 1rem; color: var(--color-graphite-700); flex-shrink: 0; margin-left: auto; }
 
 /* ── Sticky bar: details button ── */
 .pdp-stickybar__details { display: inline-flex; align-items: center; gap: 0.35rem; flex-shrink: 0; margin-left: auto;
@@ -347,16 +379,97 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 .cfgb-bar.is-stuck { box-shadow: 0 10px 18px -12px rgba(10,20,20,0.28); }
 
 /* ============ Unified Step-Dock — single active step, zero redundancy ============ */
-.pdp-b .cfgb { padding: 0; gap: 0; overflow: hidden; }
-.cfgb-bar, .cfgb-sentinel { display: none !important; }   /* retire the old icon-and-line stepper */
+/* overflow:clip (not hidden) — still clips the rounded corners but doesn't
+   create a scroll container, so the sticky dock below keeps working */
+.pdp-b .cfgb { padding: 0; gap: 0; overflow: clip; }
+.cfgb-bar { display: none !important; }   /* retire the old icon-and-line stepper (sentinel stays: it drives the dock's is-stuck flag) */
 
-.cfgb-dock { padding: 1.1rem 1.35rem 1.15rem; background: var(--color-paper); border-bottom: 1px solid var(--color-graphite-200); }
+.cfgb-dock { display: flex; flex-direction: column; padding: 0 1.35rem 1.15rem; background: var(--color-paper); border-bottom: 1px solid var(--color-graphite-200);
+  position: sticky; top: 6.5rem; z-index: 7; }   /* pins below the 104px site header while scrolling the config */
+/* stuck → compact: only the ribbon stays pinned (kicker + step title collapse) */
+.cfgb-dock.is-stuck { padding: 0 1.35rem; box-shadow: 0 10px 18px -12px rgba(10,20,20,0.28); }
+/* cap the strip above the pinned dock so scrolling options never peek through
+   the header↔dock seam; the site header (higher z) covers the rest */
+.cfgb-dock.is-stuck::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%;
+  height: 50vh; background: var(--color-paper); z-index: -1; }
+.cfgb-dock.is-stuck .cfgb-dock__meta,
+.cfgb-dock.is-stuck .cfgb-dock__title { display: none; }
+.cfgb-dock.is-stuck .cfgb-bar__track { margin: 0 -1.35rem; }
 .cfgb-dock__meta { display: flex; align-items: center; gap: 0.5rem; }
 .cfgb-dock__kicker { font-size: 0.625rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-graphite-500); }
 .cfgb-dock__flag { font-size: 0.5rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-teal); background: var(--color-teal-50); border-radius: var(--radius-pill); padding: 0.15rem 0.45rem; }
 .cfgb-dock__flag.is-opt { color: var(--color-graphite-500); background: var(--color-graphite-100); }
 .cfgb-dock__seg { display: flex; gap: 0.3rem; margin: 0.7rem 0 0.9rem; }
-.cfgb-dock .cfgb-bar__track { margin: 0.6rem 0 0.9rem; }
+
+/* ===== Chevron step-ribbon — grey (ahead) → dark teal (done) → light green (current) ===== */
+/* full-bleed band at the top of the card: no radius, no top/side padding
+   (order:-1 lifts it above meta/title; negative side margins cancel dock padding) */
+.cfgb-dock .cfgb-bar__track { display: flex; gap: 0; order: -1; margin: 0 -1.35rem 0.9rem; padding: 0;
+  border-radius: 0; overflow: visible; }
+.cfgb-dock .cfgb-bar__ico,
+.cfgb-dock .cfgb-bar__check { display: none; }           /* no icons */
+/* overlap each chevron into its neighbour's notch — the white seam shrinks to a 2px arrow line */
+.cfgb-dock .cfgb-bar__step + .cfgb-bar__step { margin-left: -8px; }
+
+.cfgb-dock .cfgb-bar__step {
+  /* flex-basis:auto — longer labels get proportionally wider chevrons.
+     Number sits inline (left) of the label. */
+  flex: 1 1 auto; min-width: 0; min-height: 2.9rem;
+  display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 0.3rem;
+  padding: 0.35rem 0.5rem 0.35rem 0.95rem; border: 0; cursor: pointer;
+  font-family: inherit; background: var(--color-graphite-200); color: var(--color-graphite-700);
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%, 10px 50%);
+  /* No transitions: this dock paints its active state on first render inside a
+     just-shown container, which strands CSS transitions at their start value.
+     Snapping states is both reliable and crisp for a stepper. */
+}
+.cfgb-dock .cfgb-bar__step:first-child {
+  padding-left: 0.9rem;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
+}
+.cfgb-dock .cfgb-bar__step:last-child {
+  padding-right: 0.9rem;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 10px 50%);
+}
+
+/* number — quiet, secondary to the label */
+.cfgb-dock .cfgb-bar__num {
+  flex: none; font-size: 0.7rem; font-weight: 800; line-height: 1;
+  font-variant-numeric: tabular-nums; opacity: 0.66;
+}
+
+/* label — the primary information: 11px, always visible, wraps instead of clipping */
+.cfgb-dock .cfgb-bar__label {
+  min-width: 0; max-width: 100%; text-align: center; color: inherit;
+  font-size: 0.6875rem; font-weight: 700; letter-spacing: 0; line-height: 1.1;
+  white-space: normal; overflow-wrap: break-word; hyphens: auto;
+}
+/* standard middot divider between number and label — same "·" used across the UI
+   (rating, price, availability); inherits each state's text colour */
+.cfgb-dock .cfgb-bar__label::before { content: "·"; margin-right: 0.35rem; font-weight: 700; opacity: 0.6; }
+
+/* ahead (not yet reached) — quiet neutral */
+.cfgb-dock .cfgb-bar__step:hover { background: var(--color-graphite-300); color: var(--color-graphite-800); }
+.cfgb-dock .cfgb-bar__step:focus-visible { outline: 2px solid var(--color-teal); outline-offset: -3px; }
+
+/* done — solid dark teal, white text (answered steps read as locked-in brand colour) */
+.cfgb-dock .cfgb-bar__step.is-filled { background: var(--color-teal); color: #fff; }
+.cfgb-dock .cfgb-bar__step.is-filled:hover { background: var(--color-teal-600); color: #fff; }
+.cfgb-dock .cfgb-bar__step.is-filled .cfgb-bar__num { opacity: 1; }   /* crisp white on the dark fill */
+
+/* current — light green, dark-teal text (the "you are here" segment stays airy) */
+.cfgb-dock .cfgb-bar__step.is-current,
+.cfgb-dock .cfgb-bar__step.is-current:hover { background: #CDE7E2; color: #01393A; }
+.cfgb-dock .cfgb-bar__step.is-current .cfgb-bar__num { opacity: 1; }
+.cfgb-dock .cfgb-bar__step.is-current .cfgb-bar__label { font-weight: 800; }
+
+/* small screens — number-only chevrons; just the current step keeps its label
+   (buttons carry full aria-labels, so nothing is lost for screen readers) */
+@media (max-width: 640px) {
+  .cfgb-dock .cfgb-bar__step { min-height: 2.55rem; padding: 0.3rem 0.5rem 0.35rem 0.9rem; }
+  .cfgb-dock .cfgb-bar__step:not(.is-current) .cfgb-bar__label { display: none; }
+  .cfgb-dock .cfgb-bar__step.is-current { flex-grow: 3; }
+}
 .cfgb-segp { flex: 1; height: 0.375rem; padding: 0; border: 0; border-radius: var(--radius-pill); background: var(--color-graphite-200); cursor: pointer; overflow: hidden; position: relative; transition: background .2s; }
 .cfgb-segp > i { position: absolute; inset: 0; display: block; transform: scaleX(0); transform-origin: left; background: var(--color-teal); transition: transform .45s cubic-bezier(.2,.8,.2,1); }
 .cfgb-segp.is-done > i { transform: scaleX(1); }
@@ -364,8 +477,11 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 .cfgb-segp.is-current { box-shadow: 0 0 0 3px rgba(1,82,83,0.10); }
 .cfgb-segp:hover { background: var(--color-graphite-300); }
 .cfgb-dock__title { margin: 0; display: flex; flex-direction: column; gap: 0.15rem; }
-.cfgb-dock__n { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.01em; color: var(--color-teal); }
-.cfgb-dock__name { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.015em; color: var(--color-digital-black); line-height: 1.2; }
+.cfgb-dock__n { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.01em; color: var(--ink-60); }
+/* numbered step title — number + name share a baseline (aligned) */
+.cfgb-dock__name { display: inline-flex; align-items: baseline; gap: 0.5rem;
+  font-size: 1.2rem; font-weight: 800; letter-spacing: -0.015em; color: var(--color-digital-black); line-height: 1.2; }
+.cfgb-dock__name-num { flex: none; color: var(--ink-60); font-weight: 800; font-variant-numeric: tabular-nums; }
 
 .cfgb-stage { padding: 1.25rem 1.35rem 0.35rem; }
 .pdp-b .cfgb .stepr { border: 0; margin: 0; padding: 0; gap: 0; }
@@ -387,13 +503,13 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 .cfgb-nav__fwd:hover { background: #000; }
 .cfgb-nav__back[hidden], .cfgb-nav__fwd[hidden] { display: none; }
 
-/* ── Color code — more visible / legible ── */
+/* ── Color code — quiet label, restrained finish name ── */
 .bx-color__label { font-size: 1rem; color: var(--color-graphite-600); }
-.bx-color__label b { font-size: 1.0625rem; color: var(--color-digital-black); font-weight: 800; }
+.bx-color__label b { font-size: 1rem; color: var(--color-graphite-800); font-weight: 500; }
 
 /* ── Payment methods — maximized, tidy wrap ── */
 .pdp-b .pdp-pay { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.55rem; max-width: 27rem; margin: 0 auto; }
-.pdp-b .pdp-pay img { height: 2.1rem; width: auto; opacity: 1; border: 1px solid var(--color-graphite-200); border-radius: var(--radius);
+.pdp-b .pdp-pay img { height: 2.1rem; width: auto; opacity: 1; border: 0; border-radius: var(--radius);
   background: #fff; padding: 0.3rem 0.45rem; box-sizing: border-box; }
 
 /* validation shake on the active step's content */
@@ -418,6 +534,12 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
   margin: 0.4rem 0 0.3rem; padding: 0.5rem 0.8rem; background: var(--color-teal-50); border-radius: var(--radius); }
 .cfg-choice.is-open .cfg-choice__qty { display: flex; }
 .cfg-choice__qtyl { font-size: 0.8125rem; font-weight: 700; color: var(--color-digital-black); }
+
+/* Zubehör: the choice wrapper IS the card, so the quantity stepper lives inside
+   its border (was a detached box floating below) */
+.cfgb .cfg-choice { border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg); background: var(--color-white); overflow: hidden; }
+.cfgb .cfg-choice.is-open { border-color: var(--color-teal); box-shadow: inset 0 0 0 1px var(--color-teal); }
+.cfgb .cfg-choice__qty { margin: 0; border-radius: 0; background: var(--color-paper); border-top: 1px solid var(--color-graphite-200); padding: 0.6rem 0.85rem; }
 .cfgb-mainqty { display: flex; align-items: center; justify-content: space-between; gap: 1rem;
   padding: 0.6rem 0.9rem; border: 1px solid var(--color-graphite-200); border-radius: var(--radius); }
 .cfgb-mainqty__l { font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black); }
@@ -426,15 +548,29 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 
 /* ── Product option cards → vertical tiles (image on top, text + price below) ── */
 .cfgb .cfg-opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr)); gap: 0.6rem; }
-.cfgb .cfg-opt { position: relative; flex-direction: column; align-items: stretch; gap: 0.5rem; padding: 0.85rem; text-align: left; height: 100%; }
+/* height:auto (not 100%) — grid align-items:stretch equalises card heights per row */
+.cfgb .cfg-opt { position: relative; flex-direction: column; align-items: stretch; gap: 0.5rem; padding: 0.85rem; text-align: left; }
 .cfgb .cfg-opt__mark { position: absolute; top: 0.65rem; right: 0.65rem; margin: 0; z-index: 2; background: var(--color-white); }
-.cfgb .cfg-opt__thumb { width: 100%; height: 5.5rem; }
+/* square frame, no grey fill, no border — the image covers it edge-to-edge */
+.cfgb .cfg-opt__thumb { width: 100%; aspect-ratio: 1; height: auto; display: grid; place-items: center; padding: 0; overflow: hidden;
+  background: var(--color-white); border: 0; border-radius: var(--radius); }
+.cfgb .cfg-opt__thumb img { grid-area: 1 / 1; width: 100%; height: 100%; object-fit: cover; padding: 0; }
 .cfgb .cfg-opt__body { flex: 0 0 auto; min-width: 0; padding-right: 1.5rem; }
 .cfgb .cfg-opt__price { align-self: flex-start; margin-top: auto; padding-top: 0.15rem; text-align: left; }
-.cfgb .cfg-choice { height: 100%; }
-.cfgb .cfg-choice .cfg-opt { height: auto; }
-.cfgb .cfg-opt__thumb--icon { background: var(--color-paper); }
-.cfgb .cfg-opt__thumb svg { width: 2.4rem; height: 2.4rem; color: var(--color-graphite-400); }
+/* inner option drops its own card chrome — the choice wrapper carries it now */
+.cfgb .cfg-choice .cfg-opt { flex: 1 1 auto; border: 0; border-radius: 0; background: none; box-shadow: none; }
+/* selected card: teal border/ring only — no grey fill */
+.cfgb .cfg-opt.is-selected { background: var(--color-white); }
+.cfgb .cfg-opt__thumb--icon { background: var(--color-white); }
+.cfgb .cfg-opt__thumb svg { width: 2.4rem; height: 2.4rem; color: var(--color-graphite-400); grid-area: 1 / 1; }
+
+/* ── Compact radio rows: for thumbnail-less binary choices (e.g. Gravur) —
+   the full image-tile treatment is too heavy for a plain option ── */
+.cfgb .cfg-opts--rows { grid-template-columns: 1fr; gap: 0.5rem; }
+.cfgb .cfg-opts--rows .cfg-opt { flex-direction: row; align-items: center; gap: 0.75rem; padding: 0.7rem 0.85rem; }
+.cfgb .cfg-opts--rows .cfg-opt__mark { position: static; top: auto; right: auto; z-index: auto; background: none; flex: none; }
+.cfgb .cfg-opts--rows .cfg-opt__body { flex: 1 1 auto; padding-right: 0; }
+.cfgb .cfg-opts--rows .cfg-opt__price { margin: 0 0 0 auto; padding-top: 0; align-self: center; text-align: right; white-space: nowrap; }
 
 /* ── Price-details summary (itemized cart with qty steppers) ── */
 .cfgb-summary { display: flex; flex-direction: column; padding: 0.5rem 0.9rem; margin-bottom: 0.2rem;
@@ -443,7 +579,7 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 .sum-row + .sum-row { border-top: 1px solid var(--color-graphite-100); }
 .sum-row__name { font-size: 0.8125rem; color: var(--color-digital-black); min-width: 0; }
 .sum-row__name b { font-weight: 700; }
-.sum-row__name .sum-sub { display: block; font-size: 0.6875rem; color: var(--color-graphite-500); margin-top: 0.05rem; }
+.sum-row__name .sum-sub { display: none; }   /* finish is shown in Ausführung + specs — not repeated per price line */
 .sum-row__price { font-size: 0.8125rem; font-weight: 700; color: var(--color-digital-black); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
 .sum-row__price.is-incl { color: var(--color-green); font-weight: 600; }
 .sum-qty { display: inline-flex; align-items: center; gap: 0.3rem; }

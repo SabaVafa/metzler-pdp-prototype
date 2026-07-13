@@ -78,8 +78,12 @@
     }
     // inline per-product qty displays
     setTxt('bMainQtyVal', state.mainQty);
+    var mainMinus = document.querySelector('.cfgb-buyrow__qty button[data-qd="-1"][data-target="main"]');
+    if (mainMinus) mainMinus.disabled = state.mainQty <= 1;
     setTxt('bInnenQty', state.innenQty);
     var iqw = $('bInnenQtyWrap'); if (iqw) iqw.classList.toggle('is-shown', hasInnen());
+    setTxt('bStromQty', state.stromQty);
+    var sqw = $('bStromQtyWrap'); if (sqw) sqw.classList.toggle('is-shown', hasStrom());
     document.querySelectorAll('[data-qtyfor]').forEach(function (s) { var n = s.getAttribute('data-qtyfor'); s.textContent = state.extras[n] ? state.extras[n].qty : 1; });
     document.querySelectorAll('.cfg-choice').forEach(function (c) { var o = c.querySelector('.cfg-opt'); c.classList.toggle('is-open', !!(o && o.classList.contains('is-selected'))); });
     markDone();
@@ -98,12 +102,17 @@
   function updateDock() {
     var cur = curIndex(); if (cur < 0) cur = 0;
     var track = $('bSeg'); if (track) track.style.setProperty('--prog', ((cur + 0.5) / STEPS.length * 100).toFixed(1) + '%');
+    /* last (optional) step: once an option is chosen there, show it as done
+       (dark teal) instead of current — the config reads as fully complete */
+    var lastDone = cur === STEPS.length - 1 && extrasCount() > 0;
     document.querySelectorAll('#bSeg .cfgb-bar__step').forEach(function (s, i) {
       s.classList.toggle('is-filled', i <= reached);
-      s.classList.toggle('is-current', i === cur);
+      s.classList.toggle('is-current', i === cur && !lastDone);
       s.setAttribute('aria-selected', i === cur ? 'true' : 'false');
+      if (i === cur) { s.setAttribute('aria-current', 'step'); } else { s.removeAttribute('aria-current'); }
     });
     setTxt('bStepN', 'Schritt ' + (cur + 1) + ' von 5');
+    setTxt('bStepNum', String(cur + 1));
     setTxt('bStepName', STEPS[cur].name);
     var flag = $('bStepFlag');
     if (flag) { var opt = STEPS[cur].key === 'zubehoer'; flag.textContent = 'optional'; flag.classList.add('is-opt'); flag.hidden = !opt; }
@@ -203,6 +212,8 @@
   function backStep() { var cur = curIndex(); if (cur > 0) openStep(cur - 1); }
   var fwdB = $('bFwd'); if (fwdB) fwdB.addEventListener('click', fwdStep);
   var backB = $('bBack'); if (backB) backB.addEventListener('click', backStep);
+  /* in-step "Weiter" buttons advance (auto-advance was removed) */
+  document.querySelectorAll('#cfgbSteps [data-next]').forEach(function (b) { b.addEventListener('click', fwdStep); });
   document.querySelectorAll('#bSeg .cfgb-bar__step').forEach(function (b) {
     b.addEventListener('click', function () { openStep(parseInt(b.getAttribute('data-goto'), 10)); });
   });
@@ -251,7 +262,7 @@
     this.querySelectorAll('.cfg-opt').forEach(function (x) { x.classList.remove('is-selected'); });
     b.classList.add('is-selected');
     state.anschluss = b.getAttribute('data-anschluss'); state.conn = CONN[state.anschluss] || null;
-    applyConn(); refresh(); autoAdvance('anschluss');
+    applyConn(); refresh();   /* no auto-advance — user continues via "Weiter" */
   });
 
   /* ── 2 · Gravur ── */
@@ -264,7 +275,6 @@
     $('bGravurField').classList.toggle('is-shown', state.gravurOn);
     refresh();
     if (state.gravurOn) { var gtf = $('bGravurText'); if (gtf) gtf.focus(); }
-    else autoAdvance('gravur');   /* only auto-advance when nothing more to enter */
   });
   var gt = $('bGravurText'); if (gt) gt.addEventListener('input', function () { state.gravurText = this.value; refresh(); });
   var fonts = $('bFonts');
@@ -282,7 +292,7 @@
     this.querySelectorAll('.cfg-opt').forEach(function (x) { x.classList.remove('is-selected'); });
     b.classList.add('is-selected'); syncGroupState('bInnen', b);
     if (!hasInnen()) state.innenQty = 1;
-    refresh(); autoAdvance('innen');
+    refresh();
   });
 
   /* ── 4 · Stromversorgung → auto-advance ── */
@@ -292,7 +302,7 @@
     this.querySelectorAll('.cfg-opt').forEach(function (x) { x.classList.remove('is-selected'); });
     b.classList.add('is-selected'); syncGroupState('bStrom', b);
     if (!hasStrom()) state.stromQty = 1;
-    refresh(); autoAdvance('strom');
+    refresh();
   });
 
   /* ── 2 & 5 · optional add-ons (checkboxes, own qty) ── */
@@ -323,7 +333,35 @@
   }
   var cart = $('bCart'); if (cart) cart.addEventListener('click', addToCart);
   var stickyCta = $('pdpStickyCta'); if (stickyCta) { var sl = $('pdpStickyLabel'); if (sl) sl.textContent = 'In den Warenkorb'; stickyCta.addEventListener('click', addToCart); }
-  var share = $('pdpShare'); if (share) share.addEventListener('click', function () { if (navigator.share) navigator.share({ title: document.title, url: location.href }).catch(function () {}); else toast('Link kopiert'); });
+  /* ── Share: popover with options (copy · e-mail · WhatsApp · Facebook · X) ── */
+  (function () {
+    var wrap = document.querySelector('.bx-share-wrap'), btn = $('pdpShare'), menu = $('pdpShareMenu');
+    if (!wrap || !btn || !menu) return;
+    var cred = wrap.closest('.bx-cred');
+    function buildLinks() {
+      var u = encodeURIComponent(location.href), t = encodeURIComponent(document.title);
+      var map = {
+        email: 'mailto:?subject=' + t + '&body=' + u,
+        whatsapp: 'https://wa.me/?text=' + t + '%20' + u,
+        facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + u,
+        x: 'https://twitter.com/intent/tweet?url=' + u + '&text=' + t
+      };
+      menu.querySelectorAll('a[data-share]').forEach(function (a) { var k = a.getAttribute('data-share'); if (map[k]) a.href = map[k]; });
+    }
+    function onDoc(e) { if (!wrap.contains(e.target)) close(); }
+    function onKey(e) { if (e.key === 'Escape') { close(); btn.focus(); } }
+    function open() { buildLinks(); menu.hidden = false; btn.setAttribute('aria-expanded', 'true'); if (cred) cred.classList.add('is-sharing'); document.addEventListener('click', onDoc); document.addEventListener('keydown', onKey); }
+    function close() { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); if (cred) cred.classList.remove('is-sharing'); document.removeEventListener('click', onDoc); document.removeEventListener('keydown', onKey); }
+    btn.addEventListener('click', function (e) { e.stopPropagation(); if (menu.hidden) open(); else close(); });
+    var copyBtn = menu.querySelector('[data-share="copy"]');
+    if (copyBtn) copyBtn.addEventListener('click', function () {
+      var lbl = copyBtn.querySelector('span'), orig = lbl.textContent;
+      var done = function () { copyBtn.classList.add('is-copied'); lbl.textContent = 'Link kopiert!';
+        window.setTimeout(function () { lbl.textContent = orig; copyBtn.classList.remove('is-copied'); close(); }, 1200); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(location.href).then(done, done); else done();
+    });
+    menu.querySelectorAll('a[data-share]').forEach(function (a) { a.addEventListener('click', function () { close(); }); });
+  })();
 
   /* ── Sticky bar visibility ── */
   var bar = $('pdpStickyBar');
@@ -349,12 +387,22 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSheet(); });
   var sheetCart = $('bSheetCart'); if (sheetCart) sheetCart.addEventListener('click', function () { closeSheet(); addToCart(); });
 
-  /* ── Sticky progress bar: flag "stuck" to cap the bleed gap above it ── */
-  var sentinel = document.querySelector('.cfgb-sentinel'), barEl = document.querySelector('.cfgb-bar');
-  if (sentinel && barEl && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { barEl.classList.toggle('is-stuck', !en.isIntersecting); });
-    }, { rootMargin: '-104px 0px 0px 0px', threshold: 0 }).observe(sentinel);
+  /* ── Sticky step-dock: pin it flush against the site header's real bottom
+     (header height varies by viewport, so measure it — a hardcoded offset
+     leaves a gap the scrolling config shows through), and flag "stuck" so it
+     compacts. Geometry check on scroll (IntersectionObserver is unreliable
+     when its sentinel can be display:none). ── */
+  var dockEl = document.querySelector('.cfgb-dock');
+  var headerEl = document.querySelector('.header') || document.querySelector('header');
+  if (dockEl) {
+    var dockStuck = function () {
+      var pin = headerEl ? Math.round(headerEl.getBoundingClientRect().height) : 104;
+      if (dockEl.style.top !== pin + 'px') dockEl.style.top = pin + 'px';
+      dockEl.classList.toggle('is-stuck', dockEl.getBoundingClientRect().top <= pin + 1);
+    };
+    window.addEventListener('scroll', dockStuck, { passive: true });
+    window.addEventListener('resize', dockStuck, { passive: true });
+    dockStuck();
   }
 
   refresh();
