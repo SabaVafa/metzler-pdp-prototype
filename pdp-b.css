@@ -48,24 +48,28 @@
 .bx-share svg { width: 1.05rem; height: 1.05rem; }
 .bx-share__t { line-height: 1; }
 /* teal accent via text + fill; border stays graphite-300 to match the menu */
-.bx-share:hover, .bx-share[aria-expanded="true"] { color: var(--color-teal); background: var(--color-teal-50); }
+.bx-share:hover { color: var(--color-teal); background: var(--color-teal-50); }
+/* OPEN: the button widens into the header of a connected dropdown card — its
+   bottom edge merges seamlessly into the menu below (no floating gap or caret) */
+.bx-share[aria-expanded="true"] {
+  position: relative; z-index: 2; min-width: 13.5rem; justify-content: flex-start;
+  color: var(--color-teal); background: var(--color-white);
+  border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom-color: transparent; }
 
-/* ── Share popover ── */
-.bx-share-wrap { position: relative; margin-left: auto; flex-shrink: 0; }
+/* ── Share popover — connected dropdown ── */
+.bx-share-wrap { position: relative; display: flex; margin-left: auto; flex-shrink: 0; }   /* flex kills the inline-descender gap so the menu butts flush to the button */
 /* .bx-cred carries an entrance transform → its own stacking context, which traps
    the menu behind later siblings. Lift it above them while the menu is open. */
 .bx-cred.is-sharing { position: relative; z-index: 60; }
-.bx-share-menu { position: absolute; top: calc(100% + 0.4rem); right: 0; z-index: 1;
-  min-width: 13rem; padding: 0.4rem; display: flex; flex-direction: column; gap: 0.1rem;
-  background: var(--color-white); border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg);
-  box-shadow: 0 0.5rem 1.25rem rgba(26,23,27,0.16), 0 0.15rem 0.4rem rgba(26,23,27,0.08);
+.bx-share-menu { position: absolute; top: 100%; right: 0; z-index: 1;
+  width: 13.5rem; padding: 0.4rem; display: flex; flex-direction: column; gap: 0.1rem;
+  background: var(--color-white); border: 1px solid var(--color-graphite-300);
+  border-top: 1px solid var(--color-graphite-200);   /* hairline divider under the header */
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);   /* square top → butts flush against the button */
+  box-shadow: 0 0.9rem 1.6rem rgba(26,23,27,0.15), 0 0.2rem 0.5rem rgba(26,23,27,0.08);
   transform-origin: top right; animation: shareIn .16s cubic-bezier(.2,.8,.2,1); }
 .bx-share-menu[hidden] { display: none; }
-/* caret centred under the "Teilen" button — same graphite-300 border as button + menu */
-.bx-share-menu::before { content: ""; position: absolute; top: -0.33rem; right: 2.65rem; width: 0.62rem; height: 0.62rem;
-  background: var(--color-white); border-left: 1px solid var(--color-graphite-300); border-top: 1px solid var(--color-graphite-300);
-  transform: rotate(45deg); }
-@keyframes shareIn { from { opacity: 0; transform: translateY(-0.4rem) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes shareIn { from { opacity: 0; transform: translateY(-0.3rem); } to { opacity: 1; transform: translateY(0); } }
 .bx-share-menu__item { position: relative; display: flex; align-items: center; gap: 0.7rem; width: 100%;
   padding: 0.6rem 0.7rem; border: 0; background: none; border-radius: var(--radius); cursor: pointer;
   font-family: inherit; font-size: 0.8125rem; font-weight: 600; color: var(--color-digital-black);
@@ -231,7 +235,7 @@
 .cfgb-group--opt { margin-top: 0.5rem; padding-top: 1.05rem; border-top: 1px solid var(--color-graphite-200); }
 
 /* ── BUY BLOCK ── */
-.cfgb-checkout { display: flex; flex-direction: column; gap: 0.85rem; }
+.cfgb-checkout { display: flex; flex-direction: column; gap: 1.6rem; }   /* match the buybox rhythm above the accordion */
 .cfgb-checkout__row { display: flex; align-items: center; gap: 1.1rem; }
 .cfgb-total { display: flex; flex-direction: column; flex-shrink: 0; gap: 0.1rem; }
 .cfgb-total__label { font-size: 0.625rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-graphite-500); }
@@ -239,6 +243,16 @@
 .cfgb-total__amount.is-bump,
 .pdp-price__amount.is-bump { animation: cfg-bump .4s ease; }
 @keyframes cfg-bump { 0%{transform:none} 30%{transform:translateY(-2px) scale(1.04)} 100%{transform:none} }
+
+/* tighten the big price number's line box so the block's line spacing reads
+   evenly (default 1.5 line-height added ~8px leading above/below the amount,
+   making its neighbouring gaps look larger than the rest) */
+.pdp-b .pdp-price { gap: 0.45rem; }
+.pdp-b .pdp-price__row { line-height: 1.05; }
+.pdp-b .pdp-price__amount { line-height: 1.05; }
+/* tight line box on the label too, so the gap below the accordion isn't inflated
+   by leading — keeps the block's three outer gaps visually identical */
+.pdp-b .pdp-price .cfgb-price__label { line-height: 1; }
 
 /* "Preis wie konfiguriert" price line */
 .cfgb-price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.15rem 0.7rem; }
@@ -583,6 +597,35 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 .cfgb .cfg-opt.is-selected { background: var(--color-white); }
 .cfgb .cfg-opt__thumb--icon { background: var(--color-white); }
 .cfgb .cfg-opt__thumb svg { width: 2.4rem; height: 2.4rem; color: var(--color-graphite-400); grid-area: 1 / 1; }
+/* Universal "none / without" tile — one treatment reusable across ANY category
+   for opt-out options (Ohne Innenstation, Ohne Gravur, Kein Zubehör, Standard …).
+   A refined ∅ mark — gradient stroke + soft shadow — on a whisper-of-brand
+   premium surface: reads as a deliberate "without" choice, not a missing image,
+   and carries no category-specific art, so it drops in anywhere. */
+.cfgb .cfg-opt__thumb--none { background: radial-gradient(120% 100% at 50% 32%, #FFFFFF 0%, #F2F6F6 100%); }
+.cfgb .cfg-opt__thumb--none svg { width: 44%; height: 44%; grid-area: 1 / 1; }
+
+/* ── Universal UNAVAILABLE state — one treatment for out-of-stock OR options
+   incompatible with an earlier choice. The tile stays visible (so the reason is
+   learnable) but is clearly inert: dimmed, non-selectable, no radio, and a single
+   flat status chip in the corner — no rotated watermark stamp. ── */
+.cfgb .cfg-opt.is-unavailable { cursor: not-allowed; }
+.cfgb .cfg-opt.is-unavailable .cfg-opt__thumb { filter: grayscale(0.9); opacity: 0.5; }
+.cfgb .cfg-opt.is-unavailable .cfg-opt__body,
+.cfgb .cfg-opt.is-unavailable .cfg-opt__price { opacity: 0.5; }
+.cfgb .cfg-opt.is-unavailable .cfg-opt__mark { visibility: hidden; }
+/* solid, high-contrast status tag — a filled pill reads clearly over the dimmed
+   tile (the old outline chip was too faint). Two tones from one component. */
+.cfg-opt__badge {
+  position: absolute; top: 0.6rem; left: 0.6rem; z-index: 3;
+  display: inline-flex; align-items: center; gap: 0.34rem; max-width: calc(100% - 1.2rem);
+  padding: 0.34rem 0.62rem; border-radius: var(--radius-pill); line-height: 1.1;
+  font-size: 0.6875rem; font-weight: 800; letter-spacing: 0.03em; text-transform: uppercase;
+  color: #fff; box-shadow: 0 0.35rem 0.9rem rgba(26,23,27,0.22);
+}
+.cfg-opt__badge svg { width: 0.9rem; height: 0.9rem; flex: none; }
+.cfg-opt__badge.is-oos { background: var(--color-red); }                 /* out of stock → red */
+.cfg-opt__badge.is-incompat { background: var(--color-digital-black); }  /* needs another connection → dark, highly visible */
 
 /* ── Compact radio rows: for thumbnail-less binary choices (e.g. Gravur) —
    the full image-tile treatment is too heavy for a plain option ── */

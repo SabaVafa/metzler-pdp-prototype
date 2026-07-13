@@ -164,22 +164,55 @@
     applyQty(b.getAttribute('data-target'), parseInt(b.getAttribute('data-qd'), 10));
   });
 
-  /* ── Connection dependency ── */
+  /* ── Availability (universal) — one treatment for options that are OUT OF STOCK
+     or INCOMPATIBLE with an earlier choice. Instead of hiding them (or slapping on
+     a rotated watermark), the tile stays visible but goes inert: dimmed + a single
+     flat status chip that names the reason, so the user learns why. ── */
+  function connLabel(c) { return c === 'lan' ? 'Nur mit LAN / PoE' : c === '2draht' ? 'Nur mit 2-Draht IP' : 'Nicht kompatibel'; }
+  var BADGE_ICON = {
+    oos: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="6.5" y1="17.5" x2="17.5" y2="6.5"/></svg>',
+    incompat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 11.5h1V16h1"/></svg>'
+  };
+  function setUnavailable(o, kind, text) {
+    o.classList.add('is-unavailable');
+    o.setAttribute('aria-disabled', 'true');
+    var badge = o.querySelector('.cfg-opt__badge');
+    if (!badge) { badge = document.createElement('span'); o.appendChild(badge); }
+    badge.className = 'cfg-opt__badge ' + (kind === 'oos' ? 'is-oos' : 'is-incompat');
+    badge.innerHTML = BADGE_ICON[kind] + '<span>' + text + '</span>';
+  }
+  function setAvailable(o) {
+    o.classList.remove('is-unavailable');
+    o.removeAttribute('aria-disabled');
+    var badge = o.querySelector('.cfg-opt__badge'); if (badge) badge.parentNode.removeChild(badge);
+  }
+  function isOOS(o) { return o.getAttribute('data-stock') === 'out'; }
+
   function applyConn() {
     ['bInnen', 'bStrom'].forEach(function (id) {
       var box = $(id); if (!box) return;
       var opts = [].slice.call(box.querySelectorAll('.cfg-opt'));
-      var selHidden = false;
+      var selBlocked = false;
       opts.forEach(function (o) {
         var c = o.getAttribute('data-conn');
-        var ok = !state.conn || c === 'both' || c === state.conn;
-        o.classList.toggle('is-hidden', !ok);
-        if (!ok && o.classList.contains('is-selected')) { o.classList.remove('is-selected'); selHidden = true; }
+        var compat = !state.conn || c === 'both' || c === state.conn;
+        if (isOOS(o)) setUnavailable(o, 'oos', 'Ausverkauft');
+        else if (!compat) setUnavailable(o, 'incompat', connLabel(c));
+        else setAvailable(o);
+        if (o.classList.contains('is-unavailable') && o.classList.contains('is-selected')) {
+          o.classList.remove('is-selected'); selBlocked = true;
+        }
       });
-      if (selHidden) {
-        var def = opts.filter(function (o) { return !o.classList.contains('is-hidden'); })[0];
+      if (selBlocked) {
+        var def = opts.filter(function (o) { return !o.classList.contains('is-unavailable'); })[0];
         if (def) { def.classList.add('is-selected'); syncGroupState(id, def); }
       }
+    });
+  }
+  /* out-of-stock in groups without a connection dependency (Anschluss, Zubehör) */
+  function applyStock() {
+    [].slice.call(document.querySelectorAll('#cfgbSteps .cfg-opt[data-stock="out"]')).forEach(function (o) {
+      if (!o.closest('#bInnen') && !o.closest('#bStrom')) setUnavailable(o, 'oos', 'Ausverkauft');
     });
   }
   function syncGroupState(id, btn) {
@@ -278,7 +311,7 @@
   /* ── 1 · Anschluss (required) → auto-advance ── */
   var ansch = $('bAnschluss');
   if (ansch) ansch.addEventListener('click', function (e) {
-    var b = e.target.closest('.cfg-opt'); if (!b) return;
+    var b = e.target.closest('.cfg-opt'); if (!b || b.classList.contains('is-unavailable')) return;
     this.querySelectorAll('.cfg-opt').forEach(function (x) { x.classList.remove('is-selected'); });
     b.classList.add('is-selected');
     this.classList.remove('is-invalid');   /* clear any lingering validation highlight */
@@ -309,7 +342,7 @@
   /* ── 3 · Innenstationen → auto-advance ── */
   var innen = $('bInnen');
   if (innen) innen.addEventListener('click', function (e) {
-    var b = e.target.closest('.cfg-opt'); if (!b || b.classList.contains('is-hidden')) return;
+    var b = e.target.closest('.cfg-opt'); if (!b || b.classList.contains('is-unavailable')) return;
     this.querySelectorAll('.cfg-opt').forEach(function (x) { x.classList.remove('is-selected'); });
     b.classList.add('is-selected'); syncGroupState('bInnen', b);
     if (!hasInnen()) state.innenQty = 1;
@@ -319,7 +352,7 @@
   /* ── 4 · Stromversorgung → auto-advance ── */
   var strom = $('bStrom');
   if (strom) strom.addEventListener('click', function (e) {
-    var b = e.target.closest('.cfg-opt'); if (!b || b.classList.contains('is-hidden')) return;
+    var b = e.target.closest('.cfg-opt'); if (!b || b.classList.contains('is-unavailable')) return;
     this.querySelectorAll('.cfg-opt').forEach(function (x) { x.classList.remove('is-selected'); });
     b.classList.add('is-selected'); syncGroupState('bStrom', b);
     if (!hasStrom()) state.stromQty = 1;
@@ -329,6 +362,7 @@
   /* ── 2 & 5 · optional add-ons (checkboxes, own qty) ── */
   document.querySelectorAll('#cfgbSteps .cfg-opt--check').forEach(function (b) {
     b.addEventListener('click', function () {
+      if (b.classList.contains('is-unavailable')) return;
       var name = b.getAttribute('data-extra'), d = parseFloat(b.getAttribute('data-delta')) || 0;
       var label = (b.querySelector('.cfg-opt__name') || {}).textContent || name;
       if (b.classList.toggle('is-selected')) state.extras[name] = { price: d, qty: 1, label: label.trim() };
@@ -428,5 +462,6 @@
     dockStuck();
   }
 
+  applyConn(); applyStock();   /* seed availability (out-of-stock + any pre-set incompatibility) */
   refresh();
 })();
