@@ -12,7 +12,7 @@
 /* ── Fold rhythm: fewer, larger beats — more air between the stacked blocks ── */
 .pdp-b .pdp-buybox { gap: 1.6rem; }
 /* extra separation before the configurator, so product info reads apart from it */
-.pdp-b .cfgb { margin-top: 0.4rem; }
+.pdp-b .cfgb { margin-top: 0.15rem; }   /* match the title→rating gap so both block edges breathe equally */
 
 /* ── Identity ── */
 .pdp-b .pdp-eyebrow { font-size: 0.6875rem; letter-spacing: 0.22em; }
@@ -104,8 +104,9 @@
 /* ── Key facts: brand · dimensions · article no. — minimal, iconless, no box
    (.pdp-b scope beats the base .pdp-specs dt/dd rules in pdp.css) ── */
 .pdp-b .pdp-specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: 0.8rem 1.5rem;
-  align-items: start; margin: 0.6rem 0 0.35rem; padding: 0; border: 0; background: none; }
+  align-items: start; margin: 0.15rem 0; padding: 0; border: 0; background: none; }
 .pdp-b .pdp-specs__item { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+.pdp-b .pdp-specs__item:nth-child(2) { align-items: center; text-align: center; }   /* middle spec (Breite × Höhe) centered */
 .pdp-b .pdp-specs__item:last-child { align-items: flex-end; text-align: right; }   /* article no. aligns to the right edge */
 .pdp-b .pdp-specs__label { margin: 0; font-size: 0.625rem; font-weight: 600; letter-spacing: 0.09em;
   text-transform: uppercase; color: var(--color-graphite-600); }   /* match the "Bewertungen" grey */
@@ -272,8 +273,8 @@
 .pdp-b .pdp-avail__ship .ph { color: var(--color-graphite-700); }
 
 /* Sticky bar CTA also morphs */
-.pdp-stickybar__cta[data-mode="configure"] { background: var(--color-digital-black); }
-.pdp-stickybar__cta[data-mode="configure"]:hover { background: #000; }
+.pdp-stickybar__cta[data-mode="configure"] { background: var(--color-teal); }
+.pdp-stickybar__cta[data-mode="configure"]:hover { background: var(--color-teal-hover); }
 
 /* Lighter payment strip */
 .pdp-b .pdp-pay img { height: 1.45rem; opacity: 0.85; }
@@ -395,10 +396,15 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 .cfgb-dock.is-stuck .cfgb-dock__meta,
 .cfgb-dock.is-stuck .cfgb-dock__title { display: none; }
 .cfgb-dock.is-stuck .cfgb-bar__track { margin: 0 -1.35rem; }
-.cfgb-dock__meta { display: flex; align-items: center; gap: 0.5rem; }
+.cfgb-dock__meta { display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem; }
 .cfgb-dock__kicker { font-size: 0.625rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-graphite-500); }
-.cfgb-dock__flag { font-size: 0.5rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-teal); background: var(--color-teal-50); border-radius: var(--radius-pill); padding: 0.15rem 0.45rem; }
-.cfgb-dock__flag.is-opt { color: var(--color-graphite-500); background: var(--color-graphite-100); }
+/* required = red (universal "mandatory" signal); optional = neutral grey (low emphasis) */
+.cfgb-dock__flag { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.625rem; font-weight: 800;
+  letter-spacing: 0.1em; text-transform: uppercase; line-height: 1; color: var(--color-red);
+  background: var(--color-red-50); border: 1px solid rgba(212,41,36,0.28); border-radius: var(--radius-pill);
+  padding: 0.3rem 0.65rem; }
+.cfgb-dock__flag::before { content: ""; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: currentColor; flex: none; }
+.cfgb-dock__flag.is-opt { color: var(--color-graphite-600); background: var(--color-graphite-100); border-color: var(--color-graphite-300); }
 .cfgb-dock__seg { display: flex; gap: 0.3rem; margin: 0.7rem 0 0.9rem; }
 
 /* ===== Chevron step-ribbon — grey (ahead) → dark teal (done) → light green (current) ===== */
@@ -512,9 +518,23 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 .pdp-b .pdp-pay img { height: 2.1rem; width: auto; opacity: 1; border: 0; border-radius: var(--radius);
   background: #fff; padding: 0.3rem 0.45rem; box-sizing: border-box; }
 
-/* validation shake on the active step's content */
-@keyframes cfgb-shake { 0%,100% { transform: translateX(0); } 20%,60% { transform: translateX(-5px); } 40%,80% { transform: translateX(5px); } }
-.cfgb .stepr__pad.is-flash { animation: cfgb-shake .42s ease; }
+/* validation shake — gentle single nudge, not a jitter */
+@keyframes cfgb-shake { 0%,100% { transform: translateX(0); } 30% { transform: translateX(-3px); } 65% { transform: translateX(3px); } }
+.cfgb .stepr__pad.is-flash { animation: cfgb-shake .3s ease; }
+
+/* invalid highlight — the red border draws the eye; one soft glow, no jump */
+@keyframes cfgb-invalid-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(212,41,36,0.4); }
+  100% { box-shadow: 0 0 0 6px rgba(212,41,36,0); }
+}
+.cfgb .cfg-opts.is-invalid .cfg-opt,
+.cfgb .cfg-input.is-invalid {
+  border-color: var(--color-red) !important;
+  animation: cfgb-invalid-pulse .7s ease-out 1;
+}
+.cfgb .cfg-opts.is-invalid { border-radius: var(--radius-lg); }
+/* badge: steady colour emphasis, no scale/jump */
+.cfgb-dock__flag.is-pulse { box-shadow: 0 0 0 3px rgba(212,41,36,0.18); }
 
 /* ── Preisdetails — inline accordion in the buy block ── */
 .cfgb-acc { border: 1px solid var(--color-graphite-200); border-radius: var(--radius); overflow: hidden; background: var(--color-white); }

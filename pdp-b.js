@@ -16,7 +16,7 @@
   var BASE = 699;
   var FONTS = { Serif: "Georgia,'Times New Roman',serif", Grotesk: "Arial,Helvetica,sans-serif", Script: "'Segoe Script','Brush Script MT',cursive", Mono: "'Courier New',monospace" };
   var STEPS = [
-    { key: 'anschluss', name: 'Anschluss' },
+    { key: 'anschluss', name: 'Anschluss', req: true },
     { key: 'gravur', name: 'Gravurdaten' },
     { key: 'innen', name: 'Innenstationen' },
     { key: 'strom', name: 'Stromversorgung' },
@@ -112,10 +112,9 @@
       if (i === cur) { s.setAttribute('aria-current', 'step'); } else { s.removeAttribute('aria-current'); }
     });
     setTxt('bStepN', 'Schritt ' + (cur + 1) + ' von 5');
-    setTxt('bStepNum', String(cur + 1));
     setTxt('bStepName', STEPS[cur].name);
     var flag = $('bStepFlag');
-    if (flag) { var opt = STEPS[cur].key === 'zubehoer'; flag.textContent = 'optional'; flag.classList.add('is-opt'); flag.hidden = !opt; }
+    if (flag) { var req = STEPS[cur].req === true; flag.textContent = req ? 'erforderlich' : 'optional'; flag.classList.toggle('is-opt', !req); flag.hidden = false; }
     var back = $('bBack'), fwd = $('bFwd');
     if (back) back.hidden = cur === 0;
     if (fwd) fwd.hidden = cur === STEPS.length - 1;
@@ -189,11 +188,12 @@
   }
 
   /* ── Single-step navigation (step-dock + Weiter/Zurück) ── */
-  function openStep(i) {
+  function openStep(i, skipScroll) {
     if (i < 0) i = 0; if (i > STEPS.length - 1) i = STEPS.length - 1;
     items.forEach(function (it, ix) { it.classList.toggle('is-active', ix === i); });
     if (i > reached) reached = i;
     refresh();
+    if (skipScroll) return;
     var dock = document.querySelector('.cfgb-dock');
     if (dock) window.setTimeout(function () { dock.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 60);
   }
@@ -203,10 +203,30 @@
     if (i > -1 && i < STEPS.length - 1) window.setTimeout(function () { openStep(i + 1); }, 340);
   }
   function flashStep(i) { var it = items[i]; if (!it) return; var p = it.querySelector('.stepr__pad') || it; p.classList.remove('is-flash'); void p.offsetWidth; p.classList.add('is-flash'); }
+  var invalidTimers = {};
+  function flashInvalid(el) {
+    if (!el) return;
+    el.classList.remove('is-invalid'); void el.offsetWidth; el.classList.add('is-invalid');
+    var id = el.id || 'anon';
+    if (invalidTimers[id]) window.clearTimeout(invalidTimers[id]);
+    invalidTimers[id] = window.setTimeout(function () { el.classList.remove('is-invalid'); }, 1600);
+  }
+  /* Scroll so the step-dock sits just below the site header — un-stuck, so the
+     progress bar AND the requirement label are both visible (the label hides
+     while the dock is stuck to the header). Target the NON-sticky panel, not the
+     dock: a stuck dock reports top === header height, which would scroll nowhere. */
+  function scrollToProgress() {
+    var panel = document.querySelector('#cfgbPanel') || document.querySelector('.cfgb'); if (!panel) return;
+    var hdr = document.querySelector('.header') || document.querySelector('header');
+    var pin = hdr ? Math.round(hdr.getBoundingClientRect().height) : 104;
+    var y = window.pageYOffset + panel.getBoundingClientRect().top - pin - 12;
+    window.scrollTo({ top: y < 0 ? 0 : y, behavior: 'smooth' });
+  }
+  function flashRequired() { var f = $('bStepFlag'); if (!f || f.classList.contains('is-opt')) return; f.classList.remove('is-pulse'); void f.offsetWidth; f.classList.add('is-pulse'); window.setTimeout(function () { f.classList.remove('is-pulse'); }, 1200); }
   function fwdStep() {
     var cur = curIndex();
-    if (cur === 0 && !state.anschluss) { flashStep(0); toast('Bitte zuerst die Anschlussart wählen.'); return; }
-    if (cur === 1 && state.gravurOn && !state.gravurText) { flashStep(1); toast('Bitte Ihren Gravurtext eingeben.'); return; }
+    if (cur === 0 && !state.anschluss) { scrollToProgress(); flashStep(0); flashInvalid($('bAnschluss')); flashRequired(); return; }
+    if (cur === 1 && state.gravurOn && !state.gravurText) { scrollToProgress(); flashStep(1); flashInvalid($('bGravurText')); return; }
     if (cur < STEPS.length - 1) openStep(cur + 1);
   }
   function backStep() { var cur = curIndex(); if (cur > 0) openStep(cur - 1); }
@@ -261,6 +281,7 @@
     var b = e.target.closest('.cfg-opt'); if (!b) return;
     this.querySelectorAll('.cfg-opt').forEach(function (x) { x.classList.remove('is-selected'); });
     b.classList.add('is-selected');
+    this.classList.remove('is-invalid');   /* clear any lingering validation highlight */
     state.anschluss = b.getAttribute('data-anschluss'); state.conn = CONN[state.anschluss] || null;
     applyConn(); refresh();   /* no auto-advance — user continues via "Weiter" */
   });
@@ -276,7 +297,7 @@
     refresh();
     if (state.gravurOn) { var gtf = $('bGravurText'); if (gtf) gtf.focus(); }
   });
-  var gt = $('bGravurText'); if (gt) gt.addEventListener('input', function () { state.gravurText = this.value; refresh(); });
+  var gt = $('bGravurText'); if (gt) gt.addEventListener('input', function () { this.classList.remove('is-invalid'); state.gravurText = this.value; refresh(); });
   var fonts = $('bFonts');
   if (fonts) fonts.addEventListener('click', function (e) {
     var b = e.target.closest('.cfg-font'); if (!b) return;
@@ -323,9 +344,11 @@
   function addToCart() {
     var iv = firstInvalid();
     if (iv > -1) {
-      openStep(iv);
-      var it = items[iv]; if (it) { it.classList.remove('is-flash'); void it.offsetWidth; it.classList.add('is-flash'); }
-      toast(iv === 0 ? 'Bitte zuerst die Anschlussart wählen.' : 'Bitte Ihren Gravurtext eingeben.');
+      openStep(iv, true);
+      scrollToProgress();
+      flashStep(iv);
+      if (iv === 0) { flashInvalid($('bAnschluss')); flashRequired(); }
+      else { flashInvalid($('bGravurText')); }
       return;
     }
     toast('In den Warenkorb gelegt · ' + euro(total()));
