@@ -83,6 +83,12 @@
   overflow: visible;   /* keep the product's soft shadow from being clipped */
 }
 .pdp-b .pdp-media__img { filter: none; }   /* image is an opaque white square — a shadow would outline it like a frame */
+/* Media view toggle icons — optical sizing. The "Fotos" glyph is a dense outline
+   (frame + sun + mountains) that fills its box corner-to-corner; the "3D" cube is
+   a sparse hexagonal outline with empty corners, so it reads lighter and looks
+   smaller at the same box size. Nudge the cube up ~12% so the two glyphs carry
+   equal visual weight. */
+.pdp-b .pdp-media__toggle button:last-child svg { width: 0.95rem; height: 0.95rem; }
 .pdp-b .pdp-thumbs button { width: 4.5rem; height: 4.5rem; border-radius: var(--radius); box-sizing: border-box; }
 /* selection recolours & thickens the existing border to a clean 2px teal — same
    treatment as the colour swatches; border-box keeps the footprint identical */
