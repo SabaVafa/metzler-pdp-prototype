@@ -83,10 +83,10 @@
   overflow: visible;   /* keep the product's soft shadow from being clipped */
 }
 .pdp-b .pdp-media__img { filter: none; }   /* image is an opaque white square — a shadow would outline it like a frame */
-.pdp-b .pdp-thumbs button { width: 4.5rem; height: 4.5rem; border-radius: var(--radius); }
-/* selection ring drawn INSET — the selected swatch keeps the exact footprint
-   of the deselected ones (the base outer box-shadow grew it ~2px) */
-.pdp-b .pdp-thumbs button[aria-current="true"] { box-shadow: inset 0 0 0 2px var(--color-teal); }
+.pdp-b .pdp-thumbs button { width: 4.5rem; height: 4.5rem; border-radius: var(--radius); box-sizing: border-box; }
+/* selection recolours & thickens the existing border to a clean 2px teal — same
+   treatment as the colour swatches; border-box keeps the footprint identical */
+.pdp-b .pdp-thumbs button[aria-current="true"] { border-width: 2px; border-color: var(--color-teal); box-shadow: none; }
 
 /* Live engraving overlay on the hero media */
 .pdp-b .pdp-media__engrave {
