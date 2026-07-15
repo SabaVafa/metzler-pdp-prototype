@@ -10,9 +10,9 @@
 <!-- Mega-menu dropdown, grabbed from the PLP -->
 <link rel="stylesheet" href="chrome.css?v=1" />
 <!-- New PDP sections -->
-<link rel="stylesheet" href="pdp.css?v=16" />
+<link rel="stylesheet" href="pdp.css?v=24" />
 <!-- Version B — inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=78" />
+<link rel="stylesheet" href="pdp-b.css?v=107" />
 </head>
 <body class="plp">
 
@@ -258,6 +258,35 @@
   <section class="pdp-hero" id="ueberblick" aria-label="Produktübersicht">
     <div class="container pdp-hero__grid">
 
+      <!-- Product header — title · rating · share (precedes the image on mobile) -->
+      <header class="pdp-hero__head">
+        <p class="pdp-eyebrow">Video-Türsprechanlage · nach Maß</p>
+        <h1 class="pdp-title">Metzler VDM10&nbsp;2.0 Video&#8209;Türsprechanlage&nbsp;<span class="pdp-title__sep">|</span> 1&nbsp;Klingeltaster&nbsp;<span class="pdp-title__sep">|</span> RAL&nbsp;7016 Anthrazitgrau&nbsp;<span class="pdp-title__sep">|</span> Colson</h1>
+        <div class="bx-cred">
+          <a href="#bewertungen" class="pdp-rate bx-cred__rate" aria-label="4,5 von 5">
+            <span class="pdp-stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6L12 17.8 6.6 19.6l1-6L3.3 9.4l6-.9z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6L12 17.8 6.6 19.6l1-6L3.3 9.4l6-.9z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6L12 17.8 6.6 19.6l1-6L3.3 9.4l6-.9z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6L12 17.8 6.6 19.6l1-6L3.3 9.4l6-.9z"/></svg>
+              <svg viewBox="0 0 24 24"><defs><linearGradient id="pdpStarHalf"><stop offset="50%" stop-color="currentColor"/><stop offset="50%" stop-color="#d8dbe0"/></linearGradient></defs><path fill="url(#pdpStarHalf)" d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6L12 17.8 6.6 19.6l1-6L3.3 9.4l6-.9z"/></svg>
+            </span>
+            <span class="pdp-rate__count"><b>4,5</b></span>
+          </a>
+          <div class="bx-share-wrap">
+            <button type="button" class="bx-share" id="pdpShare" aria-haspopup="true" aria-expanded="false" aria-controls="pdpShareMenu">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>
+              <span class="bx-share__t">Produkt teilen</span>
+            </button>
+            <div class="bx-share-menu" id="pdpShareMenu" role="menu" aria-label="Seite teilen über" hidden>
+              <button type="button" class="bx-share-menu__item" role="menuitem" data-share="copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 13.5a4 4 0 005.7 0l2.6-2.6a4 4 0 00-5.7-5.7L11.8 6.3"/><path d="M13.5 10.5a4 4 0 00-5.7 0l-2.6 2.6a4 4 0 005.7 5.7l1.3-1.3"/></svg><span>Link kopieren</span><svg class="bx-share-menu__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+              <a class="bx-share-menu__item" role="menuitem" data-share="email" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg><span>E-Mail</span><svg class="bx-share-menu__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></a>
+              <a class="bx-share-menu__item" role="menuitem" data-share="whatsapp" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 01-12.7 7.4L3 20.5l1.7-5A8.5 8.5 0 1121 11.5z"/><path d="M8.5 9c0 3.6 2.9 6.5 6.5 6.5"/></svg><span>WhatsApp</span><svg class="bx-share-menu__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></a>
+            </div>
+          </div>
+        </div>
+      </header>
+
       <!-- LEFT · Media -->
       <div class="pdp-media">
         <div class="pdp-media__stage">
@@ -267,7 +296,7 @@
               Fotos
             </button>
             <button type="button" aria-pressed="false">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(12 12) scale(0.9) translate(-12 -12)"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05"/><path d="M12 22.08V12"/></g></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05"/><path d="M12 22.08V12"/></svg>
               3D
             </button>
           </div>
@@ -284,39 +313,23 @@
           <li><button type="button" aria-current="false"><img src="Product Image/Sprechanlage/audio-station-namensschild.png" alt="Namensschild mit Gravur"></button></li>
           <li><button type="button" aria-current="false"><img src="Product Image/Sprechanlage/briefkasten-paketbox.png" alt="Kombination mit Briefkasten"></button></li>
           <li><button type="button" aria-current="false"><img src="Product Image/Sprechanlage/bus-xdm10.png" alt="Anschluss / BUS"></button></li>
+          <li><button type="button" aria-current="false"><img src="Product Image/Slider/metzler-vdm10-20-video-tuersprechanlage-1-klingeltaster-colson~6.webp" alt="VDM10 Detailansicht"></button></li>
+          <li><button type="button" aria-current="false"><img src="Product Image/Slider/metzler-vdm10-20-video-tuersprechanlage-1-klingeltaster-colson~11.webp" alt="VDM10 Kamera Detail"></button></li>
+          <li><button type="button" aria-current="false"><img src="Product Image/Slider/metzler-vdm10-20-video-tuersprechanlage-1-klingeltaster-colson~13.webp" alt="VDM10 Seitenansicht"></button></li>
+          <li><button type="button" aria-current="false"><img src="Product Image/Slider/metzler-vdm10-20-video-tuersprechanlage-1-klingeltaster-colson~19.webp" alt="VDM10 Montage"></button></li>
+          <li><button type="button" aria-current="false"><img src="Product Image/Slider/metzler-vdm10-20-video-tuersprechanlage-1-klingeltaster-colson~24.webp" alt="VDM10 an der Wand"></button></li>
+          <li><button type="button" aria-current="false"><img src="Product Image/Slider/metzler-vdm10-20-video-tuersprechanlage-1-klingeltaster-colson~28.webp" alt="VDM10 Nachtansicht"></button></li>
+          <li><button type="button" aria-current="false"><img src="Product Image/Slider/metzler-vdm10-20-video-tuersprechanlage-1-klingeltaster-colson~29.webp" alt="VDM10 Klingeltaster"></button></li>
+          <li><button type="button" aria-current="false"><img src="Product Image/Slider/metzler-vdm10-20-video-tuersprechanlage-1-klingeltaster-colson~32.webp" alt="VDM10 Lieferumfang"></button></li>
+          <li><button type="button" aria-current="false"><img src="Product Image/Sprechanlage/audio-station.png" alt="Audio-Station"></button></li>
+          <li><button type="button" aria-current="false"><img src="Product Image/Innenstation/metzler-intercom-innenstation-ultra-10-zoll-touchscreen-lan-poe-schwarz.webp" alt="Innenstation Ultra"></button></li>
+          <li><button type="button" aria-current="false"><img src="Product Image/Sprechanlage/mehrfamilien-anlage.png" alt="Mehrfamilien-Anlage"></button></li>
+          <li><button type="button" aria-current="false"><img src="Product Image/Sprechanlage/zubehoer.png" alt="Zubehör"></button></li>
         </ul>
       </div>
 
       <!-- RIGHT · Buy box -->
       <div class="pdp-buybox">
-
-        <p class="pdp-eyebrow">Video-Türsprechanlage · nach Maß</p>
-
-        <h1 class="pdp-title">Metzler VDM10&nbsp;2.0 Video&#8209;Türsprechanlage&nbsp;<span class="pdp-title__sep">|</span> 1&nbsp;Klingeltaster&nbsp;<span class="pdp-title__sep">|</span> RAL&nbsp;7016 Anthrazitgrau&nbsp;<span class="pdp-title__sep">|</span> Colson</h1>
-
-        <div class="bx-cred">
-          <a href="#bewertungen" class="pdp-rate bx-cred__rate" aria-label="4,5 von 5 · 63 Bewertungen">
-            <span class="pdp-stars" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6L12 17.8 6.6 19.6l1-6L3.3 9.4l6-.9z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6L12 17.8 6.6 19.6l1-6L3.3 9.4l6-.9z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6L12 17.8 6.6 19.6l1-6L3.3 9.4l6-.9z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6L12 17.8 6.6 19.6l1-6L3.3 9.4l6-.9z"/></svg>
-              <svg viewBox="0 0 24 24"><defs><linearGradient id="pdpStarHalf"><stop offset="50%" stop-color="currentColor"/><stop offset="50%" stop-color="#d8dbe0"/></linearGradient></defs><path fill="url(#pdpStarHalf)" d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6L12 17.8 6.6 19.6l1-6L3.3 9.4l6-.9z"/></svg>
-            </span>
-            <span class="pdp-rate__count"><b>4,5</b> · 63 Bewertungen</span>
-          </a>
-          <div class="bx-share-wrap">
-            <button type="button" class="bx-share" id="pdpShare" aria-haspopup="true" aria-expanded="false" aria-controls="pdpShareMenu">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>
-              <span class="bx-share__t">Teilen</span>
-            </button>
-            <div class="bx-share-menu" id="pdpShareMenu" role="menu" aria-label="Seite teilen über" hidden>
-              <button type="button" class="bx-share-menu__item" role="menuitem" data-share="copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 13.5a4 4 0 005.7 0l2.6-2.6a4 4 0 00-5.7-5.7L11.8 6.3"/><path d="M13.5 10.5a4 4 0 00-5.7 0l-2.6 2.6a4 4 0 005.7 5.7l1.3-1.3"/></svg><span>Link kopieren</span></button>
-              <a class="bx-share-menu__item" role="menuitem" data-share="email" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg><span>E-Mail</span></a>
-              <a class="bx-share-menu__item" role="menuitem" data-share="whatsapp" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 01-12.7 7.4L3 20.5l1.7-5A8.5 8.5 0 1121 11.5z"/><path d="M8.5 9c0 3.6 2.9 6.5 6.5 6.5"/></svg><span>WhatsApp</span></a>
-            </div>
-          </div>
-        </div>
 
         <dl class="pdp-specs" aria-label="Produktdaten">
           <div class="pdp-specs__item"><dt class="pdp-specs__label">Hersteller</dt><dd class="pdp-specs__value">Metzler</dd></div>
@@ -386,8 +399,8 @@
               </button>
               <div class="stepr__body"><div class="stepr__inner"><div class="stepr__pad">
                 <div class="cfg-opts" id="bAnschluss" role="radiogroup" aria-label="Anschlussart">
-                  <button class="cfg-opt" data-anschluss="LAN / PoE" data-conn="lan" data-delta="0" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Anschluss/metzler-patchkabel-flach-cat6-weiss.webp" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">LAN / PoE</span><span class="cfg-opt__desc">Netzwerk-Verkabelung mit PoE — empfohlen für Neubau</span></span><span class="cfg-opt__price is-incl">inklusive</span></button>
-                  <button class="cfg-opt" data-anschluss="2-Draht IP" data-conn="2draht" data-delta="0" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Anschluss/metzler-patchkabel-flach-cat6-weiss.webp" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">2-Draht IP</span><span class="cfg-opt__desc">Nutzt die vorhandene 2-Draht-Leitung — ideal für Nachrüstung</span></span><span class="cfg-opt__price is-incl">inklusive</span></button>
+                  <button class="cfg-opt" data-anschluss="LAN / PoE" data-conn="lan" data-delta="0" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Anschluss/LAN PoE.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">LAN / PoE</span><span class="cfg-opt__desc">Netzwerk-Verkabelung mit PoE — empfohlen für Neubau</span></span><span class="cfg-opt__price is-incl">inklusive</span></button>
+                  <button class="cfg-opt" data-anschluss="2-Draht IP" data-conn="2draht" data-delta="0" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Anschluss/2-Draht IP.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">2-Draht IP</span><span class="cfg-opt__desc">Nutzt die vorhandene 2-Draht-Leitung — ideal für Nachrüstung</span></span><span class="cfg-opt__price is-incl">inklusive</span></button>
                 </div>
                 <p class="cfgb-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg><span>Bitte beachten Sie die Anschlussvorgaben und Installationshinweise. Diese Wahl bestimmt die passenden Innenstationen und die Stromversorgung.</span></p>
                 <button type="button" class="cfgb-next" data-next>Weiter</button>
@@ -538,6 +551,29 @@
           </div>
         </div>
 
+        <!-- ===== FEATURE HIGHLIGHTS — numbered editorial list (below the CTA) ===== -->
+        <section class="feat" aria-label="Produkt-Highlights">
+          <ol class="feat__list">
+            <li class="feat__item"><span class="feat__name">Fortschrittliche Gesichtserkennung</span><span class="feat__desc">Öffnen Sie Ihre Tür sicher und schnell mit biometrischer Gesichtserkennung in nur 200 Millisekunden.</span></li>
+            <li class="feat__item"><span class="feat__name">Personalisierbarer Homescreen</span><span class="feat__desc">Bis zu acht virtuelle Klingeltaster sowie anpassbare Hintergründe und Symbole.</span></li>
+            <li class="feat__item"><span class="feat__name">Kristallklares HD-Video</span><span class="feat__desc">Erleben Sie Live-Videoübertragungen in Full-HD-Qualität für eine klare Sicht auf Ihre Besucher.</span></li>
+            <li class="feat__item"><span class="feat__name">Intuitives Touch-Display</span><span class="feat__desc">Bedienen Sie die Anlage mühelos über das benutzerfreundliche IPS-Touch-Display.</span></li>
+            <li class="feat__item"><span class="feat__name">Vielseitige Türöffnungsoptionen</span><span class="feat__desc">Nutzen Sie Gesichtserkennung, RFID-Karten, PIN-Codes oder die Smartphone-App für den Zutritt.</span></li>
+          </ol>
+        </section>
+
+        <!-- Trust badges (below the CTA) -->
+        <div class="hl__badges">
+          <span class="hl__badge">
+            <img class="hl__badge-seal" src="ICONS/Garantie.svg" alt="" aria-hidden="true" width="42" height="42">
+            <span class="hl__badge-txt"><span class="hl__badge-pre">10&nbsp;Jahre Metzler</span><b>Garantie</b></span>
+          </span>
+          <span class="hl__badge">
+            <img class="hl__badge-seal hl__badge-seal--flag" src="ICONS/Flag.png" alt="" aria-hidden="true" width="30" height="20">
+            <span class="hl__badge-txt"><span class="hl__badge-pre">Designed in</span><b>Germany</b></span>
+          </span>
+        </div>
+
         <div class="pdp-trust">
           <span class="pdp-trust__item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
@@ -565,6 +601,25 @@
           <img src="Paymentshipping%20logos/payment/SEPA.png" alt="SEPA-Lastschrift">
           <img src="Paymentshipping%20logos/payment/VORKASEE.png" alt="Vorkasse">
         </div>
+
+        <!-- Service & Beratung — support / partner network / consultation -->
+        <nav class="svc" aria-label="Service und Beratung">
+          <a class="svc__item" href="#">
+            <span class="svc__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 4M12 17h.01"/></svg></span>
+            <span class="svc__text"><span class="svc__title">Metzler FAQ</span><span class="svc__sub">Antworten auf häufige Fragen.</span></span>
+            <svg class="svc__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+          <a class="svc__item" href="#">
+            <span class="svc__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+            <span class="svc__text"><span class="svc__title">Fachhandels- und Montagepartner</span><span class="svc__sub">Partner in Ihrer Nähe finden</span></span>
+            <svg class="svc__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+          <a class="svc__item" href="#" data-cm-open>
+            <span class="svc__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+            <span class="svc__text"><span class="svc__title">Beratungstermin vereinbaren</span><span class="svc__sub">Kostenlos &amp; unverbindlich · persönlich beraten</span></span>
+            <svg class="svc__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+        </nav>
 
       </div>
     </div>
@@ -604,6 +659,54 @@
       <div class="sheet__price"><span class="sheet__pricelabel">Preis wie konfiguriert · inkl. USt.</span><b class="cfgb-total__amount" id="bSheetTotal">699,00 €</b></div>
       <button type="button" class="pdp-cta" id="bSheetCart">In den Warenkorb</button>
     </div>
+  </div>
+</div>
+
+<!-- ===== KONTAKT & SERVICE MODAL (opened by "Beratungstermin vereinbaren") ===== -->
+<div class="cm-overlay" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="cmTitle" aria-hidden="true">
+  <div class="cm-modal">
+    <button class="cm-close" type="button" aria-label="Schließen" data-cm-close>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <aside class="cm-brand">
+      <div class="cm-brand-head">
+        <h2 class="cm-brand-title">Sprechen Sie<br>mit einem <em>Experten</em></h2>
+        <p class="cm-lede">Persönliche Beratung, technischer Support und Metzler Partnerbetriebe — wir sind für Sie da.</p>
+      </div>
+      <div class="cm-brand-foot">
+        <span class="cm-label">Hotline</span>
+        <a class="cm-phone" href="tel:+4971213177333">+49 (0) 7121 / 317 7333</a>
+        <span class="cm-metaline">Mo–Fr · 09:00–16:00 Uhr</span>
+        <a class="cm-mail" href="mailto:service@metzlergmbh.de">service@metzlergmbh.de</a>
+      </div>
+    </aside>
+    <section class="cm-actions">
+      <p class="cm-eyebrow">Kontakt &amp; Service</p>
+      <h3 class="cm-h2" id="cmTitle">Wie können wir Ihnen helfen?</h3>
+      <p class="cm-sub">Wählen Sie Ihr Anliegen – wir helfen Ihnen gerne weiter.</p>
+      <div class="cm-list">
+        <a class="cm-row" href="#docs">
+          <span class="cm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span>
+          <span class="cm-body"><span class="cm-rowlabel">Dokumentation &amp; Downloads</span><span class="cm-rowmeta">Anleitungen, häufig gestellte Fragen und Tipps.</span></span>
+          <span class="cm-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        </a>
+        <a class="cm-row" href="#beratung">
+          <span class="cm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10z"/></svg></span>
+          <span class="cm-body"><span class="cm-rowlabel">Produktberatung &amp; Bestellung</span><span class="cm-rowmeta">Beratung vor dem Kauf einer Sprechanlage.</span></span>
+          <span class="cm-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        </a>
+        <a class="cm-row" href="#support">
+          <span class="cm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.1-2.1z"/></svg></span>
+          <span class="cm-body"><span class="cm-rowlabel">Technischer Support</span><span class="cm-rowmeta">Techniker Termin zur Einrichtung.</span></span>
+          <span class="cm-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        </a>
+        <a class="cm-row" href="#partner">
+          <span class="cm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <span class="cm-body"><span class="cm-rowlabel">Metzler Partnerbetriebe</span><span class="cm-rowmeta">Installationspartner in Ihrer Nähe.</span></span>
+          <span class="cm-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        </a>
+      </div>
+    </section>
   </div>
 </div>
 
@@ -900,6 +1003,6 @@
 </nav>
 
 <script src="chrome.js?v=1"></script>
-<script src="pdp-b.js?v=38"></script>
+<script src="pdp-b.js?v=42"></script>
 </body>
 </html>

@@ -34,12 +34,17 @@
 .pdp-hero__grid {
   display: grid;
   grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);  /* ~55 / 45 */
-  gap: clamp(2rem, 4vw, 4rem);
+  grid-template-areas: "media head" "media buy";   /* media spans both rows; header sits above the buy box in the right column */
+  column-gap: clamp(2rem, 4vw, 4rem);
+  row-gap: 1.2rem;   /* header→buybox: matches the roomier 2rem section rhythm (its own bottom leading adds the rest) */
   align-items: start;
 }
+.pdp-hero__head { grid-area: head; display: flex; flex-direction: column; gap: 2rem; min-width: 0; }
+.pdp-media { grid-area: media; }
+.pdp-buybox { grid-area: buy; }
 
 /* ── LEFT · Media stage ── */
-.pdp-media { position: sticky; top: 6.5rem; display: flex; flex-direction: column; gap: 1rem; }
+.pdp-media { position: sticky; top: 6.5rem; display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
 .pdp-media__stage {
   position: relative; border-radius: var(--radius-xl); overflow: hidden;
   aspect-ratio: 1 / 1;
@@ -63,23 +68,22 @@
    clearly-raised container and a high-contrast teal-filled active tab so it
    stays legible and accessible over any product image */
 .pdp-media__toggle {
-  position: absolute; top: 1rem; left: 1rem; z-index: 3;
-  display: inline-flex; gap: 0.25rem; padding: 0.3rem;
+  position: absolute; top: 0.75rem; left: 0.75rem; z-index: 3;
+  display: inline-flex; gap: 0.15rem; padding: 0.2rem;
   background: var(--color-white);
-  border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg);   /* match share button + option cards */
-  box-shadow: var(--shadow-lift);
+  border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg);
 }
 .pdp-media__toggle button {
   border: 0; background: none; cursor: pointer; font-family: inherit;
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  padding: 0.5rem 0.9rem; border-radius: var(--radius);
-  font-size: 0.8125rem; font-weight: 700; color: var(--color-graphite-700);
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 0.3rem 0.6rem; border-radius: var(--radius);
+  font-size: 0.75rem; font-weight: 700; color: var(--color-graphite-700);
   transition: background .16s, color .16s;
 }
-.pdp-media__toggle button:hover { color: var(--color-teal); background: var(--color-teal-50); }
+.pdp-media__toggle button:hover { color: var(--color-teal); background: rgba(255,255,255,0.55); }
 .pdp-media__toggle button[aria-pressed="true"],
 .pdp-media__toggle button[aria-pressed="true"]:hover { background: var(--color-teal); color: #fff; }
-.pdp-media__toggle svg { width: 1rem; height: 1rem; }
+.pdp-media__toggle svg { width: 0.85rem; height: 0.85rem; }
 
 /* Overlay badge (top-right) */
 .pdp-media__flag {
@@ -93,8 +97,16 @@
 }
 
 /* Thumbnail rail */
-.pdp-thumbs { list-style: none; margin: 0; padding: 0; display: flex; gap: 0.625rem; flex-wrap: wrap; }
-.pdp-thumbs li { margin: 0; }
+/* single-row horizontal filmstrip — fixed height regardless of image count;
+   scrolls instead of wrapping, with a right-edge fade hinting there's more */
+.pdp-thumbs { list-style: none; margin: 0; padding: 2px; display: flex; gap: 0.625rem; flex-wrap: nowrap;
+  min-width: 0; max-width: 100%;   /* let the strip scroll internally instead of stretching the page */
+  overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity; scroll-padding: 2px;
+  scrollbar-width: none; -ms-overflow-style: none;
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 2.25rem), transparent);
+  mask-image: linear-gradient(90deg, #000 calc(100% - 2.25rem), transparent); }
+.pdp-thumbs::-webkit-scrollbar { display: none; }
+.pdp-thumbs li { margin: 0; flex: none; scroll-snap-align: start; }
 .pdp-thumbs button {
   width: 5rem; height: 5rem; padding: 0.4rem; cursor: pointer;
   background: var(--color-white); border: 1px solid var(--color-graphite-300);
@@ -271,9 +283,11 @@
 
 /* ── Responsive ── */
 @media (max-width: 56.25rem) {
-  .pdp-hero__grid { grid-template-columns: 1fr; gap: 1.75rem; }
+  .pdp-hero__grid { grid-template-columns: 1fr; grid-template-areas: "head" "media" "buy"; row-gap: 1.5rem; }
   .pdp-media { position: static; }
   .pdp-media__stage { aspect-ratio: 4 / 3; }
+  /* header sits tight to the top; its rating leads straight into the image */
+  .pdp-hero__head { gap: 1.1rem; }
 }
 @media (max-width: 30rem) {
   .pdp-specs { flex-direction: column; align-items: stretch; }

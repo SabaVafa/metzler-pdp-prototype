@@ -170,8 +170,8 @@
      flat status chip that names the reason, so the user learns why. ── */
   function connLabel(c) { return c === 'lan' ? 'Nur mit LAN / PoE' : c === '2draht' ? 'Nur mit 2-Draht IP' : 'Nicht kompatibel'; }
   var BADGE_ICON = {
-    oos: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="6.5" y1="17.5" x2="17.5" y2="6.5"/></svg>',
-    incompat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 11.5h1V16h1"/></svg>'
+    oos: '',
+    incompat: ''
   };
   function setUnavailable(o, kind, text) {
     o.classList.add('is-unavailable');
@@ -298,6 +298,7 @@
     var b = e.target.closest('button'); if (!b) return;
     this.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-current', 'false'); });
     b.setAttribute('aria-current', 'true');
+    if (b.parentElement && b.parentElement.scrollIntoView) b.parentElement.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     var im = b.querySelector('img');
     if (im) { mainImg.style.opacity = '0'; window.setTimeout(function () { mainImg.src = im.getAttribute('src'); mainImg.alt = im.getAttribute('alt') || mainImg.alt; mainImg.style.opacity = '1'; }, 160); }
   });
@@ -443,6 +444,21 @@
   if (sheet) sheet.addEventListener('click', function (e) { if (e.target.closest('[data-sheet-close]')) closeSheet(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSheet(); });
   var sheetCart = $('bSheetCart'); if (sheetCart) sheetCart.addEventListener('click', function () { closeSheet(); addToCart(); });
+
+  /* ── Kontakt & Service modal (opened by "Beratungstermin vereinbaren") ── */
+  (function () {
+    var cm = document.getElementById('contactModal');
+    if (!cm) return;
+    var lastFocus = null;
+    function openCM(e) { if (e) e.preventDefault(); lastFocus = document.activeElement;
+      cm.classList.add('is-open'); cm.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
+      var f = cm.querySelector('a[href],button:not([disabled])'); if (f) f.focus(); }
+    function closeCM() { cm.classList.remove('is-open'); cm.setAttribute('aria-hidden', 'true'); document.body.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+    document.querySelectorAll('[data-cm-open]').forEach(function (el) { el.addEventListener('click', openCM); });
+    cm.addEventListener('click', function (e) { if (e.target === cm || e.target.closest('[data-cm-close]')) closeCM(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && cm.classList.contains('is-open')) closeCM(); });
+  })();
 
   /* ── Sticky step-dock: pin it flush against the site header's real bottom
      (header height varies by viewport, so measure it — a hardcoded offset
