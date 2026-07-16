@@ -475,7 +475,7 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
   letter-spacing: 0.1em; text-transform: uppercase; line-height: 1; color: var(--color-red);
   background: var(--color-red-50); border: 1px solid rgba(212,41,36,0.28); border-radius: var(--radius-pill);
   padding: 0.3rem 0.65rem; }
-.cfgb-dock__flag::before { content: ""; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: currentColor; flex: none; }
+.cfgb-dock__flag::before { display: none; }   /* dot removed per request */
 .cfgb-dock__flag.is-opt { color: var(--color-green-600); background: var(--color-green-50); border-color: rgba(0,153,81,0.28); }
 .cfgb-dock__seg { display: flex; gap: 0.3rem; margin: 0.7rem 0 0.9rem; }
 
@@ -512,19 +512,19 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 
 /* number — quiet, secondary to the label */
 .cfgb-dock .cfgb-bar__num {
-  flex: none; font-size: 0.7rem; font-weight: 800; line-height: 1;
+  flex: none; font-size: 0.8125rem; font-weight: 800; line-height: 1;
   font-variant-numeric: tabular-nums; opacity: 0.66;
 }
 
-/* label — the primary information: 11px, always visible, wraps instead of clipping */
+/* label — the primary information: always visible, wraps instead of clipping */
 .cfgb-dock .cfgb-bar__label {
   min-width: 0; max-width: 100%; text-align: center; color: inherit;
-  font-size: 0.6875rem; font-weight: 700; letter-spacing: 0; line-height: 1.1;
+  font-size: 0.8125rem; font-weight: 700; letter-spacing: 0; line-height: 1.15;
   white-space: normal; overflow-wrap: break-word; hyphens: auto;
 }
 /* standard middot divider between number and label — same "·" used across the UI
    (rating, price, availability); inherits each state's text colour */
-.cfgb-dock .cfgb-bar__label::before { content: "·"; margin-right: 0.35rem; font-weight: 700; opacity: 0.6; }
+.cfgb-dock .cfgb-bar__label::before { content: none; }   /* separator dropped to give the larger label more room in the ribbon */
 
 /* ahead (not yet reached) — quiet neutral */
 .cfgb-dock .cfgb-bar__step:hover { background: var(--color-graphite-300); color: var(--color-graphite-800); }
