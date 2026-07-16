@@ -9,6 +9,11 @@
    • CTA = immer aktiv & morphend: „Weiter …" → „In den Warenkorb".
    ============================================================ */
 
+/* Cap the page width — the design system's --container scales up to 1760/2040px
+   on big screens, which stretches the product hero. Hold it at a comfortable
+   max so the layout stays centered instead of spreading edge-to-edge. */
+:root { --container: 1380px; }
+
 /* ── Fold rhythm: fewer, larger beats — more air between the stacked blocks ── */
 .pdp-b .pdp-buybox { gap: 2rem; }   /* roomier section rhythm — was cramped at 1.6rem */
 /* extra separation before the configurator, so product info reads apart from it */
@@ -23,6 +28,8 @@
 .pdp-b .pdp-title .pdp-title__sep { color: var(--ink-60); font-weight: 300; margin: 0 0.3em; }
 
 /* Credential line — one calm row replaces two loud badges */
+/* tighten the gap between the breadcrumb and the product title (hero top padding) */
+.pdp-b .pdp-hero { padding-top: 1rem; }
 /* rating/share sits right under the title (the header's 2rem gap left it floating) */
 .pdp-b .pdp-hero__head { gap: 0.6rem; }
 .bx-cred { display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem 0.9rem; margin-top: 0.15rem; }
