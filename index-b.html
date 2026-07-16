@@ -10,9 +10,9 @@
 <!-- Mega-menu dropdown, grabbed from the PLP -->
 <link rel="stylesheet" href="chrome.css?v=1" />
 <!-- New PDP sections -->
-<link rel="stylesheet" href="pdp.css?v=24" />
+<link rel="stylesheet" href="pdp.css?v=28" />
 <!-- Version B — inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=109" />
+<link rel="stylesheet" href="pdp-b.css?v=127" />
 </head>
 <body class="plp">
 
@@ -416,9 +416,8 @@
                 <svg class="stepr__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
               </button>
               <div class="stepr__body"><div class="stepr__inner"><div class="stepr__pad">
-                <div class="cfg-opts cfg-opts--rows" id="bGravurSeg" role="radiogroup" aria-label="Gravur wählen">
-                  <button class="cfg-opt is-selected" data-gravur="off" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Ohne Gravur</span><span class="cfg-opt__desc">Neutrales Namensschild</span></span><span class="cfg-opt__price is-incl">inklusive</span></button>
-                  <button class="cfg-opt" data-gravur="on" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Mit Namensgravur</span><span class="cfg-opt__desc">Ihr Name per Lasergravur — UV- &amp; witterungsbeständig</span></span><span class="cfg-opt__price is-incl">inklusive</span></button>
+                <div class="cfg-opts cfg-opts--rows" id="bGravurSeg" role="group" aria-label="Namensgravur hinzufügen">
+                  <button class="cfg-opt cfg-opt--check" data-gravur="on" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Mit Namensgravur</span><span class="cfg-opt__desc">Ihr Name per Lasergravur — UV- &amp; witterungsbeständig</span></span><span class="cfg-opt__price is-incl">inklusive</span></button>
                 </div>
                 <div class="cfgb-field" id="bGravurField">
                   <input class="cfg-input" id="bGravurText" type="text" maxlength="20" placeholder="Ihr Name (z. B. Vossberg)" aria-label="Gravurtext">
@@ -442,14 +441,20 @@
                 <svg class="stepr__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
               </button>
               <div class="stepr__body"><div class="stepr__inner"><div class="stepr__pad">
-                <div class="cfg-opts" id="bInnen" role="radiogroup" aria-label="Innenstation wählen">
-                  <button class="cfg-opt is-selected" data-innen="Ohne Innenstation" data-conn="both" data-delta="0" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb cfg-opt__thumb--none" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><filter id="noneSh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.5" stdDeviation="1.6" flood-color="#5b6b6a" flood-opacity="0.18"/></filter><linearGradient id="noneStroke" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#AEB4B8"/><stop offset="1" stop-color="#828A8E"/></linearGradient></defs><g filter="url(#noneSh)" fill="none" stroke="url(#noneStroke)" stroke-width="2.4" stroke-linecap="round"><circle cx="24" cy="24" r="16"/><line x1="13.5" y1="34.5" x2="34.5" y2="13.5"/></g></svg></span><span class="cfg-opt__body"><span class="cfg-opt__name">Ohne Innenstation</span><span class="cfg-opt__desc">Nutzung über SIP / Fritz!Box &amp; Fritz!Fon (Smartphone-App nur über Innenstation)</span></span><span class="cfg-opt__price is-incl">0,00 €</span></button>
-                  <button class="cfg-opt" data-innen="Innenstation Home" data-conn="both" data-delta="199" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/innenstation.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Innenstation Home <span class="cfg-opt__tag">beliebt</span></span><span class="cfg-opt__desc">7″ Touchscreen · weiß oder schwarz</span></span><span class="cfg-opt__price">+199,00 €</span></button>
-                  <button class="cfg-opt" data-innen="Innenstation Pro" data-conn="lan" data-delta="439" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/innenstation.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Innenstation Pro</span><span class="cfg-opt__desc">7″ IPS-Touchscreen · grau · nur LAN/PoE</span></span><span class="cfg-opt__price">+439,00 €</span></button>
-                  <button class="cfg-opt" data-innen="Innenstation Ultra" data-conn="lan" data-delta="449" data-stock="out" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Innenstation/metzler-intercom-innenstation-ultra-10-zoll-touchscreen-lan-poe-schwarz.webp" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Innenstation Ultra</span><span class="cfg-opt__desc">10″ Touchscreen · schwarz · nur LAN/PoE</span></span><span class="cfg-opt__price">+449,00 €</span></button>
-                </div>
-                <div class="cfg-field" id="bInnenQtyWrap">
-                  <div class="cfg-opt" style="cursor:default"><span class="cfg-opt__body"><span class="cfg-opt__name">Anzahl Innenstationen</span><span class="cfg-opt__desc">Bis zu 11 pro Wohneinheit · jederzeit erweiterbar</span></span><span class="cfg-opt__qty"><button type="button" data-qd="-1" data-target="innen" aria-label="weniger">−</button><span id="bInnenQty">1</span><button type="button" data-qd="1" data-target="innen" aria-label="mehr">+</button></span></div>
+                <p class="cfg-innen-note"><b>Ohne Innenstation?</b> Wählen Sie einfach keine aus — die Anlage ist dann über SIP / Fritz!Box &amp; Fritz!Fon nutzbar. Die Metzler Smartphone-App ist nur mit einer Innenstation verfügbar.</p>
+                <div class="cfg-opts" id="bInnen" role="group" aria-label="Innenstationen wählen — Mehrfachauswahl möglich, je Modell eigene Menge">
+                  <div class="cfg-choice">
+                    <button class="cfg-opt cfg-opt--check" data-innen="Innenstation Home" data-conn="both" data-delta="199" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/innenstation.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Innenstation Home</span><span class="cfg-opt__desc">7″ Touchscreen · weiß oder schwarz</span></span><span class="cfg-opt__price">+199,00 €</span></button>
+                    <div class="cfg-choice__qty"><span class="cfg-choice__qtyl">Menge</span><span class="cfg-opt__qty"><button type="button" data-qd="-1" data-target="innen:Innenstation Home" aria-label="weniger">−</button><span data-innenqtyfor="Innenstation Home">1</span><button type="button" data-qd="1" data-target="innen:Innenstation Home" aria-label="mehr">+</button></span></div>
+                  </div>
+                  <div class="cfg-choice">
+                    <button class="cfg-opt cfg-opt--check" data-innen="Innenstation Pro" data-conn="lan" data-delta="439" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/innenstation.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Innenstation Pro</span><span class="cfg-opt__desc">7″ IPS-Touchscreen · grau · nur LAN/PoE</span></span><span class="cfg-opt__price">+439,00 €</span></button>
+                    <div class="cfg-choice__qty"><span class="cfg-choice__qtyl">Menge</span><span class="cfg-opt__qty"><button type="button" data-qd="-1" data-target="innen:Innenstation Pro" aria-label="weniger">−</button><span data-innenqtyfor="Innenstation Pro">1</span><button type="button" data-qd="1" data-target="innen:Innenstation Pro" aria-label="mehr">+</button></span></div>
+                  </div>
+                  <div class="cfg-choice">
+                    <button class="cfg-opt cfg-opt--check" data-innen="Innenstation Ultra" data-conn="lan" data-delta="449" data-stock="out" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Innenstation/metzler-intercom-innenstation-ultra-10-zoll-touchscreen-lan-poe-schwarz.webp" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Innenstation Ultra</span><span class="cfg-opt__desc">10″ Touchscreen · schwarz · nur LAN/PoE</span></span><span class="cfg-opt__price">+449,00 €</span></button>
+                    <div class="cfg-choice__qty"><span class="cfg-choice__qtyl">Menge</span><span class="cfg-opt__qty"><button type="button" data-qd="-1" data-target="innen:Innenstation Ultra" aria-label="weniger">−</button><span data-innenqtyfor="Innenstation Ultra">1</span><button type="button" data-qd="1" data-target="innen:Innenstation Ultra" aria-label="mehr">+</button></span></div>
+                  </div>
                 </div>
                 <button type="button" class="cfgb-next" data-next>Weiter</button>
               </div></div></div>
@@ -464,8 +469,8 @@
                 <svg class="stepr__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
               </button>
               <div class="stepr__body"><div class="stepr__inner"><div class="stepr__pad">
-                <div class="cfg-opts" id="bStrom" role="radiogroup" aria-label="Stromversorgung wählen">
-                  <button class="cfg-opt is-selected" data-strom="Standard" data-conn="both" data-delta="0" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb cfg-opt__thumb--none" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><filter id="noneSh2" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.5" stdDeviation="1.6" flood-color="#5b6b6a" flood-opacity="0.18"/></filter><linearGradient id="noneStroke2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#AEB4B8"/><stop offset="1" stop-color="#828A8E"/></linearGradient></defs><g filter="url(#noneSh2)" fill="none" stroke="url(#noneStroke2)" stroke-width="2.4" stroke-linecap="round"><circle cx="24" cy="24" r="16"/><line x1="13.5" y1="34.5" x2="34.5" y2="13.5"/></g></svg></span><span class="cfg-opt__body"><span class="cfg-opt__name">Standard</span><span class="cfg-opt__desc">Kein zusätzliches Netzteil erforderlich</span></span><span class="cfg-opt__price is-incl">inklusive</span></button>
+                <p class="cfg-innen-note"><b>Standard</b> — kein zusätzliches Netzteil erforderlich. Wählen Sie unten nur, wenn Sie eine PoE-Speisung oder einen 2-Draht-Verteiler benötigen.</p>
+                <div class="cfg-opts" id="bStrom" role="group" aria-label="Zusätzliche Stromversorgung wählen — optional">
                   <button class="cfg-opt" data-strom="Netzwerkswitch 4× PoE+" data-conn="lan" data-delta="49.99" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Anschluss/metzler-patchkabel-flach-cat6-weiss.webp" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Netzwerkswitch 10/100 · 4× PoE+</span><span class="cfg-opt__desc">Speist Tür- und Innenstationen per PoE</span></span><span class="cfg-opt__price">+49,99 €</span></button>
                   <button class="cfg-opt" data-strom="Netzwerkswitch 8× PoE+" data-conn="lan" data-delta="119" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Anschluss/metzler-patchkabel-flach-cat6-weiss.webp" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Netzwerkswitch 100/1000 · 8× PoE+</span><span class="cfg-opt__desc">Gigabit · für größere Installationen</span></span><span class="cfg-opt__price">+119,00 €</span></button>
                   <button class="cfg-opt" data-strom="2-Draht Verteiler" data-conn="2draht" data-delta="169" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Verteiler/metzler-2-draht-video-audio-verteiler-transformator-4-anschluesse-fuer-die-xdm10-serie.webp" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">2-Draht Video-/Audio-Verteiler · 6 Anschlüsse</span><span class="cfg-opt__desc">Inkl. Transformator</span></span><span class="cfg-opt__price">+169,00 €</span></button>
@@ -518,7 +523,7 @@
           </ol>
           </div>
           <div class="cfgb-nav">
-            <button type="button" class="cfgb-nav__back" id="bBack" hidden>Zurück</button>
+            <button type="button" class="cfgb-nav__back" id="bBack" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Zurück</button>
             <button type="button" class="cfgb-nav__fwd" id="bFwd">Weiter</button>
           </div>
 
@@ -1003,6 +1008,6 @@
 </nav>
 
 <script src="chrome.js?v=1"></script>
-<script src="pdp-b.js?v=42"></script>
+<script src="pdp-b.js?v=46"></script>
 </body>
 </html>

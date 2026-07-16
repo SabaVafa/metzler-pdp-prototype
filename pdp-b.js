@@ -29,7 +29,7 @@
     finish: 'Anthrazit RAL 7016', finishDelta: 0, article: '31101', mainQty: 1,
     anschluss: null, conn: null,
     gravurOn: false, gravurText: '', font: 'Serif',
-    innen: 'Ohne Innenstation', innenDelta: 0, innenQty: 1,
+    innenSel: {},   /* name -> { price, qty, label } — multi-select, own qty each */
     strom: 'Standard', stromDelta: 0, stromQty: 1,
     extras: {}   /* name -> { price, qty, label } */
   };
@@ -40,13 +40,19 @@
   function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
   function euro(n) { return n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €'; }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-  function hasInnen() { return state.innen && state.innen !== 'Ohne Innenstation'; }
+  function hasInnen() { return Object.keys(state.innenSel).length > 0; }
+  function innenSum() { var s = 0; for (var k in state.innenSel) s += state.innenSel[k].price * state.innenSel[k].qty; return s; }
+  function innenLabel() {
+    var parts = [];
+    for (var k in state.innenSel) { var s = state.innenSel[k]; parts.push((s.qty > 1 ? s.qty + '× ' : '') + (s.label || k)); }
+    return parts.join(', ') + ' · +' + euro(innenSum());
+  }
   function hasStrom() { return state.strom && state.strom !== 'Standard'; }
   function extrasCount() { return Object.keys(state.extras).length; }
   function extrasSum() { var s = 0; for (var k in state.extras) s += state.extras[k].price * state.extras[k].qty; return s; }
   function total() {
     var t = state.mainQty * (BASE + state.finishDelta);
-    if (hasInnen()) t += state.innenDelta * state.innenQty;
+    t += innenSum();
     if (hasStrom()) t += state.stromDelta * state.stromQty;
     return t + extrasSum();
   }
@@ -66,7 +72,7 @@
 
     setTxt('bPickAnschluss', state.anschluss || 'Bitte wählen');
     setTxt('bPickGravur', state.gravurOn ? (state.gravurText ? '„' + state.gravurText + '" · ' + state.font : 'Mit Gravur') : 'Ohne Gravur');
-    setTxt('bPickInnen', hasInnen() ? state.innen + (state.innenQty > 1 ? ' ×' + state.innenQty : '') + ' · +' + euro(state.innenDelta * state.innenQty) : 'Ohne Innenstation');
+    setTxt('bPickInnen', hasInnen() ? innenLabel() : 'Ohne Innenstation');
     setTxt('bPickStrom', hasStrom() ? state.strom + ' · +' + euro(state.stromDelta * state.stromQty) : 'Standard · inklusive');
     setTxt('bPickExtras', extrasCount() ? extrasCount() + ' ausgewählt · +' + euro(extrasSum()) : 'Kein Zubehör');
 
@@ -80,11 +86,10 @@
     setTxt('bMainQtyVal', state.mainQty);
     var mainMinus = document.querySelector('.cfgb-buyrow__qty button[data-qd="-1"][data-target="main"]');
     if (mainMinus) mainMinus.disabled = state.mainQty <= 1;
-    setTxt('bInnenQty', state.innenQty);
-    var iqw = $('bInnenQtyWrap'); if (iqw) iqw.classList.toggle('is-shown', hasInnen());
     setTxt('bStromQty', state.stromQty);
     var sqw = $('bStromQtyWrap'); if (sqw) sqw.classList.toggle('is-shown', hasStrom());
     document.querySelectorAll('[data-qtyfor]').forEach(function (s) { var n = s.getAttribute('data-qtyfor'); s.textContent = state.extras[n] ? state.extras[n].qty : 1; });
+    document.querySelectorAll('[data-innenqtyfor]').forEach(function (s) { var n = s.getAttribute('data-innenqtyfor'); s.textContent = state.innenSel[n] ? state.innenSel[n].qty : 1; });
     document.querySelectorAll('.cfg-choice').forEach(function (c) { var o = c.querySelector('.cfg-opt'); c.classList.toggle('is-open', !!(o && o.classList.contains('is-selected'))); });
     markDone();
     updateDock();
@@ -142,7 +147,7 @@
     h += row('<b>Metzler VDM10 2.0</b>', esc(state.finish), roQty(state.mainQty), euro(state.mainQty * (BASE + state.finishDelta)));
     if (state.anschluss) h += row('Anschluss', esc(state.anschluss), null, 'inklusive');
     if (state.gravurOn) h += row('Gravur', state.gravurText ? '„' + esc(state.gravurText) + '" · ' + state.font : 'Mit Namensgravur', null, 'inklusive');
-    if (hasInnen()) h += row(esc(state.innen), null, roQty(state.innenQty), euro(state.innenDelta * state.innenQty));
+    for (var ik in state.innenSel) { var iv = state.innenSel[ik]; h += row(esc(iv.label || ik), null, roQty(iv.qty), euro(iv.price * iv.qty)); }
     if (hasStrom()) h += row(esc(state.strom), null, null, euro(state.stromDelta * state.stromQty));
     for (var k in state.extras) { var x = state.extras[k]; h += row(esc(x.label || k), null, roQty(x.qty), euro(x.price * x.qty)); }
     document.querySelectorAll('.cfgb-summary').forEach(function (x) { x.innerHTML = h; });
@@ -152,8 +157,8 @@
   }
   function applyQty(target, d) {
     if (target === 'main') state.mainQty = clamp(state.mainQty + d, 1, 20);
-    else if (target === 'innen') state.innenQty = clamp(state.innenQty + d, 1, 11);
     else if (target === 'strom') state.stromQty = clamp(state.stromQty + d, 1, 10);
+    else if (target.indexOf('innen:') === 0) { var ni = target.slice(6); if (state.innenSel[ni]) state.innenSel[ni].qty = clamp(state.innenSel[ni].qty + d, 1, 11); }
     else if (target.indexOf('extra:') === 0) { var n = target.slice(6); if (state.extras[n]) state.extras[n].qty = clamp(state.extras[n].qty + d, 1, 20); }
     refresh();
   }
@@ -189,9 +194,27 @@
   function isOOS(o) { return o.getAttribute('data-stock') === 'out'; }
 
   function applyConn() {
-    ['bInnen', 'bStrom'].forEach(function (id) {
-      var box = $(id); if (!box) return;
-      var opts = [].slice.call(box.querySelectorAll('.cfg-opt'));
+    /* Innenstationen — multi-select: mark each option available/inert, and if a
+       CHECKED one becomes incompatible or out of stock, uncheck it and drop it
+       from the selection (no forced fallback — "none selected" is a valid state). */
+    var innenBox = $('bInnen');
+    if (innenBox) {
+      [].slice.call(innenBox.querySelectorAll('.cfg-opt')).forEach(function (o) {
+        var c = o.getAttribute('data-conn');
+        var compat = !state.conn || c === 'both' || c === state.conn;
+        if (isOOS(o)) setUnavailable(o, 'oos', 'Ausverkauft');
+        else if (!compat) setUnavailable(o, 'incompat', connLabel(c));
+        else setAvailable(o);
+        if (o.classList.contains('is-unavailable') && o.classList.contains('is-selected')) {
+          o.classList.remove('is-selected');
+          delete state.innenSel[o.getAttribute('data-innen')];
+        }
+      });
+    }
+    /* Stromversorgung — single-select: on block, fall back to the first available. */
+    var stromBox = $('bStrom');
+    if (stromBox) {
+      var opts = [].slice.call(stromBox.querySelectorAll('.cfg-opt'));
       var selBlocked = false;
       opts.forEach(function (o) {
         var c = o.getAttribute('data-conn');
@@ -203,11 +226,8 @@
           o.classList.remove('is-selected'); selBlocked = true;
         }
       });
-      if (selBlocked) {
-        var def = opts.filter(function (o) { return !o.classList.contains('is-unavailable'); })[0];
-        if (def) { def.classList.add('is-selected'); syncGroupState(id, def); }
-      }
-    });
+      if (selBlocked) { state.strom = 'Standard'; state.stromDelta = 0; }   /* revert to Standard, never auto-pick a paid switch */
+    }
   }
   /* out-of-stock in groups without a connection dependency (Anschluss, Zubehör) */
   function applyStock() {
@@ -216,8 +236,7 @@
     });
   }
   function syncGroupState(id, btn) {
-    if (id === 'bInnen') { state.innen = btn.getAttribute('data-innen'); state.innenDelta = parseFloat(btn.getAttribute('data-delta')) || 0; }
-    else if (id === 'bStrom') { state.strom = btn.getAttribute('data-strom'); state.stromDelta = parseFloat(btn.getAttribute('data-delta')) || 0; }
+    if (id === 'bStrom') { state.strom = btn.getAttribute('data-strom'); state.stromDelta = parseFloat(btn.getAttribute('data-delta')) || 0; }
   }
 
   /* ── Single-step navigation (step-dock + Weiter/Zurück) ── */
@@ -324,10 +343,9 @@
   var seg = $('bGravurSeg');
   if (seg) seg.addEventListener('click', function (e) {
     var b = e.target.closest('.cfg-opt'); if (!b) return;
-    this.querySelectorAll('.cfg-opt').forEach(function (x) { x.classList.remove('is-selected'); });
-    b.classList.add('is-selected');
-    state.gravurOn = b.getAttribute('data-gravur') === 'on';
+    state.gravurOn = b.classList.toggle('is-selected');   /* toggle add-on; unselected = ohne Gravur */
     $('bGravurField').classList.toggle('is-shown', state.gravurOn);
+    if (!state.gravurOn) { state.gravurText = ''; var gc = $('bGravurText'); if (gc) gc.value = ''; }
     refresh();
     if (state.gravurOn) { var gtf = $('bGravurText'); if (gtf) gtf.focus(); }
   });
@@ -340,13 +358,15 @@
     if (gt) gt.style.fontFamily = FONTS[state.font] || ''; refresh();
   });
 
-  /* ── 3 · Innenstationen → auto-advance ── */
+  /* ── 3 · Innenstationen → multi-select, each with its own qty (no auto-advance,
+     since users may combine several models) ── */
   var innen = $('bInnen');
   if (innen) innen.addEventListener('click', function (e) {
     var b = e.target.closest('.cfg-opt'); if (!b || b.classList.contains('is-unavailable')) return;
-    this.querySelectorAll('.cfg-opt').forEach(function (x) { x.classList.remove('is-selected'); });
-    b.classList.add('is-selected'); syncGroupState('bInnen', b);
-    if (!hasInnen()) state.innenQty = 1;
+    var name = b.getAttribute('data-innen'), d = parseFloat(b.getAttribute('data-delta')) || 0;
+    var label = (b.querySelector('.cfg-opt__name') || {}).textContent || name;
+    if (b.classList.toggle('is-selected')) state.innenSel[name] = { price: d, qty: 1, label: label.trim() };
+    else delete state.innenSel[name];
     refresh();
   });
 
@@ -354,14 +374,18 @@
   var strom = $('bStrom');
   if (strom) strom.addEventListener('click', function (e) {
     var b = e.target.closest('.cfg-opt'); if (!b || b.classList.contains('is-unavailable')) return;
+    var wasSel = b.classList.contains('is-selected');
     this.querySelectorAll('.cfg-opt').forEach(function (x) { x.classList.remove('is-selected'); });
-    b.classList.add('is-selected'); syncGroupState('bStrom', b);
+    if (wasSel) { state.strom = 'Standard'; state.stromDelta = 0; }   /* deselect → back to Standard (inklusive) */
+    else { b.classList.add('is-selected'); syncGroupState('bStrom', b); }
     if (!hasStrom()) state.stromQty = 1;
     refresh();
   });
 
-  /* ── 2 & 5 · optional add-ons (checkboxes, own qty) ── */
+  /* ── 2 & 5 · optional add-ons (checkboxes, own qty) — Innenstationen share the
+     .cfg-opt--check styling but have their own handler above, so skip them here ── */
   document.querySelectorAll('#cfgbSteps .cfg-opt--check').forEach(function (b) {
+    if (!b.hasAttribute('data-extra')) return;   /* Innen / Gravur reuse the checkbox look but have their own handlers */
     b.addEventListener('click', function () {
       if (b.classList.contains('is-unavailable')) return;
       var name = b.getAttribute('data-extra'), d = parseFloat(b.getAttribute('data-delta')) || 0;
@@ -467,14 +491,30 @@
      when its sentinel can be display:none). ── */
   var dockEl = document.querySelector('.cfgb-dock');
   var headerEl = document.querySelector('.header') || document.querySelector('header');
+  var sentinelEl = document.querySelector('.cfgb-sentinel');
   if (dockEl) {
+    var mqMobile = window.matchMedia('(max-width: 640px)');
     var dockStuck = function () {
       var pin = headerEl ? Math.round(headerEl.getBoundingClientRect().height) : 104;
       if (dockEl.style.top !== pin + 'px') dockEl.style.top = pin + 'px';
-      dockEl.classList.toggle('is-stuck', dockEl.getBoundingClientRect().top <= pin + 1);
+      if (mqMobile.matches && sentinelEl) {
+        /* Mobile: detach the ribbon as a full-width bar fixed below the header so
+           it persists across the WHOLE page (sticky is bounded by .cfgb). The
+           in-flow sentinel is the scroll reference; grow it to the dock's height
+           so the content below doesn't jump when the dock leaves the flow. */
+        var stuck = sentinelEl.getBoundingClientRect().top <= pin + 1;
+        dockEl.classList.toggle('is-stuck', stuck);
+        dockEl.classList.toggle('is-fixed', stuck);
+        sentinelEl.style.height = stuck ? dockEl.offsetHeight + 'px' : '';
+      } else {
+        dockEl.classList.remove('is-fixed');
+        if (sentinelEl) sentinelEl.style.height = '';
+        dockEl.classList.toggle('is-stuck', dockEl.getBoundingClientRect().top <= pin + 1);
+      }
     };
     window.addEventListener('scroll', dockStuck, { passive: true });
     window.addEventListener('resize', dockStuck, { passive: true });
+    if (mqMobile.addEventListener) mqMobile.addEventListener('change', dockStuck);
     dockStuck();
   }
 

@@ -14,6 +14,9 @@
   --color-red-50: #FFF0EF;       --color-red: #D42924;       --color-red-600: #B52320;
   --color-white: #FFFFFF;        --color-paper: #F5F6FA;
   --color-green: #009951;        --color-star: #FFC041;
+  --color-green-50: #E7F6EE;     --color-green-600: #007A40;
+  --color-blue-50: #EAF2FB;      --color-blue: #1C6FB8;      --color-blue-600: #155A96;
+  --color-orange-50: #FFF3E4;    --color-orange: #E07B00;    --color-orange-600: #B45309;
   --color-graphite-100: #F0F0F0; --color-graphite-450: #CCCCCC;
   --color-teal-75: #E3F2F0;
   --ink-60: rgba(0, 0, 0, 0.6);   /* dividers / separators (also used by chrome.css) */
@@ -218,9 +221,9 @@
   display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
   height: 3.5rem; padding: 0 1.5rem; border-radius: var(--radius);
   background: var(--color-teal); color: #fff; font-size: 1.0625rem; font-weight: 700;
-  box-shadow: 0 0.5rem 1.25rem rgba(1,82,83,0.22); transition: background .16s, transform .12s, box-shadow .16s;
+  box-shadow: 0 0.375rem 0.9rem rgba(1,82,83,0.15); transition: background .16s, transform .12s, box-shadow .16s;
 }
-.pdp-cta:hover { background: var(--color-teal-hover); box-shadow: 0 0.75rem 1.5rem rgba(1,82,83,0.28); }
+.pdp-cta:hover { background: var(--color-teal-hover); box-shadow: 0 0.5rem 1.1rem rgba(1,82,83,0.2); }
 .pdp-cta:active { transform: translateY(1px); }
 .pdp-cta svg { width: 1.15rem; height: 1.15rem; }
 .pdp-cta__note { display: block; text-align: center; margin: 0; font-size: 0.8125rem; color: var(--color-graphite-600); }
@@ -342,7 +345,7 @@ body.cfg-lock { overflow: hidden; }
 /* number marker — plain figure, not a badge; becomes a teal check when done */
 .cfg-rail__step b { font-size: 0.75rem; font-weight: 700; color: var(--color-graphite-400); font-variant-numeric: tabular-nums; transition: color .18s ease; }
 .cfg-rail__step.is-done b { color: var(--color-teal); font-size: 0.875rem; }
-.cfg-rail__step .opt { font-size: 0.5625rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--color-graphite-400); }
+.cfg-rail__step .opt { font-size: 0.5625rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--color-green-600); }
 .cfg-rail__step.is-done .opt { display: none; } /* value replaces the "optional" tag once chosen */
 .cfg-rail__step .val { max-width: 9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.75rem; font-weight: 400; color: var(--color-graphite-500); }
 .cfg-rail__step:hover { color: var(--color-digital-black); }
@@ -384,7 +387,7 @@ body.cfg-lock { overflow: hidden; }
 @keyframes cfg-in-back { from { opacity: 0; transform: translateX(-1.1rem); } to { opacity: 1; transform: none; } }
 .cfg-step__head { display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 0.35rem; }
 .cfg-step__n { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-teal); }
-.cfg-step__opt { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-graphite-500); }
+.cfg-step__opt { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-green-600); }
 .cfg-step h2 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.015em; color: var(--color-digital-black); margin: 0 0 0.4rem; }
 .cfg-step__sub { font-size: 0.9375rem; color: var(--color-graphite-700); margin: 0 0 1.25rem; max-width: 46ch; }
 
