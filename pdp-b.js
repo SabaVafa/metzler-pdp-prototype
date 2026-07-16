@@ -14,7 +14,18 @@
   'use strict';
   var $ = function (id) { return document.getElementById(id); };
   var BASE = 699;
-  var FONTS = { Serif: "Georgia,'Times New Roman',serif", Grotesk: "Arial,Helvetica,sans-serif", Script: "'Segoe Script','Brush Script MT',cursive", Mono: "'Courier New',monospace" };
+  var FONTS = {
+    Klassisch: "'Cinzel',Georgia,serif",
+    Elegant: "'Playfair Display',Georgia,serif",
+    Fein: "'Cormorant Garamond',Georgia,serif",
+    Modern: "'Montserrat',Arial,sans-serif",
+    Schmal: "'Oswald','Arial Narrow',sans-serif",
+    Schreibschrift: "'Dancing Script',cursive",
+    Kalligrafie: "'Great Vibes',cursive",
+    Handschrift: "'Caveat',cursive",
+    Fraktur: "'UnifrakturMaguntia',serif",
+    Technisch: "'Roboto Mono','Courier New',monospace"
+  };
   var STEPS = [
     { key: 'anschluss', name: 'Anschluss', req: true },
     { key: 'gravur', name: 'Gravurdaten' },
@@ -28,7 +39,7 @@
   var state = {
     finish: 'Anthrazit RAL 7016', finishDelta: 0, article: '31101', mainQty: 1,
     anschluss: null, conn: null,
-    gravurOn: false, gravurText: '', font: 'Serif',
+    gravurOn: false, gravurText: '', font: 'Klassisch',
     innenSel: {},   /* name -> { price, qty, label } — multi-select, own qty each */
     strom: 'Standard', stromDelta: 0, stromQty: 1,
     extras: {}   /* name -> { price, qty, label } */

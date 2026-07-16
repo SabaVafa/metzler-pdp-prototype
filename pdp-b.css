@@ -9,10 +9,12 @@
    • CTA = immer aktiv & morphend: „Weiter …" → „In den Warenkorb".
    ============================================================ */
 
-/* Cap the page width — the design system's --container scales up to 1760/2040px
-   on big screens, which stretches the product hero. Hold it at a comfortable
-   max so the layout stays centered instead of spreading edge-to-edge. */
-:root { --container: 1380px; }
+/* Match the LIVE product page grid (edelstahl-tuerklingel.de): the mw-container is
+   a fixed 1600px, and the product row is two equal Bootstrap columns (col-sm-6 /
+   col-sm-6) with a ~64px gutter between gallery and info. Cap --container at 1600
+   (overrides the design system's 1760/2040 growth) and use a 50/50 hero grid. */
+:root { --container: 1600px; }
+.pdp-b .pdp-hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 4rem; }
 
 /* ── Fold rhythm: fewer, larger beats — more air between the stacked blocks ── */
 .pdp-b .pdp-buybox { gap: 2rem; }   /* roomier section rhythm — was cramped at 1.6rem */
@@ -124,6 +126,15 @@
   text-transform: uppercase; color: var(--color-graphite-600); }   /* match the "Bewertungen" grey */
 .pdp-b .pdp-specs__value { margin: 0; font-size: 1rem; font-weight: 600; color: var(--color-digital-black);
   font-variant-numeric: tabular-nums; }
+/* minimal hairline dividers between the three key facts (desktop; mobile keeps its
+   horizontal row dividers) — border centered in the gutter via even side padding */
+@media (min-width: 561px) {
+  .pdp-b .pdp-specs { column-gap: 0; }
+  .pdp-b .pdp-specs__item { padding-inline: 1.5rem; }
+  .pdp-b .pdp-specs__item:first-child { padding-left: 0; }
+  .pdp-b .pdp-specs__item:last-child { padding-right: 0; }
+  .pdp-b .pdp-specs__item + .pdp-specs__item { border-left: 1px solid var(--color-graphite-200); }
+}
 /* Big screens: nudge the labels up a touch (values stay a fixed 16px) */
 @media (min-width: 1200px) {
   .pdp-b .pdp-specs__label { font-size: 0.75rem; }
@@ -591,7 +602,10 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 .cfgb-segp.is-current > i { transform: scaleX(1); background: linear-gradient(90deg, #016d70, #01999b); }
 .cfgb-segp.is-current { box-shadow: 0 0 0 3px rgba(1,82,83,0.10); }
 .cfgb-segp:hover { background: var(--color-graphite-300); }
-.cfgb-dock__title { margin: 0; display: flex; flex-direction: column; gap: 0.15rem; }
+/* title row: step text on the left, ERFORDERLICH/OPTIONAL flag aligned on the right */
+.cfgb-dock__title { margin: 0; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 1rem; }
+.cfgb-dock__titletext { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+.cfgb-dock__title .cfgb-dock__flag { flex: none; }
 .cfgb-dock__n { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.01em; color: var(--ink-60); }
 /* numbered step title — number + name share a baseline (aligned) */
 .cfgb-dock__name { display: inline-flex; align-items: baseline; gap: 0.5rem;
@@ -726,7 +740,25 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
    its border (was a detached box floating below) */
 .cfgb .cfg-choice { border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg); background: var(--color-white); overflow: hidden; }
 .cfgb .cfg-choice.is-open { border-color: var(--color-teal); box-shadow: inset 0 0 0 1px var(--color-teal); }
-.cfgb .cfg-choice__qty { margin: 0; border-radius: 0; background: var(--color-paper); border-top: 1px solid var(--color-graphite-200); padding: 0.6rem 0.85rem; }
+.cfgb .cfg-choice__qty { margin: 0; border-radius: 0; background: var(--color-paper); border-top: 1px solid var(--color-graphite-200); padding: 0.6rem 0.85rem; justify-content: center; }
+/* stepper = one connected control (was two floating bordered boxes), like the main qty */
+.cfgb .cfg-choice__qty .cfg-opt__qty { gap: 0; align-items: stretch; border: 1px solid var(--color-graphite-300);
+  border-radius: var(--radius); overflow: hidden; background: var(--color-white); }
+.cfgb .cfg-choice__qty .cfg-opt__qty button { width: 2.5rem; height: 2rem; border: 0; border-radius: 0; background: none;
+  color: var(--color-teal); font-size: 1.15rem; }
+.cfgb .cfg-choice__qty .cfg-opt__qty button:hover { background: var(--color-teal-50); }
+.cfgb .cfg-choice__qty .cfg-opt__qty > span { min-width: 2.25rem; display: grid; place-items: center; padding: 0 0.35rem;
+  border-left: 1px solid var(--color-graphite-200); border-right: 1px solid var(--color-graphite-200); }
+
+/* ── Gravur font picker — grid of samples ("Muster") with a style name ── */
+.pdp-b .cfg-fonts { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.25rem, 1fr)); gap: 0.5rem; }
+.pdp-b .cfg-font { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.15rem;
+  padding: 0.6rem 0.5rem; min-height: 3.9rem; font-weight: 400; }
+.pdp-b .cfg-font.is-selected { font-weight: 400; }   /* don't force-bold the sample */
+.pdp-b .cfg-font__s { font-size: 1.2rem; line-height: 1.1; color: var(--color-digital-black); }
+.pdp-b .cfg-font__n { font-size: 0.5625rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-graphite-500); }
+.pdp-b .cfg-font.is-selected .cfg-font__s,
+.pdp-b .cfg-font.is-selected .cfg-font__n { color: var(--color-teal); }
 .cfgb-mainqty { display: flex; align-items: center; justify-content: space-between; gap: 1rem;
   padding: 0.6rem 0.9rem; border: 1px solid var(--color-graphite-200); border-radius: var(--radius); }
 .cfgb-mainqty__l { font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black); }
