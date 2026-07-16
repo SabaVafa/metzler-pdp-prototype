@@ -14,6 +14,9 @@
    col-sm-6) with a ~64px gutter between gallery and info. Cap --container at 1600
    (overrides the design system's 1760/2040 growth) and use a 50/50 hero grid. */
 :root { --container: 1600px; }
+/* match the live mw-container box model exactly: 1600 container − 100px inline
+   padding each side = 1400px content */
+@media (min-width: 1440px) { .container { padding-inline: 100px; } }
 .pdp-b .pdp-hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 4rem; }
 
 /* ── Fold rhythm: fewer, larger beats — more air between the stacked blocks ── */
