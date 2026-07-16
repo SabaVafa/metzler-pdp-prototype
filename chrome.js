@@ -139,3 +139,20 @@
   }
   set(); mobileMq.addEventListener('change', set); tabletMq.addEventListener('change', set);
 })();
+
+/* ===== Quickbar — mobile dropdown toggle (grabbed from the PLP) ===== */
+(function(){
+  var qb = document.getElementById('quickbar'); if(!qb) return;
+  var toggle = qb.querySelector('.qa-mobile-toggle'); if(!toggle) return;
+  toggle.addEventListener('click', function(){
+    var open = qb.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  /* close the panel when tapping outside it */
+  document.addEventListener('click', function(e){
+    if (qb.classList.contains('is-open') && !qb.contains(e.target)) {
+      qb.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+})();

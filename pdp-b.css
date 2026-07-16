@@ -23,6 +23,8 @@
 .pdp-b .pdp-title .pdp-title__sep { color: var(--ink-60); font-weight: 300; margin: 0 0.3em; }
 
 /* Credential line — one calm row replaces two loud badges */
+/* rating/share sits right under the title (the header's 2rem gap left it floating) */
+.pdp-b .pdp-hero__head { gap: 0.6rem; }
 .bx-cred { display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem 0.9rem; margin-top: 0.15rem; }
 .bx-cred__rate { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; }
 .bx-cred__rate .pdp-stars { color: var(--color-star); }
@@ -113,16 +115,14 @@
 .pdp-b .pdp-specs__item:last-child { align-items: flex-end; text-align: right; }   /* article no. aligns to the right edge */
 .pdp-b .pdp-specs__label { margin: 0; font-size: 0.625rem; font-weight: 600; letter-spacing: 0.09em;
   text-transform: uppercase; color: var(--color-graphite-600); }   /* match the "Bewertungen" grey */
-.pdp-b .pdp-specs__value { margin: 0; font-size: 0.875rem; font-weight: 600; color: var(--color-digital-black);
+.pdp-b .pdp-specs__value { margin: 0; font-size: 1rem; font-weight: 600; color: var(--color-digital-black);
   font-variant-numeric: tabular-nums; }
-/* Big screens: the key facts read too small in the wide buy column — scale up */
+/* Big screens: nudge the labels up a touch (values stay a fixed 16px) */
 @media (min-width: 1200px) {
   .pdp-b .pdp-specs__label { font-size: 0.75rem; }
-  .pdp-b .pdp-specs__value { font-size: 1.0625rem; }
 }
 @media (min-width: 1600px) {
   .pdp-b .pdp-specs__label { font-size: 0.8125rem; }
-  .pdp-b .pdp-specs__value { font-size: 1.1875rem; }
 }
 
 /* ── AUSFÜHRUNG · Farbe (Variante) ── */
@@ -601,13 +601,10 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 .pdp-b .cfgb .stepr__pad { padding: 0; }
 
 .cfgb-nav { display: flex; gap: 0.75rem; padding: 1.3rem 1.35rem 1.4rem; }
-/* Back — a quiet text link with a leading chevron, not a boxed button */
-.cfgb-nav__back { display: inline-flex; align-items: center; gap: 0.3rem;
-  border: 0; background: none; padding: 0.8rem 0.35rem; color: var(--color-graphite-600);
-  font-family: inherit; font-size: 0.9375rem; font-weight: 600; cursor: pointer;
-  transition: color .15s; }
-.cfgb-nav__back svg { width: 1.05rem; height: 1.05rem; flex: none; }
-.cfgb-nav__back:hover { color: var(--color-teal); text-decoration: underline; text-underline-offset: 0.2em; }
+.cfgb-nav__back { border: 1px solid var(--color-graphite-300); background: var(--color-white); color: var(--color-graphite-700);
+  border-radius: var(--radius); padding: 0.8rem 1.4rem; font-family: inherit; font-size: 0.9375rem; font-weight: 700; cursor: pointer;
+  transition: border-color .15s, color .15s; }
+.cfgb-nav__back:hover { border-color: var(--color-teal); color: var(--color-teal); }
 .cfgb-nav__fwd { flex: 1; border: 0; background: var(--color-digital-black); color: #fff; border-radius: var(--radius);
   padding: 0.8rem 1.4rem; font-family: inherit; font-size: 0.9375rem; font-weight: 700; cursor: pointer;
   transition: background .15s; box-shadow: 0 0.5rem 1.25rem rgba(26,23,27,0.18); }
