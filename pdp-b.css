@@ -188,20 +188,14 @@
    also keeps the price + CTA visible on entry instead of below a tall open panel. ── */
 .cfgb.is-locked { display: none; }
 
-/* Colour requirement — clearly visible but clean: a crisp red ring pulses around the
-   swatch group while it gives a short shake (motion reads far better than a soft glow).
-   Clears itself; the persistent "Bitte Farbe wählen" label carries the message.
-   Re-triggered on every attempt by JS (remove→reflow→add). */
+/* Colour requirement — a single crisp red ring that expands once and fades. Visible
+   but calm: no shake, no per-swatch motion. The persistent "Bitte Farbe wählen" label
+   carries the message. Re-triggered on every attempt by JS (remove→reflow→add). */
 .bx-swatches { border-radius: var(--radius-lg); }
-.bx-swatches.is-invalid { animation: bx-swatch-alert .7s cubic-bezier(.36,.07,.19,.97) both; }
+.bx-swatches.is-invalid { animation: bx-swatch-alert .7s ease-out both; }
 @keyframes bx-swatch-alert {
-  0%   { transform: translateX(0);    box-shadow: 0 0 0 0 rgba(212,41,36,0); }
-  10%  { box-shadow: 0 0 0 4px rgba(212,41,36,0.55); }
-  20%  { transform: translateX(-6px); }
-  40%  { transform: translateX(6px);  box-shadow: 0 0 0 4px rgba(212,41,36,0.5); }
-  60%  { transform: translateX(-4px); }
-  80%  { transform: translateX(2px); }
-  100% { transform: translateX(0);    box-shadow: 0 0 0 10px rgba(212,41,36,0); }
+  0%   { box-shadow: 0 0 0 0 rgba(212,41,36,0.5); }
+  100% { box-shadow: 0 0 0 8px rgba(212,41,36,0); }
 }
 @media (prefers-reduced-motion: reduce) {
   .bx-swatches.is-invalid { animation: none !important; box-shadow: 0 0 0 2px var(--color-red); }
