@@ -16,7 +16,7 @@
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=28" />
 <!-- Version B — inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=151" />
+<link rel="stylesheet" href="pdp-b.css?v=154" />
 </head>
 <body class="plp">
 
@@ -606,36 +606,36 @@
             </button>
             <div class="cfgb-acc__body" id="bAccBody"><div class="cfgb-acc__inner"><div class="cfgb-summary" id="bSummaryInline" aria-label="Preisdetails · konfigurierte Positionen"></div></div></div>
           </div>
-          <div class="pdp-price">
-            <span class="cfgb-price__label">Preis wie konfiguriert</span>
-            <div class="pdp-price__row">
-              <b class="pdp-price__amount" id="bTotal" aria-live="polite">699,00 €</b>
+          <!-- price on the left, shipping data on the right — fills the space that
+               otherwise sat blank beside the price block -->
+          <div class="pdp-priceship">
+            <div class="pdp-price">
+              <span class="cfgb-price__label">Preis wie konfiguriert</span>
+              <div class="pdp-price__row">
+                <b class="pdp-price__amount" id="bTotal" aria-live="polite">699,00 €</b>
+              </div>
+              <p class="pdp-price__meta">inkl. 19% USt.</p>
+              <div class="pdp-avail">
+                <span class="pdp-avail__dot" aria-hidden="true"></span>
+                <span class="pdp-avail__status">Sofort verfügbar</span>
+              </div>
             </div>
-            <p class="pdp-price__meta">inkl. 19% USt.</p>
-          </div>
-          <!-- Delivery & availability — consolidated premium panel (stock · free shipping · delivery date) -->
-          <div class="bx-delivery" aria-label="Verfügbarkeit und Lieferung">
-            <div class="bx-delivery__row bx-delivery__row--stock">
-              <span class="bx-delivery__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
-              <span class="bx-delivery__text">
-                <b class="bx-delivery__lead">Sofort verfügbar</b>
-                <span class="bx-delivery__sub">Auf Lager · sofort versandfertig</span>
-              </span>
-            </div>
-            <div class="bx-delivery__row">
-              <span class="bx-delivery__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg></span>
-              <span class="bx-delivery__text">
-                <b class="bx-delivery__lead">Kostenloser Versand</b>
-                <span class="bx-delivery__sub">DHL GoGreen · klimaneutraler Versand</span>
-              </span>
-              <span class="bx-delivery__tag">Gratis</span>
-            </div>
-            <div class="bx-delivery__row">
-              <span class="bx-delivery__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg></span>
-              <span class="bx-delivery__text">
-                <b class="bx-delivery__lead">Lieferung <span class="ph">TT.MM. – TT.MM.</span></b>
-                <span class="bx-delivery__sub">Bei Bestellung heute bis 14 Uhr</span>
-              </span>
+            <div class="bx-delivery" aria-label="Lieferung">
+              <div class="bx-delivery__row">
+                <span class="bx-delivery__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg></span>
+                <span class="bx-delivery__text">
+                  <b class="bx-delivery__lead">Kostenloser Versand</b>
+                  <span class="bx-delivery__sub">DHL GoGreen · klimaneutral</span>
+                </span>
+                <span class="bx-delivery__tag">Gratis</span>
+              </div>
+              <div class="bx-delivery__row">
+                <span class="bx-delivery__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg></span>
+                <span class="bx-delivery__text">
+                  <b class="bx-delivery__lead">Lieferung <span class="ph">TT.MM. – TT.MM.</span></b>
+                  <span class="bx-delivery__sub">Bei Bestellung heute bis 14 Uhr</span>
+                </span>
+              </div>
             </div>
           </div>
           <div class="cfgb-buyrow">
