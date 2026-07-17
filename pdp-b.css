@@ -688,7 +688,7 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 .feat__item { display: flex; flex-direction: column; gap: 0.1rem; padding: 0.6rem 0; }
 .feat__item + .feat__item { border-top: 1px solid var(--color-graphite-200); }
 .feat__name { font-size: 0.875rem; font-weight: 700; line-height: 1.25; letter-spacing: -0.01em; color: var(--color-digital-black); }
-.feat__desc { font-size: 0.8125rem; line-height: 1.4; color: var(--color-graphite-600); }
+.feat__desc { font-size: 0.8125rem; line-height: 1.4; color: var(--color-graphite-700); }   /* match the config additional-info text */
 
 /* ── Trust badges — frame-free: prominent seal/flag + clean type, split by a
    single hairline divider ── */
@@ -699,7 +699,7 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 .hl__badge-seal { flex: none; width: 2.7rem; height: 2.7rem; display: grid; place-items: center; }
 .hl__badge-seal--flag { width: 2.15rem; height: auto; border-radius: 3px; box-shadow: 0 1px 3px rgba(26,23,27,0.18); }
 .hl__badge-txt { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; text-align: left; }
-.hl__badge-pre { font-size: 0.8125rem; font-weight: 400; color: var(--color-graphite-600); }
+.hl__badge-pre { font-size: 0.8125rem; font-weight: 400; color: var(--color-graphite-700); }   /* match config additional-info / feature text */
 .hl__badge-txt b { font-size: 0.9375rem; font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
 
 /* validation shake — gentle single nudge, not a jitter */
@@ -712,6 +712,9 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
   100% { box-shadow: 0 0 0 6px rgba(212,41,36,0); }
 }
 .cfgb .cfg-opts.is-invalid .cfg-opt,
+/* fixed line-height so the engraving preview font (some scripts have tall metrics)
+   doesn't change the input's height and jump the layout when switching styles */
+.pdp-b .cfg-input { line-height: 1.5; height: 3.25rem; box-sizing: border-box; }
 .cfgb .cfg-input.is-invalid {
   border-color: var(--color-red) !important;
   animation: cfgb-invalid-pulse .7s ease-out 1;
@@ -783,6 +786,13 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 .cfgb .cfg-choice .cfg-opt { flex: 1 1 auto; border: 0; border-radius: 0; background: none; box-shadow: none; }
 /* selected card: teal border/ring only — no grey fill */
 .cfgb .cfg-opt.is-selected { background: var(--color-white); }
+/* Uniform selection border: one crisp 2px teal border on every config card
+   (Gravur/Anschluss carry it on the .cfg-opt, Innenstation/Zubehör on the
+   .cfg-choice wrapper). Replaces the 1px-border + 1px-inset-ring combo so the
+   weight is identical everywhere; border-box keeps the footprint stable. */
+.cfgb .cfg-opts > .cfg-opt, .cfgb .cfg-choice { box-sizing: border-box; }
+.cfgb .cfg-opts > .cfg-opt.is-selected,
+.cfgb .cfg-choice.is-open { border-width: 2px; border-color: var(--color-teal); box-shadow: none; }
 .cfgb .cfg-opt__thumb--icon { background: var(--color-white); }
 .cfgb .cfg-opt__thumb svg { width: 2.4rem; height: 2.4rem; color: var(--color-graphite-400); grid-area: 1 / 1; }
 /* "Ohne Innenstation" as a slim full-width row (no tile/icon) — the free baseline
@@ -791,8 +801,8 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
    default / safe-fallback / selection logic all keep working unchanged. */
 /* "Ohne Innenstation" explainer — a quiet note above the multi-select cards
    (choosing no station is simply leaving them all unselected) */
-.cfg-innen-note { margin: 0 0 0.9rem; font-size: 0.8125rem; line-height: 1.5; color: var(--color-graphite-600); }
-.cfg-innen-note b { color: var(--color-graphite-800); font-weight: 600; }
+.cfg-innen-note { margin: 0 0 0.9rem; font-size: 0.8125rem; line-height: 1.5; color: var(--color-graphite-700); }
+.cfg-innen-note b { color: var(--color-digital-black); font-weight: 700; }
 .cfgb .cfg-opts .cfg-opt--plain { grid-column: 1 / -1; flex-direction: row; align-items: center;
   gap: 0.85rem; padding: 0.8rem 1rem; }
 .cfgb .cfg-opt--plain .cfg-opt__mark { position: static; top: auto; right: auto; margin: 0; flex: none; }
