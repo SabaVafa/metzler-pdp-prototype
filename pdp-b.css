@@ -188,15 +188,20 @@
    also keeps the price + CTA visible on entry instead of below a tall open panel. ── */
 .cfgb.is-locked { display: none; }
 
-/* Colour requirement — minimal: a single soft red halo pulses once around the swatch
-   group, then clears. No per-swatch motion. The persistent "Bitte Farbe wählen" label
-   carries the message. Re-triggered on every attempt by JS (remove→reflow→add). */
+/* Colour requirement — clearly visible but clean: a crisp red ring pulses around the
+   swatch group while it gives a short shake (motion reads far better than a soft glow).
+   Clears itself; the persistent "Bitte Farbe wählen" label carries the message.
+   Re-triggered on every attempt by JS (remove→reflow→add). */
 .bx-swatches { border-radius: var(--radius-lg); }
-.bx-swatches.is-invalid { animation: bx-swatch-halo .9s ease-out both; }
-@keyframes bx-swatch-halo {
-  0%   { box-shadow: 0 0 0 0 rgba(212,41,36,0.22); }
-  55%  { box-shadow: 0 0 16px 3px rgba(212,41,36,0.12); }
-  100% { box-shadow: 0 0 0 0 rgba(212,41,36,0); }
+.bx-swatches.is-invalid { animation: bx-swatch-alert .7s cubic-bezier(.36,.07,.19,.97) both; }
+@keyframes bx-swatch-alert {
+  0%   { transform: translateX(0);    box-shadow: 0 0 0 0 rgba(212,41,36,0); }
+  10%  { box-shadow: 0 0 0 4px rgba(212,41,36,0.55); }
+  20%  { transform: translateX(-6px); }
+  40%  { transform: translateX(6px);  box-shadow: 0 0 0 4px rgba(212,41,36,0.5); }
+  60%  { transform: translateX(-4px); }
+  80%  { transform: translateX(2px); }
+  100% { transform: translateX(0);    box-shadow: 0 0 0 10px rgba(212,41,36,0); }
 }
 @media (prefers-reduced-motion: reduce) {
   .bx-swatches.is-invalid { animation: none !important; box-shadow: 0 0 0 2px var(--color-red); }
@@ -327,6 +332,12 @@
   gap: 0.35rem; padding: 1rem 1.1rem 0.9rem; background: transparent; text-align: left; }
 .pdp-price__main { display: flex; flex-direction: column; align-items: flex-start; gap: 0.35rem; min-width: 0; }
 .pdp-price__aside { display: flex; flex-direction: column; align-items: flex-start; gap: 0.2rem; text-align: left; }
+/* give the price block real presence so it holds its own next to the CTA, swatches
+   and delivery table (it read too small as plain flush-left text) */
+.cfgb-acc.pdp-pricebar .pdp-price__amount { font-size: 2.25rem; letter-spacing: -0.025em; }
+.cfgb-acc.pdp-pricebar .cfgb-price__label { font-size: 0.6875rem; letter-spacing: 0.12em; }
+.cfgb-acc.pdp-pricebar .pdp-price__meta { font-size: 0.875rem; }
+.cfgb-acc.pdp-pricebar .pdp-avail__status { font-size: 0.9375rem; }
 /* page entry (no colour yet): show only the price block — hide the Preisdetails/Menge bar */
 .cfgb-acc.pdp-pricebar.is-precolor .cfgb-detailsbtn,
 .cfgb-acc.pdp-pricebar.is-precolor .cfgb-acc__body { display: none; }

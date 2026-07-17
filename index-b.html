@@ -16,7 +16,7 @@
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=28" />
 <!-- Version B — inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=172" />
+<link rel="stylesheet" href="pdp-b.css?v=176" />
 </head>
 <body class="plp">
 
@@ -402,6 +402,27 @@
           <div class="pdp-specs__item"><dt class="pdp-specs__label">Artikelnummer</dt><dd class="pdp-specs__value" id="bArticleInline">—</dd></div>
         </dl>
 
+        <!-- Price bar — placed before the colour swatches -->
+        <div class="cfgb-acc pdp-pricebar" id="bAcc">
+          <button type="button" class="cfgb-detailsbtn" id="bDetailsBtn" aria-expanded="false" aria-controls="bAccBody">
+            <span class="cfgb-detailsbtn__t">Preisdetails &amp; Menge</span>
+            <svg class="cfgb-detailsbtn__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="cfgb-acc__body" id="bAccBody"><div class="cfgb-acc__inner"><div class="cfgb-summary" id="bSummaryInline" aria-label="Preisdetails · konfigurierte Positionen"></div></div></div>
+          <div class="pdp-price">
+            <div class="pdp-price__main">
+              <span class="cfgb-price__label">Preis wie konfiguriert</span>
+              <div class="pdp-price__row">
+                <b class="pdp-price__amount" id="bTotal" aria-live="polite">699,00 €</b>
+              </div>
+              <p class="pdp-price__meta">inkl. 19% USt.</p>
+            </div>
+            <div class="pdp-price__aside">
+              <span class="pdp-avail"><span class="pdp-avail__status">Sofort verfügbar</span></span>
+            </div>
+          </div>
+        </div>
+
         <!-- ===== AUSFÜHRUNG · FARBE — eigene Variante (außerhalb der Konfiguration; steuert die Optionen) ===== -->
         <div class="bx-color" id="bFarbe">
           <div class="bx-color__head">
@@ -599,26 +620,6 @@
 
         <!-- ===== BUY BLOCK — "Preis wie konfiguriert" · always-live cart (validate on click, never lock) ===== -->
         <div class="cfgb-checkout" id="bCheckout">
-          <!-- Price bar: Preisdetails/Menge toggle on top, headline price + availability below -->
-          <div class="cfgb-acc pdp-pricebar" id="bAcc">
-            <button type="button" class="cfgb-detailsbtn" id="bDetailsBtn" aria-expanded="false" aria-controls="bAccBody">
-              <span class="cfgb-detailsbtn__t">Preisdetails &amp; Menge</span>
-              <svg class="cfgb-detailsbtn__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-            <div class="cfgb-acc__body" id="bAccBody"><div class="cfgb-acc__inner"><div class="cfgb-summary" id="bSummaryInline" aria-label="Preisdetails · konfigurierte Positionen"></div></div></div>
-            <div class="pdp-price">
-              <div class="pdp-price__main">
-                <span class="cfgb-price__label">Preis wie konfiguriert</span>
-                <div class="pdp-price__row">
-                  <b class="pdp-price__amount" id="bTotal" aria-live="polite">699,00 €</b>
-                </div>
-                <p class="pdp-price__meta">inkl. 19% USt.</p>
-              </div>
-              <div class="pdp-price__aside">
-                <span class="pdp-avail"><span class="pdp-avail__status">Sofort verfügbar</span></span>
-              </div>
-            </div>
-          </div>
           <div class="cfgb-buyrow">
             <span class="cfg-opt__qty cfgb-buyrow__qty" aria-label="Menge VDM10 Türstation"><button type="button" data-qd="-1" data-target="main" aria-label="Menge verringern">−</button><span id="bMainQtyVal">1</span><button type="button" data-qd="1" data-target="main" aria-label="Menge erhöhen">+</button></span>
             <button type="button" class="pdp-cta cfgb-cta" id="bCart">In den Warenkorb</button>
