@@ -16,7 +16,7 @@
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=28" />
 <!-- Version B — inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=154" />
+<link rel="stylesheet" href="pdp-b.css?v=172" />
 </head>
 <body class="plp">
 
@@ -399,16 +399,16 @@
         <dl class="pdp-specs" aria-label="Produktdaten">
           <div class="pdp-specs__item"><dt class="pdp-specs__label">Hersteller</dt><dd class="pdp-specs__value">Metzler</dd></div>
           <div class="pdp-specs__item"><dt class="pdp-specs__label">Breite × Höhe</dt><dd class="pdp-specs__value">13,30 × 27,40&nbsp;cm</dd></div>
-          <div class="pdp-specs__item"><dt class="pdp-specs__label">Artikelnummer</dt><dd class="pdp-specs__value" id="bArticleInline">31101</dd></div>
+          <div class="pdp-specs__item"><dt class="pdp-specs__label">Artikelnummer</dt><dd class="pdp-specs__value" id="bArticleInline">—</dd></div>
         </dl>
 
         <!-- ===== AUSFÜHRUNG · FARBE — eigene Variante (außerhalb der Konfiguration; steuert die Optionen) ===== -->
         <div class="bx-color" id="bFarbe">
           <div class="bx-color__head">
-            <span class="bx-color__label">Ausführung — <b id="pdpFinishName">Anthrazit RAL 7016</b></span>
+            <span class="bx-color__label">Ausführung — <b id="pdpFinishName">Bitte Farbe wählen</b></span>
           </div>
           <div class="pdp-swatches bx-swatches" id="pdpSwatches" role="group" aria-label="Farbe wählen — jede Farbe ist eine eigene Variante mit eigener Artikelnummer">
-            <button type="button" class="pdp-swatch" aria-pressed="true"  data-finish="Anthrazit RAL 7016" data-delta="0" data-article="31101"><img src="assets/swatches/anthrazit-ral7016.jpg" alt="Anthrazit RAL 7016"></button>
+            <button type="button" class="pdp-swatch" aria-pressed="false" data-finish="Anthrazit RAL 7016" data-delta="0" data-article="31101"><img src="assets/swatches/anthrazit-ral7016.jpg" alt="Anthrazit RAL 7016"></button>
             <button type="button" class="pdp-swatch" aria-pressed="false" data-finish="Verkehrsweiß RAL 9016" data-delta="0" data-article="31102"><img src="assets/swatches/verkehrsweiss-ral9016.jpg" alt="Verkehrsweiß RAL 9016"></button>
             <button type="button" class="pdp-swatch" aria-pressed="false" data-finish="Graualuminium RAL 9007" data-delta="0" data-article="31103"><img src="assets/swatches/graualuminium-ral9007.jpg" alt="Graualuminium RAL 9007"></button>
             <button type="button" class="pdp-swatch" aria-pressed="false" data-finish="Eisenglimmer DB 703" data-delta="0" data-article="31104"><img src="assets/swatches/eisenglimmer-db703.jpg" alt="Eisenglimmer DB 703"></button>
@@ -421,7 +421,7 @@
         </div>
 
         <!-- ===== KONFIGURATION (erforderlich) — geführt, mit Fortschritts-Spine ===== -->
-        <div class="cfgb" id="cfgbPanel">
+        <div class="cfgb is-locked" id="cfgbPanel">
           <span class="cfgb-sentinel" aria-hidden="true"></span>
           <!-- Unified Step-Dock — the single source of step title/progress (zero redundancy) -->
           <div class="cfgb-dock">
@@ -599,48 +599,40 @@
 
         <!-- ===== BUY BLOCK — "Preis wie konfiguriert" · always-live cart (validate on click, never lock) ===== -->
         <div class="cfgb-checkout" id="bCheckout">
-          <div class="cfgb-acc" id="bAcc">
+          <!-- Price bar: Preisdetails/Menge toggle on top, headline price + availability below -->
+          <div class="cfgb-acc pdp-pricebar" id="bAcc">
             <button type="button" class="cfgb-detailsbtn" id="bDetailsBtn" aria-expanded="false" aria-controls="bAccBody">
               <span class="cfgb-detailsbtn__t">Preisdetails &amp; Menge</span>
               <svg class="cfgb-detailsbtn__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
             </button>
             <div class="cfgb-acc__body" id="bAccBody"><div class="cfgb-acc__inner"><div class="cfgb-summary" id="bSummaryInline" aria-label="Preisdetails · konfigurierte Positionen"></div></div></div>
-          </div>
-          <!-- price on the left, shipping data on the right — fills the space that
-               otherwise sat blank beside the price block -->
-          <div class="pdp-priceship">
             <div class="pdp-price">
-              <span class="cfgb-price__label">Preis wie konfiguriert</span>
-              <div class="pdp-price__row">
-                <b class="pdp-price__amount" id="bTotal" aria-live="polite">699,00 €</b>
+              <div class="pdp-price__main">
+                <span class="cfgb-price__label">Preis wie konfiguriert</span>
+                <div class="pdp-price__row">
+                  <b class="pdp-price__amount" id="bTotal" aria-live="polite">699,00 €</b>
+                </div>
+                <p class="pdp-price__meta">inkl. 19% USt.</p>
               </div>
-              <p class="pdp-price__meta">inkl. 19% USt.</p>
-              <div class="pdp-avail">
-                <span class="pdp-avail__dot" aria-hidden="true"></span>
-                <span class="pdp-avail__status">Sofort verfügbar</span>
-              </div>
-            </div>
-            <div class="bx-delivery" aria-label="Lieferung">
-              <div class="bx-delivery__row">
-                <span class="bx-delivery__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg></span>
-                <span class="bx-delivery__text">
-                  <b class="bx-delivery__lead">Kostenloser Versand</b>
-                  <span class="bx-delivery__sub">DHL GoGreen · klimaneutral</span>
-                </span>
-                <span class="bx-delivery__tag">Gratis</span>
-              </div>
-              <div class="bx-delivery__row">
-                <span class="bx-delivery__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg></span>
-                <span class="bx-delivery__text">
-                  <b class="bx-delivery__lead">Lieferung <span class="ph">TT.MM. – TT.MM.</span></b>
-                  <span class="bx-delivery__sub">Bei Bestellung heute bis 14 Uhr</span>
-                </span>
+              <div class="pdp-price__aside">
+                <span class="pdp-avail"><span class="pdp-avail__status">Sofort verfügbar</span></span>
               </div>
             </div>
           </div>
           <div class="cfgb-buyrow">
             <span class="cfg-opt__qty cfgb-buyrow__qty" aria-label="Menge VDM10 Türstation"><button type="button" data-qd="-1" data-target="main" aria-label="Menge verringern">−</button><span id="bMainQtyVal">1</span><button type="button" data-qd="1" data-target="main" aria-label="Menge erhöhen">+</button></span>
             <button type="button" class="pdp-cta cfgb-cta" id="bCart">In den Warenkorb</button>
+          </div>
+          <!-- delivery table (after the CTA) — two-column spec layout: label │ value -->
+          <div class="bx-delivery" aria-label="Versand und Lieferung">
+            <div class="bx-delivery__row">
+              <span class="bx-delivery__key"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>Versanddatum</span>
+              <span class="bx-delivery__val"><b class="ph">TT.MM. – TT.MM.</b></span>
+            </div>
+            <div class="bx-delivery__row">
+              <span class="bx-delivery__key"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg>Lieferung</span>
+              <span class="bx-delivery__val"><b class="bx-delivery__free">Gratis Versand</b> · DHL GoGreen <a href="#" class="bx-delivery__details">Details</a></span>
+            </div>
           </div>
         </div>
 
@@ -1096,6 +1088,6 @@
 </nav>
 
 <script src="chrome.js?v=2"></script>
-<script src="pdp-b.js?v=47"></script>
+<script src="pdp-b.js?v=51"></script>
 </body>
 </html>

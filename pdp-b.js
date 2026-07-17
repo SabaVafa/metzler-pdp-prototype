@@ -37,7 +37,7 @@
   var CONN = { 'LAN / PoE': 'lan', '2-Draht IP': '2draht' };
 
   var state = {
-    finish: 'Anthrazit RAL 7016', finishDelta: 0, article: '31101', mainQty: 1,
+    finish: '', finishDelta: 0, article: '', mainQty: 1,   /* no colour pre-selected — user must choose (each colour is its own article) */
     anschluss: null, conn: null,
     gravurOn: false, gravurText: '', font: 'Klassisch',
     innenSel: {},   /* name -> { price, qty, label } — multi-select, own qty each */
@@ -77,9 +77,15 @@
     if (el && el.textContent !== t) { el.textContent = t; el.classList.remove('is-bump'); void el.offsetWidth; el.classList.add('is-bump'); }
     var sp = $('bStickyPrice'); if (sp) sp.innerHTML = 'konfiguriert · <b>' + t + '</b>';
 
-    setTxt('pdpFinishName', state.finish);
-    setTxt('bArticleInline', state.article);
-    var sf = $('pdpStickyFinish'); if (sf) sf.textContent = state.finish;
+    setTxt('pdpFinishName', state.finish || 'Bitte Farbe wählen');
+    setTxt('bArticleInline', state.article || '—');
+    var sf = $('pdpStickyFinish'); if (sf) sf.textContent = state.finish || 'Farbe wählen';
+
+    /* before a colour is chosen: CTA prompts for the colour, and the price section
+       shows only the price block (the Preisdetails/Menge bar stays hidden) */
+    var cartBtn = $('bCart'); if (cartBtn) cartBtn.textContent = state.finish ? 'In den Warenkorb' : 'Bitte Farbe wählen';
+    var sLabel = $('pdpStickyLabel'); if (sLabel) sLabel.textContent = state.finish ? 'In den Warenkorb' : 'Bitte Farbe wählen';
+    var priceBar = $('bAcc'); if (priceBar) priceBar.classList.toggle('is-precolor', !state.finish);
 
     setTxt('bPickAnschluss', state.anschluss || 'Bitte wählen');
     setTxt('bPickGravur', state.gravurOn ? (state.gravurText ? '„' + state.gravurText + '" · ' + state.font : 'Mit Gravur') : 'Ohne Gravur');
@@ -310,12 +316,19 @@
     state.finish = b.getAttribute('data-finish'); state.finishDelta = parseFloat(b.getAttribute('data-delta')) || 0;
     state.article = b.getAttribute('data-article') || state.article;
     var img = $('pdpMainImg'); if (img) { img.style.opacity = '0.35'; window.setTimeout(function () { img.style.opacity = '1'; }, 200); }
+    /* colour chosen → unlock the configurator (colour drives the available options) */
+    this.classList.remove('is-invalid');
+    var panel = $('cfgbPanel');
+    if (panel && panel.classList.contains('is-locked')) {
+      panel.classList.remove('is-locked');
+      window.dispatchEvent(new Event('resize'));   /* re-run dock geometry now the panel has height */
+    }
     refresh();
   });
   /* preview any colour's full name in the prominent label on hover/focus (no click needed) */
   if (sw) {
     var previewName = function (e) { var b = e.target.closest('.pdp-swatch'); if (b) setTxt('pdpFinishName', b.getAttribute('data-finish')); };
-    var restoreName = function () { setTxt('pdpFinishName', state.finish); };
+    var restoreName = function () { setTxt('pdpFinishName', state.finish || 'Bitte Farbe wählen'); };
     sw.addEventListener('mouseover', previewName);
     sw.addEventListener('mouseout', restoreName);
     sw.addEventListener('focusin', previewName);
@@ -412,6 +425,18 @@
   function toast(msg) { if (!toastEl) return; toastMsg.textContent = msg; toastEl.classList.add('is-shown'); clearTimeout(toastTimer); toastTimer = window.setTimeout(function () { toastEl.classList.remove('is-shown'); }, 2800); }
   function firstInvalid() { if (!state.anschluss) return 0; if (state.gravurOn && !state.gravurText) return 1; return -1; }
   function addToCart() {
+    /* colour is the first gate — surface the requirement at the swatches, not on the CTA */
+    if (!state.finish) {
+      var swEl = $('pdpSwatches');
+      if (swEl) {
+        /* re-trigger the ripple/halo on every attempt (removing → reflow → re-adding
+           restarts the CSS animations even if .is-invalid was already set) */
+        swEl.classList.remove('is-invalid'); void swEl.offsetWidth; swEl.classList.add('is-invalid');
+        swEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      toast('Bitte wählen Sie zuerst eine Farbe');
+      return;
+    }
     var iv = firstInvalid();
     if (iv > -1) {
       openStep(iv, true);
@@ -456,13 +481,22 @@
     menu.querySelectorAll('a[data-share]').forEach(function (a) { a.addEventListener('click', function () { close(); }); });
   })();
 
-  /* ── Sticky bar visibility ── */
+  /* ── Sticky bar visibility — show whenever the main CTA is off-screen.
+     Geometry check (not IntersectionObserver): the CTA's position shifts on load,
+     on colour-unlock relayout, and on image load without a scroll, and IO's initial
+     callback can latch a stale "visible" before layout settles. This stays correct. ── */
   var bar = $('pdpStickyBar');
-  if (cart && bar && 'IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { var show = !en.isIntersecting; bar.classList.toggle('is-visible', show); bar.setAttribute('aria-hidden', show ? 'false' : 'true'); });
-    }, { threshold: 0 });
-    io.observe(cart);
+  if (cart && bar) {
+    var syncStickyBar = function () {
+      var r = cart.getBoundingClientRect();
+      var show = r.bottom <= 0 || r.top >= window.innerHeight;   /* CTA fully out of view */
+      bar.classList.toggle('is-visible', show);
+      bar.setAttribute('aria-hidden', show ? 'false' : 'true');
+    };
+    window.addEventListener('scroll', syncStickyBar, { passive: true });
+    window.addEventListener('resize', syncStickyBar, { passive: true });
+    window.addEventListener('load', syncStickyBar);
+    syncStickyBar();
   }
 
   /* ── Bottom-up price sheet (accessible page-wide) ── */
