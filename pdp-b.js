@@ -85,7 +85,7 @@
        shows only the price block (the Preisdetails/Menge bar stays hidden) */
     var cartBtn = $('bCart'); if (cartBtn) cartBtn.textContent = state.finish ? 'In den Warenkorb' : 'Bitte Farbe wählen';
     var sLabel = $('pdpStickyLabel'); if (sLabel) sLabel.textContent = state.finish ? 'In den Warenkorb' : 'Bitte Farbe wählen';
-    var priceBar = $('bAcc'); if (priceBar) priceBar.classList.toggle('is-precolor', !state.finish);
+    var checkout = $('bCheckout'); if (checkout) checkout.classList.toggle('is-precolor', !state.finish);
 
     setTxt('bPickAnschluss', state.anschluss || 'Bitte wählen');
     setTxt('bPickGravur', state.gravurOn ? (state.gravurText ? '„' + state.gravurText + '" · ' + state.font : 'Mit Gravur') : 'Ohne Gravur');
@@ -335,6 +335,34 @@
     sw.addEventListener('focusout', restoreName);
   }
 
+  /* ── Swatch labelling on touch (hover is a capability, not a screen size) ──
+     Pointer devices keep the compact hover-preview grid. Touch devices (no hover) get
+     a treatment that surfaces the colour names, since there is no hover to reveal them.
+       Option 1 (default): labelled swatches — the name sits under each thumbnail.
+       Option 2 (?swatches=carousel): a snap-scroller with a live caption that follows
+                the centred swatch.
+     ?touch=1 forces the touch treatment on a pointer device so both can be previewed. */
+  (function () {
+    var params = new URLSearchParams(location.search);
+    var forced = params.get('touch') === '1';
+    var isTouch = forced || (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches);
+    var carousel = params.get('swatches') === 'carousel';
+    document.body.classList.toggle('swtouch', !!isTouch);
+    document.body.classList.add(carousel ? 'sw-carousel' : 'sw-list');
+    if (isTouch && carousel && sw) {
+      var caption = function () {
+        var mid = sw.getBoundingClientRect().left + sw.clientWidth / 2, near = null, best = Infinity;
+        sw.querySelectorAll('.pdp-swatch').forEach(function (b) {
+          var r = b.getBoundingClientRect(), d = Math.abs((r.left + r.width / 2) - mid);
+          if (d < best) { best = d; near = b; }
+        });
+        if (near) setTxt('pdpFinishName', near.getAttribute('data-finish'));
+      };
+      sw.addEventListener('scroll', caption, { passive: true });
+      caption();
+    }
+  })();
+
   /* ── Hero: thumbnails + view toggle ── */
   var thumbs = $('pdpThumbs'), mainImg = $('pdpMainImg');
   if (thumbs && mainImg) thumbs.addEventListener('click', function (e) {
@@ -422,7 +450,7 @@
 
   /* ── Toast + validate-on-cart (never lock) ── */
   var toastEl = $('cfgToast'), toastMsg = $('cfgToastMsg'), toastTimer;
-  function toast(msg) { if (!toastEl) return; toastMsg.textContent = msg; toastEl.classList.add('is-shown'); clearTimeout(toastTimer); toastTimer = window.setTimeout(function () { toastEl.classList.remove('is-shown'); }, 2800); }
+  function toast(msg) { /* toast messages removed per request — visual cues (swatch/step signals, cart badge) convey state instead */ }
   function firstInvalid() { if (!state.anschluss) return 0; if (state.gravurOn && !state.gravurText) return 1; return -1; }
   function addToCart() {
     /* colour is the first gate — surface the requirement at the swatches, not on the CTA */

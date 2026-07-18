@@ -16,7 +16,7 @@
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=28" />
 <!-- Version B — inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=177" />
+<link rel="stylesheet" href="pdp-b.css?v=200" />
 </head>
 <body class="plp">
 
@@ -402,24 +402,16 @@
           <div class="pdp-specs__item"><dt class="pdp-specs__label">Artikelnummer</dt><dd class="pdp-specs__value" id="bArticleInline">—</dd></div>
         </dl>
 
-        <!-- Price bar — placed before the colour swatches -->
-        <div class="cfgb-acc pdp-pricebar" id="bAcc">
-          <button type="button" class="cfgb-detailsbtn" id="bDetailsBtn" aria-expanded="false" aria-controls="bAccBody">
-            <span class="cfgb-detailsbtn__t">Preisdetails &amp; Menge</span>
-            <svg class="cfgb-detailsbtn__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-          <div class="cfgb-acc__body" id="bAccBody"><div class="cfgb-acc__inner"><div class="cfgb-summary" id="bSummaryInline" aria-label="Preisdetails · konfigurierte Positionen"></div></div></div>
-          <div class="pdp-price">
-            <div class="pdp-price__main">
-              <span class="cfgb-price__label">Preis wie konfiguriert</span>
-              <div class="pdp-price__row">
-                <b class="pdp-price__amount" id="bTotal" aria-live="polite">699,00 €</b>
-              </div>
-              <p class="pdp-price__meta">inkl. 19% USt.</p>
-            </div>
-            <div class="pdp-price__aside">
-              <span class="pdp-avail"><span class="pdp-avail__status">Sofort verfügbar</span></span>
-            </div>
+        <!-- Fixed plain price block (no card) above the swatches — the total, shown both
+             before and after colour selection -->
+        <div class="pdp-price pdp-price--lead">
+          <span class="cfgb-price__label">Preis wie konfiguriert</span>
+          <div class="pdp-price__row">
+            <b class="pdp-price__amount" id="bTotal" aria-live="polite">699,00 €</b>
+          </div>
+          <p class="pdp-price__meta">inkl. 19% USt. · <a href="#">Versandkostenfreie Lieferung</a></p>
+          <div class="pdp-avail">
+            <span class="pdp-avail__status">Sofort verfügbar</span>
           </div>
         </div>
 
@@ -620,6 +612,14 @@
 
         <!-- ===== BUY BLOCK — "Preis wie konfiguriert" · always-live cart (validate on click, never lock) ===== -->
         <div class="cfgb-checkout" id="bCheckout">
+          <!-- Price details (follows the config): opening reveals the itemised breakdown + total -->
+          <div class="cfgb-acc" id="bAcc">
+            <button type="button" class="cfgb-detailsbtn" id="bDetailsBtn" aria-expanded="false" aria-controls="bAccBody">
+              <span class="cfgb-detailsbtn__t">Preisdetails &amp; Menge</span>
+              <svg class="cfgb-detailsbtn__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="cfgb-acc__body" id="bAccBody"><div class="cfgb-acc__inner"><div class="cfgb-summary" id="bSummaryInline" aria-label="Preisdetails · konfigurierte Positionen"></div></div></div>
+          </div>
           <div class="cfgb-buyrow">
             <span class="cfg-opt__qty cfgb-buyrow__qty" aria-label="Menge VDM10 Türstation"><button type="button" data-qd="-1" data-target="main" aria-label="Menge verringern">−</button><span id="bMainQtyVal">1</span><button type="button" data-qd="1" data-target="main" aria-label="Menge erhöhen">+</button></span>
             <button type="button" class="pdp-cta cfgb-cta" id="bCart">In den Warenkorb</button>
@@ -646,19 +646,18 @@
             <li class="feat__item"><span class="feat__name">Intuitives Touch-Display</span><span class="feat__desc">Bedienen Sie die Anlage mühelos über das benutzerfreundliche IPS-Touch-Display.</span></li>
             <li class="feat__item"><span class="feat__name">Vielseitige Türöffnungsoptionen</span><span class="feat__desc">Nutzen Sie Gesichtserkennung, RFID-Karten, PIN-Codes oder die Smartphone-App für den Zutritt.</span></li>
           </ol>
+          <!-- Trust badges — inside the feature card -->
+          <div class="hl__badges hl__badges--infeat">
+            <span class="hl__badge">
+              <img class="hl__badge-seal" src="ICONS/Garantie.svg" alt="" aria-hidden="true" width="42" height="42">
+              <span class="hl__badge-txt"><span class="hl__badge-pre">10&nbsp;Jahre Metzler</span><b>Garantie</b></span>
+            </span>
+            <span class="hl__badge">
+              <img class="hl__badge-seal hl__badge-seal--flag" src="ICONS/Flag.png" alt="" aria-hidden="true" width="30" height="20">
+              <span class="hl__badge-txt"><span class="hl__badge-pre">Designed in</span><b>Germany</b></span>
+            </span>
+          </div>
         </section>
-
-        <!-- Trust badges (below the CTA) -->
-        <div class="hl__badges">
-          <span class="hl__badge">
-            <img class="hl__badge-seal" src="ICONS/Garantie.svg" alt="" aria-hidden="true" width="42" height="42">
-            <span class="hl__badge-txt"><span class="hl__badge-pre">10&nbsp;Jahre Metzler</span><b>Garantie</b></span>
-          </span>
-          <span class="hl__badge">
-            <img class="hl__badge-seal hl__badge-seal--flag" src="ICONS/Flag.png" alt="" aria-hidden="true" width="30" height="20">
-            <span class="hl__badge-txt"><span class="hl__badge-pre">Designed in</span><b>Germany</b></span>
-          </span>
-        </div>
 
         <div class="pdp-trust">
           <span class="pdp-trust__item">
@@ -1089,6 +1088,6 @@
 </nav>
 
 <script src="chrome.js?v=2"></script>
-<script src="pdp-b.js?v=51"></script>
+<script src="pdp-b.js?v=59"></script>
 </body>
 </html>

@@ -313,31 +313,18 @@
 .cfgb-price__meta { font-size: 0.8125rem; color: var(--color-graphite-600); }
 .cfgb-price__meta a { color: var(--color-teal); text-decoration: underline; }
 
-/* ── Price bar ── the headline price + availability are integrated INTO the grey
-   Preisdetails/Menge bar: one continuous grey component (price on top, expandable
-   breakdown below), not a white price panel stacked above a grey strip. */
-.cfgb-acc.pdp-pricebar { background: var(--color-paper); }
-/* page entry (no colour yet): plain price block — no grey card, flush with the column */
-.cfgb-acc.pdp-pricebar.is-precolor { background: transparent; border: 0; box-shadow: none; }
-.cfgb-acc.pdp-pricebar.is-precolor .pdp-price { padding-left: 0; padding-right: 0; }
-/* price + availability form ONE left-aligned block (label · amount · USt · status,
-   all flush left) rather than a split left/right row with a gap between them */
-.cfgb-acc.pdp-pricebar .pdp-price { display: flex; flex-direction: column; align-items: flex-start;
-  gap: 0.35rem; padding: 1rem 1.1rem 0.9rem; background: transparent; text-align: left; }
-.pdp-price__main { display: flex; flex-direction: column; align-items: flex-start; gap: 0.35rem; min-width: 0; }
-.pdp-price__aside { display: flex; flex-direction: column; align-items: flex-start; gap: 0.2rem; text-align: left; }
-/* give the price block real presence so it holds its own next to the CTA, swatches
-   and delivery table (it read too small as plain flush-left text) */
-.cfgb-acc.pdp-pricebar .pdp-price__amount { font-size: 2.25rem; letter-spacing: -0.025em; }
-.cfgb-acc.pdp-pricebar .cfgb-price__label { font-size: 0.6875rem; letter-spacing: 0.12em; }
-.cfgb-acc.pdp-pricebar .pdp-price__meta { font-size: 0.875rem; }
-.cfgb-acc.pdp-pricebar .pdp-avail__status { font-size: 0.9375rem; }
-/* page entry (no colour yet): show only the price block — hide the Preisdetails/Menge bar */
-.cfgb-acc.pdp-pricebar.is-precolor .cfgb-detailsbtn,
-.cfgb-acc.pdp-pricebar.is-precolor .cfgb-acc__body { display: none; }
-.cfgb-acc.pdp-pricebar .cfgb-detailsbtn { border-bottom: 1px solid var(--color-graphite-200); background: transparent; }
-.cfgb-acc.pdp-pricebar .cfgb-detailsbtn:hover,
-.cfgb-acc.pdp-pricebar.is-open .cfgb-detailsbtn { background: var(--color-white); }
+/* ── Lead price block ── a plain (no card) left-aligned block fixed above the swatches,
+   shown both before and after colour. Sized to hold its own next to the swatches. */
+.pdp-price--lead { display: flex; flex-direction: column; align-items: flex-start; text-align: left;
+  gap: 0.3rem; margin-top: -0.3rem; }
+.pdp-price--lead .pdp-price__amount { font-size: 2rem; letter-spacing: -0.025em; line-height: 1.05; }
+.pdp-price--lead .cfgb-price__label { font-size: 0.6875rem; letter-spacing: 0.12em; }
+.pdp-price--lead .pdp-price__meta { font-size: 0.875rem; }
+.pdp-price--lead .pdp-avail__status { font-size: 0.9375rem; }
+
+/* Preisdetails & Menge accordion lives in the checkout now (after the config); hide it
+   until a colour is chosen — nothing to detail yet */
+.cfgb-checkout.is-precolor #bAcc { display: none; }
 
 /* Delivery — two-column spec table: [icon + label] │ [value].
    Rows divided by hairlines, columns split by a vertical rule (label ~40%). */
@@ -348,7 +335,7 @@
 .bx-delivery__row + .bx-delivery__row { border-top: 1px solid var(--color-graphite-200); }
 .bx-delivery__key { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 0.9rem;
   font-size: 0.8125rem; font-weight: 700; color: var(--color-digital-black); }
-.bx-delivery__key svg { width: 1.2rem; height: 1.2rem; flex: none; color: var(--color-teal); }
+.bx-delivery__key svg { width: 1.2rem; height: 1.2rem; flex: none; color: var(--color-graphite-600); }
 .bx-delivery__val { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;
   padding: 0.75rem 0.95rem; border-left: 1px solid var(--color-graphite-200);
   font-size: 0.8125rem; color: var(--color-graphite-700); min-width: 0; }
@@ -365,6 +352,8 @@
 /* quantity box sits beside the CTA, matched to its height */
 .cfgb-buyrow { display: flex; align-items: stretch; gap: 0.6rem; }
 .cfgb-buyrow .cfgb-cta { flex: 1 1 auto; width: auto; }
+/* before a colour is chosen: hide the quantity stepper (CTA spans full width) */
+.cfgb-checkout.is-precolor .cfgb-buyrow__qty { display: none; }
 /* premium stepper: teal glyphs, hairline-divided segments, tactile states */
 .cfgb-buyrow__qty { flex: none; display: inline-flex; align-items: stretch; gap: 0; height: 3.5rem;
   border: 1px solid var(--color-graphite-300); border-radius: var(--radius); overflow: hidden;
@@ -500,6 +489,24 @@
    name stays available via its img alt / hover preview. */
 .bx-swatches .pdp-swatch::before,
 .bx-swatches .pdp-swatch::after { display: none; }
+
+/* ── Touch swatch treatments (only on no-hover devices, or ?touch=1 preview) ── */
+/* Option 1 — labelled swatches: the colour name sits under each thumbnail so every
+   colour is identifiable without a hover to reveal it. */
+.swtouch.sw-list .bx-swatches { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+.swtouch.sw-list .bx-swatches .pdp-swatch { flex-direction: row; align-items: center; gap: 0.7rem; text-align: left; }
+.swtouch.sw-list .bx-swatches .pdp-swatch img { width: 3rem; height: 3rem; flex: none; }
+.swtouch.sw-list .bx-swatches .pdp-swatch::after { display: block; content: attr(data-finish);
+  font-size: 0.8125rem; font-weight: 600; line-height: 1.2; color: var(--color-graphite-800); }
+
+/* Option 2 — snap-scroller with a live caption (the "Ausführung — …" header follows
+   the centred swatch via JS). Swipe to browse names, tap to select. */
+.swtouch.sw-carousel .bx-swatches { display: flex; grid-template-columns: none; flex-wrap: nowrap;
+  overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+  gap: 0.7rem; padding: 0.2rem 40% 0.5rem; scroll-padding: 0 40%; }
+.swtouch.sw-carousel .bx-swatches::-webkit-scrollbar { display: none; }
+.swtouch.sw-carousel .bx-swatches .pdp-swatch { flex: 0 0 5rem; scroll-snap-align: center; }
+.swtouch.sw-carousel .bx-color__label { position: sticky; top: 0; }
 
 /* ── Preisdetails trigger (buy block) ── */
 .cfgb-detailsbtn { display: flex; align-items: center; gap: 0.6rem; width: 100%; padding: 0.75rem 0.9rem;
@@ -725,7 +732,7 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
    white card with a hairline teal-tinted border and a teal hover (left accent
    bar, gradient wash, lift). ── */
 .svc { display: flex; flex-direction: column; gap: 0.625rem; margin-top: 0.35rem;
-  padding-top: 1.4rem; border-top: 1px solid var(--color-graphite-200); }
+  padding-top: 1.4rem; }
 .svc__item { position: relative; display: grid; grid-template-columns: 2rem 1fr auto; align-items: center; gap: 0.875rem;
   padding: 0.9rem 1rem; border: 1px solid rgba(1,82,83,0.1); border-radius: var(--radius-lg);
   background: var(--color-white); text-decoration: none; color: inherit; overflow: hidden; isolation: isolate;
@@ -769,9 +776,17 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 /* ── Trust badges — frame-free: prominent seal/flag + clean type, split by a
    single hairline divider ── */
 .hl__badges { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: center; }
+/* badges nested inside the feature card — divided from the list by a hairline */
+/* Assurance footer band: the paper feature card resolves into a lighter, full-bleed
+   white band at its base (clipped to the card's rounded corners by .feat overflow),
+   with the two badges evenly distributed — a deliberate trust footer, not floaters. */
+.hl__badges--infeat { display: flex; flex-wrap: wrap; justify-content: space-evenly; align-items: center; gap: 0.75rem 1.25rem;
+  margin: 0.95rem -1.25rem -0.6rem; padding: 1rem 1.35rem;
+  background: var(--color-paper); }
+.hl__badges--infeat .hl__badge { padding: 0; justify-content: center; }
 .hl__badge { display: flex; align-items: center; justify-content: center; gap: 0.7rem; padding: 0.35rem 0.9rem;
   border: 0; background: none; text-decoration: none; color: inherit; min-width: 0; }
-.hl__badge + .hl__badge { border-left: 1px solid var(--color-graphite-200); }
+.hl__badge + .hl__badge { border-left: 0; }
 .hl__badge-seal { flex: none; width: 2.7rem; height: 2.7rem; display: grid; place-items: center; }
 .hl__badge-seal--flag { width: 2.15rem; height: auto; border-radius: 3px; box-shadow: 0 1px 3px rgba(26,23,27,0.18); }
 .hl__badge-txt { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; text-align: left; }
@@ -806,7 +821,9 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
    transition fades it in) — no glow ring, no pulse */
 .cfgb .cfg-opts.is-invalid .cfg-opt { border-color: var(--color-red); }
 /* badge: steady colour emphasis, no scale/jump */
-.cfgb-dock__flag.is-pulse { box-shadow: 0 0 0 3px rgba(212,41,36,0.18); }
+/* same red-ring pulse as the colour-requirement cue (bx-swatch-alert) so every
+   "required" signal reads consistently — same animation, same red */
+.cfgb-dock__flag.is-pulse { animation: bx-swatch-alert .7s ease-out; }
 
 /* ── Preisdetails — inline accordion in the buy block ── */
 .cfgb-acc { border: 1px solid var(--color-graphite-200); border-radius: var(--radius); overflow: hidden; background: var(--color-white); }
