@@ -432,9 +432,10 @@
   /* status tag: keep it clear of the small thumb in row layout */
   .cfgb .cfg-opts .cfg-opt.is-unavailable .cfg-opt__badge { top: 0.5rem; left: auto; right: 0.6rem; }
 
-  /* trust badges stack full-width on narrow screens; divider flips to horizontal */
+  /* trust badges on mobile: centred as a pair, no divider, a touch more breathing room */
   .pdp-b .hl__badges { grid-template-columns: 1fr; }
-  .pdp-b .hl__badge + .hl__badge { border-left: 0; border-top: 1px solid var(--color-graphite-200); }
+  .pdp-b .hl__badge + .hl__badge { border-left: 0; border-top: 0; }
+  .pdp-b .hl__badges--infeat { justify-content: center; gap: 0.9rem 2rem; }
 
   /* ── COLOUR SWATCHES → 4-up grid. At 8-in-a-row they collapsed to ~35px:
      below the 44px tap target and visually the busiest element on the page.
