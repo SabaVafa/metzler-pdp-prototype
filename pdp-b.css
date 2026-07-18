@@ -490,23 +490,15 @@
 .bx-swatches .pdp-swatch::before,
 .bx-swatches .pdp-swatch::after { display: none; }
 
-/* ── Touch swatch treatments (only on no-hover devices, or ?touch=1 preview) ── */
-/* Option 1 — labelled swatches: the colour name sits under each thumbnail so every
-   colour is identifiable without a hover to reveal it. */
-.swtouch.sw-list .bx-swatches { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
-.swtouch.sw-list .bx-swatches .pdp-swatch { flex-direction: row; align-items: center; gap: 0.7rem; text-align: left; }
-.swtouch.sw-list .bx-swatches .pdp-swatch img { width: 3rem; height: 3rem; flex: none; }
-.swtouch.sw-list .bx-swatches .pdp-swatch::after { display: block; content: attr(data-finish);
-  font-size: 0.8125rem; font-weight: 600; line-height: 1.2; color: var(--color-graphite-800); }
-
-/* Option 2 — snap-scroller with a live caption (the "Ausführung — …" header follows
-   the centred swatch via JS). Swipe to browse names, tap to select. */
-.swtouch.sw-carousel .bx-swatches { display: flex; grid-template-columns: none; flex-wrap: nowrap;
+/* ── Touch swatch treatment (only on no-hover devices, or ?touch=1 preview) ──
+   Snap-scroller with a live caption: the "Ausführung — …" header follows the centred
+   swatch via JS (hover isn't available on touch to reveal names). Swipe to browse
+   the colour names, tap to select. */
+.swtouch .bx-swatches { display: flex; grid-template-columns: none; flex-wrap: nowrap;
   overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
   gap: 0.7rem; padding: 0.2rem 40% 0.5rem; scroll-padding: 0 40%; }
-.swtouch.sw-carousel .bx-swatches::-webkit-scrollbar { display: none; }
-.swtouch.sw-carousel .bx-swatches .pdp-swatch { flex: 0 0 5rem; scroll-snap-align: center; }
-.swtouch.sw-carousel .bx-color__label { position: sticky; top: 0; }
+.swtouch .bx-swatches::-webkit-scrollbar { display: none; }
+.swtouch .bx-swatches .pdp-swatch { flex: 0 0 5rem; scroll-snap-align: center; }
 
 /* ── Preisdetails trigger (buy block) ── */
 .cfgb-detailsbtn { display: flex; align-items: center; gap: 0.6rem; width: 100%; padding: 0.75rem 0.9rem;

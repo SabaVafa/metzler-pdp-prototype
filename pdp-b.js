@@ -337,19 +337,14 @@
 
   /* ── Swatch labelling on touch (hover is a capability, not a screen size) ──
      Pointer devices keep the compact hover-preview grid. Touch devices (no hover) get
-     a treatment that surfaces the colour names, since there is no hover to reveal them.
-       Option 1 (default): labelled swatches — the name sits under each thumbnail.
-       Option 2 (?swatches=carousel): a snap-scroller with a live caption that follows
-                the centred swatch.
-     ?touch=1 forces the touch treatment on a pointer device so both can be previewed. */
+     a snap-scroller whose caption (the "Ausführung — …" header) follows the centred
+     swatch, since there is no hover to reveal the colour names.
+     ?touch=1 forces the touch treatment on a pointer device so it can be previewed. */
   (function () {
     var params = new URLSearchParams(location.search);
-    var forced = params.get('touch') === '1';
-    var isTouch = forced || (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches);
-    var carousel = params.get('swatches') === 'carousel';
+    var isTouch = params.get('touch') === '1' || (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches);
     document.body.classList.toggle('swtouch', !!isTouch);
-    document.body.classList.add(carousel ? 'sw-carousel' : 'sw-list');
-    if (isTouch && carousel && sw) {
+    if (isTouch && sw) {
       var caption = function () {
         var mid = sw.getBoundingClientRect().left + sw.clientWidth / 2, near = null, best = Infinity;
         sw.querySelectorAll('.pdp-swatch').forEach(function (b) {
