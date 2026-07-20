@@ -19,23 +19,62 @@
 @media (min-width: 1440px) { .container { padding-inline: 100px; } }
 .pdp-b .pdp-hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 4rem; }
 
-/* ── Wide screens: thumbnails as a grid — fewer per row, more rows, larger tiles.
+/* ── Wide screens: thumbnails as a fixed 2-row grid — fewer per row, larger tiles,
+   NO inner scroll (a nested scroll area fights the page scroll). Extra images live
+   behind an "Alle Bilder" lightbox opened from the button below the grid.
    The media column stays sticky (base pdp.css), so the image block pins on scroll.
-   The grid is HEIGHT-CAPPED and scrolls internally: this keeps the media column
-   shorter than the buy box (so the pin always works and the page never lengthens),
-   no matter how many images the product has — extra thumbnails scroll in place.
    Desktop only (≥ 56.25rem); the mobile scroll-strip is untouched.
    Selector carries .pdp-media so it beats the base `.pdp-b .pdp-thumbs button`
    tile size that sits later in the file at equal specificity. ── */
 @media (min-width: 56.25rem) {
   .pdp-b .pdp-media .pdp-thumbs {
     display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.6rem;
-    max-width: none; padding: 0;
-    max-height: 34rem; overflow-y: auto; overflow-x: visible;
-    scrollbar-width: thin; scroll-padding: 0.25rem;
+    max-width: none; padding: 0; overflow: visible;
     -webkit-mask-image: none; mask-image: none; }
   .pdp-b .pdp-media .pdp-thumbs li { flex: initial; scroll-snap-align: none; }
+  .pdp-b .pdp-media .pdp-thumbs li:nth-child(n+11) { display: none; }   /* first 10 inline; rest in the lightbox */
   .pdp-b .pdp-media .pdp-thumbs button { width: 100%; height: auto; aspect-ratio: 1; padding: 0.5rem; }
+  .pdp-b .pdp-media .pdp-thumbs__all:not([hidden]) { display: inline-flex; }
+}
+
+/* "Alle N Bilder ansehen" button — hidden by default (mobile keeps the strip);
+   JS un-hides it on desktop only when there are more images than fit inline. */
+.pdp-b .pdp-thumbs__all { display: none; align-items: center; justify-content: center; gap: 0.4rem;
+  margin-top: 0.75rem; width: 100%; padding: 0.6rem 1rem; cursor: pointer;
+  font: inherit; font-size: 0.8125rem; font-weight: 700; color: var(--color-teal);
+  background: var(--color-white); border: 1px solid var(--color-graphite-200);
+  border-radius: var(--radius-lg); transition: border-color .15s, background .15s; }
+.pdp-b .pdp-thumbs__all:hover { border-color: var(--color-teal); background: var(--color-teal-50); }
+.pdp-b .pdp-thumbs__all svg { width: 1.05rem; height: 1.05rem; }
+
+/* ── Lightbox — full-screen gallery of every product image. The page is locked
+   behind it, so the modal's own scroll never conflicts with the page. ── */
+.pdp-lightbox { position: fixed; inset: 0; z-index: 1000; display: none; }
+.pdp-lightbox[aria-hidden="false"] { display: block; }
+.pdp-lightbox__backdrop { position: absolute; inset: 0; background: rgba(20,22,26,0.62);
+  backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
+.pdp-lightbox__panel { position: absolute; inset: 50% auto auto 50%; transform: translate(-50%,-50%);
+  width: min(960px, 92vw); max-height: 88vh; display: flex; flex-direction: column;
+  background: var(--color-white); border-radius: var(--radius-xl); overflow: hidden;
+  box-shadow: 0 24px 60px -20px rgba(10,20,20,0.5); }
+.pdp-lightbox__head { display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.25rem; border-bottom: 1px solid var(--color-graphite-200); flex: none; }
+.pdp-lightbox__title { font-size: 0.95rem; font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
+.pdp-lightbox__close { display: grid; place-items: center; width: 2.25rem; height: 2.25rem; cursor: pointer;
+  background: var(--color-paper); border: 1px solid var(--color-graphite-200); border-radius: 50%; color: var(--color-graphite-700);
+  transition: background .15s, color .15s; }
+.pdp-lightbox__close:hover { background: var(--color-teal-50); color: var(--color-teal); }
+.pdp-lightbox__close svg { width: 1.1rem; height: 1.1rem; }
+.pdp-lightbox__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem;
+  padding: 1.25rem; overflow-y: auto; }
+.pdp-lightbox__grid button { padding: 0.55rem; cursor: pointer; background: var(--color-white);
+  border: 1px solid var(--color-graphite-200); border-radius: var(--radius-lg); aspect-ratio: 1;
+  transition: border-color .15s, box-shadow .15s; }
+.pdp-lightbox__grid button:hover { border-color: var(--color-teal); box-shadow: 0 0 0 1px var(--color-teal); }
+.pdp-lightbox__grid img { width: 100%; height: 100%; object-fit: contain; display: block; }
+@media (max-width: 48rem) {
+  .pdp-lightbox__grid { grid-template-columns: repeat(3, 1fr); gap: 0.55rem; padding: 1rem; }
+  .pdp-lightbox__panel { width: 94vw; max-height: 90vh; }
 }
 
 /* ── Fold rhythm: fewer, larger beats — more air between the stacked blocks ── */

@@ -368,6 +368,54 @@
     var im = b.querySelector('img');
     if (im) { mainImg.style.opacity = '0'; window.setTimeout(function () { mainImg.src = im.getAttribute('src'); mainImg.alt = im.getAttribute('alt') || mainImg.alt; mainImg.style.opacity = '1'; }, 160); }
   });
+
+  /* ── Thumbnails beyond the inline limit → "Alle Bilder" lightbox.
+     A modal (page scroll locked behind it) avoids any nested-scroll conflict. ── */
+  (function () {
+    var lb = $('pdpLightbox'), lbGrid = $('pdpLightboxGrid'), allBtn = $('pdpThumbsAll');
+    if (!thumbs || !lb || !lbGrid) return;
+    var items = [].slice.call(thumbs.querySelectorAll('li img'));
+    var LIMIT = 10;   /* must match the CSS `:nth-child(n+11)` inline limit */
+
+    if (allBtn && items.length > LIMIT) {
+      var cnt = $('pdpThumbsCount'); if (cnt) cnt.textContent = items.length;
+      allBtn.hidden = false;
+    }
+
+    var lastFocus = null;
+    function closeLb() {
+      lb.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    function openLb() {
+      lastFocus = document.activeElement;
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';   /* lock the page so the modal owns the scroll */
+      var c = lb.querySelector('.pdp-lightbox__close'); if (c) c.focus();
+    }
+
+    items.forEach(function (im) {
+      var b = document.createElement('button'); b.type = 'button';
+      var g = document.createElement('img');
+      g.src = im.getAttribute('src'); g.alt = im.getAttribute('alt') || ''; g.loading = 'lazy';
+      b.appendChild(g);
+      b.addEventListener('click', function () {
+        if (mainImg) { mainImg.style.opacity = '0'; window.setTimeout(function () { mainImg.src = g.src; mainImg.alt = g.alt || mainImg.alt; mainImg.style.opacity = '1'; }, 160); }
+        thumbs.querySelectorAll('button').forEach(function (x) {
+          var xi = x.querySelector('img');
+          x.setAttribute('aria-current', xi && xi.getAttribute('src') === g.src ? 'true' : 'false');
+        });
+        closeLb();
+      });
+      lbGrid.appendChild(b);
+    });
+
+    if (allBtn) allBtn.addEventListener('click', openLb);
+    lb.addEventListener('click', function (e) { if (e.target.hasAttribute('data-lb-close')) closeLb(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lb.getAttribute('aria-hidden') === 'false') closeLb(); });
+  })();
+
   var mtoggle = document.querySelector('.pdp-media__toggle');
   if (mtoggle) mtoggle.addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
