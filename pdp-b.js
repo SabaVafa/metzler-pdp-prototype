@@ -412,7 +412,7 @@
     });
 
     if (allBtn) allBtn.addEventListener('click', openLb);
-    lb.addEventListener('click', function (e) { if (e.target.hasAttribute('data-lb-close')) closeLb(); });
+    lb.addEventListener('click', function (e) { if (e.target.closest('[data-lb-close]')) closeLb(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lb.getAttribute('aria-hidden') === 'false') closeLb(); });
   })();
 
