@@ -416,6 +416,63 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lb.getAttribute('aria-hidden') === 'false') closeLb(); });
   })();
 
+  /* ── Reviews: featured happy testimonial + customer-photo thumbnail nav.
+     Reads the (hidden) review cards as its data source, then renders one large
+     featured review with a crossfade; the customer photos double as the switcher. ── */
+  (function () {
+    var src = $('rvTrack'); if (!src) return;
+    var cards = [].slice.call(src.querySelectorAll('.rv__card')); if (!cards.length) return;
+    var data = cards.map(function (c) {
+      var im = c.querySelector('.rv__card-img img');
+      var starsEl = c.querySelector('.rv__card-stars');
+      return {
+        img: im ? im.getAttribute('src') : '',
+        alt: im ? (im.getAttribute('alt') || '') : '',
+        stars: starsEl ? starsEl.querySelectorAll('svg[fill="currentColor"]').length : 5,
+        title: (c.querySelector('.rv__card-title') || {}).textContent || '',
+        text: (c.querySelector('.rv__card-text') || {}).textContent || '',
+        author: (c.querySelector('.rv__card-author') || {}).textContent || '',
+        date: (c.querySelector('.rv__card-date') || {}).textContent || ''
+      };
+    });
+    var card = $('rvFeatureCard'), fImg = $('rvFeatureImg'), fStars = $('rvFeatureStars'),
+        fTitle = $('rvFeatureTitle'), fText = $('rvFeatureText'), fAuthor = $('rvFeatureAuthor'),
+        fDate = $('rvFeatureDate'), fAvatar = $('rvFeatureAvatar'), nav = $('rvThumbsNav'),
+        prev = document.querySelector('.rv__feature-arrow--prev'), next = document.querySelector('.rv__feature-arrow--next');
+    if (!card || !nav) return;
+    var STAR = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>';
+    var STAR_O = '<svg viewBox="0 0 24 24" fill="#d8dbe0"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>';
+    function initials(n) { return n.trim().split(/\s+/).map(function (w) { return w.charAt(0); }).join('').slice(0, 2).toUpperCase(); }
+    var idx = -1;
+    var thumbBtns = data.map(function (d, i) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'rv__thumbnav-btn';
+      b.setAttribute('aria-label', 'Bewertung von ' + d.author);
+      var im = document.createElement('img'); im.src = d.img; im.alt = d.alt; im.loading = 'lazy';
+      b.appendChild(im);
+      b.addEventListener('click', function () { show(i); });
+      nav.appendChild(b); return b;
+    });
+    function apply(d) {
+      fImg.src = d.img; fImg.alt = d.alt;
+      fStars.innerHTML = STAR.repeat(d.stars) + STAR_O.repeat(Math.max(0, 5 - d.stars));
+      fStars.setAttribute('aria-label', d.stars + ' von 5');
+      fTitle.textContent = d.title; fText.textContent = d.text;
+      fAuthor.textContent = d.author; fDate.textContent = d.date;
+      if (fAvatar) fAvatar.textContent = initials(d.author);
+    }
+    function show(i) {
+      if (i === idx) return;
+      var first = idx === -1; idx = i; var d = data[i];
+      thumbBtns.forEach(function (b, k) { b.setAttribute('aria-current', k === i ? 'true' : 'false'); });
+      if (first) { apply(d); return; }
+      card.classList.add('is-swapping');
+      window.setTimeout(function () { apply(d); card.classList.remove('is-swapping'); }, 200);
+    }
+    if (prev) prev.addEventListener('click', function () { show((idx - 1 + data.length) % data.length); });
+    if (next) next.addEventListener('click', function () { show((idx + 1) % data.length); });
+    show(0);
+  })();
+
   var mtoggle = document.querySelector('.pdp-media__toggle');
   if (mtoggle) mtoggle.addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
