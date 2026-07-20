@@ -19,6 +19,25 @@
 @media (min-width: 1440px) { .container { padding-inline: 100px; } }
 .pdp-b .pdp-hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 4rem; }
 
+/* ── Wide screens: thumbnails as a grid — fewer per row, more rows, larger tiles.
+   The media column stays sticky (base pdp.css), so the image block pins on scroll.
+   The grid is HEIGHT-CAPPED and scrolls internally: this keeps the media column
+   shorter than the buy box (so the pin always works and the page never lengthens),
+   no matter how many images the product has — extra thumbnails scroll in place.
+   Desktop only (≥ 56.25rem); the mobile scroll-strip is untouched.
+   Selector carries .pdp-media so it beats the base `.pdp-b .pdp-thumbs button`
+   tile size that sits later in the file at equal specificity. ── */
+@media (min-width: 56.25rem) {
+  .pdp-b .pdp-media .pdp-thumbs {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.6rem;
+    max-width: none; padding: 0;
+    max-height: 34rem; overflow-y: auto; overflow-x: visible;
+    scrollbar-width: thin; scroll-padding: 0.25rem;
+    -webkit-mask-image: none; mask-image: none; }
+  .pdp-b .pdp-media .pdp-thumbs li { flex: initial; scroll-snap-align: none; }
+  .pdp-b .pdp-media .pdp-thumbs button { width: 100%; height: auto; aspect-ratio: 1; padding: 0.5rem; }
+}
+
 /* ── Fold rhythm: fewer, larger beats — more air between the stacked blocks ── */
 .pdp-b .pdp-buybox { gap: 2rem; }   /* roomier section rhythm — was cramped at 1.6rem */
 /* extra separation before the configurator, so product info reads apart from it */
