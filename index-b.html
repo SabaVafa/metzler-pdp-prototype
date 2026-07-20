@@ -16,7 +16,7 @@
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=28" />
 <!-- Version B — inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=230" />
+<link rel="stylesheet" href="pdp-b.css?v=240" />
 </head>
 <body class="plp">
 
@@ -755,11 +755,11 @@
         </div>
 
         <div class="rv__dist" aria-label="Bewertungsverteilung">
-          <div class="rv__dist-row"><span class="rv__dist-label">5<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span class="rv__dist-bar"><i style="width:71%"></i></span><span class="rv__dist-val">45</span></div>
-          <div class="rv__dist-row"><span class="rv__dist-label">4<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span class="rv__dist-bar"><i style="width:19%"></i></span><span class="rv__dist-val">12</span></div>
-          <div class="rv__dist-row"><span class="rv__dist-label">3<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span class="rv__dist-bar"><i style="width:6%"></i></span><span class="rv__dist-val">4</span></div>
-          <div class="rv__dist-row"><span class="rv__dist-label">2<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span class="rv__dist-bar"><i style="width:2%"></i></span><span class="rv__dist-val">1</span></div>
-          <div class="rv__dist-row"><span class="rv__dist-label">1<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span class="rv__dist-bar"><i style="width:2%"></i></span><span class="rv__dist-val">1</span></div>
+          <div class="rv__dist-row"><span class="rv__dist-label">5 Sterne</span><span class="rv__dist-bar"><i style="width:71%"></i></span><span class="rv__dist-val">45</span></div>
+          <div class="rv__dist-row"><span class="rv__dist-label">4 Sterne</span><span class="rv__dist-bar"><i style="width:19%"></i></span><span class="rv__dist-val">12</span></div>
+          <div class="rv__dist-row"><span class="rv__dist-label">3 Sterne</span><span class="rv__dist-bar"><i style="width:6%"></i></span><span class="rv__dist-val">4</span></div>
+          <div class="rv__dist-row"><span class="rv__dist-label">2 Sterne</span><span class="rv__dist-bar"><i style="width:2%"></i></span><span class="rv__dist-val">1</span></div>
+          <div class="rv__dist-row"><span class="rv__dist-label">1 Stern</span><span class="rv__dist-bar"><i style="width:2%"></i></span><span class="rv__dist-val">1</span></div>
         </div>
 
         <div class="rv__aside">
@@ -789,11 +789,15 @@
           </div>
         </article>
 
-        <!-- one consolidated control row: prev · customer-photo thumbnails · next -->
-        <div class="rv__navrow">
-          <button type="button" class="rv__feature-arrow rv__feature-arrow--prev" aria-label="Vorherige Bewertung"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-          <div class="rv__thumbsnav" id="rvThumbsNav" aria-label="Kundenfotos – Bewertung wählen"></div>
-          <button type="button" class="rv__feature-arrow rv__feature-arrow--next" aria-label="Nächste Bewertung"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+        <!-- label + control row grouped so the label sits tight above the thumbnails;
+             it clarifies each thumbnail is a different customer's review -->
+        <div class="rv__navwrap">
+          <p class="rv__navlabel">Weitere Bewertungen mit Foto</p>
+          <div class="rv__navrow">
+            <button type="button" class="rv__feature-arrow rv__feature-arrow--prev" aria-label="Vorherige Bewertung"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <div class="rv__thumbsnav" id="rvThumbsNav" aria-label="Kundenfotos – Bewertung wählen"></div>
+            <button type="button" class="rv__feature-arrow rv__feature-arrow--next" aria-label="Nächste Bewertung"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+          </div>
         </div>
 
         <!-- Data source (progressive enhancement): JS reads these to build the feature -->

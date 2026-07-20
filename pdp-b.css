@@ -37,8 +37,9 @@
   .pdp-b .pdp-media .pdp-thumbs__all:not([hidden]) { display: inline-flex; }
 }
 
-/* "Alle N Bilder ansehen" button — hidden by default (mobile keeps the strip);
-   JS un-hides it on desktop only when there are more images than fit inline. */
+/* "Alle N Bilder ansehen" button. Hidden by default (mobile keeps the strip);
+   JS un-hides it on desktop only when there are more images than fit inline.
+   The reviews "Alle N Bewertungen ansehen" CTA mirrors this style. */
 .pdp-b .pdp-thumbs__all { display: none; align-items: center; justify-content: center; gap: 0.4rem;
   margin-top: 0.75rem; width: 100%; padding: 0.6rem 1rem; cursor: pointer;
   font: inherit; font-size: 0.8125rem; font-weight: 700; color: var(--color-teal);
@@ -1142,7 +1143,7 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 
 /* Heading — matches the About-us section header (.eyebrow / .section-title / .section-sub) */
 .rv__head { text-align: center; max-width: 44rem; margin: 0 auto clamp(1.75rem, 3vw, 2.5rem); }
-.rv__eyebrow { margin: 0 0 0.75rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; line-height: 1.4; text-transform: uppercase; color: var(--color-teal); }
+.rv__eyebrow { margin: 0 0 0.75rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; line-height: 1.4; text-transform: uppercase; color: #6A6A6A; }
 .rv__title { margin: 0; font-size: clamp(2rem, 4vw, 2.875rem); font-weight: 700; letter-spacing: -0.01em; line-height: 1.15; color: var(--color-digital-black); }
 .rv__sub { margin: 1rem auto 0; max-width: 56ch; font-size: 1.125rem; line-height: 1.5; color: var(--color-digital-black); }
 
@@ -1160,7 +1161,7 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 
 /* score */
 .rv__score { text-align: center; }
-.rv__score-num { font-size: clamp(3rem, 6vw, 4rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1; color: var(--color-digital-black); }
+.rv__score-num { font-size: clamp(2.25rem, 3.5vw, 3rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1; color: var(--color-digital-black); }
 .rv__score-num span { font-size: 0.35em; font-weight: 700; color: var(--color-graphite-500); margin-left: 0.15em; }
 .rv__score-stars { margin: 0.65rem 0 0.5rem; justify-content: center; }
 .rv__score-stars svg { width: 1.35rem; height: 1.35rem; }
@@ -1173,9 +1174,8 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 /* distribution bars */
 .rv__dist { display: flex; flex-direction: column; gap: 0.55rem; min-width: 0;
   padding: 1.25rem 0; border-top: 1px solid var(--color-graphite-200); border-bottom: 1px solid var(--color-graphite-200); }
-.rv__dist-row { display: grid; grid-template-columns: 2.4rem 1fr 2rem; align-items: center; gap: 0.7rem; }
-.rv__dist-label { display: inline-flex; align-items: center; gap: 0.15rem; font-size: 0.8125rem; font-weight: 700; color: var(--color-graphite-700); }
-.rv__dist-label svg { width: 0.85rem; height: 0.85rem; color: var(--color-star); }
+.rv__dist-row { display: grid; grid-template-columns: 4.75rem 1fr 2rem; align-items: center; gap: 0.7rem; }
+.rv__dist-label { font-size: 0.8125rem; font-weight: 700; color: var(--color-graphite-700); white-space: nowrap; }
 .rv__dist-bar { height: 0.5rem; background: var(--color-white); border-radius: var(--radius-pill); overflow: hidden; }
 .rv__dist-bar i { display: block; height: 100%; border-radius: var(--radius-pill);
   background: var(--color-star); }
@@ -1183,11 +1183,12 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 
 /* aside: CTA */
 .rv__aside { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; text-align: center; }
-/* lighter ghost CTA — visible but not competing with the buy CTA */
+/* CTA — mirrors the gallery's "Alle N Bilder ansehen" button (.pdp-thumbs__all):
+   white, 1px grey border, teal text, radius-lg; hover = teal border + teal-50 */
 .rv__cta { display: flex; width: 100%; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.4rem;
   font-size: 0.9375rem; font-weight: 700; letter-spacing: -0.01em; text-decoration: none;
-  color: var(--color-teal); background: transparent; border: 1px solid var(--color-graphite-300);
-  border-radius: var(--radius-pill); transition: background .16s, border-color .16s; }
+  color: var(--color-teal); background: var(--color-white); border: 1px solid var(--color-graphite-200);
+  border-radius: var(--radius-lg); transition: background .16s, border-color .16s; }
 .rv__cta svg { width: 1.05rem; height: 1.05rem; transition: transform .16s; }
 .rv__cta:hover { background: var(--color-teal-50); border-color: var(--color-teal); }
 .rv__cta:hover svg { transform: translateX(3px); }
@@ -1203,7 +1204,7 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 .rv__feature-card { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: clamp(1rem, 2vw, 1.5rem); align-items: center; }
 
-.rv__feature-media { position: relative; aspect-ratio: 4 / 3; border-radius: var(--radius-lg);
+.rv__feature-media { position: relative; aspect-ratio: 4 / 3; border-radius: var(--radius);
   overflow: hidden; background: var(--color-paper); }
 .rv__feature-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .rv__feature-cam { position: absolute; left: 0.75rem; bottom: 0.75rem; display: inline-flex; align-items: center; gap: 0.35rem;
@@ -1230,8 +1231,11 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 .rv__feature-card.is-swapping .rv__feature-media img,
 .rv__feature-card.is-swapping .rv__feature-content > :not(.rv__feature-quote) { opacity: 0; }
 
-/* one control row: prev · customer-photo thumbnails · next (spacing from the
-   carousel gap — no divider line or empty band) */
+/* label + control row grouped; label clarifies the thumbnails are OTHER customers */
+.rv__navwrap { display: flex; flex-direction: column; gap: 0.65rem; }
+.rv__navlabel { margin: 0; text-align: center; font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.15em; line-height: 1.4; text-transform: uppercase; color: #6A6A6A; }
+/* one control row: prev · customer-photo thumbnails · next */
 .rv__navrow { display: flex; align-items: center; gap: 0.75rem; }
 
 /* square icon buttons, consistent with the PLP carousel arrows */
@@ -1246,7 +1250,7 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 /* customer-photo thumbnail nav — fills the row between the arrows */
 .rv__thumbsnav { flex: 1; min-width: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 0.6rem; }
 .rv__thumbnav-btn { width: 3.5rem; height: 3.5rem; padding: 0; cursor: pointer; overflow: hidden; flex: none;
-  background: var(--color-white); border: 2px solid transparent; border-radius: var(--radius-lg);
+  background: var(--color-white); border: 2px solid transparent; border-radius: var(--radius);
   box-shadow: inset 0 0 0 1px var(--color-graphite-200); opacity: 0.6;
   transition: opacity .18s, transform .18s, border-color .18s, box-shadow .18s; }
 .rv__thumbnav-btn img { width: 100%; height: 100%; object-fit: cover; display: block; }
