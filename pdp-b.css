@@ -432,12 +432,11 @@
   /* status tag: keep it clear of the small thumb in row layout */
   .cfgb .cfg-opts .cfg-opt.is-unavailable .cfg-opt__badge { top: 0.5rem; left: auto; right: 0.6rem; }
 
-  /* trust badges on mobile: keep the white plinth, centre the pair, drop the
-     divider, and let the badges hug the middle (no stretch) with a touch more air */
+  /* trust badges on mobile: two equal-width white chips with a slightly tighter gap */
   .pdp-b .hl__badges { grid-template-columns: 1fr; }
   .pdp-b .hl__badge + .hl__badge { border-left: 0; border-top: 0; }
-  .pdp-b .hl__badges--infeat { justify-content: center; gap: 0.9rem 1.75rem; }
-  .pdp-b .hl__badges--infeat .hl__badge { flex: 0 1 auto; padding: 0.15rem 0.25rem; }
+  .pdp-b .hl__badges--infeat { gap: 0.6rem; }
+  .pdp-b .hl__badges--infeat .hl__badge { flex: 1 1 0; padding: 0.45rem 0.5rem; }
 
   /* ── COLOUR SWATCHES → 4-up grid. At 8-in-a-row they collapsed to ~35px:
      below the 44px tap target and visually the busiest element on the page.
@@ -726,8 +725,9 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
    teal-tinted gradient icon box · bold title + grey sub · teal chevron, in a
    white card with a hairline teal-tinted border and a teal hover (left accent
    bar, gradient wash, lift). ── */
-.svc { display: flex; flex-direction: column; gap: 0.625rem; margin-top: 0.35rem;
-  padding-top: 1.4rem; }
+.svc { display: flex; flex-direction: column; gap: 0.625rem; }
+  /* no extra margin/padding-top — the 2rem .pdp-buybox gap is the sole section rhythm,
+     so the trust-card→service gap matches the service→payments gap */
 .svc__item { position: relative; display: grid; grid-template-columns: 2rem 1fr auto; align-items: center; gap: 0.875rem;
   padding: 0.9rem 1rem; border: 1px solid rgba(1,82,83,0.1); border-radius: var(--radius-lg);
   background: var(--color-white); text-decoration: none; color: inherit; overflow: hidden; isolation: isolate;
@@ -759,12 +759,15 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 /* ── Feature highlights — numbered editorial list. Strong title/description
    hierarchy, teal serial numbers, hairline dividers, roomy rhythm. No dot
    bullets, no icons, no grey box. ── */
-.feat { position: relative; overflow: hidden; padding: 1.1rem 1.25rem 0.6rem;
+.feat { position: relative; overflow: hidden; padding: 1.25rem;   /* uniform gutter on all four sides */
   background: var(--color-paper); border: 1px solid var(--color-graphite-200);
   border-radius: var(--radius-xl); box-shadow: var(--shadow-soft); }
 .feat__list { position: relative; list-style: none; margin: 0; padding: 0; }
 .feat__item { display: flex; flex-direction: column; gap: 0.1rem; padding: 0.6rem 0; }
 .feat__item + .feat__item { border-top: 1px solid var(--color-graphite-200); }
+/* first/last rows sit flush to the card's uniform gutter (no doubled-up padding) */
+.feat__list > .feat__item:first-child { padding-top: 0; }
+.feat__list > .feat__item:last-child { padding-bottom: 0; }
 .feat__name { font-size: 0.875rem; font-weight: 700; line-height: 1.25; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .feat__desc { font-size: 0.8125rem; line-height: 1.4; color: var(--color-graphite-700); }   /* match the config additional-info text */
 
@@ -772,17 +775,18 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
    single hairline divider ── */
 .hl__badges { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: center; }
 
-/* Assurance footer — stays on the card's own surface (no contrasting box that would
-   read as a separate panel). Grounding comes from rules, not a fill: a full-bleed top
-   hairline divides it from the feature list, and a centre rule splits the two seals. */
-.hl__badges--infeat { display: flex; align-items: stretch; gap: 0;
-  margin: 1.05rem -1.25rem 0; padding: 1.05rem 1.25rem 0.35rem;
+/* Assurance footer — two white chips on the card's grey surface. The chips lift the
+   pair off the card as tangible trust marks; a full-bleed top hairline separates the
+   footer from the feature list. */
+.hl__badges--infeat { display: flex; align-items: stretch; gap: 0.75rem;
+  margin: 1.25rem 0 0; padding: 1.25rem 0 0;   /* symmetric space around the divider; chips sit flush to the card's bottom gutter */
   background: transparent;
   border-top: 1px solid var(--color-graphite-200); }
-.hl__badges--infeat .hl__badge { flex: 1 1 0; padding: 0.15rem 0.9rem; justify-content: center; }
-/* centre divider between the two seals */
-.hl__badges--infeat .hl__badge + .hl__badge {
-  border-left: 1px solid var(--color-graphite-200); }
+.hl__badges--infeat .hl__badge { flex: 1 1 0; padding: 0.45rem 0.7rem; justify-content: center;
+  background: var(--color-white);
+  border: 1px solid var(--color-graphite-200); border-radius: var(--radius-lg);
+  box-shadow: 0 1px 2px rgba(26,23,27,0.04); }
+/* chips separate themselves via the gap — no centre rule */
 
 .hl__badge { display: flex; align-items: center; justify-content: center; gap: 0.7rem; padding: 0.35rem 0.9rem;
   border: 0; background: none; text-decoration: none; color: inherit; min-width: 0; }
