@@ -103,8 +103,7 @@
     setTxt('bMainQtyVal', state.mainQty);
     var mainMinus = document.querySelector('.cfgb-buyrow__qty button[data-qd="-1"][data-target="main"]');
     if (mainMinus) mainMinus.disabled = state.mainQty <= 1;
-    setTxt('bStromQty', state.stromQty);
-    var sqw = $('bStromQtyWrap'); if (sqw) sqw.classList.toggle('is-shown', hasStrom());
+    document.querySelectorAll('[data-stromqty]').forEach(function (s) { s.textContent = state.stromQty; });
     document.querySelectorAll('[data-qtyfor]').forEach(function (s) { var n = s.getAttribute('data-qtyfor'); s.textContent = state.extras[n] ? state.extras[n].qty : 1; });
     document.querySelectorAll('[data-innenqtyfor]').forEach(function (s) { var n = s.getAttribute('data-innenqtyfor'); s.textContent = state.innenSel[n] ? state.innenSel[n].qty : 1; });
     document.querySelectorAll('.cfg-choice').forEach(function (c) { var o = c.querySelector('.cfg-opt'); c.classList.toggle('is-open', !!(o && o.classList.contains('is-selected'))); });
