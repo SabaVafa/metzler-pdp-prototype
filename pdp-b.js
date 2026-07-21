@@ -490,15 +490,59 @@
     secs.forEach(function (s) { io.observe(s); });
   })();
 
-  /* ── Frage zum Artikel: FAQ accordion ── */
+  /* ── Tasteful motion: scroll-reveal + subtle Beschreibung image parallax.
+     Both fully skipped under prefers-reduced-motion (and without IntersectionObserver). ── */
   (function () {
-    var faq = $('psxFaq'); if (!faq) return;
-    faq.addEventListener('click', function (e) {
-      var q = e.target.closest('.psx-faq__q'); if (!q) return;
-      var item = q.closest('.psx-faq__item');
-      var open = item.classList.toggle('is-open');
-      q.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !('IntersectionObserver' in window)) return;
+
+    /* reveal: fade + rise each block as it enters the viewport (one-shot) */
+    var targets = [].slice.call(document.querySelectorAll(
+      '.psx-sec .psx-eyebrow, .psx-sec .psx-title, .psx-sec .psx-lead, .psx-descrow, .psx-benefits, .psx-dl__item, .psx-spec__group, .faq__support, .faq__list'));
+    if (targets.length) {
+      targets.forEach(function (t) { t.classList.add('psx-anim'); });
+      var rio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); rio.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+      targets.forEach(function (t) { rio.observe(t); });
+    }
+
+    /* parallax: Beschreibung photos drift a little slower than the page */
+    var imgs = [].slice.call(document.querySelectorAll('.psx-descrow__media img'));
+    if (imgs.length) {
+      imgs.forEach(function (im) { im.classList.add('psx-parallax'); });
+      var ticking = false;
+      function paint() {
+        var vh = window.innerHeight || document.documentElement.clientHeight;
+        imgs.forEach(function (im) {
+          var box = im.parentElement.getBoundingClientRect();
+          if (box.bottom < -100 || box.top > vh + 100) return;   /* skip off-screen */
+          var progress = (box.top + box.height / 2 - vh / 2) / vh;   /* ~ -0.5 … 0.5 */
+          var shift = Math.max(-22, Math.min(22, -progress * 44));
+          im.style.transform = 'translateY(' + shift.toFixed(1) + 'px) scale(1.14)';
+        });
+        ticking = false;
+      }
+      function onScroll() { if (!ticking) { ticking = true; window.requestAnimationFrame(paint); } }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      paint();
+    }
+  })();
+
+  /* ── Beschreibung scrollytelling: swap the pinned image as each scene hits center ── */
+  (function () {
+    var scenes = [].slice.call(document.querySelectorAll('.psx-story__scene'));
+    var imgs = [].slice.call(document.querySelectorAll('.psx-story__img'));
+    if (!scenes.length || !imgs.length || !('IntersectionObserver' in window)) return;
+    function activate(n) {
+      imgs.forEach(function (im) { im.classList.toggle('is-active', im.getAttribute('data-scene') === n); });
+      scenes.forEach(function (s) { s.classList.toggle('is-current', s.getAttribute('data-scene') === n); });
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) activate(e.target.getAttribute('data-scene')); });
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+    scenes.forEach(function (s) { io.observe(s); });
   })();
 
   var mtoggle = document.querySelector('.pdp-media__toggle');

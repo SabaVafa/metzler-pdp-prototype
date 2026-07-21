@@ -16,7 +16,7 @@
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=28" />
 <!-- Version B — inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=250" />
+<link rel="stylesheet" href="pdp-b.css?v=254" />
 </head>
 <body class="plp">
 
@@ -733,52 +733,7 @@
     </div>
   </section>
 
-  <!-- ===== PRODUCT INFO — sticky scroll-spy nav over 5 stacked sections ===== -->
-  <nav class="psx-nav" id="psxNav" aria-label="Produktinformationen">
-    <div class="container psx-nav__inner">
-      <a class="psx-nav__link is-active" href="#sx-beschreibung">Beschreibung</a>
-      <a class="psx-nav__link" href="#bewertungen">Bewertungen<span class="psx-nav__count">63</span></a>
-      <a class="psx-nav__link" href="#sx-downloads">Downloads<span class="psx-nav__count">7</span></a>
-      <a class="psx-nav__link" href="#sx-technik">Technische Details</a>
-      <a class="psx-nav__link" href="#sx-frage">Frage zum Artikel</a>
-    </div>
-  </nav>
-
-  <!-- 1 · Beschreibung -->
-  <section id="sx-beschreibung" class="psx-sec" aria-labelledby="sxBeschrTitle">
-    <div class="container psx-sec__inner">
-      <p class="psx-eyebrow">Produktbeschreibung</p>
-      <h2 class="psx-title" id="sxBeschrTitle">Die Türsprechanlage, die mitdenkt</h2>
-      <p class="psx-lead">Die Metzler VDM10&nbsp;2.0 verbindet edle Edelstahl-Verarbeitung „made in Germany" mit moderner Video- und Smart-Home-Technik — für ein Entree, das sicher, komfortabel und einladend zugleich ist.</p>
-
-      <div class="psx-descrow">
-        <figure class="psx-descrow__media"><img src="Product Image/Slider/metzler-vdm10-20-video-tuersprechanlage-1-klingeltaster-colson~13.webp" alt="VDM10 Kamera-Detail" loading="lazy"></figure>
-        <div class="psx-descrow__copy">
-          <h3>Sehen, wer klingelt — in gestochen scharfem HD</h3>
-          <p>Die Full-HD-Kamera mit 170°-Weitwinkel erfasst den kompletten Eingangsbereich und liefert auch bei Nacht ein klares Bild. So erkennen Sie jeden Besucher sofort — ob live am Touch-Display oder unterwegs per App.</p>
-        </div>
-      </div>
-
-      <div class="psx-descrow psx-descrow--rev">
-        <figure class="psx-descrow__media"><img src="Product Image/Slider/metzler-vdm10-20-video-tuersprechanlage-1-klingeltaster-colson~19.webp" alt="VDM10 an der Haustür montiert" loading="lazy"></figure>
-        <div class="psx-descrow__copy">
-          <h3>Öffnen in 200&nbsp;Millisekunden</h3>
-          <p>Dank biometrischer Gesichtserkennung öffnet sich die Tür sicher und schnell — ganz ohne Schlüssel. Alternativ per RFID-Karte, PIN-Code oder Smartphone. Bis zu acht virtuelle Klingeltaster lassen sich frei belegen.</p>
-        </div>
-      </div>
-
-      <ul class="psx-benefits">
-        <li><b>Fortschrittliche Gesichtserkennung</b><span>Sicher öffnen in nur 200&nbsp;Millisekunden.</span></li>
-        <li><b>Kristallklares HD-Video</b><span>Full-HD-Übertragung, auch bei Gegenlicht und nachts.</span></li>
-        <li><b>Personalisierbarer Homescreen</b><span>Anpassbare Hintergründe, Symbole und Klingeltaster.</span></li>
-        <li><b>Vielseitige Türöffnung</b><span>Gesicht, RFID, PIN oder App — Sie entscheiden.</span></li>
-        <li><b>Edelstahl „made in Germany"</b><span>In Handarbeit gefertigt, pulverbeschichtet, langlebig.</span></li>
-        <li><b>10&nbsp;Jahre Metzler Garantie</b><span>Qualität, auf die Sie sich verlassen können.</span></li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ===== 2 · Bewertungen (reviews module) ===== -->
+  <!-- ===== Customer reviews — standalone, immediately after the product hero ===== -->
   <section id="bewertungen" class="rv" aria-labelledby="rvHeading">
     <div class="container rv__inner">
 
@@ -915,6 +870,60 @@
     </div>
   </section>
 
+  <!-- ===== PRODUCT INFO — sticky scroll-spy nav over the info sections ===== -->
+  <nav class="psx-nav" id="psxNav" aria-label="Produktinformationen">
+    <div class="container psx-nav__inner">
+      <a class="psx-nav__link is-active" href="#sx-beschreibung">Beschreibung</a>
+      <a class="psx-nav__link" href="#sx-downloads">Downloads<span class="psx-nav__count">7</span></a>
+      <a class="psx-nav__link" href="#sx-technik">Technische Details</a>
+      <a class="psx-nav__link" href="#sx-frage">Frage zum Artikel</a>
+    </div>
+  </nav>
+
+  <!-- 1 · Beschreibung — pinned scrollytelling: a sticky image that swaps as the
+       text scenes scroll past (position:sticky, no scroll-jacking) -->
+  <section id="sx-beschreibung" class="psx-sec psx-story" aria-labelledby="sxBeschrTitle">
+    <div class="container psx-sec__inner">
+      <p class="psx-eyebrow">Produktbeschreibung</p>
+      <h2 class="psx-title" id="sxBeschrTitle">Die Türsprechanlage, die mitdenkt</h2>
+      <p class="psx-lead">Die Metzler VDM10&nbsp;2.0 verbindet edle Edelstahl-Verarbeitung „made in Germany" mit moderner Video- und Smart-Home-Technik — für ein Entree, das sicher, komfortabel und einladend zugleich ist.</p>
+
+      <div class="psx-story__grid">
+        <div class="psx-story__media" aria-hidden="true">
+          <img class="psx-story__img is-active" data-scene="0" src="Product Image/Slider/metzler-vdm10-20-video-tuersprechanlage-1-klingeltaster-colson~13.webp" alt="">
+          <img class="psx-story__img" data-scene="1" src="Product Image/Slider/metzler-vdm10-20-video-tuersprechanlage-1-klingeltaster-colson~19.webp" alt="">
+          <img class="psx-story__img" data-scene="2" src="Product Image/Slider/metzler-vdm10-20-video-tuersprechanlage-1-klingeltaster-colson~24.webp" alt="">
+        </div>
+        <div class="psx-story__scenes">
+          <article class="psx-story__scene" data-scene="0">
+            <span class="psx-story__step">01</span>
+            <h3>Sehen, wer klingelt — in gestochen scharfem HD</h3>
+            <p>Die Full-HD-Kamera mit 170°-Weitwinkel erfasst den kompletten Eingangsbereich und liefert auch bei Nacht ein klares Bild. So erkennen Sie jeden Besucher sofort — live am Touch-Display oder unterwegs per App.</p>
+          </article>
+          <article class="psx-story__scene" data-scene="1">
+            <span class="psx-story__step">02</span>
+            <h3>Öffnen in 200&nbsp;Millisekunden</h3>
+            <p>Dank biometrischer Gesichtserkennung öffnet sich die Tür sicher und schnell — ganz ohne Schlüssel. Alternativ per RFID-Karte, PIN-Code oder Smartphone. Bis zu acht virtuelle Klingeltaster lassen sich frei belegen.</p>
+          </article>
+          <article class="psx-story__scene" data-scene="2">
+            <span class="psx-story__step">03</span>
+            <h3>Edelstahl, in Handarbeit veredelt</h3>
+            <p>Jede Front wird als Maßanfertigung gefertigt, pulverbeschichtet und von Hand veredelt — für ein Entree, das über Jahre hochwertig bleibt. Mit 10&nbsp;Jahren Metzler Garantie.</p>
+          </article>
+        </div>
+      </div>
+
+      <ul class="psx-benefits">
+        <li><b>Fortschrittliche Gesichtserkennung</b><span>Sicher öffnen in nur 200&nbsp;Millisekunden.</span></li>
+        <li><b>Kristallklares HD-Video</b><span>Full-HD-Übertragung, auch bei Gegenlicht und nachts.</span></li>
+        <li><b>Personalisierbarer Homescreen</b><span>Anpassbare Hintergründe, Symbole und Klingeltaster.</span></li>
+        <li><b>Vielseitige Türöffnung</b><span>Gesicht, RFID, PIN oder App — Sie entscheiden.</span></li>
+        <li><b>Edelstahl „made in Germany"</b><span>In Handarbeit gefertigt, pulverbeschichtet, langlebig.</span></li>
+        <li><b>10&nbsp;Jahre Metzler Garantie</b><span>Qualität, auf die Sie sich verlassen können.</span></li>
+      </ul>
+    </div>
+  </section>
+
   <!-- 3 · Downloads -->
   <section id="sx-downloads" class="psx-sec psx-sec--alt" aria-labelledby="sxDlTitle">
     <div class="container psx-sec__inner">
@@ -979,37 +988,44 @@
     </div>
   </section>
 
-  <!-- 5 · Frage zum Artikel -->
-  <section id="sx-frage" class="psx-sec psx-sec--alt" aria-labelledby="sxFrageTitle">
-    <div class="container psx-sec__inner">
-      <p class="psx-eyebrow">Frage zum Artikel</p>
-      <h2 class="psx-title" id="sxFrageTitle">Häufige Fragen — und Ihre eigene</h2>
-      <div class="psx-frage">
-        <ul class="psx-faq" id="psxFaq">
-          <li class="psx-faq__item">
-            <button type="button" class="psx-faq__q" aria-expanded="false">Passt die VDM10 2.0 an meine bestehende 2-Draht-Verkabelung?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
-            <div class="psx-faq__a"><p>Ja. Die Anlage lässt sich wahlweise per 2-Draht-Verteiler oder über LAN/PoE anschließen — die passende Stromversorgung wählen Sie im Konfigurator.</p></div>
-          </li>
-          <li class="psx-faq__item">
-            <button type="button" class="psx-faq__q" aria-expanded="false">Funktioniert die Gesichtserkennung auch bei Dunkelheit?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
-            <div class="psx-faq__a"><p>Ja. Dank IR-unterstützter Nachtsicht erkennt die Kamera Gesichter zuverlässig — auch nachts und bei Gegenlicht.</p></div>
-          </li>
-          <li class="psx-faq__item">
-            <button type="button" class="psx-faq__q" aria-expanded="false">Wie lange dauert die Lieferung meiner Maßanfertigung?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
-            <div class="psx-faq__a"><p>Das voraussichtliche Versanddatum wird Ihnen direkt im Warenkorb angezeigt, sobald Ihre Konfiguration abgeschlossen ist.</p></div>
-          </li>
-          <li class="psx-faq__item">
-            <button type="button" class="psx-faq__q" aria-expanded="false">Kann ich die Anlage später um weitere Innenstationen erweitern?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
-            <div class="psx-faq__a"><p>Ja, das System ist erweiterbar — für mehrere Räume oder Etagen lassen sich jederzeit zusätzliche Innenstationen ergänzen.</p></div>
-          </li>
-        </ul>
-        <aside class="psx-ask">
-          <h3>Ihre Frage ist nicht dabei?</h3>
-          <p>Unser Fachteam beantwortet Ihre Frage zum Artikel persönlich — kostenlos und unverbindlich.</p>
-          <a class="psx-ask__cta" href="#">Frage stellen
+  <!-- 5 · Frage zum Artikel — FAQ (consistent with the produktionsprozess page) -->
+  <section id="sx-frage" class="psx-sec psx-sec--alt faq" aria-labelledby="sxFrageTitle">
+    <div class="container">
+      <div class="faq__inner">
+        <aside class="faq__support">
+          <h3>Beratung gewünscht?</h3>
+          <p>Unser Fachteam beantwortet Ihre Frage zum Artikel persönlich — zu Anschluss, Montage und Konfiguration. Kostenlos und unverbindlich.</p>
+          <a class="faq__cta" href="#">Zum Kundensupport
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
           </a>
+          <div class="faq__phone">
+            Sprechanlagen-Hotline
+            <strong>+49 (0) 7121 / 317 7333</strong>
+            <span class="faq__phone-hours">Mo–Fr · 09:00–16:00 Uhr</span>
+          </div>
         </aside>
+        <div>
+          <p class="psx-eyebrow">Frage zum Artikel</p>
+          <h2 class="psx-title" id="sxFrageTitle">Häufige Fragen</h2>
+          <div class="faq__list">
+            <details class="faq__item" open>
+              <summary class="faq__q">Passt die VDM10&nbsp;2.0 an meine bestehende 2-Draht-Verkabelung?<span class="faq__q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></summary>
+              <div class="faq__a">Ja. Die Anlage lässt sich wahlweise per 2-Draht-Verteiler oder über LAN/PoE anschließen — die passende Stromversorgung wählen Sie direkt im Konfigurator.</div>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q">Funktioniert die Gesichtserkennung auch bei Dunkelheit?<span class="faq__q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></summary>
+              <div class="faq__a">Ja. Dank IR-unterstützter Nachtsicht erkennt die Kamera Gesichter zuverlässig — auch nachts und bei Gegenlicht am Nachmittag.</div>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q">Wie lange dauert die Lieferung meiner Maßanfertigung?<span class="faq__q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></summary>
+              <div class="faq__a">Das voraussichtliche Versanddatum wird Ihnen direkt im Warenkorb angezeigt, sobald Ihre Konfiguration abgeschlossen ist — inklusive Gratis-Versand mit DHL GoGreen.</div>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q">Kann ich die Anlage später um weitere Innenstationen erweitern?<span class="faq__q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></summary>
+              <div class="faq__a">Ja, das System ist erweiterbar — für mehrere Räume oder Etagen lassen sich jederzeit zusätzliche Innenstationen ergänzen.</div>
+            </details>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1406,6 +1422,6 @@
 </nav>
 
 <script src="chrome.js?v=2"></script>
-<script src="pdp-b.js?v=70"></script>
+<script src="pdp-b.js?v=73"></script>
 </body>
 </html>
