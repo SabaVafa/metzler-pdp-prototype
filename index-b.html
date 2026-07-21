@@ -16,7 +16,7 @@
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=28" />
 <!-- Version B — inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=247" />
+<link rel="stylesheet" href="pdp-b.css?v=250" />
 </head>
 <body class="plp">
 
@@ -733,7 +733,52 @@
     </div>
   </section>
 
-  <!-- ===== CUSTOMER REVIEWS ===== -->
+  <!-- ===== PRODUCT INFO — sticky scroll-spy nav over 5 stacked sections ===== -->
+  <nav class="psx-nav" id="psxNav" aria-label="Produktinformationen">
+    <div class="container psx-nav__inner">
+      <a class="psx-nav__link is-active" href="#sx-beschreibung">Beschreibung</a>
+      <a class="psx-nav__link" href="#bewertungen">Bewertungen<span class="psx-nav__count">63</span></a>
+      <a class="psx-nav__link" href="#sx-downloads">Downloads<span class="psx-nav__count">7</span></a>
+      <a class="psx-nav__link" href="#sx-technik">Technische Details</a>
+      <a class="psx-nav__link" href="#sx-frage">Frage zum Artikel</a>
+    </div>
+  </nav>
+
+  <!-- 1 · Beschreibung -->
+  <section id="sx-beschreibung" class="psx-sec" aria-labelledby="sxBeschrTitle">
+    <div class="container psx-sec__inner">
+      <p class="psx-eyebrow">Produktbeschreibung</p>
+      <h2 class="psx-title" id="sxBeschrTitle">Die Türsprechanlage, die mitdenkt</h2>
+      <p class="psx-lead">Die Metzler VDM10&nbsp;2.0 verbindet edle Edelstahl-Verarbeitung „made in Germany" mit moderner Video- und Smart-Home-Technik — für ein Entree, das sicher, komfortabel und einladend zugleich ist.</p>
+
+      <div class="psx-descrow">
+        <figure class="psx-descrow__media"><img src="Product Image/Slider/metzler-vdm10-20-video-tuersprechanlage-1-klingeltaster-colson~13.webp" alt="VDM10 Kamera-Detail" loading="lazy"></figure>
+        <div class="psx-descrow__copy">
+          <h3>Sehen, wer klingelt — in gestochen scharfem HD</h3>
+          <p>Die Full-HD-Kamera mit 170°-Weitwinkel erfasst den kompletten Eingangsbereich und liefert auch bei Nacht ein klares Bild. So erkennen Sie jeden Besucher sofort — ob live am Touch-Display oder unterwegs per App.</p>
+        </div>
+      </div>
+
+      <div class="psx-descrow psx-descrow--rev">
+        <figure class="psx-descrow__media"><img src="Product Image/Slider/metzler-vdm10-20-video-tuersprechanlage-1-klingeltaster-colson~19.webp" alt="VDM10 an der Haustür montiert" loading="lazy"></figure>
+        <div class="psx-descrow__copy">
+          <h3>Öffnen in 200&nbsp;Millisekunden</h3>
+          <p>Dank biometrischer Gesichtserkennung öffnet sich die Tür sicher und schnell — ganz ohne Schlüssel. Alternativ per RFID-Karte, PIN-Code oder Smartphone. Bis zu acht virtuelle Klingeltaster lassen sich frei belegen.</p>
+        </div>
+      </div>
+
+      <ul class="psx-benefits">
+        <li><b>Fortschrittliche Gesichtserkennung</b><span>Sicher öffnen in nur 200&nbsp;Millisekunden.</span></li>
+        <li><b>Kristallklares HD-Video</b><span>Full-HD-Übertragung, auch bei Gegenlicht und nachts.</span></li>
+        <li><b>Personalisierbarer Homescreen</b><span>Anpassbare Hintergründe, Symbole und Klingeltaster.</span></li>
+        <li><b>Vielseitige Türöffnung</b><span>Gesicht, RFID, PIN oder App — Sie entscheiden.</span></li>
+        <li><b>Edelstahl „made in Germany"</b><span>In Handarbeit gefertigt, pulverbeschichtet, langlebig.</span></li>
+        <li><b>10&nbsp;Jahre Metzler Garantie</b><span>Qualität, auf die Sie sich verlassen können.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== 2 · Bewertungen (reviews module) ===== -->
   <section id="bewertungen" class="rv" aria-labelledby="rvHeading">
     <div class="container rv__inner">
 
@@ -867,6 +912,105 @@
 
       </div><!-- /rv__layout -->
 
+    </div>
+  </section>
+
+  <!-- 3 · Downloads -->
+  <section id="sx-downloads" class="psx-sec psx-sec--alt" aria-labelledby="sxDlTitle">
+    <div class="container psx-sec__inner">
+      <p class="psx-eyebrow">Downloads</p>
+      <h2 class="psx-title" id="sxDlTitle">Anleitungen &amp; Dokumente</h2>
+      <p class="psx-lead">Alle Unterlagen zu Ihrer VDM10&nbsp;2.0 — jederzeit als PDF zum Herunterladen.</p>
+      <ul class="psx-dl">
+        <li><a class="psx-dl__item" href="#" download><span class="psx-dl__badge">PDF</span><span class="psx-dl__text"><b>Bedienungsanleitung</b><span>Deutsch · 4,2 MB</span></span><svg class="psx-dl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></a></li>
+        <li><a class="psx-dl__item" href="#" download><span class="psx-dl__badge">PDF</span><span class="psx-dl__text"><b>Montageanleitung</b><span>Deutsch · 6,8 MB</span></span><svg class="psx-dl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></a></li>
+        <li><a class="psx-dl__item" href="#" download><span class="psx-dl__badge">PDF</span><span class="psx-dl__text"><b>Technisches Datenblatt</b><span>Deutsch · 1,1 MB</span></span><svg class="psx-dl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></a></li>
+        <li><a class="psx-dl__item" href="#" download><span class="psx-dl__badge">PDF</span><span class="psx-dl__text"><b>Anschlussplan (LAN/PoE &amp; 2-Draht)</b><span>Deutsch · 2,3 MB</span></span><svg class="psx-dl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></a></li>
+        <li><a class="psx-dl__item" href="#" download><span class="psx-dl__badge">PDF</span><span class="psx-dl__text"><b>Kurzanleitung Metzler-App</b><span>Deutsch · 0,9 MB</span></span><svg class="psx-dl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></a></li>
+        <li><a class="psx-dl__item" href="#" download><span class="psx-dl__badge">PDF</span><span class="psx-dl__text"><b>CE-Konformitätserklärung</b><span>Deutsch · 0,4 MB</span></span><svg class="psx-dl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></a></li>
+        <li><a class="psx-dl__item" href="#" download><span class="psx-dl__badge">PDF</span><span class="psx-dl__text"><b>Pflege- &amp; Reinigungshinweise</b><span>Deutsch · 0,3 MB</span></span><svg class="psx-dl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4 · Technische Details -->
+  <section id="sx-technik" class="psx-sec" aria-labelledby="sxTechTitle">
+    <div class="container psx-sec__inner">
+      <p class="psx-eyebrow">Technische Details</p>
+      <h2 class="psx-title" id="sxTechTitle">Technische Daten im Überblick</h2>
+      <div class="psx-spec">
+        <div class="psx-spec__group">
+          <h3 class="psx-spec__grouptitle">Allgemein</h3>
+          <dl class="psx-spec__list">
+            <div><dt>Hersteller</dt><dd>Metzler</dd></div>
+            <div><dt>Modell</dt><dd>VDM10 2.0 · Colson</dd></div>
+            <div><dt>Material</dt><dd>Edelstahl, pulverbeschichtet</dd></div>
+            <div><dt>Fertigung</dt><dd>Maßanfertigung, made in Germany</dd></div>
+          </dl>
+        </div>
+        <div class="psx-spec__group">
+          <h3 class="psx-spec__grouptitle">Kamera &amp; Display</h3>
+          <dl class="psx-spec__list">
+            <div><dt>Auflösung</dt><dd>Full-HD 1080p</dd></div>
+            <div><dt>Blickwinkel</dt><dd>170° Weitwinkel</dd></div>
+            <div><dt>Nachtsicht</dt><dd>Ja, IR-unterstützt</dd></div>
+            <div><dt>Display</dt><dd>IPS-Touch-Display</dd></div>
+          </dl>
+        </div>
+        <div class="psx-spec__group">
+          <h3 class="psx-spec__grouptitle">Anschluss &amp; Zutritt</h3>
+          <dl class="psx-spec__list">
+            <div><dt>Anschluss</dt><dd>LAN/PoE oder 2-Draht</dd></div>
+            <div><dt>Zutritt</dt><dd>Gesichtserkennung, RFID, PIN, App</dd></div>
+            <div><dt>Klingeltaster</dt><dd>Bis zu 8 (virtuell)</dd></div>
+            <div><dt>Smart-Home</dt><dd>Metzler-App (iOS &amp; Android)</dd></div>
+          </dl>
+        </div>
+        <div class="psx-spec__group">
+          <h3 class="psx-spec__grouptitle">Abmessungen &amp; Garantie</h3>
+          <dl class="psx-spec__list">
+            <div><dt>Maße (B×H)</dt><dd>13,30 × 27,40 cm</dd></div>
+            <div><dt>Schutzart</dt><dd>IP54 (wettergeschützt)</dd></div>
+            <div><dt>Lieferung</dt><dd>Gratis Versand · DHL GoGreen</dd></div>
+            <div><dt>Garantie</dt><dd>10 Jahre Metzler Garantie</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · Frage zum Artikel -->
+  <section id="sx-frage" class="psx-sec psx-sec--alt" aria-labelledby="sxFrageTitle">
+    <div class="container psx-sec__inner">
+      <p class="psx-eyebrow">Frage zum Artikel</p>
+      <h2 class="psx-title" id="sxFrageTitle">Häufige Fragen — und Ihre eigene</h2>
+      <div class="psx-frage">
+        <ul class="psx-faq" id="psxFaq">
+          <li class="psx-faq__item">
+            <button type="button" class="psx-faq__q" aria-expanded="false">Passt die VDM10 2.0 an meine bestehende 2-Draht-Verkabelung?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="psx-faq__a"><p>Ja. Die Anlage lässt sich wahlweise per 2-Draht-Verteiler oder über LAN/PoE anschließen — die passende Stromversorgung wählen Sie im Konfigurator.</p></div>
+          </li>
+          <li class="psx-faq__item">
+            <button type="button" class="psx-faq__q" aria-expanded="false">Funktioniert die Gesichtserkennung auch bei Dunkelheit?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="psx-faq__a"><p>Ja. Dank IR-unterstützter Nachtsicht erkennt die Kamera Gesichter zuverlässig — auch nachts und bei Gegenlicht.</p></div>
+          </li>
+          <li class="psx-faq__item">
+            <button type="button" class="psx-faq__q" aria-expanded="false">Wie lange dauert die Lieferung meiner Maßanfertigung?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="psx-faq__a"><p>Das voraussichtliche Versanddatum wird Ihnen direkt im Warenkorb angezeigt, sobald Ihre Konfiguration abgeschlossen ist.</p></div>
+          </li>
+          <li class="psx-faq__item">
+            <button type="button" class="psx-faq__q" aria-expanded="false">Kann ich die Anlage später um weitere Innenstationen erweitern?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="psx-faq__a"><p>Ja, das System ist erweiterbar — für mehrere Räume oder Etagen lassen sich jederzeit zusätzliche Innenstationen ergänzen.</p></div>
+          </li>
+        </ul>
+        <aside class="psx-ask">
+          <h3>Ihre Frage ist nicht dabei?</h3>
+          <p>Unser Fachteam beantwortet Ihre Frage zum Artikel persönlich — kostenlos und unverbindlich.</p>
+          <a class="psx-ask__cta" href="#">Frage stellen
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+          </a>
+        </aside>
+      </div>
     </div>
   </section>
 
@@ -1262,6 +1406,6 @@
 </nav>
 
 <script src="chrome.js?v=2"></script>
-<script src="pdp-b.js?v=69"></script>
+<script src="pdp-b.js?v=70"></script>
 </body>
 </html>

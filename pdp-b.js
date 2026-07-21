@@ -472,6 +472,35 @@
     show(0);
   })();
 
+  /* ── Product-info sticky nav: scroll-spy (highlight the section in view) ── */
+  (function () {
+    var nav = $('psxNav'); if (!nav) return;
+    var links = [].slice.call(nav.querySelectorAll('.psx-nav__link'));
+    var map = {}, secs = [];
+    links.forEach(function (l) {
+      var id = (l.getAttribute('href') || '').slice(1);
+      var sec = document.getElementById(id);
+      if (sec) { map[id] = l; secs.push(sec); }
+    });
+    if (!secs.length || !('IntersectionObserver' in window)) return;
+    function setActive(l) { links.forEach(function (x) { x.classList.toggle('is-active', x === l); }); }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting && map[e.target.id]) setActive(map[e.target.id]); });
+    }, { rootMargin: '-118px 0px -66% 0px', threshold: 0 });
+    secs.forEach(function (s) { io.observe(s); });
+  })();
+
+  /* ── Frage zum Artikel: FAQ accordion ── */
+  (function () {
+    var faq = $('psxFaq'); if (!faq) return;
+    faq.addEventListener('click', function (e) {
+      var q = e.target.closest('.psx-faq__q'); if (!q) return;
+      var item = q.closest('.psx-faq__item');
+      var open = item.classList.toggle('is-open');
+      q.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  })();
+
   var mtoggle = document.querySelector('.pdp-media__toggle');
   if (mtoggle) mtoggle.addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
