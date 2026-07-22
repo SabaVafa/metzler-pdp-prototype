@@ -71,6 +71,7 @@
   function curIndex() { for (var i = 0; i < items.length; i++) if (items[i].classList.contains('is-active')) return i; return -1; }
 
   /* ── Central refresh ── */
+  var priceOpenedOnce = false;   /* auto-expand Preisdetails once, on the first paid add-on */
   function refresh() {
     var t = euro(total());
     var el = $('bTotal');
@@ -86,6 +87,21 @@
     var cartBtn = $('bCart'); if (cartBtn) cartBtn.textContent = state.finish ? 'In den Warenkorb' : 'Bitte Farbe wählen';
     var sLabel = $('pdpStickyLabel'); if (sLabel) sLabel.textContent = state.finish ? 'In den Warenkorb' : 'Bitte Farbe wählen';
     var checkout = $('bCheckout'); if (checkout) checkout.classList.toggle('is-precolor', !state.finish);
+
+    /* Preisdetails stays hidden until the config carries a surcharge; the first paid
+       item reveals it, already expanded (reveal persists; expand fires once so we
+       respect the user if they later collapse it) */
+    var paidExtra = innenSum() + extrasSum()
+      + (hasStrom() ? state.stromDelta * state.stromQty : 0)
+      + (state.finishDelta > 0 ? state.finishDelta * state.mainQty : 0);
+    if (paidExtra > 0 && checkout) {
+      checkout.classList.add('is-priced');
+      if (!priceOpenedOnce) {
+        var accEl = $('bAcc'), accBtn = $('bDetailsBtn');
+        if (accEl) { accEl.classList.add('is-open'); if (accBtn) accBtn.setAttribute('aria-expanded', 'true'); }
+        priceOpenedOnce = true;
+      }
+    }
 
     setTxt('bPickAnschluss', state.anschluss || 'Bitte wählen');
     setTxt('bPickGravur', state.gravurOn ? (state.gravurText ? '„' + state.gravurText + '" · ' + state.font : 'Mit Gravur') : 'Ohne Gravur');
@@ -488,6 +504,30 @@
       entries.forEach(function (e) { if (e.isIntersecting && map[e.target.id]) setActive(map[e.target.id]); });
     }, { rootMargin: '-118px 0px -66% 0px', threshold: 0 });
     secs.forEach(function (s) { io.observe(s); });
+  })();
+
+  /* ── Bewertungen: happy-review carousel arrows (scroll by ~card width) ── */
+  (function () {
+    var track = document.getElementById('rvwCarousel'); if (!track) return;
+    var wrap = track.closest('.rvw-happy'); if (!wrap) return;
+    var prev = wrap.querySelector('.rvw-arrow[data-dir="prev"]');
+    var next = wrap.querySelector('.rvw-arrow[data-dir="next"]');
+    if (!prev || !next) return;
+    function step() {
+      var card = track.querySelector('.rvw-happy-card');
+      var gap = parseFloat(getComputedStyle(track).columnGap) || 16;
+      return card ? card.getBoundingClientRect().width + gap : 320;
+    }
+    function update() {
+      var max = track.scrollWidth - track.clientWidth - 2;
+      prev.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft >= max;
+    }
+    prev.addEventListener('click', function () { track.scrollBy({ left: -step() * 1.5, behavior: 'smooth' }); });
+    next.addEventListener('click', function () { track.scrollBy({ left: step() * 1.5, behavior: 'smooth' }); });
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
   })();
 
   /* ── Tasteful motion: scroll-reveal + subtle Beschreibung image parallax.
