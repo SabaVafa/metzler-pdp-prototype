@@ -93,7 +93,7 @@
 
 /* Credential line — one calm row replaces two loud badges */
 /* tighten the gap between the breadcrumb and the product title (hero top padding) */
-.pdp-b .pdp-hero { padding-top: 1rem; }
+.pdp-b .pdp-hero { padding-top: 1rem; padding-bottom: var(--sx-rhythm); }   /* bottom padding on the section rhythm so the hero→first-section gap matches the rest */
 /* rating/share sits right under the title (the header's 2rem gap left it floating) */
 .pdp-b .pdp-hero__head { gap: 0.6rem; }
 .bx-cred { display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem 0.9rem; margin-top: 0.15rem; }
@@ -190,8 +190,8 @@
 .pdp-b .pdp-specs__item { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
 .pdp-b .pdp-specs__item:nth-child(2) { align-items: center; text-align: center; }   /* middle spec (Breite × Höhe) centered */
 .pdp-b .pdp-specs__item:last-child { align-items: flex-end; text-align: right; }   /* article no. aligns to the right edge */
-.pdp-b .pdp-specs__label { margin: 0; font-size: 0.625rem; font-weight: 600; letter-spacing: 0.09em;
-  text-transform: uppercase; color: var(--color-graphite-600); }   /* match the "Bewertungen" grey */
+.pdp-b .pdp-specs__label { margin: 0; font-size: 0.8125rem; font-weight: 600; letter-spacing: normal;
+  text-transform: none; color: var(--color-graphite-600); }   /* match the "Bewertungen" grey */
 .pdp-b .pdp-specs__value { margin: 0; font-size: 1rem; font-weight: 600; color: var(--color-digital-black);
   font-variant-numeric: tabular-nums; }
 /* minimal hairline dividers between the three key facts (desktop; mobile keeps its
@@ -203,13 +203,7 @@
   .pdp-b .pdp-specs__item:last-child { padding-right: 0; }
   .pdp-b .pdp-specs__item + .pdp-specs__item { border-left: 1px solid var(--color-graphite-200); }
 }
-/* Big screens: nudge the labels up a touch (values stay a fixed 16px) */
-@media (min-width: 1200px) {
-  .pdp-b .pdp-specs__label { font-size: 0.75rem; }
-}
-@media (min-width: 1600px) {
-  .pdp-b .pdp-specs__label { font-size: 0.8125rem; }
-}
+/* labels held at a consistent 11px across breakpoints (values stay a fixed 16px) */
 
 /* ── AUSFÜHRUNG · Farbe (Variante) ── */
 .bx-color { display: flex; flex-direction: column; gap: 0.7rem; }
@@ -369,7 +363,7 @@
 
 /* "Preis wie konfiguriert" price line */
 .cfgb-price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.15rem 0.7rem; }
-.cfgb-price__label { flex-basis: 100%; font-size: 0.625rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(0,0,0,0.6); }
+.cfgb-price__label { flex-basis: 100%; font-size: 0.8125rem; font-weight: 700; letter-spacing: normal; text-transform: none; color: rgba(0,0,0,0.6); }
 .cfgb-price__meta { font-size: 0.8125rem; color: var(--color-graphite-600); }
 .cfgb-price__meta a { color: var(--color-teal); text-decoration: underline; }
 
@@ -378,7 +372,7 @@
 .pdp-price--lead { display: flex; flex-direction: column; align-items: flex-start; text-align: left;
   gap: 0.3rem; margin-top: -0.3rem; }
 .pdp-price--lead .pdp-price__amount { font-size: 2rem; letter-spacing: -0.025em; line-height: 1.05; }
-.pdp-price--lead .cfgb-price__label { font-size: 0.6875rem; letter-spacing: 0.12em; }
+.pdp-price--lead .cfgb-price__label { font-size: 0.8125rem; letter-spacing: normal; }
 .pdp-price--lead .pdp-price__meta { font-size: 0.875rem; }
 .pdp-price--lead .pdp-avail__status { font-size: 0.9375rem; }
 
@@ -442,15 +436,15 @@
 .pdp-b .pdp-pay img { height: 1.45rem; opacity: 0.85; }
 
 /* required / optional tags (spine + step titles + option) */
-.cfgb-bar__req, .stepr__req { font-size: 0.5rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+.cfgb-bar__req, .stepr__req { font-size: 0.6875rem; font-weight: 800; letter-spacing: normal; text-transform: capitalize;
   color: var(--color-teal); background: var(--color-teal-50); border-radius: var(--radius-pill); padding: 0.14rem 0.45rem; vertical-align: middle; }
-.stepr__opt { font-size: 0.5rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+.stepr__opt { font-size: 0.6875rem; font-weight: 800; letter-spacing: normal; text-transform: capitalize;
   color: var(--color-green-600); background: var(--color-green-50); border-radius: var(--radius-pill); padding: 0.14rem 0.45rem; vertical-align: middle; }
 /* "beliebt" status tag — same calm pill interface as the category-page feature
    pills (light fill, thin border, sentence case, medium weight, no shadow),
    carrying a restrained teal tint instead of a loud uppercase chip. */
 .cfg-opt__tag { display: inline-block; margin-left: 0.4rem; vertical-align: middle;
-  font-size: 0.625rem; font-weight: 600; letter-spacing: normal; text-transform: capitalize; line-height: 1.3;
+  font-size: 0.6875rem; font-weight: 600; letter-spacing: normal; text-transform: capitalize; line-height: 1.3;
   color: var(--color-teal); background: var(--color-teal-50);
   border: 1px solid var(--color-teal-75); border-radius: var(--radius-pill); padding: 0.08rem 0.5rem; }
 
@@ -525,7 +519,7 @@
   .pdp-b .pdp-thumbs button { width: 3.25rem; height: 3.25rem; }
 
   /* ── SPEC LABELS → nudged off 10px for comfortable legibility ── */
-  .pdp-b .pdp-specs__label { font-size: 0.6875rem; }
+  .pdp-b .pdp-specs__label { font-size: 0.8125rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -597,8 +591,9 @@
 .sheet .cfgb-summary { border: 0; background: none; padding: 0 1.25rem; margin: 0; overflow-y: auto; }
 .sheet__foot { display: flex; align-items: center; gap: 0.85rem; padding: 1rem 1.25rem; border-top: 1px solid var(--color-graphite-200); margin-top: 0.5rem; }
 /* price yields width so the CTA never has to wrap; label wraps instead of the button */
-.sheet__price { display: flex; flex-direction: column; flex: 0 1 auto; min-width: 0; }
-.sheet__pricelabel { font-size: 0.625rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(0,0,0,0.6); line-height: 1.25; }
+.sheet__price { display: block; flex: 0 0 auto; }
+.sheet__pricelabel { display: block; font-size: 0.625rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(0,0,0,0.6); line-height: 1.25; }
+.sheet__pricemeta { margin-left: 0.5rem; font-size: 0.75rem; line-height: 1.3; color: var(--color-graphite-700); white-space: nowrap; }
 /* CTA stays on a single line and sizes to its content */
 .sheet__foot .pdp-cta { flex: 1 1 auto; width: auto; white-space: nowrap; background: var(--color-teal); box-shadow: 0 0.375rem 0.9rem rgba(1,82,83,0.15); }
 .sheet__foot .pdp-cta:hover { background: var(--color-teal-hover); }
@@ -634,8 +629,8 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 .cfgb-dock__meta { display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem; }
 .cfgb-dock__kicker { font-size: 0.625rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-graphite-500); }
 /* required = red (universal "mandatory" signal); optional = green (universal "no action needed" signal) */
-.cfgb-dock__flag { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.625rem; font-weight: 800;
-  letter-spacing: 0.1em; text-transform: uppercase; line-height: 1; color: var(--color-red);
+.cfgb-dock__flag { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.6875rem; font-weight: 800;
+  letter-spacing: normal; text-transform: capitalize; line-height: 1; color: var(--color-red);
   background: var(--color-red-50); border: 1px solid rgba(212,41,36,0.28); border-radius: var(--radius-pill);
   padding: 0.3rem 0.65rem; }
 .cfgb-dock__flag::before { display: none; }   /* dot removed per request */
@@ -976,6 +971,8 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 /* height:auto (not 100%) — grid align-items:stretch equalises card heights per row */
 .cfgb .cfg-opt { position: relative; flex-direction: column; align-items: stretch; gap: 0.5rem; padding: 0.85rem; text-align: left; }
 .cfgb .cfg-opt__mark { position: absolute; top: 0.65rem; right: 0.65rem; margin: 0; z-index: 2; background: var(--color-white); }
+/* keep the selection fill dead-centered in the mark box (robust vs grid/box-sizing drift) */
+.cfgb .cfg-opt.is-selected .cfg-opt__mark::after { position: absolute; inset: 0; margin: auto; }
 /* "Empfohlen" pill — same format as the availability badges, in primary teal */
 .cfg-opt__rec {
   position: absolute; top: 0.6rem; left: 0.6rem; z-index: 3;
@@ -1177,7 +1174,7 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 /* ============================================================
    CUSTOMER REVIEWS — overall score, distribution, testimonial carousel.
    Built on the Metzler design tokens; scoped to .rv. ============================ */
-.rv { background: var(--color-paper); padding: clamp(2.75rem, 5vw, 4.75rem) 0; scroll-margin-top: 5.5rem; }
+.rv { background: var(--color-paper); padding: var(--sx-rhythm) 0; scroll-margin-top: 5.5rem; }
 .rv__inner { display: flex; flex-direction: column; }
 
 /* Heading — matches the About-us section header (.eyebrow / .section-title / .section-sub) */
@@ -1327,9 +1324,25 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
    ============================================================ */
 html { scroll-behavior: smooth; }
 
-.psx-nav { position: sticky; top: 64px; z-index: 50; background: var(--color-white);
+/* --pdp-header-h tracks the live (compacting) site-header height; pdp-b.js keeps it
+   in sync so the sticky bars below always sit flush under the header. */
+:root { --pdp-header-h: 81px; }
+.psx-nav { position: sticky; top: var(--pdp-header-h); z-index: 50; background: var(--color-white);
   border-top: 1px solid var(--color-graphite-200); border-bottom: 1px solid var(--color-graphite-200);
   box-shadow: 0 4px 10px -8px rgba(10,20,20,0.2); }
+
+/* ── Sticky handoff (desktop) ──────────────────────────────────────────────
+   The green quickbar pins directly under the header while scrolling. As the
+   product-section nav (.psx-nav) rises into its slot, pdp-b.js slides the
+   quickbar up behind the header (translateY) so the section nav takes its place
+   — a clean baton-pass, not two stacked bars. Mobile keeps its accordion. */
+@media (min-width: 768px) {
+  body.is-scrolled #quickbar {
+    position: sticky; top: var(--pdp-header-h); z-index: 45;
+    box-shadow: 0 8px 18px -14px rgba(1,40,40,0.55);
+    will-change: transform;
+  }
+}
 .psx-nav__inner { display: flex; gap: clamp(1.75rem, 4vw, 3.75rem); align-items: stretch;
   overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
 .psx-nav__inner::-webkit-scrollbar { display: none; }
@@ -1342,13 +1355,29 @@ html { scroll-behavior: smooth; }
 .psx-nav__count { font-size: 0.8em; font-weight: 700; color: var(--color-graphite-500); }
 .psx-nav__link.is-active .psx-nav__count { color: var(--color-teal); }
 
-.psx-sec { scroll-margin-top: 7.75rem; padding: clamp(2.75rem, 5vw, 4.5rem) 0; }
+/* One rhythm token for every full-width info section, so the vertical padding
+   (and therefore the gap between any two sections) is identical at all widths. */
+:root { --sx-rhythm: clamp(2.75rem, 5vw, 4.5rem); }
+.psx-sec { scroll-margin-top: 7.75rem; padding: var(--sx-rhythm) 0; }
 .psx-sec--alt { background: var(--color-paper); }
 .rv { scroll-margin-top: 7.75rem; }   /* reviews section = Bewertungen target */
 
 .psx-eyebrow { margin: 0 0 0.6rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; line-height: 1.4; text-transform: uppercase; color: #6A6A6A; }
 .psx-title { margin: 0 0 1rem; font-size: clamp(1.6rem, 3vw, 2.25rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; color: var(--color-digital-black); }
 .psx-lead { margin: 0 0 2rem; max-width: 62ch; font-size: 1.0625rem; line-height: 1.6; color: var(--color-graphite-700); }
+
+/* Center the intro text block (eyebrow · title · lead) in the Bewertungen,
+   Downloads and Technische-Details sections only — Beschreibung and FAQ keep
+   their left-aligned headers. The lead's max-width box is re-centered via auto
+   side margins so the copy sits centered under the title. */
+#sx-bewertungen .psx-eyebrow, #sx-bewertungen .psx-title, #sx-bewertungen .psx-lead,
+#sx-downloads .psx-eyebrow,   #sx-downloads .psx-title,   #sx-downloads .psx-lead,
+#sx-technik .psx-eyebrow,     #sx-technik .psx-title,     #sx-technik .psx-lead {
+  text-align: center;
+}
+#sx-bewertungen .psx-lead, #sx-downloads .psx-lead, #sx-technik .psx-lead {
+  margin-left: auto; margin-right: auto;
+}
 
 /* Beschreibung */
 .psx-descrow { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(1.25rem,3vw,2.5rem); align-items: center; margin-bottom: clamp(1.5rem,3vw,2.5rem); }
@@ -1382,10 +1411,127 @@ html { scroll-behavior: smooth; }
 .psx-badges li { padding: 0.4rem 0.85rem; border: 1px solid var(--color-graphite-300); border-radius: var(--radius-pill); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-teal); background: #fff; }
 /* extra breathing room above the alternating rows */
 .psx-rows { margin-top: clamp(2rem, 4vw, 3.25rem); }
-.psx-benefits { list-style: none; margin: clamp(1rem,2vw,1.75rem) 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(15rem,100%),1fr)); gap: 1.1rem 2rem; }
-.psx-benefits li { display: flex; flex-direction: column; gap: 0.15rem; padding-top: 0.85rem; border-top: 2px solid var(--color-teal); }
-.psx-benefits b { font-size: 0.9375rem; font-weight: 800; color: var(--color-digital-black); }
-.psx-benefits span { font-size: 0.875rem; line-height: 1.45; color: var(--color-graphite-700); }
+/* ===== Neue Features — premium branded panel ===========================
+   A deep-teal rounded panel holding white icon-cards. Each card lifts on
+   hover, its icon chip fills teal, and a short accent underline grows out
+   from the title. Responsive 3 → 2 → 1 columns. ==================== */
+.nfeat { margin: clamp(1.75rem,3.5vw,2.75rem) 0 0; padding: clamp(1.75rem,3.5vw,3rem) clamp(1.25rem,3vw,2.75rem);
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(120% 120% at 85% -10%, rgba(124,198,185,0.16), transparent 55%),
+    var(--color-teal);
+  color: #fff; }
+.nfeat__head { text-align: center; max-width: 44rem; margin: 0 auto clamp(1.5rem,3vw,2.25rem); }
+.nfeat__eyebrow { display: inline-block; margin: 0 0 0.7rem; padding: 0.28rem 0.7rem; border-radius: var(--radius-pill);
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22);
+  font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #cdeae5; }
+.nfeat__title { margin: 0 0 0.6rem; font-size: clamp(1.5rem,2.6vw,2.05rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; color: #fff; }
+.nfeat__lead { margin: 0; font-size: 1rem; line-height: 1.6; color: rgba(255,255,255,0.78); }
+
+.nfeat__grid { list-style: none; margin: 0; padding: 0; display: grid;
+  grid-template-columns: 1fr; gap: clamp(0.85rem,1.5vw,1.15rem); }
+@media (min-width: 40rem)  { .nfeat__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 60rem)  { .nfeat__grid { grid-template-columns: repeat(3, 1fr); } }
+.nfeat__card { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 0.55rem;
+  padding: clamp(1.25rem,2vw,1.6rem); background: var(--color-white); border-radius: var(--radius-lg);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+  transition: transform .2s ease, box-shadow .25s ease; }
+.nfeat__card:hover { transform: translateY(-4px); box-shadow: 0 22px 38px -22px rgba(0,0,0,0.5); }
+.nfeat__cardtitle { position: relative; margin: 0; padding-bottom: 0.55rem; font-size: 1.0625rem; font-weight: 800;
+  letter-spacing: -0.01em; color: var(--color-digital-black); }
+.nfeat__cardtitle::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 1.5rem;
+  background: var(--color-teal); border-radius: 2px; transition: width .25s ease; }
+.nfeat__card:hover .nfeat__cardtitle::after { width: 3rem; }
+.nfeat__cardtext { margin: 0; font-size: 0.9rem; line-height: 1.55; color: var(--color-graphite-700); }
+
+/* ============================================================
+   Kameratechnologie showcase — premium camera deep-dive.
+   Interactive 146° FOV demo + animated stats + capability grid
+   + foldaway spec sheet. Data scraped from the live VDM10 page.
+   ============================================================ */
+.camtech { margin: clamp(2.5rem,6vw,5rem) 0 clamp(1rem,2vw,1.5rem); }
+.camtech__head { max-width: 46rem; margin: 0 0 clamp(1.75rem,3.5vw,2.75rem); }
+.camtech__eyebrow { margin: 0 0 0.6rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--color-teal); }
+.camtech__title { margin: 0 0 0.85rem; font-size: clamp(1.5rem,2.6vw,2.05rem); font-weight: 800;
+  letter-spacing: -0.02em; line-height: 1.15; color: var(--color-digital-black); }
+.camtech__lead { margin: 0; font-size: 1.0625rem; line-height: 1.6; color: var(--color-graphite-700); }
+.camtech__lead b { color: var(--color-digital-black); font-weight: 700; }
+
+/* ── Hero: FOV demo + headline numbers ── */
+.camtech__hero { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(1.5rem,3.5vw,3rem);
+  align-items: center; margin-bottom: clamp(2rem,4vw,3rem); }
+
+/* dark stage makes the teal cone glow, echoing the product's black camera-dome shots */
+.fov { margin: 0; padding: clamp(1rem,2vw,1.5rem); border-radius: var(--radius-xl);
+  background: radial-gradient(120% 100% at 50% 100%, #14313a 0%, #0b1418 70%); overflow: hidden; }
+.fov__svg { display: block; width: 100%; height: auto; }
+.fov__ground { stroke: rgba(255,255,255,0.14); stroke-width: 1.5; stroke-dasharray: 3 6; }
+.fov__cone { transform-origin: 220px 275px; transition: opacity .5s ease; }
+/* cones scale up from the camera node when the demo scrolls into view */
+.fov__cone { transform: scale(0.15); opacity: 0; }
+.camtech.is-in .fov__cone { transform: scale(1); opacity: 1; transition: transform .9s cubic-bezier(.16,1,.3,1), opacity .6s ease; }
+.fov__cone--ref { fill: rgba(255,255,255,0.12); }
+.camtech.is-in .fov__cone--ref { transition-delay: .05s; }
+.fov__cone--wide { fill: rgba(45,190,155,0.34); }
+.camtech.is-in .fov__cone--wide { transition-delay: .22s; }
+.fov__sweep { stroke: rgba(120,240,205,0.85); stroke-width: 2; stroke-linecap: round; filter: drop-shadow(0 0 4px rgba(80,230,190,0.8)); }
+.fov__cam { fill: #fff; stroke: var(--color-teal); stroke-width: 3; }
+.fov__person circle { fill: #fff; } .fov__person path { fill: #fff; }
+.fov__person--wideonly circle, .fov__person--wideonly path { fill: #7ef0cd; }
+.fov__person { opacity: 0; }
+.camtech.is-in .fov__person { opacity: 1; transition: opacity .5s ease .6s; }
+.fov__legend { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.1rem; margin-top: 0.9rem; }
+.fov__key { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8125rem; font-weight: 600; color: rgba(255,255,255,0.9); }
+.fov__key i { width: 0.85rem; height: 0.85rem; border-radius: 3px; }
+.fov__key--wide i { background: rgba(45,190,155,0.7); } .fov__key--ref i { background: rgba(255,255,255,0.35); }
+.fov__note { flex-basis: 100%; font-size: 0.8125rem; color: rgba(255,255,255,0.6); }
+
+.camtech__stats { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 1.25rem; }
+.camtech__stats li { display: flex; flex-direction: column; gap: 0.2rem; padding-left: 0.9rem; border-left: 3px solid var(--color-teal); }
+.camtech__stat { font-size: clamp(1.75rem,3vw,2.4rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1;
+  color: var(--color-digital-black); font-variant-numeric: tabular-nums; }
+.camtech__statlabel { font-size: 0.8125rem; line-height: 1.4; color: var(--color-graphite-700); }
+
+/* ── Capability grid ── */
+.camtech__grid { list-style: none; margin: 0; padding: 0; display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(16rem,100%),1fr)); gap: 1rem; }
+.camfeat { padding: 1.35rem 1.4rem; border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg);
+  background: var(--color-white); transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease; }
+.camfeat:hover { border-color: var(--color-teal); box-shadow: 0 10px 30px rgba(1,82,83,0.08); transform: translateY(-3px); }
+.camfeat__icon { display: inline-grid; place-items: center; width: 2.75rem; height: 2.75rem; margin-bottom: 0.9rem;
+  border-radius: 50%; background: var(--color-teal-50); color: var(--color-teal); }
+.camfeat__icon svg { width: 1.5rem; height: 1.5rem; }
+.camfeat__title { margin: 0 0 0.45rem; font-size: 1rem; font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
+.camfeat__text { margin: 0; font-size: 0.9rem; line-height: 1.55; color: var(--color-graphite-700); }
+
+/* ── Foldaway spec sheet ── */
+.camtech__specs { margin-top: 1.5rem; border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg); overflow: hidden; }
+.camtech__specsbtn { display: flex; align-items: center; justify-content: space-between; gap: 1rem; cursor: pointer;
+  list-style: none; padding: 1rem 1.3rem; font-size: 0.95rem; font-weight: 700; color: var(--color-digital-black);
+  background: var(--color-paper); transition: color .15s ease; user-select: none; }
+.camtech__specsbtn::-webkit-details-marker { display: none; }
+.camtech__specsbtn:hover { color: var(--color-teal); }
+.camtech__specsbtn svg { flex: none; width: 1.2rem; height: 1.2rem; color: var(--color-graphite-600); transition: transform .25s ease; }
+.camtech__specs[open] .camtech__specsbtn { color: var(--color-teal); border-bottom: 1px solid var(--color-graphite-200); }
+.camtech__specs[open] .camtech__specsbtn svg { transform: rotate(180deg); }
+/* explicit collapse — guarantees the sheet hides when closed even where native <details> hiding is unavailable */
+.camtech__specs:not([open]) .camspec { display: none; }
+.camspec { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(15rem,100%),1fr)); gap: 1.25rem 2rem; padding: 1.4rem 1.3rem; }
+.camspec__group h5 { margin: 0 0 0.5rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--color-teal); }
+.camspec__group dl { margin: 0; display: grid; grid-template-columns: minmax(0,auto) 1fr; gap: 0.35rem 0.9rem; }
+.camspec__group dt { font-size: 0.8125rem; color: var(--color-graphite-600); }
+.camspec__group dd { margin: 0; font-size: 0.8125rem; font-weight: 600; color: var(--color-digital-black); text-align: right; }
+
+@media (max-width: 48rem) {
+  .camtech__hero { grid-template-columns: 1fr; }
+  .camtech__stats { gap: 1.1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fov__cone, .camtech.is-in .fov__cone, .fov__person, .camtech.is-in .fov__person { transition: none; transform: none; opacity: 1; }
+  .fov__sweep { display: none; }
+}
 
 /* Beschreibung — pinned scrollytelling: sticky image (left) swaps as the text
    scenes (right) scroll past. Uses position:sticky, so no scroll-jacking. */
@@ -1445,6 +1591,27 @@ html { scroll-behavior: smooth; }
 .rvw-dist-val { text-align: right; font-variant-numeric: tabular-nums; }
 .rvw-cta { display: inline-flex; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; gap: 0.5rem; padding: 0.7rem 1.25rem; border: 2px solid var(--color-teal); border-radius: var(--radius); background: #fff; color: var(--color-teal); font-size: 0.9rem; font-weight: 700; text-decoration: none; cursor: pointer; transition: background .15s ease, color .15s ease; }
 .rvw-cta:hover { background: var(--color-teal); color: #fff; }
+/* "Wie funktionieren Bewertungen?" disclosure — quiet explanatory note under the
+   CTA, divided by a hairline so it reads as secondary to the score + write-review
+   action. Collapsed by default: the summary row is the tap target, the body reveals
+   on open and the chevron rotates to signal state. */
+.rvw-howto { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--color-graphite-300); }
+.rvw-howto__title { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+  margin: 0; font-size: 0.8125rem; font-weight: 700; color: var(--color-digital-black);
+  cursor: pointer; list-style: none; user-select: none; }
+.rvw-howto__title::-webkit-details-marker { display: none; }   /* strip native disclosure triangle (Safari/Chrome) */
+.rvw-howto__title:hover { color: var(--color-teal); }
+.rvw-howto__chev { flex: none; width: 1.05rem; height: 1.05rem; color: var(--color-graphite-600);
+  transition: transform .2s ease; }
+.rvw-howto[open] .rvw-howto__chev { transform: rotate(180deg); }
+.rvw-howto[open] .rvw-howto__title { color: var(--color-teal); }
+/* explicit collapse — guarantees the body hides when closed even where the UA's
+   native <details> hiding is unavailable; redundant-but-harmless in modern browsers */
+.rvw-howto:not([open]) .rvw-howto__body { display: none; }
+.rvw-howto__text { margin: 0.55rem 0 0; font-size: 0.75rem; line-height: 1.55; color: var(--color-graphite-700); }
+.rvw-howto__link { display: inline-block; margin-top: 0.6rem; font-size: 0.75rem; font-weight: 600;
+  color: var(--color-teal); text-decoration: underline; text-underline-offset: 2px; }
+.rvw-howto__link:hover { color: var(--color-teal-600); }
 .rvw-list { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; }
 .rvw-review { padding: clamp(1.25rem,2.5vw,1.75rem) 0; border-top: 1px solid var(--color-graphite-300); }
 .rvw-review:first-child { border-top: 0; padding-top: 0; }
@@ -1452,6 +1619,28 @@ html { scroll-behavior: smooth; }
 .rvw-review__head .rvw-verified { margin-left: auto; }   /* push the badge to the right edge, consistent across reviews */
 .rvw-review__title { margin: 0 0 0.4rem; font-size: 1.0625rem; font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .rvw-review__text { margin: 0; font-size: 0.95rem; line-height: 1.65; color: var(--color-graphite-700); }
+/* Customer-uploaded photos — a compact thumbnail strip between the review text and
+   its byline. Square tiles, capped at three per review; each opens a lightbox. */
+.rvw-review__media { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.9rem 0 0; }
+.rvw-shot { flex: none; width: 4.5rem; height: 4.5rem; padding: 0; overflow: hidden; cursor: pointer;
+  background: none; border: 1px solid var(--color-graphite-300); border-radius: var(--radius);
+  transition: border-color .15s ease, transform .15s ease; }
+.rvw-shot:hover { border-color: var(--color-teal); transform: translateY(-1px); }
+.rvw-shot:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
+.rvw-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Lightbox overlay (injected once by JS) */
+.rvw-lightbox { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center;
+  gap: 0.5rem; padding: clamp(1rem, 4vw, 3rem); background: rgba(10,12,14,0.82); }
+.rvw-lightbox.is-open { display: flex; }
+.rvw-lightbox img { max-width: min(90vw, 880px); max-height: 88vh; border-radius: var(--radius);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.45); }
+.rvw-lightbox__close { position: absolute; top: clamp(0.75rem, 2vw, 1.4rem); right: clamp(0.75rem, 2vw, 1.4rem);
+  width: 2.75rem; height: 2.75rem; display: grid; place-items: center; font-size: 1.6rem; line-height: 1; cursor: pointer;
+  color: #fff; background: rgba(255,255,255,0.14); border: 0; border-radius: 50%; transition: background .15s ease; }
+.rvw-lightbox__close:hover { background: rgba(255,255,255,0.28); }
+.rvw-lightbox__nav { flex: none; width: 2.75rem; height: 2.75rem; display: grid; place-items: center; font-size: 1.8rem; line-height: 1;
+  cursor: pointer; color: #fff; background: rgba(255,255,255,0.14); border: 0; border-radius: 50%; transition: background .15s ease; }
+.rvw-lightbox__nav:hover { background: rgba(255,255,255,0.28); }
 .rvw-review__foot { margin-top: 0.7rem; display: flex; align-items: center; gap: 0.6rem; font-size: 0.8125rem; }
 .rvw-review__foot .rvw-author { font-size: 0.8125rem; }
 .rvw-review__foot time { color: var(--color-graphite-700); }
@@ -1490,17 +1679,53 @@ html { scroll-behavior: smooth; }
 }
 
 /* Downloads */
-.psx-dl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(18rem,100%),1fr)); grid-auto-rows: 1fr; align-items: stretch; gap: 0.75rem; }
-.psx-dl__item { height: 100%; box-sizing: border-box; display: flex; align-items: center; gap: 0.9rem; padding: 0.85rem 1rem; text-decoration: none;
-  background: var(--color-white); border: 1px solid var(--color-graphite-200); border-radius: var(--radius-lg);
-  transition: border-color .15s, box-shadow .15s, transform .15s; }
-.psx-dl__item:hover { border-color: var(--color-teal); box-shadow: 0 0.5rem 1.25rem -0.75rem rgba(1,82,83,0.3); transform: translateY(-2px); }
-.psx-dl__badge { flex: none; display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: var(--radius);
-  background: var(--color-teal-50); color: var(--color-teal); font-size: 0.6875rem; font-weight: 800; letter-spacing: 0.03em; }
-.psx-dl__text { display: flex; flex-direction: column; min-width: 0; flex: 1; }
-.psx-dl__text b { font-size: 0.9375rem; font-weight: 700; color: var(--color-digital-black); }
-.psx-dl__text span { font-size: 0.8125rem; color: var(--color-graphite-500); }
-.psx-dl__icon { flex: none; width: 1.35rem; height: 1.35rem; color: var(--color-teal); }
+/* ===== Downloads — premium document cards ==============================
+   Modernised on the existing markup (no HTML change, so both index versions
+   inherit it): airier cards with a soft rest-shadow and a teal lift on hover,
+   a folded-corner "PDF" sheet badge, and a circular download button whose
+   arrow nudges down on hover. ========================================= */
+.psx-dl { list-style: none; margin: 0; padding: 0; display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(19rem,100%),1fr));
+  grid-auto-rows: 1fr; align-items: stretch; gap: 1rem; }
+
+.psx-dl__item { position: relative; overflow: hidden; height: 100%; box-sizing: border-box;
+  display: flex; align-items: center; gap: 1.1rem; padding: 1.15rem 1.25rem; text-decoration: none;
+  background: var(--color-white); border: 1px solid var(--color-graphite-300); border-radius: var(--radius-xl);
+  transition: border-color .2s ease, box-shadow .25s ease, transform .2s ease; }
+/* soft teal wash that fades in from the top-right on hover */
+.psx-dl__item::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(130% 140% at 100% 0%, rgba(1,82,83,0.07), transparent 55%);
+  opacity: 0; transition: opacity .25s ease; }
+.psx-dl__item:hover { border-color: var(--color-teal); transform: translateY(-3px);
+  box-shadow: 0 20px 34px -20px rgba(1,82,83,0.5), 0 2px 6px -3px rgba(16,24,40,0.08); }
+.psx-dl__item:hover::after { opacity: 1; }
+.psx-dl__item:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 3px; }
+
+/* PDF badge → a document sheet with a folded top-right corner */
+.psx-dl__badge { position: relative; flex: none; display: grid; place-items: center;
+  width: 2.75rem; height: 3.25rem; border-radius: 0.55rem;
+  background: linear-gradient(158deg, #ffffff 0%, var(--color-teal-50) 100%);
+  border: 1px solid var(--color-teal-75); color: var(--color-teal);
+  font-size: 0.625rem; font-weight: 800; letter-spacing: 0.05em;
+  box-shadow: 0 3px 8px -4px rgba(1,82,83,0.35); transition: transform .2s ease; }
+.psx-dl__badge::before { content: ""; position: absolute; top: 0; right: 0; width: 0; height: 0;
+  border-top: 0.75rem solid var(--color-white); border-left: 0.75rem solid transparent;
+  border-top-right-radius: 0.55rem; filter: drop-shadow(-1px 1px 1px rgba(1,82,83,0.12)); }
+.psx-dl__item:hover .psx-dl__badge { transform: translateY(-2px) rotate(-3deg); }
+
+.psx-dl__text { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; flex: 1; }
+.psx-dl__text b { font-size: 0.9375rem; font-weight: 700; line-height: 1.3; color: var(--color-digital-black); }
+.psx-dl__text span { font-size: 0.8125rem; color: var(--color-graphite-700); }
+
+/* circular download button — arrow nudges down on hover */
+.psx-dl__icon { flex: none; box-sizing: content-box; width: 1.1rem; height: 1.1rem; padding: 0.55rem;
+  border-radius: 50%; background: var(--color-teal-50); color: var(--color-teal);
+  transition: background .2s ease, color .2s ease; }
+.psx-dl__item:hover .psx-dl__icon { background: var(--color-teal); color: #fff; }
+@media (prefers-reduced-motion: no-preference) {
+  .psx-dl__item:hover .psx-dl__icon { animation: dl-nudge .7s ease; }
+  @keyframes dl-nudge { 0%,100% { transform: translateY(0); } 45% { transform: translateY(3px); } }
+}
 
 /* Technische Details */
 .psx-spec { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(20rem,100%),1fr)); gap: clamp(1.25rem,3vw,2.5rem) clamp(1.5rem,4vw,3.5rem); }
@@ -1509,6 +1734,153 @@ html { scroll-behavior: smooth; }
 .psx-spec__list > div { display: flex; justify-content: space-between; gap: 1rem; padding: 0.65rem 0; border-top: 1px solid var(--color-graphite-200); }
 .psx-spec__list dt { margin: 0; font-size: 0.875rem; color: var(--color-graphite-600); }
 .psx-spec__list dd { margin: 0; font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black); text-align: right; }
+
+/* ===== Anschlussübersichten — diagram galleries (replaces the live dropdowns) =====
+   Open, labeled groups instead of accordions: a titled block + a responsive grid
+   of diagram cards. Each schematic sits on a clean white surface with its caption;
+   clicking opens a zoom lightbox (techdia JS) since the diagrams must be read close. */
+/* ===== Merkmale & Technische Daten — flexible attribute list (end of description) =
+   Content-agnostic: each row is a label + a wrapping set of clickable chips (or a
+   plain value for measurements), so it adapts to any product — one value or a
+   dozen, few attributes or many. Closes with a quiet manufacturer/safety footer. */
+.dspec { margin-top: clamp(2rem,4vw,3rem); }
+.dspec__title { margin: 0 0 clamp(1.1rem,2vw,1.4rem); font-size: clamp(1.15rem,1.9vw,1.4rem); font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
+/* white surface with #DADADA (graphite-300) borders/dividers */
+.dspec__list { margin: 0; background: var(--color-white); border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg); overflow: hidden;
+  box-shadow: 0 1px 2px rgba(16,24,40,0.04), 0 12px 30px -20px rgba(16,24,40,0.22); }
+.dspec__row { display: grid; grid-template-columns: 1fr; }
+.dspec__row + .dspec__row { border-top: 1px solid var(--color-graphite-300); }
+@media (min-width: 40rem) { .dspec__row { grid-template-columns: minmax(11rem, 16rem) 1fr; } }
+.dspec__key { display: flex; align-items: center; flex-wrap: wrap; padding: 0.8rem 1.15rem; background: var(--color-paper); font-size: 0.9rem; font-weight: 700; line-height: 1.35; color: var(--color-digital-black); }
+@media (min-width: 40rem) { .dspec__key { border-right: 1px solid var(--color-graphite-300); } }
+.dspec__sub { margin-left: 0.4rem; font-size: 0.75rem; font-weight: 500; color: var(--color-graphite-700); white-space: nowrap; }
+.dspec__val { display: flex; flex-wrap: wrap; align-items: center; align-content: center; gap: 0.45rem 0.55rem; min-width: 0; padding: 0.8rem 1.15rem; }
+.dspec__val--plain { font-size: 0.95rem; font-weight: 700; color: var(--color-digital-black); font-variant-numeric: tabular-nums; }
+/* clickable value chip (System, Farbe, Klingeltaster, Türöffner-Bedienung …) */
+.dspec__chip { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.65rem; border-radius: var(--radius-pill);
+  background: var(--color-teal-50); border: 1px solid var(--color-teal-75); color: var(--color-teal);
+  font-size: 0.8125rem; font-weight: 600; text-decoration: none; white-space: nowrap;
+  transition: background .15s ease, border-color .15s ease, color .15s ease; }
+.dspec__chip:hover { background: var(--color-teal); border-color: var(--color-teal); color: #fff; }
+.dspec__chip:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
+/* small colour dot inside Farbe chips */
+.dspec__dot { flex: none; width: 0.85rem; height: 0.85rem; border-radius: 0.22rem; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.2); }
+.dspec__dot--light { box-shadow: inset 0 0 0 1px var(--color-graphite-400); }
+.dspec__dot--custom { background: conic-gradient(from 210deg, #e8443c, #f2c223, #2dbe6c, #3cc6e6, #9457e8, #e8443c); }
+
+.dspec__mfr { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 0.9rem;
+  margin: 0.85rem 0 0; font-size: 0.8125rem; line-height: 1.5; color: var(--color-graphite-700); }
+.dspec__mfr > svg { flex: none; width: 1rem; height: 1rem; color: var(--color-graphite-600); }
+.dspec__mfr span { min-width: 0; }
+.dspec__mfr b { color: var(--color-graphite-700); font-weight: 700; }
+.dspec__mfr a { color: var(--color-teal); text-decoration: underline; text-underline-offset: 2px; }
+.dspec__safety { margin-left: auto; display: inline-flex; align-items: center; gap: 0.4rem; flex: none;
+  padding: 0.4rem 0.8rem; border: 1px solid var(--color-red-600); border-radius: var(--radius-pill);
+  color: var(--color-red-600) !important; font-weight: 700; text-decoration: none !important;
+  transition: border-color .15s ease, color .15s ease, background .15s ease; }
+.dspec__safety:hover { border-color: var(--color-red-600); background: var(--color-red-50); color: var(--color-red-600) !important; }
+.dspec__safety svg { width: 1rem; height: 1rem; color: var(--color-red-600); }
+
+/* ===== Technische Übersichten — master–detail on one unified surface =====
+   A single bordered card split into a tinted category rail and a detail panel.
+   One category at a time → no long scroll; the vertical rail is visually distinct
+   from the horizontal mid-nav → no tabs-in-tabs. Collapses to a chip row on
+   small screens. */
+.techms { margin-top: clamp(1.5rem,3vw,2rem); display: grid; grid-template-columns: 1fr;
+  border: 1px solid var(--color-teal); border-radius: var(--radius-xl); overflow: hidden; background: var(--color-white); }
+@media (min-width: 56rem) { .techms { grid-template-columns: 17rem 1fr; } }
+
+/* rail — primary-green (teal) column; the fill itself divides it from the white panel */
+.techms__rail { display: flex; flex-direction: row; gap: 0.2rem; padding: 0.6rem; overflow-x: auto; scrollbar-width: none;
+  background: var(--color-teal); }
+.techms__rail::-webkit-scrollbar { display: none; }
+@media (min-width: 56rem) {
+  .techms__rail { flex-direction: column; gap: 0.2rem; padding: 0.85rem 0.7rem; overflow: visible; }
+}
+
+/* rail item on teal — light text/icon; active = a white pill with teal text/icon */
+.techms__tab { flex: none; display: flex; align-items: center; gap: 0.7rem;
+  padding: 0.65rem 0.75rem; border: 0; border-radius: 0.3rem; background: transparent;
+  text-align: left; cursor: pointer; white-space: nowrap; color: rgba(255,255,255,0.82);
+  transition: background .18s ease, color .18s ease; }
+@media (min-width: 56rem) { .techms__tab { white-space: normal; } }
+.techms__tab:hover { color: #fff; background: rgba(255,255,255,0.14); }
+.techms__tab.is-active { color: var(--color-teal); background: var(--color-white); }
+.techms__tab:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.techms__ico { flex: none; display: grid; place-items: center; width: 1.4rem; height: 1.4rem;
+  color: rgba(255,255,255,0.72); transition: color .18s ease; }
+.techms__ico svg { width: 1.3rem; height: 1.3rem; }
+.techms__tab:hover .techms__ico { color: #fff; }
+.techms__tab.is-active .techms__ico { color: var(--color-teal); }
+.techms__tabtext { min-width: 0; flex: 1; }
+.techms__tablabel { display: block; font-size: 0.9rem; font-weight: 600; line-height: 1.3; letter-spacing: -0.005em; }
+.techms__tabsub { display: none; }
+.techms__tab.is-active .techms__tablabel { font-weight: 700; }
+.techms__count { flex: none; font-size: 0.75rem; font-weight: 700; padding: 0; background: none; color: rgba(255,255,255,0.6); }
+.techms__tab.is-active .techms__count { color: var(--color-teal); }
+
+/* panel */
+.techms__panel { padding: clamp(1.25rem,2.5vw,2rem); }
+.techms__panel[hidden] { display: none; }
+.techms__phead { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 0.4rem 1rem; margin: 0 0 1.35rem; }
+.techms__ptitle { margin: 0 0 0.25rem; font-size: clamp(1.1rem,1.7vw,1.3rem); font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
+.techms__pdesc { margin: 0; font-size: 0.9rem; line-height: 1.5; color: var(--color-graphite-600); }
+.techms__phint { display: inline-flex; align-items: center; gap: 0.35rem; flex: none; margin-top: 0.15rem; font-size: 0.75rem; font-weight: 600; color: var(--color-graphite-500); }
+.techms__phint svg { width: 16px; height: 16px; color: var(--color-teal); }
+/* datasheet card (Datenblatt panel) */
+.techms__doc { display: flex; align-items: center; gap: 1.1rem; padding: 1.25rem 1.35rem; text-decoration: none;
+  background: var(--color-white); border: 1px solid var(--color-graphite-200); border-radius: var(--radius-lg);
+  transition: border-color .2s ease, box-shadow .25s ease, transform .2s ease; }
+.techms__doc:hover { border-color: var(--color-teal); transform: translateY(-2px); box-shadow: 0 8px 18px -14px rgba(1,82,83,0.28); }
+.techms__doc-badge { flex: none; display: grid; place-items: center; width: 2.75rem; height: 3.25rem; border-radius: 0.55rem;
+  background: linear-gradient(158deg,#fff,var(--color-teal-50)); border: 1px solid var(--color-teal-75); color: var(--color-teal);
+  font-size: 0.625rem; font-weight: 800; letter-spacing: 0.05em; }
+.techms__doc-body { display: flex; flex-direction: column; gap: 0.2rem; flex: 1; min-width: 0; }
+.techms__doc-body b { font-size: 0.9375rem; font-weight: 700; color: var(--color-digital-black); }
+.techms__doc-body span { font-size: 0.8125rem; color: var(--color-graphite-600); }
+.techms__doc-icon { flex: none; width: 1.35rem; height: 1.35rem; color: var(--color-teal); }
+
+.techdia { margin-top: var(--sx-rhythm); }
+.techdia__group + .techdia__group { margin-top: clamp(2rem,4vw,3rem); }
+.techdia__grouphead { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
+  margin: 0 0 1.1rem; padding-bottom: 0.7rem; border-bottom: 1px solid var(--color-graphite-200); }
+.techdia__grouptitle { margin: 0; font-size: clamp(1.05rem,1.6vw,1.2rem); font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
+.techdia__groupmeta { margin: 0; font-size: 0.8125rem; color: var(--color-graphite-500); }
+
+.techdia__grid { list-style: none; margin: 0; padding: 0; display: grid;
+  grid-template-columns: 1fr; gap: clamp(1rem,2vw,1.35rem); }
+@media (min-width: 40rem) { .techdia__grid { grid-template-columns: repeat(2, 1fr); } }
+
+.techdia__item { display: flex; flex-direction: column; gap: 0.7rem; min-width: 0; }
+.techdia__shot { position: relative; display: block; width: 100%; padding: clamp(0.75rem,2vw,1.25rem); cursor: zoom-in;
+  background: var(--color-white); border: 1px solid var(--color-graphite-200); border-radius: var(--radius-lg); overflow: hidden;
+  transition: border-color .2s ease, box-shadow .25s ease, transform .2s ease; }
+.techdia__shot img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: contain; }
+.techdia__shot:hover { border-color: var(--color-teal); transform: translateY(-2px);
+  box-shadow: 0 8px 18px -14px rgba(1,82,83,0.28); }
+.techdia__shot:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 3px; }
+/* zoom affordance — a circular magnifier badge that appears on hover/focus */
+.techdia__zoom { position: absolute; top: 0.7rem; right: 0.7rem; width: 2.1rem; height: 2.1rem; display: grid; place-items: center;
+  border-radius: 50%; background: rgba(1,82,83,0.92); color: #fff; opacity: 0; transform: scale(0.85);
+  transition: opacity .2s ease, transform .2s ease; }
+.techdia__zoom svg { width: 1.1rem; height: 1.1rem; }
+.techdia__shot:hover .techdia__zoom, .techdia__shot:focus-visible .techdia__zoom { opacity: 1; transform: scale(1); }
+.techdia__caption { font-size: 0.9rem; font-weight: 600; line-height: 1.4; color: var(--color-graphite-700); }
+
+/* Diagram lightbox (injected by pdp-b.js) — reuses the review-lightbox look */
+.tdiag-lightbox { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center;
+  gap: 0.5rem; padding: clamp(1rem,4vw,3rem); background: rgba(10,12,14,0.86); }
+.tdiag-lightbox.is-open { display: flex; }
+.tdiag-lightbox figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 0.9rem; max-width: min(92vw, 1100px); }
+.tdiag-lightbox img { max-width: 100%; max-height: 80vh; background: #fff; border-radius: var(--radius); box-shadow: 0 18px 50px rgba(0,0,0,0.45); }
+.tdiag-lightbox figcaption { color: rgba(255,255,255,0.9); font-size: 0.9rem; text-align: center; }
+.tdiag-lightbox__close { position: absolute; top: clamp(0.75rem,2vw,1.4rem); right: clamp(0.75rem,2vw,1.4rem);
+  width: 2.75rem; height: 2.75rem; display: grid; place-items: center; font-size: 1.6rem; line-height: 1; cursor: pointer;
+  color: #fff; background: rgba(255,255,255,0.14); border: 0; border-radius: 50%; transition: background .15s ease; }
+.tdiag-lightbox__close:hover { background: rgba(255,255,255,0.28); }
+.tdiag-lightbox__nav { flex: none; width: 2.75rem; height: 2.75rem; display: grid; place-items: center; font-size: 1.8rem; line-height: 1;
+  cursor: pointer; color: #fff; background: rgba(255,255,255,0.14); border: 0; border-radius: 50%; transition: background .15s ease; }
+.tdiag-lightbox__nav:hover { background: rgba(255,255,255,0.28); }
 
 /* Frage / FAQ — ported from the produktionsprozess page (.faq), mapped to PDP tokens */
 .faq__inner { display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }

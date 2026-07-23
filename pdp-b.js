@@ -815,3 +815,263 @@
   applyConn(); applyStock();   /* seed availability (out-of-stock + any pre-set incompatibility) */
   refresh();
 })();
+
+/* ============================================================
+   Review photo lightbox — customer-uploaded images (max 3/review).
+   Thumbnails (.rvw-shot) open a full-size overlay with prev/next
+   scoped to the clicked review's photo group. No dependencies.
+   ============================================================ */
+(function () {
+  'use strict';
+  var shots = [].slice.call(document.querySelectorAll('.rvw-shot'));
+  if (!shots.length) return;
+
+  var lb = document.createElement('div');
+  lb.className = 'rvw-lightbox';
+  lb.setAttribute('role', 'dialog');
+  lb.setAttribute('aria-modal', 'true');
+  lb.setAttribute('aria-label', 'Kundenfoto zur Bewertung');
+  lb.innerHTML =
+    '<button type="button" class="rvw-lightbox__close" aria-label="Schließen">×</button>' +
+    '<button type="button" class="rvw-lightbox__nav" data-dir="prev" aria-label="Vorheriges Foto">‹</button>' +
+    '<img alt="Kundenfoto zur Bewertung">' +
+    '<button type="button" class="rvw-lightbox__nav" data-dir="next" aria-label="Nächstes Foto">›</button>';
+  document.body.appendChild(lb);
+
+  var img = lb.querySelector('img');
+  var navs = [].slice.call(lb.querySelectorAll('.rvw-lightbox__nav'));
+  var closeBtn = lb.querySelector('.rvw-lightbox__close');
+  var group = [], idx = 0, lastFocus = null;
+
+  function show(i) {
+    idx = (i + group.length) % group.length;
+    img.src = group[idx].getAttribute('data-full');
+    img.alt = (group[idx].querySelector('img') || {}).alt || 'Kundenfoto zur Bewertung';
+    var multi = group.length > 1;
+    navs.forEach(function (b) { b.style.display = multi ? '' : 'none'; });
+  }
+  function open(shot) {
+    var media = shot.closest('.rvw-review__media');
+    group = media ? [].slice.call(media.querySelectorAll('.rvw-shot')) : [shot];
+    lastFocus = shot;
+    show(group.indexOf(shot));
+    lb.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+  function close() {
+    lb.classList.remove('is-open');
+    img.removeAttribute('src');
+    document.body.style.overflow = '';
+    if (lastFocus) lastFocus.focus();
+  }
+
+  shots.forEach(function (s) { s.addEventListener('click', function () { open(s); }); });
+  lb.addEventListener('click', function (e) {
+    if (e.target === lb || e.target === closeBtn) { close(); return; }
+    var nav = e.target.closest('.rvw-lightbox__nav');
+    if (nav) show(idx + (nav.getAttribute('data-dir') === 'next' ? 1 : -1));
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!lb.classList.contains('is-open')) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowRight') show(idx + 1);
+    else if (e.key === 'ArrowLeft') show(idx - 1);
+  });
+})();
+
+/* ============================================================
+   Kameratechnologie showcase — reveal the 146° FOV demo and
+   count the headline numbers up when the module scrolls in.
+   ============================================================ */
+(function () {
+  'use strict';
+  var mod = document.getElementById('camtech');
+  if (!mod) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var stats = [].slice.call(mod.querySelectorAll('.camtech__stat'));
+
+  function countUp(el) {
+    var target = parseFloat(el.getAttribute('data-count')) || 0;
+    var suffix = el.getAttribute('data-suffix') || '';
+    if (reduce) { el.textContent = target + suffix; return; }
+    var dur = 1200, start = null;
+    function step(ts) {
+      if (start === null) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);          /* easeOutCubic */
+      el.textContent = Math.round(target * eased) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function run() {
+    mod.classList.add('is-in');
+    stats.forEach(countUp);
+  }
+
+  if (!('IntersectionObserver' in window)) { run(); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { run(); io.disconnect(); }
+    });
+  }, { threshold: 0, rootMargin: '0px 0px -15% 0px' });   /* fires once the top scrolls into view — robust for tall modules */
+  io.observe(mod);
+})();
+
+/* ============================================================
+   Sticky-bar handoff — the green quickbar pins under the site
+   header while scrolling, then the product-section nav (.psx-nav)
+   rises and takes its place. We keep --pdp-header-h synced to the
+   live (compacting) header height, and slide the quickbar up behind
+   the header exactly as the section nav reaches it (desktop only;
+   mobile keeps the quickbar accordion). All work is rAF-throttled.
+   ============================================================ */
+(function () {
+  'use strict';
+  var header = document.querySelector('.header');
+  if (!header) return;
+  var qb = document.getElementById('quickbar');
+  var nav = document.querySelector('.psx-nav');
+  var root = document.documentElement;
+  var desktop = window.matchMedia('(min-width: 768px)');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var ticking = false;
+
+  function frame() {
+    ticking = false;
+    /* keep the shared offset in sync with the live header height */
+    var h = Math.round(header.getBoundingClientRect().height);
+    root.style.setProperty('--pdp-header-h', h + 'px');
+
+    if (!qb) return;
+    if (nav && desktop.matches && !reduce.matches) {
+      /* how far the section nav has pushed into the quickbar's pinned slot */
+      var qbH = qb.offsetHeight;
+      var navTop = nav.getBoundingClientRect().top;
+      var delta = Math.min(qbH, Math.max(0, (h + qbH) - navTop));
+      qb.style.transform = delta ? 'translate3d(0,' + (-delta) + 'px,0)' : '';
+    } else {
+      qb.style.transform = '';
+    }
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  if (desktop.addEventListener) desktop.addEventListener('change', onScroll);
+  frame();
+})();
+
+/* ============================================================
+   Anschluss-diagram lightbox — the technical connection schematics
+   (.techdia__shot) open full-size with a caption and prev/next within
+   their gallery group. Keyboard + backdrop close. No dependencies.
+   ============================================================ */
+(function () {
+  'use strict';
+  var shots = [].slice.call(document.querySelectorAll('.techdia__shot'));
+  if (!shots.length) return;
+
+  var lb = document.createElement('div');
+  lb.className = 'tdiag-lightbox';
+  lb.setAttribute('role', 'dialog');
+  lb.setAttribute('aria-modal', 'true');
+  lb.setAttribute('aria-label', 'Anschlussschema');
+  lb.innerHTML =
+    '<button type="button" class="tdiag-lightbox__close" aria-label="Schließen">×</button>' +
+    '<button type="button" class="tdiag-lightbox__nav" data-dir="prev" aria-label="Vorheriges Schema">‹</button>' +
+    '<figure><img alt=""><figcaption></figcaption></figure>' +
+    '<button type="button" class="tdiag-lightbox__nav" data-dir="next" aria-label="Nächstes Schema">›</button>';
+  document.body.appendChild(lb);
+
+  var img = lb.querySelector('img');
+  var cap = lb.querySelector('figcaption');
+  var navs = [].slice.call(lb.querySelectorAll('.tdiag-lightbox__nav'));
+  var closeBtn = lb.querySelector('.tdiag-lightbox__close');
+  var group = [], idx = 0, lastFocus = null;
+
+  function captionFor(shot) {
+    var item = shot.closest('.techdia__item');
+    var c = item && item.querySelector('.techdia__caption');
+    return c ? c.textContent : '';
+  }
+  function show(i) {
+    idx = (i + group.length) % group.length;
+    var shot = group[idx];
+    img.src = shot.getAttribute('data-full');
+    cap.textContent = captionFor(shot);
+    var multi = group.length > 1;
+    navs.forEach(function (b) { b.style.display = multi ? '' : 'none'; });
+  }
+  function open(shot) {
+    var grid = shot.closest('.techdia__grid');
+    group = grid ? [].slice.call(grid.querySelectorAll('.techdia__shot')) : [shot];
+    lastFocus = shot;
+    show(group.indexOf(shot));
+    lb.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+  function close() {
+    lb.classList.remove('is-open');
+    img.removeAttribute('src');
+    document.body.style.overflow = '';
+    if (lastFocus) lastFocus.focus();
+  }
+
+  shots.forEach(function (s) { s.addEventListener('click', function () { open(s); }); });
+  lb.addEventListener('click', function (e) {
+    if (e.target === lb || e.target === closeBtn) { close(); return; }
+    var nav = e.target.closest('.tdiag-lightbox__nav');
+    if (nav) show(idx + (nav.getAttribute('data-dir') === 'next' ? 1 : -1));
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!lb.classList.contains('is-open')) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowRight') show(idx + 1);
+    else if (e.key === 'ArrowLeft') show(idx - 1);
+  });
+})();
+
+/* ============================================================
+   Technische Übersichten — left-rail master–detail (ARIA tabs).
+   Clicking / arrow-keying a category in the rail reveals its panel
+   and hides the others. Vertical tablist, full keyboard support.
+   ============================================================ */
+(function () {
+  'use strict';
+  [].slice.call(document.querySelectorAll('.techms__rail')).forEach(function (rail) {
+    var tabs = [].slice.call(rail.querySelectorAll('.techms__tab'));
+    if (!tabs.length) return;
+
+    function activate(tab) {
+      tabs.forEach(function (t) {
+        var sel = t === tab;
+        t.classList.toggle('is-active', sel);
+        t.setAttribute('aria-selected', sel ? 'true' : 'false');
+        t.tabIndex = sel ? 0 : -1;
+        var panel = document.getElementById(t.getAttribute('aria-controls'));
+        if (panel) panel.hidden = !sel;
+      });
+    }
+    rail.addEventListener('click', function (e) {
+      var t = e.target.closest('.techms__tab');
+      if (t) { activate(t); t.focus(); }
+    });
+    rail.addEventListener('keydown', function (e) {
+      var i = tabs.indexOf(document.activeElement);
+      if (i < 0) return;
+      var n = null;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') n = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') n = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') n = 0;
+      else if (e.key === 'End') n = tabs.length - 1;
+      else return;
+      e.preventDefault();
+      activate(tabs[n]);
+      tabs[n].focus();
+    });
+  });
+})();
