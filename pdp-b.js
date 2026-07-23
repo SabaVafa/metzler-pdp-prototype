@@ -321,6 +321,15 @@
   document.querySelectorAll('#bSeg .cfgb-bar__step').forEach(function (b) {
     b.addEventListener('click', function () { openStep(parseInt(b.getAttribute('data-goto'), 10)); });
   });
+  /* Option A accordion (mobile): a step header opens its step in place. Headers are
+     display:none on desktop, so this is a no-op there. */
+  document.querySelectorAll('#cfgbSteps .stepr__head').forEach(function (h) {
+    h.addEventListener('click', function () {
+      var it = h.closest('.stepr__item'); if (!it) return;
+      var i = parseInt(it.getAttribute('data-step'), 10);
+      if (!isNaN(i)) openStep(i, true);
+    });
+  });
 
   /* ── Farbe = VARIANTE ── */
   var sw = $('pdpSwatches');

@@ -762,6 +762,27 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
    visible regardless of the entrance flourish. */
 .pdp-b .cfgb .stepr__item.is-active .stepr__pad > * { opacity: 1 !important; transform: none !important; animation: none !important; }
 
+/* ── Option A (mobile ≤48rem): vertical labeled accordion instead of the single-step
+   wizard. Re-shows the fully-styled .stepr accordion (all steps visible, expand in
+   place, one open at a time) and hides the wizard chrome (horizontal progress dock +
+   Weiter/Zurück). Desktop keeps the wizard — untouched. ── */
+@media (max-width: 48rem) {
+  .pdp-b .cfgb .cfgb-dock { display: none; }
+  .pdp-b .cfgb .cfgb-nav { display: none; }
+  .pdp-b .cfgb .cfgb-stage { padding: 0; }
+  .pdp-b .cfgb .stepr { gap: 0.6rem; }
+  .pdp-b .cfgb .stepr__item { display: block; border: 1px solid var(--color-graphite-200); border-radius: var(--radius); background: var(--color-white); }
+  .pdp-b .cfgb .stepr__item.is-active { border-color: var(--color-teal); box-shadow: 0 0.5rem 1.5rem rgba(1,82,83,0.08); }
+  .pdp-b .cfgb .stepr__head { display: flex !important; }
+  .pdp-b .cfgb .stepr__body { display: grid !important; grid-template-rows: 0fr !important; }
+  .pdp-b .cfgb .stepr__item.is-active .stepr__body { grid-template-rows: 1fr !important; }
+  .pdp-b .cfgb .stepr__inner { overflow: hidden; }
+  .pdp-b .cfgb .stepr__pad { padding: 0.1rem 1rem 1.2rem; }
+  /* options are horizontal rows on mobile — let the "Empfohlen" badge flow above the
+     name instead of the absolute (desktop-card) position that overlapped the title */
+  .pdp-b .cfgb .cfg-opt__rec { position: static; align-self: flex-start; margin: 0 0 0.3rem; }
+}
+
 .cfgb-nav { display: flex; gap: 0.75rem; padding: 1.3rem 1.35rem 1.4rem; }
 .cfgb-nav__back { border: 1px solid var(--color-graphite-300); background: var(--color-white); color: var(--color-graphite-700);
   border-radius: var(--radius); padding: 0.8rem 1.4rem; font-family: inherit; font-size: 0.9375rem; font-weight: 700; cursor: pointer;
@@ -822,10 +843,10 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
    bullets, no icons, no grey box. ── */
 .feat { position: relative; overflow: hidden; padding: 1.25rem;   /* uniform gutter on all four sides */
   background: var(--color-paper); border: 1px solid var(--color-graphite-300);   /* About-us gray codes: #F5F6FA bg · #DADADA border */
-  border-radius: var(--radius-xl); box-shadow: var(--shadow-soft); }
+  border-radius: var(--radius-xl); box-shadow: none; }
 .feat__list { position: relative; list-style: none; margin: 0; padding: 0; }
 .feat__item { display: flex; flex-direction: column; gap: 0.1rem; padding: 0.6rem 0; }
-.feat__item + .feat__item { border-top: 1px solid var(--color-graphite-200); }
+.feat__item + .feat__item { border-top: 1px solid var(--color-graphite-300); }
 /* first/last rows sit flush to the card's uniform gutter (no doubled-up padding) */
 .feat__list > .feat__item:first-child { padding-top: 0; }
 .feat__list > .feat__item:last-child { padding-bottom: 0; }
@@ -842,11 +863,13 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 .hl__badges--infeat { display: flex; align-items: stretch; gap: 0.75rem;
   margin: 1.25rem 0 0; padding: 1.25rem 0 0;   /* symmetric space around the divider; chips sit flush to the card's bottom gutter */
   background: transparent;
-  border-top: 1px solid var(--color-graphite-200); }
+  border-top: 1px solid var(--color-graphite-300); }
 .hl__badges--infeat .hl__badge { flex: 1 1 0; padding: 0.45rem 0.7rem; justify-content: center;
   background: var(--color-white);
-  border: 1px solid var(--color-graphite-200); border-radius: var(--radius-lg);
+  border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg);
   box-shadow: 0 1px 2px rgba(26,23,27,0.04); }
+/* these are separate bordered chips — restore the left border the frame-free base rule removes */
+.hl__badges--infeat .hl__badge + .hl__badge { border-left: 1px solid var(--color-graphite-300); }
 /* chips separate themselves via the gap — no centre rule */
 
 .hl__badge { display: flex; align-items: center; justify-content: center; gap: 0.7rem; padding: 0.35rem 0.9rem;
@@ -953,6 +976,14 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 /* height:auto (not 100%) — grid align-items:stretch equalises card heights per row */
 .cfgb .cfg-opt { position: relative; flex-direction: column; align-items: stretch; gap: 0.5rem; padding: 0.85rem; text-align: left; }
 .cfgb .cfg-opt__mark { position: absolute; top: 0.65rem; right: 0.65rem; margin: 0; z-index: 2; background: var(--color-white); }
+/* "Empfohlen" pill — same format as the availability badges, in primary teal */
+.cfg-opt__rec {
+  position: absolute; top: 0.6rem; left: 0.6rem; z-index: 3;
+  display: inline-flex; align-items: center; max-width: calc(100% - 1.2rem);
+  padding: 0.28rem 0.6rem; border-radius: var(--radius-pill); line-height: 1.2;
+  font-size: 0.6875rem; font-weight: 600; letter-spacing: normal; text-transform: none;
+  border: 1px solid var(--color-teal); background: rgba(1,82,83,0.08); color: var(--color-teal);
+}
 /* square frame, no grey fill, no border — the image covers it edge-to-edge */
 .cfgb .cfg-opt__thumb { width: 100%; aspect-ratio: 1; height: auto; display: grid; place-items: center; padding: 0; overflow: hidden;
   background: var(--color-white); border: 0; border-radius: var(--radius); }
@@ -1054,8 +1085,11 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
   #pdpStickyBar .pdp-stickybar__inner { padding: 0.7rem 1rem; }
   /* collapse the hero to a single stacked column — the base rule (pdp.css:289) does this,
      but .pdp-b .pdp-hero__grid (pdp-b.css:20) outranks it, so re-state the override here
-     or the buybox stays trapped in a half-width grid track. */
-  .pdp-b .pdp-hero__grid { grid-template-columns: 1fr; column-gap: 0; }
+     or the buybox stays trapped in a half-width grid track.
+     minmax(0,1fr) (not 1fr) + min-width:0 let the column shrink to the viewport instead
+     of the buy-box's min-content, which otherwise forces ~330px and overflows narrow phones. */
+  .pdp-b .pdp-hero__grid { grid-template-columns: minmax(0, 1fr); column-gap: 0; }
+  .pdp-b .pdp-buybox { min-width: 0; }
 }
 
 /* ============================================================
@@ -1264,17 +1298,27 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 .rv__thumbnav-btn[aria-current="true"] { opacity: 1; border-color: var(--color-teal); }
 
 @media (max-width: 64rem) {
-  /* stack the panel: summary (tinted) above, testimonial below */
-  .rv__layout { grid-template-columns: 1fr; }
+  /* stack the panel: summary (tinted) above, testimonial below.
+     minmax(0,1fr) + min-width:0 stop the column expanding to min-content and overflowing */
+  .rv__layout { grid-template-columns: minmax(0, 1fr); }
+  .rv__summary, .rv__carousel { min-width: 0; }
 }
 @media (max-width: 48rem) {
-  .rv__feature-card { grid-template-columns: 1fr; }
+  .rv__feature-card { grid-template-columns: minmax(0, 1fr); }
+  .rv__feature-card, .rv__feature-content, .rv__feature-media { min-width: 0; }
   .rv__feature-media { aspect-ratio: 16 / 10; }
+  .rv__feature-text { max-width: none; }
   .rv__thumbsnav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; padding-bottom: 0.25rem; }
   .rv__thumbsnav::-webkit-scrollbar { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .rv__feature-media img, .rv__feature-content > *, .rv__feature-arrow, .rv__thumbnav-btn, .rv__cta, .rv__cta svg { transition: none !important; }
+}
+/* Footer legal links only wrap ≤640px in the design system, so they overflow the
+   viewport across the tablet range. Extend the wrap up to 75rem (PDP-scoped; desktop
+   ≥1200px and the shared Home page are untouched). */
+@media (max-width: 75rem) {
+  .footer__legal-links { flex-wrap: wrap; white-space: normal; justify-content: center; text-align: center; column-gap: var(--sp-4); row-gap: var(--sp-2); }
 }
 
 /* ============================================================
@@ -1327,8 +1371,12 @@ html { scroll-behavior: smooth; }
 .psx-chips li { padding: 0.35rem 0.75rem; border-radius: var(--radius); background: var(--color-paper); border: 1px solid var(--color-graphite-300); font-size: 0.8125rem; font-weight: 700; color: var(--color-digital-black); }
 /* selectable LED colour dots */
 .psx-dots { list-style: none; display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1.1rem 0 0; padding: 0; }
-.psx-dots li { width: 1.6rem; height: 1.6rem; border-radius: 50%; box-shadow: inset 0 0 0 3px #fff, 0 0 0 1px var(--color-graphite-300); }
-.psx-dots li.is-off { box-shadow: inset 0 0 0 3px #fff, 0 0 0 1px var(--color-graphite-300); }
+/* flat, refined swatches — clean e-commerce colour dots (hairline ring so light
+   colours read on white; gentle hover lift) */
+.psx-dots { gap: 0.7rem; }
+.psx-dots li { width: 1.6rem; height: 1.6rem; border-radius: var(--radius); cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(20,22,25,0.14); transition: transform .16s ease, box-shadow .16s ease; }
+.psx-dots li:hover { transform: scale(1.09); box-shadow: 0 0 0 1px rgba(20,22,25,0.18), 0 3px 8px rgba(20,22,25,0.14); }
 /* Highlight badges under the intro title */
 .psx-badges { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 1.4rem; padding: 0; }
 .psx-badges li { padding: 0.4rem 0.85rem; border: 1px solid var(--color-graphite-300); border-radius: var(--radius-pill); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-teal); background: #fff; }
@@ -1358,7 +1406,10 @@ html { scroll-behavior: smooth; }
 .rvw-author { font-weight: 800; color: var(--color-digital-black); }
 
 /* happy carousel */
-.rvw-happy { margin: clamp(1.5rem,3vw,2.5rem) 0 clamp(2.5rem,5vw,4rem); }
+.rvw-happy { margin: 0 0 clamp(2.5rem,5vw,4rem); }   /* tighter gap under the intro lead */
+/* larger, more prominent stars on the carousel cards */
+.rvw-happy-card .rvw-stars { gap: 3px; }
+.rvw-happy-card .rvw-stars svg { width: 1.35rem; height: 1.35rem; }
 .rvw-happy__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; }
 .rvw-happy__title { margin: 0; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .rvw-arrows { display: flex; gap: 0.5rem; flex: none; }
@@ -1372,7 +1423,8 @@ html { scroll-behavior: smooth; }
 .rvw-happy-card__media { aspect-ratio: 4 / 3; background: var(--color-paper); }
 .rvw-happy-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .rvw-happy-card__body { flex: 1; display: flex; flex-direction: column; gap: 0.85rem; padding: 1.25rem 1.4rem 1.4rem; }
-.rvw-happy-quote { margin: 0; font-size: 1rem; line-height: 1.6; color: var(--color-digital-black); }
+.rvw-happy-quote { margin: 0; font-size: 1rem; line-height: 1.6; color: var(--color-digital-black);
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; }
 .rvw-happy-foot { margin-top: auto; display: flex; flex-direction: column; gap: 0.4rem; padding-top: 0.35rem; }
 .rvw-happy-foot .rvw-author { font-size: 0.9375rem; }
 .rvw-meta { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
@@ -1397,6 +1449,7 @@ html { scroll-behavior: smooth; }
 .rvw-review { padding: clamp(1.25rem,2.5vw,1.75rem) 0; border-top: 1px solid var(--color-graphite-300); }
 .rvw-review:first-child { border-top: 0; padding-top: 0; }
 .rvw-review__head { display: flex; align-items: center; gap: 0.85rem; margin-bottom: 0.6rem; }
+.rvw-review__head .rvw-verified { margin-left: auto; }   /* push the badge to the right edge, consistent across reviews */
 .rvw-review__title { margin: 0 0 0.4rem; font-size: 1.0625rem; font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .rvw-review__text { margin: 0; font-size: 0.95rem; line-height: 1.65; color: var(--color-graphite-700); }
 .rvw-review__foot { margin-top: 0.7rem; display: flex; align-items: center; gap: 0.6rem; font-size: 0.8125rem; }
@@ -1418,10 +1471,17 @@ html { scroll-behavior: smooth; }
 .psx-story__scene h3 { margin: 0; font-size: clamp(1.35rem,2.4vw,1.75rem); font-weight: 800; letter-spacing: -0.015em; line-height: 1.2; color: var(--color-digital-black); }
 .psx-story__scene p { margin: 0; font-size: 1.0625rem; line-height: 1.65; color: var(--color-graphite-700); max-width: 42ch; }
 
+/* Mobile shows each scene's own image inline (above its text) instead of the desktop
+   sticky cross-fade — so every image is seen, not just the first. Hidden on desktop. */
+.psx-story__sceneimg { display: none; }
 @media (max-width: 56.25rem) {
   .psx-story__grid { grid-template-columns: 1fr; gap: 1rem; }
-  .psx-story__media { position: relative; top: 0; height: auto; aspect-ratio: 4 / 3; margin-bottom: 0.5rem; }
-  .psx-story__scene { min-height: 0; opacity: 1; margin-bottom: 1.75rem; }
+  .psx-story__media { display: none; }
+  .psx-story__scene { min-height: 0; opacity: 1; margin-bottom: 2.25rem; }
+  .psx-story__sceneimg { display: block; aspect-ratio: 4 / 3; margin: 0 0 1rem; border-radius: var(--radius-lg); overflow: hidden; background: var(--color-paper); }
+  .psx-story__sceneimg img, .psx-story__sceneimg video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .psx-story__sceneimg--contain { background: #fff; }
+  .psx-story__sceneimg--contain img { object-fit: contain; padding: clamp(0.75rem, 3vw, 1.5rem); }
 }
 @media (prefers-reduced-motion: reduce) {
   .psx-story__media { position: relative; top: 0; height: auto; aspect-ratio: 4 / 3; }
@@ -1430,8 +1490,8 @@ html { scroll-behavior: smooth; }
 }
 
 /* Downloads */
-.psx-dl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(18rem,100%),1fr)); gap: 0.75rem; }
-.psx-dl__item { display: flex; align-items: center; gap: 0.9rem; padding: 0.85rem 1rem; text-decoration: none;
+.psx-dl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(18rem,100%),1fr)); grid-auto-rows: 1fr; align-items: stretch; gap: 0.75rem; }
+.psx-dl__item { height: 100%; box-sizing: border-box; display: flex; align-items: center; gap: 0.9rem; padding: 0.85rem 1rem; text-decoration: none;
   background: var(--color-white); border: 1px solid var(--color-graphite-200); border-radius: var(--radius-lg);
   transition: border-color .15s, box-shadow .15s, transform .15s; }
 .psx-dl__item:hover { border-color: var(--color-teal); box-shadow: 0 0.5rem 1.25rem -0.75rem rgba(1,82,83,0.3); transform: translateY(-2px); }
@@ -1477,9 +1537,11 @@ html { scroll-behavior: smooth; }
   padding: 1.4rem 1.25rem; font-size: 1.0625rem; font-weight: 700; color: var(--color-digital-black); cursor: pointer; list-style: none; transition: color .18s ease; }
 .faq__q::-webkit-details-marker { display: none; }
 .faq__item[open] .faq__q { color: var(--color-teal); }
-.faq__q-icon { flex: none; width: 1.5rem; height: 1.5rem; display: grid; place-items: center; color: var(--color-graphite-600); transition: color .2s ease; }
+/* plain chevron, no circle — reset the ring the Home design-system rule adds, to
+   match the produktionsprozess FAQ (background:none · border:0 · flips on open) */
+.faq__q-icon { flex: none; width: 1.5rem; height: 1.5rem; display: grid; place-items: center; background: none; border: 0; border-radius: 0; color: var(--color-graphite-600); transition: color .2s ease; }
 .faq__q-icon svg { width: 1.5rem; height: 1.5rem; transition: transform .2s ease; }
-.faq__item:hover .faq__q-icon, .faq__item[open] .faq__q-icon { color: var(--color-teal); }
+.faq__item:hover .faq__q-icon, .faq__item[open] .faq__q-icon { color: var(--color-teal); background: none; border-color: transparent; }
 .faq__item[open] .faq__q-icon svg { transform: scaleY(-1); }
 .faq__a { padding: 0 1.25rem 1.4rem; max-width: 65ch; font-size: 1rem; line-height: 1.7; color: var(--color-graphite-700); }
 

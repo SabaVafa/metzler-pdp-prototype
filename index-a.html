@@ -10,7 +10,9 @@
 <!-- Mega-menu dropdown, grabbed from the PLP -->
 <link rel="stylesheet" href="chrome.css?v=1" />
 <!-- New PDP sections -->
-<link rel="stylesheet" href="pdp.css?v=12" />
+<link rel="stylesheet" href="pdp.css?v=28" />
+<!-- Version B product-info sections (Beschreibung · Bewertungen · Downloads · Technik · FAQ) ported in -->
+<link rel="stylesheet" href="pdp-b.css?v=284" />
 </head>
 <body class="plp">
 
@@ -401,6 +403,266 @@
     Nächste Sektion folgt … (Feature-Bar → 9 Features → Feature-Details → …)
   </div>
 
+
+  <!-- ===== PRODUCT INFO — sticky scroll-spy nav over the info sections ===== -->
+  <nav class="psx-nav" id="psxNav" aria-label="Produktinformationen">
+    <div class="container psx-nav__inner">
+      <a class="psx-nav__link is-active" href="#sx-bewertungen">Bewertungen</a>
+      <a class="psx-nav__link" href="#sx-downloads">Downloads</a>
+      <a class="psx-nav__link" href="#sx-technik">Technische Details</a>
+      <a class="psx-nav__link" href="#sx-frage">Frage zum Artikel</a>
+    </div>
+  </nav>
+
+  <!-- 2 · Bewertungen — happy carousel (top) + detailed reviews with rating sidebar -->
+  <section id="sx-bewertungen" class="psx-sec" aria-labelledby="sxRevTitle">
+    <!-- shared half-star gradient for the summary score -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="rvwHalf" x1="0" x2="1" y1="0" y2="0"><stop offset="50%" stop-color="#FFC041"/><stop offset="50%" stop-color="#d8dbe0"/></linearGradient></defs></svg>
+
+    <div class="container psx-sec__inner">
+      <p class="psx-eyebrow">Bewertungen</p>
+      <h2 class="psx-title" id="sxRevTitle">Das sagen unsere Kunden</h2>
+      <p class="psx-lead">Durchschnittlich <b>4,5&nbsp;von&nbsp;5</b> Sternen aus <b>63&nbsp;verifizierten Bewertungen</b> — echte Erfahrungen von Metzler-Kunden.</p>
+
+      <!-- ── Happy reviews carousel ── -->
+      <div class="rvw-happy">
+        <div class="rvw-happy__head">
+          <h3 class="rvw-happy__title">Das schätzen Kunden am meisten</h3>
+          <div class="rvw-arrows">
+            <button type="button" class="rvw-arrow" data-dir="prev" aria-label="Vorherige Bewertungen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <button type="button" class="rvw-arrow" data-dir="next" aria-label="Weitere Bewertungen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+        <ul class="rvw-carousel" id="rvwCarousel">
+          <li class="rvw-happy-card">
+            <div class="rvw-happy-card__media"><img src="Reviews/review-1.webp" alt="Kundenfoto: Metzler VDM10 in Anthrazit mit Gravur „CAN" an einer Putzfassade" loading="lazy"></div>
+            <div class="rvw-happy-card__body">
+              <span class="rvw-stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+              <p class="rvw-happy-quote">„Formschön und im schlichten Design, einfach zu handhaben — und mit der Kopplung aufs Handy eine super Lösung, wenn man mal nicht zu Hause ist."</p>
+              <div class="rvw-happy-foot">
+                <span class="rvw-author">Simone L.</span>
+                <span class="rvw-meta"><span class="rvw-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span><time>03.12.2025</time></span>
+              </div>
+            </div>
+          </li>
+          <li class="rvw-happy-card">
+            <div class="rvw-happy-card__media"><img src="Reviews/review-2.webp" alt="Kundenfoto: Metzler VDM10 aus gebürstetem Edelstahl mit Gravur „Weyrauch"" loading="lazy"></div>
+            <div class="rvw-happy-card__body">
+              <span class="rvw-stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+              <p class="rvw-happy-quote">„Die Verarbeitung wirkt hochwertig und stabil. Die Sprachqualität ist klar und deutlich — ohne Rauschen oder Verzerrungen."</p>
+              <div class="rvw-happy-foot">
+                <span class="rvw-author">Gast</span>
+                <span class="rvw-meta"><span class="rvw-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span><time>16.02.2026</time></span>
+              </div>
+            </div>
+          </li>
+          <li class="rvw-happy-card">
+            <div class="rvw-happy-card__media"><img src="Reviews/review-3.webp" alt="Kundenfoto: Metzler VDM10 in Anthrazit mit Gravur „Bohr-Neuberg" an einer Natursteinwand" loading="lazy"></div>
+            <div class="rvw-happy-card__body">
+              <span class="rvw-stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+              <p class="rvw-happy-quote">„Fügt sich optisch gut ins Gesamtbild ein und die Bedienung ist sehr einfach."</p>
+              <div class="rvw-happy-foot">
+                <span class="rvw-author">Philip W.</span>
+                <span class="rvw-meta"><span class="rvw-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span><time>05.04.2026</time></span>
+              </div>
+            </div>
+          </li>
+          <li class="rvw-happy-card">
+            <div class="rvw-happy-card__media"><img src="Reviews/review-4.webp" alt="Kundenfoto: Metzler VDM10 und Briefkasten an einer Toranlage vor einem Klinkerhaus" loading="lazy"></div>
+            <div class="rvw-happy-card__body">
+              <span class="rvw-stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+              <p class="rvw-happy-quote">„Jetzt sehen wir direkt, wer vor unserem Tor steht. Der Empfang reicht bis zu unserem Haus. Tolles Produkt."</p>
+              <div class="rvw-happy-foot">
+                <span class="rvw-author">Gast</span>
+                <span class="rvw-meta"><span class="rvw-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span><time>14.01.2025</time></span>
+              </div>
+            </div>
+          </li>
+          <li class="rvw-happy-card">
+            <div class="rvw-happy-card__media"><img src="Reviews/review-5.webp" alt="Kundenfoto: Metzler VDM10 an einer Holzfassade neben der Haustür" loading="lazy"></div>
+            <div class="rvw-happy-card__body">
+              <span class="rvw-stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+              <p class="rvw-happy-quote">„Die Installation war einfacher als gedacht, und die Bildqualität ist wirklich hervorragend — sogar bei Nacht."</p>
+              <div class="rvw-happy-foot">
+                <span class="rvw-author">Gast</span>
+                <span class="rvw-meta"><span class="rvw-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span><time>20.12.2024</time></span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ── Detailed reviews + rating sidebar ── -->
+      <div class="rvw-main">
+        <aside class="rvw-summary">
+          <div class="rvw-summary__inner">
+            <div class="rvw-summary__top">
+              <div class="rvw-summary__score">4,5</div>
+              <div class="rvw-summary__scoremeta">
+                <span class="rvw-stars rvw-stars--lg" role="img" aria-label="4,5 von 5 Sternen"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path fill="url(#rvwHalf)" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                <p class="rvw-summary__count">63&nbsp;Bewertungen</p>
+              </div>
+            </div>
+            <div class="rvw-dist" aria-label="Bewertungsverteilung">
+              <div class="rvw-dist-row"><span class="rvw-dist-label">5 Sterne</span><span class="rvw-dist-bar"><i style="width:75%"></i></span><span class="rvw-dist-val">47</span></div>
+              <div class="rvw-dist-row"><span class="rvw-dist-label">4 Sterne</span><span class="rvw-dist-bar"><i style="width:21%"></i></span><span class="rvw-dist-val">13</span></div>
+              <div class="rvw-dist-row"><span class="rvw-dist-label">3 Sterne</span><span class="rvw-dist-bar"><i style="width:5%"></i></span><span class="rvw-dist-val">3</span></div>
+              <div class="rvw-dist-row"><span class="rvw-dist-label">2 Sterne</span><span class="rvw-dist-bar"><i style="width:0%"></i></span><span class="rvw-dist-val">0</span></div>
+              <div class="rvw-dist-row"><span class="rvw-dist-label">1 Stern</span><span class="rvw-dist-bar"><i style="width:0%"></i></span><span class="rvw-dist-val">0</span></div>
+            </div>
+            <a href="#" class="rvw-cta">Bewertung schreiben</a>
+          </div>
+        </aside>
+
+        <div class="rvw-list">
+          <article class="rvw-review">
+            <div class="rvw-review__head"><span class="rvw-stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span class="rvw-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span></div>
+            <h4 class="rvw-review__title">Videosprechanlage Colson</h4>
+            <p class="rvw-review__text">Kombiniert modernes Design mit hochwertiger Technik und lässt sich individuell personalisieren. Die Kamera liefert ein tolles Bild, selbst bei schlechten Lichtverhältnissen — Besucher sind auch bei Dunkelheit erkennbar. Der großzügige Betrachtungswinkel deckt den gesamten Eingangsbereich ab. Verarbeitung hochwertig, Materialien robust und wetterfest.</p>
+            <div class="rvw-review__foot"><span class="rvw-author">Gast</span><time>19.12.2024</time></div>
+          </article>
+          <article class="rvw-review">
+            <div class="rvw-review__head"><span class="rvw-stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span class="rvw-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span></div>
+            <h4 class="rvw-review__title">Klare Kaufempfehlung — sehr zufrieden!</h4>
+            <p class="rvw-review__text">Die Installation war unkompliziert und auch für mich als Nicht-Profi gut machbar. Die Verarbeitung wirkt hochwertig und stabil. Die Sprachqualität ist klar und deutlich — ohne Rauschen oder Verzerrungen. Insgesamt ein sehr gutes Preis-Leistungs-Verhältnis. Ich würde sie jederzeit wieder kaufen.</p>
+            <div class="rvw-review__foot"><span class="rvw-author">Gast</span><time>16.02.2026</time></div>
+          </article>
+          <article class="rvw-review">
+            <div class="rvw-review__head"><span class="rvw-stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span class="rvw-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span></div>
+            <h4 class="rvw-review__title">Gutes Produkt und schnelle Lieferung</h4>
+            <p class="rvw-review__text">Dank der ausführlichen Anleitungen und Videos auf der Website konnten wir alles ohne Support zusammenbauen. Die Installation vor Ort war schnell erledigt. Lediglich der Einsteckplatz für das LAN-Kabel an der Innenstation ist etwas knapp bemessen. Ansonsten klare Kaufempfehlung.</p>
+            <div class="rvw-review__foot"><span class="rvw-author">Gast</span><time>01.12.2025</time></div>
+          </article>
+          <article class="rvw-review">
+            <div class="rvw-review__head"><span class="rvw-stars" role="img" aria-label="4 von 5 Sternen"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="#d8dbe0"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span class="rvw-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span></div>
+            <h4 class="rvw-review__title">Metzler Türsprechanlage</h4>
+            <p class="rvw-review__text">Die Softwareinstallation ist top — schnell, unkompliziert und läuft fehlerfrei. Weniger begeistert war ich vom Einbau: Da kein Unterputz-Halter verfügbar ist, war die Montage im Stahlpfosten mühsam. Technisch super, beim Einbau im Metallpfosten muss man aber etwas improvisieren.</p>
+            <div class="rvw-review__foot"><span class="rvw-author">Gast</span><time>02.06.2026</time></div>
+          </article>
+          <article class="rvw-review">
+            <div class="rvw-review__head"><span class="rvw-stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span class="rvw-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span></div>
+            <h4 class="rvw-review__title">Sehr schöne Anlage und exzellenter Support</h4>
+            <p class="rvw-review__text">Eine sehr schöne, wertige und optisch ansprechende Türsprechanlage. Die Inbetriebnahme hat nach Hinzuziehen des sehr kompetenten Supports gut funktioniert. Mit dem Endzustand bin ich sehr zufrieden.</p>
+            <div class="rvw-review__foot"><span class="rvw-author">Volker W.</span><time>22.11.2025</time></div>
+          </article>
+          <article class="rvw-review">
+            <div class="rvw-review__head"><span class="rvw-stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span class="rvw-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span></div>
+            <h4 class="rvw-review__title">Metzler Türsprechanlage</h4>
+            <p class="rvw-review__text">Die Bild- und Tonqualität ist gut, das Design modern und die Bedienung über Panel und App sehr praktisch. Besonders angenehm ist die zuverlässige Nutzung im Alltag. Vielen Dank für ein gelungenes und hochwertiges Produkt — klare Weiterempfehlung.</p>
+            <div class="rvw-review__foot"><span class="rvw-author">Gast</span><time>28.01.2026</time></div>
+          </article>
+          <a href="#" class="rvw-list__more">Alle 63 Bewertungen ansehen<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · Downloads -->
+  <section id="sx-downloads" class="psx-sec psx-sec--alt" aria-labelledby="sxDlTitle">
+    <div class="container psx-sec__inner">
+      <p class="psx-eyebrow">Downloads</p>
+      <h2 class="psx-title" id="sxDlTitle">Anleitungen &amp; Dokumente</h2>
+      <p class="psx-lead">Alle Unterlagen zu Ihrer VDM10&nbsp;2.0 — jederzeit als PDF zum Herunterladen.</p>
+      <ul class="psx-dl">
+        <li><a class="psx-dl__item" href="#" download><span class="psx-dl__badge">PDF</span><span class="psx-dl__text"><b>Bedienungsanleitung</b><span>Deutsch · 4,2 MB</span></span><svg class="psx-dl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></a></li>
+        <li><a class="psx-dl__item" href="#" download><span class="psx-dl__badge">PDF</span><span class="psx-dl__text"><b>Montageanleitung</b><span>Deutsch · 6,8 MB</span></span><svg class="psx-dl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></a></li>
+        <li><a class="psx-dl__item" href="#" download><span class="psx-dl__badge">PDF</span><span class="psx-dl__text"><b>Technisches Datenblatt</b><span>Deutsch · 1,1 MB</span></span><svg class="psx-dl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></a></li>
+        <li><a class="psx-dl__item" href="#" download><span class="psx-dl__badge">PDF</span><span class="psx-dl__text"><b>Anschlussplan (LAN/PoE &amp; 2-Draht)</b><span>Deutsch · 2,3 MB</span></span><svg class="psx-dl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></a></li>
+        <li><a class="psx-dl__item" href="#" download><span class="psx-dl__badge">PDF</span><span class="psx-dl__text"><b>Kurzanleitung Metzler-App</b><span>Deutsch · 0,9 MB</span></span><svg class="psx-dl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></a></li>
+        <li><a class="psx-dl__item" href="#" download><span class="psx-dl__badge">PDF</span><span class="psx-dl__text"><b>CE-Konformitätserklärung</b><span>Deutsch · 0,4 MB</span></span><svg class="psx-dl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></a></li>
+        <li><a class="psx-dl__item" href="#" download><span class="psx-dl__badge">PDF</span><span class="psx-dl__text"><b>Pflege- &amp; Reinigungshinweise</b><span>Deutsch · 0,3 MB</span></span><svg class="psx-dl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4 · Technische Details -->
+  <section id="sx-technik" class="psx-sec" aria-labelledby="sxTechTitle">
+    <div class="container psx-sec__inner">
+      <p class="psx-eyebrow">Technische Details</p>
+      <h2 class="psx-title" id="sxTechTitle">Technische Daten im Überblick</h2>
+      <div class="psx-spec">
+        <div class="psx-spec__group">
+          <h3 class="psx-spec__grouptitle">Allgemein</h3>
+          <dl class="psx-spec__list">
+            <div><dt>Hersteller</dt><dd>Metzler</dd></div>
+            <div><dt>Modell</dt><dd>VDM10 2.0 · Colson</dd></div>
+            <div><dt>Material</dt><dd>Edelstahl, pulverbeschichtet</dd></div>
+            <div><dt>Fertigung</dt><dd>Maßanfertigung, made in Germany</dd></div>
+          </dl>
+        </div>
+        <div class="psx-spec__group">
+          <h3 class="psx-spec__grouptitle">Kamera &amp; Display</h3>
+          <dl class="psx-spec__list">
+            <div><dt>Auflösung</dt><dd>Full-HD 1080p</dd></div>
+            <div><dt>Blickwinkel</dt><dd>170° Weitwinkel</dd></div>
+            <div><dt>Nachtsicht</dt><dd>Ja, IR-unterstützt</dd></div>
+            <div><dt>Display</dt><dd>IPS-Touch-Display</dd></div>
+          </dl>
+        </div>
+        <div class="psx-spec__group">
+          <h3 class="psx-spec__grouptitle">Anschluss &amp; Zutritt</h3>
+          <dl class="psx-spec__list">
+            <div><dt>Anschluss</dt><dd>LAN/PoE oder 2-Draht</dd></div>
+            <div><dt>Zutritt</dt><dd>Gesichtserkennung, RFID, PIN, App</dd></div>
+            <div><dt>Klingeltaster</dt><dd>Bis zu 8 (virtuell)</dd></div>
+            <div><dt>Smart-Home</dt><dd>Metzler-App (iOS &amp; Android)</dd></div>
+          </dl>
+        </div>
+        <div class="psx-spec__group">
+          <h3 class="psx-spec__grouptitle">Abmessungen &amp; Garantie</h3>
+          <dl class="psx-spec__list">
+            <div><dt>Maße (B×H)</dt><dd>13,30 × 27,40 cm</dd></div>
+            <div><dt>Schutzart</dt><dd>IP54 (wettergeschützt)</dd></div>
+            <div><dt>Lieferung</dt><dd>Gratis Versand · DHL GoGreen</dd></div>
+            <div><dt>Garantie</dt><dd>10 Jahre Metzler Garantie</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · Frage zum Artikel — FAQ (consistent with the produktionsprozess page) -->
+  <section id="sx-frage" class="psx-sec psx-sec--alt faq" aria-labelledby="sxFrageTitle">
+    <div class="container">
+      <div class="faq__inner">
+        <aside class="faq__support">
+          <h3>Beratung gewünscht?</h3>
+          <p>Unser Fachteam beantwortet Ihre Frage zum Artikel persönlich — zu Anschluss, Montage und Konfiguration. Kostenlos und unverbindlich.</p>
+          <a class="faq__cta" href="#">Zum Kundensupport
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+          </a>
+          <div class="faq__phone">
+            Sprechanlagen-Hotline
+            <strong>+49 (0) 7121 / 317 7333</strong>
+            <span class="faq__phone-hours">Mo–Fr · 09:00–16:00 Uhr</span>
+          </div>
+        </aside>
+        <div>
+          <p class="psx-eyebrow">Frage zum Artikel</p>
+          <h2 class="psx-title" id="sxFrageTitle">Häufige Fragen</h2>
+          <div class="faq__list">
+            <details class="faq__item" open>
+              <summary class="faq__q">Passt die VDM10&nbsp;2.0 an meine bestehende 2-Draht-Verkabelung?<span class="faq__q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></summary>
+              <div class="faq__a">Ja. Die Anlage lässt sich wahlweise per 2-Draht-Verteiler oder über LAN/PoE anschließen — die passende Stromversorgung wählen Sie direkt im Konfigurator.</div>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q">Funktioniert die Gesichtserkennung auch bei Dunkelheit?<span class="faq__q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></summary>
+              <div class="faq__a">Ja. Dank IR-unterstützter Nachtsicht erkennt die Kamera Gesichter zuverlässig — auch nachts und bei Gegenlicht am Nachmittag.</div>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q">Wie lange dauert die Lieferung meiner Maßanfertigung?<span class="faq__q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></summary>
+              <div class="faq__a">Das voraussichtliche Versanddatum wird Ihnen direkt im Warenkorb angezeigt, sobald Ihre Konfiguration abgeschlossen ist — inklusive Gratis-Versand mit DHL GoGreen.</div>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q">Kann ich die Anlage später um weitere Innenstationen erweitern?<span class="faq__q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></summary>
+              <div class="faq__a">Ja, das System ist erweiterbar — für mehrere Räume oder Etagen lassen sich jederzeit zusätzliche Innenstationen ergänzen.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <!-- ===== STICKY PURCHASE BAR (reveals on scroll past the hero CTA) ===== -->
@@ -712,5 +974,7 @@
 
 <script src="chrome.js?v=1"></script>
 <script src="pdp.js?v=5"></script>
+<!-- drives the ported product-info sections: scroll-spy nav, Beschreibung scrollytelling, review carousel -->
+<script src="pdp-b.js?v=79"></script>
 </body>
 </html>
