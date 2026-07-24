@@ -36,8 +36,59 @@
   var LIGHT_FINISHES = { 'Verkehrsweiß RAL 9016': 1, 'Edelstahl gebürstet': 1 };
   var CONN = { 'LAN / PoE': 'lan', '2-Draht IP': '2draht' };
 
+  /* ── RAL Classic palette (Wunschfarbe picker) — code | German name | hex ── */
+  var WUNSCHFARBE = 'Wunschfarbe nach RAL';
+  var RAL_FAMS = [['all', 'Alle'], ['1', 'Gelb'], ['2', 'Orange'], ['3', 'Rot'], ['4', 'Violett'], ['5', 'Blau'], ['6', 'Grün'], ['7', 'Grau'], ['8', 'Braun'], ['9', 'Weiß/Schwarz']];
+  var RAL = ('1000|Grünbeige|CDBA88 1001|Beige|D0B084 1002|Sandgelb|D2AA6D 1003|Signalgelb|F9A800 1004|Goldgelb|E49E00 ' +
+    '1005|Honiggelb|CB8E00 1006|Maisgelb|E29000 1007|Narzissengelb|E88C00 1011|Braunbeige|AF804F 1012|Zitronengelb|DDAF27 ' +
+    '1013|Perlweiß|E3D9C6 1014|Elfenbein|DDC49A 1015|Hellelfenbein|E6D2B5 1016|Schwefelgelb|F1DD38 1017|Safrangelb|F6A950 ' +
+    '1018|Zinkgelb|FACA30 1019|Graubeige|A5998B 1020|Olivgelb|9E9764 1021|Rapsgelb|F5D033 1023|Verkehrsgelb|F0CA00 ' +
+    '1024|Ockergelb|B89C50 1026|Leuchtgelb|F5FF00 1027|Curry|9D9101 1028|Melonengelb|F3A505 1032|Ginstergelb|E2A300 ' +
+    '1033|Dahliengelb|F4A900 1034|Pastellgelb|EFA94A 1035|Perlbeige|908370 1036|Perlgold|80643F 1037|Sonnengelb|F09200 ' +
+    '2000|Gelborange|ED760E 2001|Rotorange|C93C20 2002|Blutorange|CB2821 2003|Pastellorange|FF7514 2004|Reinorange|F44611 ' +
+    '2005|Leuchtorange|FF2301 2007|Leuchthellorange|FFA420 2008|Hellrotorange|F75E25 2009|Verkehrsorange|F54021 2010|Signalorange|D84B20 ' +
+    '2011|Tieforange|EC7C26 2012|Lachsorange|E55137 2013|Perlorange|C35831 ' +
+    '3000|Feuerrot|AF2B1E 3001|Signalrot|A52019 3002|Karminrot|A2231D 3003|Rubinrot|9B111E 3004|Purpurrot|75151E ' +
+    '3005|Weinrot|5E2129 3007|Schwarzrot|412227 3009|Oxidrot|642424 3011|Braunrot|781F19 3012|Beigerot|C1876B ' +
+    '3013|Tomatenrot|A12312 3014|Altrosa|D36E70 3015|Hellrosa|EA899A 3016|Korallenrot|B32821 3017|Rosé|E63244 ' +
+    '3018|Erdbeerrot|D53032 3020|Verkehrsrot|CC0605 3022|Lachsrot|D95030 3024|Leuchtrot|F80000 3026|Leuchthellrot|FE0000 ' +
+    '3027|Himbeerrot|C51D34 3028|Reinrot|CB3234 3031|Orientrot|B32428 3032|Perlrubinrot|721422 3033|Perlrosa|B44C43 ' +
+    '4001|Rotlila|6D3F5B 4002|Rotviolett|922B3E 4003|Erikaviolett|DE4C8A 4004|Bordeauxviolett|641C34 4005|Blaulila|6C4675 ' +
+    '4006|Verkehrspurpur|A03472 4007|Purpurviolett|4A192C 4008|Signalviolett|924E7D 4009|Pastellviolett|A18594 4010|Telemagenta|CF3476 ' +
+    '4011|Perlviolett|8673A1 4012|Perlbrombeer|6C6874 ' +
+    '5000|Violettblau|354D73 5001|Grünblau|1F3438 5002|Ultramarinblau|20214F 5003|Saphirblau|1D1E33 5004|Schwarzblau|18171C ' +
+    '5005|Signalblau|1E2460 5007|Brillantblau|3E5F8A 5008|Graublau|26252D 5009|Azurblau|025669 5010|Enzianblau|0E294B ' +
+    '5011|Stahlblau|231A24 5012|Lichtblau|3B83BD 5013|Kobaltblau|1E213D 5014|Taubenblau|606E8C 5015|Himmelblau|2271B3 ' +
+    '5017|Verkehrsblau|063971 5018|Türkisblau|3F888F 5019|Capriblau|1B5583 5020|Ozeanblau|1F3A3D 5021|Wasserblau|256D7B ' +
+    '5022|Nachtblau|252850 5023|Fernblau|49678D 5024|Pastellblau|5D9B9B 5025|Perlenzian|2A6478 5026|Perlnachtblau|102C54 ' +
+    '6000|Patinagrün|327662 6001|Smaragdgrün|28713E 6002|Laubgrün|276235 6003|Olivgrün|4B573E 6004|Blaugrün|0E4243 ' +
+    '6005|Moosgrün|0F4336 6006|Grauoliv|3E3B32 6007|Flaschengrün|283424 6008|Braungrün|35382E 6009|Tannengrün|26392F ' +
+    '6010|Grasgrün|3D642D 6011|Resedagrün|6C7156 6012|Schwarzgrün|303D3A 6013|Schilfgrün|7E7B52 6014|Gelboliv|474135 ' +
+    '6015|Schwarzoliv|3B3C36 6016|Türkisgrün|026A52 6017|Maigrün|468641 6018|Gelbgrün|48A43F 6019|Weißgrün|BDECB6 ' +
+    '6020|Chromoxidgrün|2E3A23 6021|Blassgrün|89AC76 6022|Braunoliv|3B3327 6024|Verkehrsgrün|308446 6025|Farngrün|587246 ' +
+    '6026|Opalgrün|005D52 6027|Lichtgrün|7FB5B5 6028|Kieferngrün|2C5545 6029|Minzgrün|20603D 6032|Signalgrün|317F43 ' +
+    '6033|Minttürkis|497E76 6034|Pastelltürkis|7FB0B2 6035|Perlgrün|1C542D 6036|Perlopalgrün|193F32 6037|Reingrün|008F39 6038|Leuchtgrün|00BB2D ' +
+    '7000|Fehgrau|78858B 7001|Silbergrau|8A9597 7002|Olivgrau|817863 7003|Moosgrau|7A7B6D 7004|Signalgrau|9EA0A1 ' +
+    '7005|Mausgrau|6B716F 7006|Beigegrau|756857 7008|Khakigrau|6D6552 7009|Grüngrau|4F5951 7010|Zeltgrau|4C514A ' +
+    '7011|Eisengrau|434B4D 7012|Basaltgrau|4E5452 7013|Braungrau|464531 7015|Schiefergrau|434750 7016|Anthrazitgrau|293133 ' +
+    '7021|Schwarzgrau|23282B 7022|Umbragrau|403A3A 7023|Betongrau|808076 7024|Graphitgrau|474A50 7026|Granitgrau|2F353B ' +
+    '7030|Steingrau|8B8C7A 7031|Blaugrau|474B4E 7032|Kieselgrau|B8B799 7033|Zementgrau|7D8471 7034|Gelbgrau|8F8B66 ' +
+    '7035|Lichtgrau|D7D7D7 7036|Platingrau|7F7679 7037|Staubgrau|7D7F7D 7038|Achatgrau|B5B8B1 7039|Quarzgrau|6C6960 ' +
+    '7040|Fenstergrau|9DA1AA 7042|Verkehrsgrau A|8D948D 7043|Verkehrsgrau B|4E5754 7044|Seidengrau|CAC4B0 7045|Telegrau 1|909090 ' +
+    '7046|Telegrau 2|82898F 7047|Telegrau 4|D0D0D0 7048|Perlmausgrau|898176 ' +
+    '8000|Grünbraun|826C34 8001|Ockerbraun|955F20 8002|Signalbraun|6C3B2A 8003|Lehmbraun|734222 8004|Kupferbraun|8E402A ' +
+    '8007|Rehbraun|59351F 8008|Olivbraun|6F4F28 8011|Nussbraun|5B3A29 8012|Rotbraun|592321 8014|Sepiabraun|382C1E ' +
+    '8015|Kastanienbraun|633A34 8016|Mahagonibraun|4C2F27 8017|Schokoladenbraun|45322E 8019|Graubraun|403A3A 8022|Schwarzbraun|212121 ' +
+    '8023|Orangebraun|A65E2E 8024|Beigebraun|79553D 8025|Blassbraun|755C48 8028|Terrabraun|4E3B31 8029|Perlkupfer|763C28 ' +
+    '9001|Cremeweiß|FDF4E3 9002|Grauweiß|E7EBDA 9003|Signalweiß|F4F4F4 9004|Signalschwarz|282828 9005|Tiefschwarz|0A0A0A ' +
+    '9006|Weißaluminium|A5A5A5 9007|Graualuminium|8F8F8F 9010|Reinweiß|FFFFFF 9011|Graphitschwarz|1C1C1C 9016|Verkehrsweiß|F6F6F6 ' +
+    '9017|Verkehrsschwarz|1E1E1E 9018|Papyrusweiß|CFD3CD 9022|Perlhellgrau|9C9C9C 9023|Perldunkelgrau|828282')
+    .split(/\s+(?=\d{4}\|)/).map(function (s) { var p = s.split('|'); return { code: p[0], name: p[1], hex: '#' + p[2], fam: p[0].charAt(0) }; });
+
+  var ralUI = null;   /* set by setupRalPicker() — { open, close, flash, sync } */
   var state = {
     finish: '', finishDelta: 0, article: '', mainQty: 1,   /* no colour pre-selected — user must choose (each colour is its own article) */
+    ral: null,   /* Wunschfarbe: { code, name, hex } once a RAL is picked */
     anschluss: null, conn: null,
     gravurOn: false, gravurText: '', font: 'Klassisch',
     innenSel: {},   /* name -> { price, qty, label } — multi-select, own qty each */
@@ -70,6 +121,20 @@
   function setTxt(id, t) { var el = $(id); if (el) el.textContent = t; }
   function curIndex() { for (var i = 0; i < items.length; i++) if (items[i].classList.contains('is-active')) return i; return -1; }
 
+  /* ── Wunschfarbe helpers ── */
+  /* the finish as displayed everywhere: a chosen RAL expands the generic "Wunschfarbe nach RAL" */
+  function finishText() {
+    if (state.finish === WUNSCHFARBE && state.ral) return 'Wunschfarbe · RAL ' + state.ral.code + ' ' + state.ral.name;
+    return state.finish;
+  }
+  /* Wunschfarbe picked but no RAL chosen yet → the colour choice is incomplete */
+  function needsRal() { return state.finish === WUNSCHFARBE && !state.ral; }
+  /* legible ink (dark/light) for a swatch background, by perceived luminance */
+  function ralInk(hex) {
+    var r = parseInt(hex.substr(1, 2), 16), g = parseInt(hex.substr(3, 2), 16), b = parseInt(hex.substr(5, 2), 16);
+    return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 ? 'rgba(0,0,0,0.85)' : 'rgba(255,255,255,0.96)';
+  }
+
   /* ── Central refresh ── */
   var priceOpenedOnce = false;   /* auto-expand Preisdetails once, on the first paid add-on */
   function refresh() {
@@ -78,19 +143,24 @@
     if (el && el.textContent !== t) { el.textContent = t; el.classList.remove('is-bump'); void el.offsetWidth; el.classList.add('is-bump'); }
     var sp = $('bStickyPrice'); if (sp) sp.innerHTML = (state.finish ? 'konfiguriert · ' : 'ab ') + '<b>' + t + '</b>';
 
-    setTxt('pdpFinishName', state.finish || 'Bitte Farbe wählen');
+    setTxt('pdpFinishName', finishText() || 'Bitte Farbe wählen');
     setTxt('bArticleInline', state.article || '—');
-    var sf = $('pdpStickyFinish'); if (sf) sf.textContent = state.finish || 'Farbe wählen';
+    var sf = $('pdpStickyFinish'); if (sf) sf.textContent = finishText() || 'Farbe wählen';
+
+    /* colour-preview dot in the label — shows the exact RAL hex once picked */
+    var dot = $('pdpFinishDot');
+    if (dot) { if (state.ral) { dot.hidden = false; dot.style.background = state.ral.hex; } else { dot.hidden = true; } }
+    if (ralUI) ralUI.sync();
 
     /* "Preis wie konfiguriert" wording appears only after a colour is chosen;
        before that, the price reads "ab 699,00 €" (starting-at) */
     document.querySelectorAll('.cfgb-price__label, .sheet__pricelabel').forEach(function (el) { el.hidden = !state.finish; });
     document.querySelectorAll('#bTotalFrom, #bSheetFrom').forEach(function (el) { el.hidden = !!state.finish; });
 
-    /* before a colour is chosen: CTA prompts for the colour, and the price section
-       shows only the price block (the Preisdetails/Menge bar stays hidden) */
-    var cartBtn = $('bCart'); if (cartBtn) cartBtn.textContent = state.finish ? 'In den Warenkorb' : 'Bitte Farbe wählen';
-    var sLabel = $('pdpStickyLabel'); if (sLabel) sLabel.textContent = state.finish ? 'In den Warenkorb' : 'Bitte Farbe wählen';
+    /* CTA prompts for what's missing: a colour first, then (for Wunschfarbe) a RAL tone */
+    var ctaTxt = !state.finish ? 'Bitte Farbe wählen' : (needsRal() ? 'Bitte RAL-Farbe wählen' : 'In den Warenkorb');
+    var cartBtn = $('bCart'); if (cartBtn) cartBtn.textContent = ctaTxt;
+    var sLabel = $('pdpStickyLabel'); if (sLabel) sLabel.textContent = ctaTxt;
     var checkout = $('bCheckout'); if (checkout) checkout.classList.toggle('is-precolor', !state.finish);
 
     /* Preisdetails stays hidden until the config carries a surcharge; the first paid
@@ -181,7 +251,7 @@
   function renderSummary() {
     var el = $('bSummary'); if (!el) return;
     var h = '';
-    h += row('<b>Metzler VDM10 2.0</b>', esc(state.finish), roQty(state.mainQty), euro(state.mainQty * (BASE + state.finishDelta)));
+    h += row('<b>Metzler VDM10 2.0</b>', esc(finishText()), roQty(state.mainQty), euro(state.mainQty * (BASE + state.finishDelta)));
     if (state.anschluss) h += row('Anschluss', esc(state.anschluss), null, 'inklusive');
     if (state.gravurOn) h += row('Gravur', state.gravurText ? '„' + esc(state.gravurText) + '" · ' + state.font : 'Mit Namensgravur', null, 'inklusive');
     for (var ik in state.innenSel) { var iv = state.innenSel[ik]; h += row(esc(iv.label || ik), null, roQty(iv.qty), euro(iv.price * iv.qty)); }
@@ -345,6 +415,8 @@
     state.finish = b.getAttribute('data-finish'); state.finishDelta = parseFloat(b.getAttribute('data-delta')) || 0;
     state.article = b.getAttribute('data-article') || state.article;
     var img = $('pdpMainImg'); if (img) { img.style.opacity = '0.35'; window.setTimeout(function () { img.style.opacity = '1'; }, 200); }
+    /* Wunschfarbe → reveal the inline RAL picker; any standard colour → close it and drop the RAL */
+    if (ralUI) { if (state.finish === WUNSCHFARBE) ralUI.open(); else { ralUI.close(); state.ral = null; } }
     /* colour chosen → unlock the configurator (colour drives the available options) */
     this.classList.remove('is-invalid');
     var panel = $('cfgbPanel');
@@ -357,12 +429,107 @@
   /* preview any colour's full name in the prominent label on hover/focus (no click needed) */
   if (sw) {
     var previewName = function (e) { var b = e.target.closest('.pdp-swatch'); if (b) setTxt('pdpFinishName', b.getAttribute('data-finish')); };
-    var restoreName = function () { setTxt('pdpFinishName', state.finish || 'Bitte Farbe wählen'); };
+    var restoreName = function () { setTxt('pdpFinishName', finishText() || 'Bitte Farbe wählen'); };
     sw.addEventListener('mouseover', previewName);
     sw.addEventListener('mouseout', restoreName);
     sw.addEventListener('focusin', previewName);
     sw.addEventListener('focusout', restoreName);
   }
+
+  /* ── Wunschfarbe: inline RAL picker — collapsed by default; trigger reveals a
+     searchable palette with an in-search-bar filter dropdown; live preview ── */
+  function setupRalPicker() {
+    var panel = $('ralPick'), grid = $('ralGrid'), search = $('ralSearch'), clearBtn = $('ralClear'),
+        empty = $('ralEmpty'), trigger = $('ralTrigger'), body = $('ralBody'),
+        swEl = $('ralTriggerSw'), swImg = swEl ? swEl.querySelector('img') : null,
+        labelEl = $('ralTriggerLabel'), subEl = $('ralTriggerSub'),
+        filterBtn = $('ralFilterBtn'), filterLabel = $('ralFilterLabel'), menu = $('ralFilterMenu');
+    if (!panel || !grid) return;
+    var curFam = 'all', curQ = '';
+    var SUB_DEFAULT = 'Aus 216 RAL-Classic-Tönen — durchsuchbar nach Code oder Name';
+    var FAMLABEL = { all: 'Filtern', '1': 'Gelb', '2': 'Orange', '3': 'Rot', '4': 'Violett', '5': 'Blau', '6': 'Grün', '7': 'Grau', '8': 'Braun', '9': 'Weiß/Schwarz' };
+
+    grid.innerHTML = RAL.map(function (c) {
+      return '<button type="button" class="ral-chip" role="option" aria-selected="false" data-code="' + c.code + '" data-fam="' + c.fam + '"'
+        + ' style="background:' + c.hex + ';color:' + ralInk(c.hex) + '" title="RAL ' + c.code + ' ' + esc(c.name) + '">'
+        + '<span class="ral-chip__code">RAL ' + c.code + '</span><span class="ral-chip__name">' + esc(c.name) + '</span></button>';
+    }).join('');
+    var chips = [].slice.call(grid.querySelectorAll('.ral-chip'));
+    var byCode = {}; RAL.forEach(function (c) { byCode[c.code] = c; });
+
+    function applyFilter() {
+      var q = curQ.trim().toLowerCase(), shown = 0;
+      chips.forEach(function (ch) {
+        var code = ch.getAttribute('data-code'), fam = ch.getAttribute('data-fam');
+        var name = byCode[code] ? byCode[code].name.toLowerCase() : '';
+        var okFam = curFam === 'all' || fam === curFam;
+        var okQ = !q || code.indexOf(q) > -1 || name.indexOf(q) > -1 || ('ral ' + code).indexOf(q) > -1;
+        var vis = okFam && okQ; ch.style.display = vis ? '' : 'none'; if (vis) shown++;
+      });
+      if (empty) empty.hidden = shown > 0;
+    }
+    /* reflect the chosen RAL on the collapsed trigger (swatch + name) and in the grid */
+    function sync() {
+      chips.forEach(function (ch) {
+        var on = !!(state.ral && ch.getAttribute('data-code') === state.ral.code);
+        ch.classList.toggle('is-selected', on); ch.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      if (state.ral) {
+        if (swImg) swImg.style.display = 'none';
+        if (swEl) swEl.style.background = state.ral.hex;
+        if (labelEl) labelEl.textContent = 'RAL ' + state.ral.code + ' · ' + state.ral.name;
+        if (subEl) subEl.textContent = 'Ausgewählt — tippen zum Ändern';
+      } else {
+        if (swImg) swImg.style.display = '';
+        if (swEl) swEl.style.background = '';
+        if (labelEl) labelEl.textContent = 'RAL-Wunschfarbe wählen';
+        if (subEl) subEl.textContent = SUB_DEFAULT;
+      }
+    }
+    function closeMenu() { if (menu) menu.hidden = true; if (filterBtn) filterBtn.setAttribute('aria-expanded', 'false'); }
+    function expand() { panel.classList.add('is-expanded'); if (trigger) trigger.setAttribute('aria-expanded', 'true'); trigger.classList.remove('is-hint'); applyFilter(); }
+    function collapse() { panel.classList.remove('is-expanded'); if (trigger) trigger.setAttribute('aria-expanded', 'false'); closeMenu(); }
+
+    if (trigger) trigger.addEventListener('click', function () {
+      if (panel.classList.contains('is-expanded')) { collapse(); }
+      else { expand(); if (search) window.setTimeout(function () { search.focus(); }, 60); }
+    });
+    if (search) search.addEventListener('input', function () { curQ = this.value; if (clearBtn) clearBtn.hidden = !this.value; applyFilter(); });
+    if (clearBtn) clearBtn.addEventListener('click', function () { search.value = ''; curQ = ''; this.hidden = true; applyFilter(); search.focus(); });
+
+    /* filter link → toggle the colour-group menu */
+    if (filterBtn) filterBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var openNow = menu.hidden; menu.hidden = !openNow; filterBtn.setAttribute('aria-expanded', openNow ? 'true' : 'false');
+    });
+    if (menu) menu.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-fam]'); if (!b) return;
+      curFam = b.getAttribute('data-fam');
+      menu.querySelectorAll('button').forEach(function (x) { var on = x === b; x.classList.toggle('is-active', on); x.setAttribute('aria-checked', on ? 'true' : 'false'); });
+      if (filterLabel) filterLabel.textContent = FAMLABEL[curFam] || 'Filtern';
+      closeMenu(); applyFilter();
+    });
+    /* dismiss the menu on outside click / Escape */
+    document.addEventListener('click', function (e) { if (menu && !menu.hidden && !e.target.closest('.ralpick__filter')) closeMenu(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+
+    grid.addEventListener('click', function (e) {
+      var b = e.target.closest('.ral-chip'); if (!b) return;
+      var c = byCode[b.getAttribute('data-code')]; if (!c) return;
+      state.ral = { code: c.code, name: c.name, hex: c.hex };
+      panel.classList.remove('is-invalid');
+      collapse();          /* resolve → collapse back to the summary trigger */
+      refresh();
+    });
+
+    ralUI = {
+      open: function () { panel.classList.add('is-shown'); collapse(); sync(); if (!state.ral && trigger) { trigger.classList.remove('is-hint'); void trigger.offsetWidth; trigger.classList.add('is-hint'); } },
+      close: function () { panel.classList.remove('is-shown', 'is-expanded'); closeMenu(); },
+      flash: function () { expand(); panel.classList.remove('is-invalid'); void panel.offsetWidth; panel.classList.add('is-invalid'); },
+      sync: sync
+    };
+  }
+  setupRalPicker();
 
   /* ── Swatch labelling on touch (hover is a capability, not a screen size) ──
      Pointer devices keep the compact hover-preview grid. Touch devices (no hover) get
@@ -689,6 +856,13 @@
         swEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
       toast('Bitte wählen Sie zuerst eine Farbe');
+      return;
+    }
+    /* Wunschfarbe chosen but no RAL tone yet → open + flash the picker, don't proceed */
+    if (needsRal()) {
+      if (ralUI) { ralUI.open(); ralUI.flash(); }
+      var rp = $('ralPick'); if (rp) rp.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      var rs = $('ralSearch'); if (rs) window.setTimeout(function () { rs.focus(); }, 400);
       return;
     }
     var iv = firstInvalid();

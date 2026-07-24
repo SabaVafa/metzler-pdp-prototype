@@ -16,7 +16,7 @@
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=28" />
 <!-- Version B — inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=339" />
+<link rel="stylesheet" href="pdp-b.css?v=344" />
 </head>
 <body class="plp">
 
@@ -436,7 +436,7 @@
         <!-- ===== AUSFÜHRUNG · FARBE — eigene Variante (außerhalb der Konfiguration; steuert die Optionen) ===== -->
         <div class="bx-color" id="bFarbe">
           <div class="bx-color__head">
-            <span class="bx-color__label">Farbe — <b id="pdpFinishName">Bitte Farbe wählen</b></span>
+            <span class="bx-color__label">Farbe — <span class="bx-color__dot" id="pdpFinishDot" hidden></span><b id="pdpFinishName">Bitte Farbe wählen</b></span>
           </div>
           <div class="pdp-swatches bx-swatches" id="pdpSwatches" role="group" aria-label="Farbe wählen — jede Farbe ist eine eigene Variante mit eigener Artikelnummer">
             <button type="button" class="pdp-swatch" aria-pressed="false" data-finish="Anthrazit RAL 7016" data-delta="0" data-article="31101"><img src="assets/swatches/anthrazit-ral7016.jpg" alt="Anthrazit RAL 7016"></button>
@@ -448,6 +448,44 @@
             <button type="button" class="pdp-swatch" aria-pressed="false" data-finish="Linen Tex Black" data-delta="0" data-article="31107"><img src="assets/swatches/linen-tex-black.jpg" alt="Linen Tex Black"></button>
             <button type="button" class="pdp-swatch" aria-pressed="false" data-finish="Wunschfarbe nach RAL" data-delta="49" data-article="31108"><img src="assets/swatches/wunschfarbe-nach-ral.jpg" alt="Wunschfarbe nach RAL"></button>
           </div>
+
+          <!-- ===== WUNSCHFARBE · inline RAL picker (revealed when "Wunschfarbe nach RAL" is chosen) ===== -->
+          <div class="ralpick" id="ralPick">
+            <!-- collapsed by default: an inviting trigger that communicates the palette is available -->
+            <button type="button" class="ralpick__trigger" id="ralTrigger" aria-expanded="false" aria-controls="ralBody">
+              <span class="ralpick__trigger-sw" id="ralTriggerSw" aria-hidden="true"><img src="assets/swatches/wunschfarbe-nach-ral.jpg" alt=""></span>
+              <span class="ralpick__trigger-txt">
+                <span class="ralpick__trigger-label"><span id="ralTriggerLabel">RAL-Wunschfarbe wählen</span><span class="ralpick__fee">+49 €</span></span>
+                <span class="ralpick__trigger-sub" id="ralTriggerSub">Aus 216 RAL-Classic-Tönen — durchsuchbar nach Code oder Name</span>
+              </span>
+              <svg class="ralpick__trigger-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="ralpick__body" id="ralBody">
+              <div class="ralpick__search">
+                <svg class="ralpick__searchicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                <input class="ralpick__input" id="ralSearch" type="search" autocomplete="off" placeholder="RAL-Code oder Farbname suchen (z. B. 7016 oder Anthrazit)" aria-label="RAL-Farbe suchen">
+                <button type="button" class="ralpick__clear" id="ralClear" hidden aria-label="Suche löschen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+                <div class="ralpick__filter">
+                  <button type="button" class="ralpick__filterlink" id="ralFilterBtn" aria-haspopup="true" aria-expanded="false"><span id="ralFilterLabel">Filtern</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+                  <div class="ralpick__menu" id="ralFilterMenu" role="menu" hidden>
+                    <button type="button" role="menuitemradio" aria-checked="true" class="is-active" data-fam="all">Alle Farbgruppen</button>
+                    <button type="button" role="menuitemradio" aria-checked="false" data-fam="1">Gelb</button>
+                    <button type="button" role="menuitemradio" aria-checked="false" data-fam="2">Orange</button>
+                    <button type="button" role="menuitemradio" aria-checked="false" data-fam="3">Rot</button>
+                    <button type="button" role="menuitemradio" aria-checked="false" data-fam="4">Violett</button>
+                    <button type="button" role="menuitemradio" aria-checked="false" data-fam="5">Blau</button>
+                    <button type="button" role="menuitemradio" aria-checked="false" data-fam="6">Grün</button>
+                    <button type="button" role="menuitemradio" aria-checked="false" data-fam="7">Grau</button>
+                    <button type="button" role="menuitemradio" aria-checked="false" data-fam="8">Braun</button>
+                    <button type="button" role="menuitemradio" aria-checked="false" data-fam="9">Weiß/Schwarz</button>
+                  </div>
+                </div>
+              </div>
+              <div class="ralpick__grid" id="ralGrid" role="listbox" aria-label="RAL-Farben"></div>
+              <p class="ralpick__empty" id="ralEmpty" hidden>Keine Farbe gefunden — bitte Suche anpassen.</p>
+            </div>
+          </div>
+
           <p class="bx-color__note">Jede Farbe ist eine <b>eigene Variante</b> mit eigener Artikelnummer — Ihre Wahl bestimmt die verfügbaren Konfigurationsoptionen.</p>
         </div>
 
@@ -1825,6 +1863,6 @@
 </div>
 
 <script src="chrome.js?v=2"></script>
-<script src="pdp-b.js?v=85"></script>
+<script src="pdp-b.js?v=89"></script>
 </body>
 </html>
