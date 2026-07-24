@@ -1018,7 +1018,9 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 .cfg-innen-note b { color: var(--color-digital-black); font-weight: 700; }
 .cfgb .cfg-opts .cfg-opt--plain { grid-column: 1 / -1; flex-direction: row; align-items: center;
   gap: 0.85rem; padding: 0.8rem 1rem; }
-.cfgb .cfg-opt--plain .cfg-opt__mark { position: static; top: auto; right: auto; margin: 0; flex: none; }
+/* relative (not static) so the absolutely-centered selection fill (::after, line ~982)
+   stays inside the mark box instead of escaping to the row's centre */
+.cfgb .cfg-opt--plain .cfg-opt__mark { position: relative; top: auto; right: auto; margin: 0; flex: none; }
 .cfgb .cfg-opt--plain .cfg-opt__body { flex: 1 1 auto; padding-right: 0; }
 .cfgb .cfg-opt--plain .cfg-opt__price { margin: 0 0 0 auto; align-self: center; padding-top: 0; white-space: nowrap; }
 /* Opt-out / "without" tile — a MEANINGFUL duotone medallion of the alternative,
@@ -1058,7 +1060,7 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
    the full image-tile treatment is too heavy for a plain option ── */
 .cfgb .cfg-opts--rows { grid-template-columns: 1fr; gap: 0.5rem; }
 .cfgb .cfg-opts--rows .cfg-opt { flex-direction: row; align-items: center; gap: 0.75rem; padding: 0.7rem 0.85rem; }
-.cfgb .cfg-opts--rows .cfg-opt__mark { position: static; top: auto; right: auto; z-index: auto; background: none; flex: none; }
+.cfgb .cfg-opts--rows .cfg-opt__mark { position: relative; top: auto; right: auto; z-index: auto; background: none; flex: none; }
 .cfgb .cfg-opts--rows .cfg-opt__body { flex: 1 1 auto; padding-right: 0; }
 .cfgb .cfg-opts--rows .cfg-opt__price { margin: 0 0 0 auto; padding-top: 0; align-self: center; text-align: right; white-space: nowrap; }
 
