@@ -478,8 +478,9 @@
       var c = byCode[b.getAttribute('data-code')]; if (!c) return;
       state.ral = { code: c.code, name: c.name, hex: c.hex };
       panel.classList.remove('is-invalid');
-      /* mirror the chosen code into the search field */
-      if (search) { search.value = 'RAL ' + c.code; curQ = search.value; if (clearBtn) clearBtn.hidden = false; applyFilter(); }
+      /* mirror the chosen code into the search field — WITHOUT filtering, so the
+         rest of the palette stays visible (curQ is left untouched) */
+      if (search) { search.value = 'RAL ' + c.code; if (clearBtn) clearBtn.hidden = false; }
       refresh();
     });
 
