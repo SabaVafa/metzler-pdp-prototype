@@ -16,7 +16,7 @@
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=28" />
 <!-- Version B — inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=336" />
+<link rel="stylesheet" href="pdp-b.css?v=338" />
 </head>
 <body class="plp">
 
@@ -422,8 +422,9 @@
         <!-- Fixed plain price block (no card) above the swatches — the total, shown both
              before and after colour selection -->
         <div class="pdp-price pdp-price--lead">
-          <span class="cfgb-price__label">Preis wie konfiguriert</span>
+          <span class="cfgb-price__label" hidden>Preis wie konfiguriert</span>
           <div class="pdp-price__row">
+            <span class="pdp-price__from" id="bTotalFrom">ab</span>
             <b class="pdp-price__amount" id="bTotal" aria-live="polite">699,00 €</b>
           </div>
           <p class="pdp-price__meta">inkl. 19% USt. · <a href="#">Versandkostenfreie Lieferung</a></p>
@@ -1459,7 +1460,7 @@
   <div class="container pdp-stickybar__inner">
     <div class="pdp-stickybar__info">
       <span class="pdp-stickybar__name">Metzler VDM10 2.0 | Colson · <span id="pdpStickyFinish">Anthrazit RAL 7016</span></span>
-      <span class="pdp-stickybar__price" id="bStickyPrice">konfiguriert · <b>699,00 €</b></span>
+      <span class="pdp-stickybar__price" id="bStickyPrice">ab <b>699,00 €</b></span>
     </div>
     <button type="button" class="pdp-stickybar__details" id="bStickyDetails" aria-haspopup="dialog" aria-controls="bSheet">
       <span>Details</span>
@@ -1483,7 +1484,7 @@
     </div>
     <div class="cfgb-summary" id="bSummary" aria-label="Konfigurierte Positionen"></div>
     <div class="sheet__foot">
-      <div class="sheet__price"><span class="sheet__pricelabel">Preis wie konfiguriert</span><b class="cfgb-total__amount" id="bSheetTotal">699,00 €</b><span class="sheet__pricemeta">inkl. 19% USt.</span></div>
+      <div class="sheet__price"><span class="sheet__pricelabel" hidden>Preis wie konfiguriert</span><span class="sheet__pricefrom" id="bSheetFrom">ab</span><b class="cfgb-total__amount" id="bSheetTotal">699,00 €</b><span class="sheet__pricemeta">inkl. 19% USt.</span></div>
       <button type="button" class="pdp-cta" id="bSheetCart">In den Warenkorb</button>
     </div>
   </div>
@@ -1823,13 +1824,7 @@
   <span id="cfgToastMsg">In den Warenkorb gelegt</span>
 </div>
 
-<!-- A/B version switcher -->
-<nav class="vswitch" aria-label="Prototyp-Version">
-  <a href="index-a.html">A <small>Overlay</small></a>
-  <a href="index.html" class="is-current">B <small>Inline</small></a>
-</nav>
-
 <script src="chrome.js?v=2"></script>
-<script src="pdp-b.js?v=82"></script>
+<script src="pdp-b.js?v=84"></script>
 </body>
 </html>

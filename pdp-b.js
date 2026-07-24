@@ -76,11 +76,16 @@
     var t = euro(total());
     var el = $('bTotal');
     if (el && el.textContent !== t) { el.textContent = t; el.classList.remove('is-bump'); void el.offsetWidth; el.classList.add('is-bump'); }
-    var sp = $('bStickyPrice'); if (sp) sp.innerHTML = 'konfiguriert · <b>' + t + '</b>';
+    var sp = $('bStickyPrice'); if (sp) sp.innerHTML = (state.finish ? 'konfiguriert · ' : 'ab ') + '<b>' + t + '</b>';
 
     setTxt('pdpFinishName', state.finish || 'Bitte Farbe wählen');
     setTxt('bArticleInline', state.article || '—');
     var sf = $('pdpStickyFinish'); if (sf) sf.textContent = state.finish || 'Farbe wählen';
+
+    /* "Preis wie konfiguriert" wording appears only after a colour is chosen;
+       before that, the price reads "ab 699,00 €" (starting-at) */
+    document.querySelectorAll('.cfgb-price__label, .sheet__pricelabel').forEach(function (el) { el.hidden = !state.finish; });
+    document.querySelectorAll('#bTotalFrom, #bSheetFrom').forEach(function (el) { el.hidden = !!state.finish; });
 
     /* before a colour is chosen: CTA prompts for the colour, and the price section
        shows only the price block (the Preisdetails/Menge bar stays hidden) */
