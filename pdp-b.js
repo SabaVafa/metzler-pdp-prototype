@@ -436,18 +436,12 @@
     sw.addEventListener('focusout', restoreName);
   }
 
-  /* ── Wunschfarbe: inline RAL picker — collapsed by default; trigger reveals a
-     searchable palette with an in-search-bar filter dropdown; live preview ── */
+  /* ── Wunschfarbe: inline RAL picker — search field + palette, shown when
+     Wunschfarbe is chosen (search by code or name); live preview ── */
   function setupRalPicker() {
-    var panel = $('ralPick'), grid = $('ralGrid'), search = $('ralSearch'), clearBtn = $('ralClear'),
-        empty = $('ralEmpty'), trigger = $('ralTrigger'), body = $('ralBody'),
-        swEl = $('ralTriggerSw'), swImg = swEl ? swEl.querySelector('img') : null,
-        labelEl = $('ralTriggerLabel'), subEl = $('ralTriggerSub'),
-        filterBtn = $('ralFilterBtn'), filterLabel = $('ralFilterLabel'), menu = $('ralFilterMenu');
+    var panel = $('ralPick'), grid = $('ralGrid'), search = $('ralSearch'), clearBtn = $('ralClear'), empty = $('ralEmpty');
     if (!panel || !grid) return;
-    var curFam = 'all', curQ = '';
-    var SUB_DEFAULT = 'Aus 216 RAL-Classic-Tönen — durchsuchbar nach Code oder Name';
-    var FAMLABEL = { all: 'Filtern', '1': 'Gelb', '2': 'Orange', '3': 'Rot', '4': 'Violett', '5': 'Blau', '6': 'Grün', '7': 'Grau', '8': 'Braun', '9': 'Weiß/Schwarz' };
+    var curQ = '';
 
     grid.innerHTML = RAL.map(function (c) {
       return '<button type="button" class="ral-chip" role="option" aria-selected="false" data-code="' + c.code + '" data-fam="' + c.fam + '"'
@@ -460,72 +454,37 @@
     function applyFilter() {
       var q = curQ.trim().toLowerCase(), shown = 0;
       chips.forEach(function (ch) {
-        var code = ch.getAttribute('data-code'), fam = ch.getAttribute('data-fam');
+        var code = ch.getAttribute('data-code');
         var name = byCode[code] ? byCode[code].name.toLowerCase() : '';
-        var okFam = curFam === 'all' || fam === curFam;
-        var okQ = !q || code.indexOf(q) > -1 || name.indexOf(q) > -1 || ('ral ' + code).indexOf(q) > -1;
-        var vis = okFam && okQ; ch.style.display = vis ? '' : 'none'; if (vis) shown++;
+        var vis = !q || code.indexOf(q) > -1 || name.indexOf(q) > -1 || ('ral ' + code).indexOf(q) > -1;
+        ch.style.display = vis ? '' : 'none'; if (vis) shown++;
       });
       if (empty) empty.hidden = shown > 0;
     }
-    /* reflect the chosen RAL on the collapsed trigger (swatch + name) and in the grid */
+    /* highlight the chosen RAL in the grid (the selection is also mirrored in the
+       "Farbe — …" label + price above) */
     function sync() {
       chips.forEach(function (ch) {
         var on = !!(state.ral && ch.getAttribute('data-code') === state.ral.code);
         ch.classList.toggle('is-selected', on); ch.setAttribute('aria-selected', on ? 'true' : 'false');
       });
-      if (state.ral) {
-        if (swImg) swImg.style.display = 'none';
-        if (swEl) swEl.style.background = state.ral.hex;
-        if (labelEl) labelEl.textContent = 'RAL ' + state.ral.code + ' · ' + state.ral.name;
-        if (subEl) subEl.textContent = 'Ausgewählt — tippen zum Ändern';
-      } else {
-        if (swImg) swImg.style.display = '';
-        if (swEl) swEl.style.background = '';
-        if (labelEl) labelEl.textContent = 'RAL-Wunschfarbe wählen';
-        if (subEl) subEl.textContent = SUB_DEFAULT;
-      }
     }
-    function closeMenu() { if (menu) menu.hidden = true; if (filterBtn) filterBtn.setAttribute('aria-expanded', 'false'); }
-    function expand() { panel.classList.add('is-expanded'); if (trigger) trigger.setAttribute('aria-expanded', 'true'); trigger.classList.remove('is-hint'); applyFilter(); }
-    function collapse() { panel.classList.remove('is-expanded'); if (trigger) trigger.setAttribute('aria-expanded', 'false'); closeMenu(); }
 
-    if (trigger) trigger.addEventListener('click', function () {
-      if (panel.classList.contains('is-expanded')) { collapse(); }
-      else { expand(); if (search) window.setTimeout(function () { search.focus(); }, 60); }
-    });
     if (search) search.addEventListener('input', function () { curQ = this.value; if (clearBtn) clearBtn.hidden = !this.value; applyFilter(); });
     if (clearBtn) clearBtn.addEventListener('click', function () { search.value = ''; curQ = ''; this.hidden = true; applyFilter(); search.focus(); });
-
-    /* filter link → toggle the colour-group menu */
-    if (filterBtn) filterBtn.addEventListener('click', function (e) {
-      e.stopPropagation();
-      var openNow = menu.hidden; menu.hidden = !openNow; filterBtn.setAttribute('aria-expanded', openNow ? 'true' : 'false');
-    });
-    if (menu) menu.addEventListener('click', function (e) {
-      var b = e.target.closest('button[data-fam]'); if (!b) return;
-      curFam = b.getAttribute('data-fam');
-      menu.querySelectorAll('button').forEach(function (x) { var on = x === b; x.classList.toggle('is-active', on); x.setAttribute('aria-checked', on ? 'true' : 'false'); });
-      if (filterLabel) filterLabel.textContent = FAMLABEL[curFam] || 'Filtern';
-      closeMenu(); applyFilter();
-    });
-    /* dismiss the menu on outside click / Escape */
-    document.addEventListener('click', function (e) { if (menu && !menu.hidden && !e.target.closest('.ralpick__filter')) closeMenu(); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
 
     grid.addEventListener('click', function (e) {
       var b = e.target.closest('.ral-chip'); if (!b) return;
       var c = byCode[b.getAttribute('data-code')]; if (!c) return;
       state.ral = { code: c.code, name: c.name, hex: c.hex };
       panel.classList.remove('is-invalid');
-      collapse();          /* resolve → collapse back to the summary trigger */
       refresh();
     });
 
     ralUI = {
-      open: function () { panel.classList.add('is-shown'); collapse(); sync(); if (!state.ral && trigger) { trigger.classList.remove('is-hint'); void trigger.offsetWidth; trigger.classList.add('is-hint'); } },
-      close: function () { panel.classList.remove('is-shown', 'is-expanded'); closeMenu(); },
-      flash: function () { expand(); panel.classList.remove('is-invalid'); void panel.offsetWidth; panel.classList.add('is-invalid'); },
+      open: function () { panel.classList.add('is-shown'); applyFilter(); sync(); },
+      close: function () { panel.classList.remove('is-shown'); },
+      flash: function () { panel.classList.remove('is-invalid'); void panel.offsetWidth; panel.classList.add('is-invalid'); },
       sync: sync
     };
   }

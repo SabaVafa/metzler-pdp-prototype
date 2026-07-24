@@ -239,39 +239,16 @@
    only appears once a Wunschfarbe RAL tone is picked (not for standard finishes) */
 .bx-color__dot[hidden] { display: none; }
 
-/* ── WUNSCHFARBE · inline RAL picker ── */
-.ralpick { display: none; flex-direction: column; gap: 0.85rem; margin-top: 0.1rem;
-  padding: 1rem; border: 1px solid var(--color-graphite-200); border-radius: var(--radius-lg);
-  background: var(--color-paper); }
-.ralpick.is-shown { display: flex; animation: ralpick-in .22s ease; }
+/* ── WUNSCHFARBE · inline RAL picker — search + palette, shown when Wunschfarbe is chosen ── */
+.ralpick { display: none; margin-top: 0.1rem; }
+.ralpick.is-shown { display: block; animation: ralpick-in .22s ease; }
 @keyframes ralpick-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
-.ralpick.is-invalid .ralpick__trigger { animation: ralpick-shake .4s ease; }
+.ralpick.is-invalid .ralpick__body { animation: ralpick-shake .4s ease; }
 @keyframes ralpick-shake { 0%,100%{transform:none} 20%{transform:translateX(-5px)} 40%{transform:translateX(5px)} 60%{transform:translateX(-3px)} 80%{transform:translateX(3px)} }
 
-/* +49 surcharge — plain black text, no frame */
-.ralpick__fee { font-size: 0.8125rem; font-weight: 700; color: var(--color-digital-black); }
-
-/* collapsed trigger — the always-visible affordance that the palette is available */
-.ralpick__trigger { display: flex; align-items: center; gap: 0.8rem; width: 100%; text-align: left;
-  padding: 0.7rem 0.85rem; font: inherit; cursor: pointer;
-  background: var(--color-white); border: 1px solid var(--color-graphite-300); border-radius: var(--radius);
-  transition: border-color .12s; }
-.ralpick__trigger:hover { border-color: var(--color-teal); }
-.ralpick__trigger:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
-.ralpick__trigger.is-hint { animation: ral-hint 1.6s ease; }
-@keyframes ral-hint { 0%,100%{box-shadow:0 0 0 0 rgba(1,82,83,0)} 30%{box-shadow:0 0 0 4px rgba(1,82,83,0.18)} 70%{box-shadow:0 0 0 0 rgba(1,82,83,0)} }
-.ralpick__trigger-sw { flex: none; width: 2.4rem; height: 2.4rem; border-radius: 50%; overflow: hidden;
-  border: 1px solid rgba(0,0,0,0.12); background-size: cover; background-position: center; }
-.ralpick__trigger-sw img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.ralpick__trigger-txt { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; flex: 1 1 auto; }
-.ralpick__trigger-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9375rem; font-weight: 700; color: var(--color-digital-black); }
-.ralpick__trigger-sub { font-size: 0.8125rem; color: var(--color-graphite-600); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ralpick__trigger-chev { flex: none; width: 1.2rem; height: 1.2rem; color: var(--color-graphite-500); transition: transform .2s ease; }
-.ralpick.is-expanded .ralpick__trigger-chev { transform: rotate(180deg); }
-
-/* collapsible body */
-.ralpick__body { display: none; flex-direction: column; gap: 0.85rem; }
-.ralpick.is-expanded .ralpick__body { display: flex; animation: ralpick-in .2s ease; }
+/* the search + grid live inside a framed panel; the search field is the main control */
+.ralpick__body { display: flex; flex-direction: column; gap: 0.85rem;
+  padding: 0.9rem; border: 1px solid var(--color-graphite-200); border-radius: var(--radius-lg); background: var(--color-paper); }
 
 /* search bar — one box holding icon · input · clear · filter link */
 .ralpick__search { position: relative; display: flex; align-items: center; gap: 0.4rem; height: 2.85rem;
@@ -283,26 +260,9 @@
   font: inherit; font-size: 0.9375rem; color: var(--color-digital-black); padding: 0; }
 .ralpick__input::-webkit-search-cancel-button { display: none; }
 .ralpick__clear { flex: none; display: grid; place-items: center; width: 1.5rem; height: 1.5rem;
-  border: 0; border-radius: 50%; background: var(--color-graphite-200); color: var(--color-graphite-700); cursor: pointer; }
-.ralpick__clear:hover { background: var(--color-graphite-300); }
-.ralpick__clear svg { width: 0.72rem; height: 0.72rem; }
-
-/* filter — a link inside the search bar; opens a dropdown to narrow by colour group */
-.ralpick__filter { position: relative; flex: none; }
-.ralpick__filterlink { display: inline-flex; align-items: center; gap: 0.25rem; cursor: pointer;
-  border: 0; border-left: 1px solid var(--color-graphite-200); background: none;
-  padding: 0.25rem 0.1rem 0.25rem 0.6rem; font: inherit; font-size: 0.8125rem; font-weight: 600; color: var(--color-teal); }
-.ralpick__filterlink:hover { color: var(--color-teal-hover); }
-.ralpick__filterlink > span { text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
-.ralpick__filterlink svg { width: 0.9rem; height: 0.9rem; transition: transform .18s ease; }
-.ralpick__filterlink[aria-expanded="true"] svg { transform: rotate(180deg); }
-.ralpick__menu { position: absolute; top: calc(100% + 0.45rem); right: 0; z-index: 30; min-width: 11.5rem;
-  display: flex; flex-direction: column; padding: 0.3rem; background: var(--color-white);
-  border: 1px solid var(--color-graphite-200); border-radius: var(--radius); box-shadow: 0 8px 22px rgba(26,23,27,0.16); }
-.ralpick__menu button { text-align: left; border: 0; background: none; cursor: pointer; padding: 0.5rem 0.6rem;
-  border-radius: var(--radius); font: inherit; font-size: 0.875rem; color: var(--color-digital-black); }
-.ralpick__menu button:hover { background: var(--color-teal-50); }
-.ralpick__menu button.is-active { color: var(--color-teal); font-weight: 700; background: var(--color-teal-50); }
+  border: 0; background: none; color: var(--color-graphite-500); cursor: pointer; }
+.ralpick__clear:hover { color: var(--color-graphite-700); }
+.ralpick__clear svg { width: 0.8rem; height: 0.8rem; }
 
 .ralpick__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); gap: 0.5rem;
   max-height: 17.5rem; overflow-y: auto; padding: 0.3rem; margin: -0.3rem; }
