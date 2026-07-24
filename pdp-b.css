@@ -259,20 +259,20 @@
 .ralpick__input { flex: 1 1 auto; min-width: 0; height: 100%; border: 0; background: none; outline: none;
   font: inherit; font-size: 0.9375rem; color: var(--color-digital-black); padding: 0; }
 .ralpick__input::-webkit-search-cancel-button { display: none; }
-.ralpick__clear { flex: none; display: grid; place-items: center; width: 1.5rem; height: 1.5rem;
+.ralpick__clear { flex: none; display: grid; place-items: center; width: 2rem; height: 2rem;
   border: 0; background: none; color: var(--color-graphite-500); cursor: pointer; }
 .ralpick__clear:hover { color: var(--color-graphite-700); }
-.ralpick__clear svg { width: 0.8rem; height: 0.8rem; }
+.ralpick__clear svg { width: 1.4rem; height: 1.4rem; }
 
 .ralpick__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); gap: 0.5rem;
-  max-height: 17.5rem; overflow-y: auto; padding: 0.3rem; margin: -0.3rem; }
+  max-height: 17.5rem; overflow-y: auto; }
 .ral-chip { position: relative; display: flex; flex-direction: column; justify-content: flex-end; gap: 0.1rem;
   height: 4.2rem; padding: 0.4rem 0.5rem; text-align: left; cursor: pointer;
   border: 1px solid rgba(0,0,0,0.12); border-radius: var(--radius); overflow: hidden; }
 .ral-chip:hover { border-color: rgba(0,0,0,0.28); }
-.ral-chip:focus-visible { outline: none; box-shadow: inset 0 0 0 3px var(--color-teal); }
-/* selection: an inset ring — stays inside the tile, no layout shift, no clipping by the scroll box */
-.ral-chip.is-selected { box-shadow: inset 0 0 0 3px var(--color-teal); border-color: var(--color-teal); }
+.ral-chip:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--color-teal); }
+/* selection: a thin inset ring — stays inside the tile, no layout shift, no clipping by the scroll box */
+.ral-chip.is-selected { box-shadow: inset 0 0 0 2px var(--color-teal); border-color: var(--color-teal); }
 .ral-chip__code { font-size: 0.75rem; font-weight: 700; line-height: 1.1; }
 .ral-chip__name { font-size: 0.625rem; line-height: 1.15; opacity: 0.92; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
 
