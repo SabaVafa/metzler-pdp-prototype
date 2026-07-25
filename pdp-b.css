@@ -570,20 +570,6 @@
 
   /* ── SPEC LABELS → nudged off 10px for comfortable legibility ── */
   .pdp-b .pdp-specs__label { font-size: 0.8125rem; }
-
-  /* ── FIX (mobile only): sticky purchase bar — the product name was being crushed
-     to ~11px between the Details + CTA buttons (rendered as just "M"). Drop the name
-     block and let the CTA fill the row → clean [Details] [In den Warenkorb] bar. ── */
-  .pdp-stickybar__info { display: none; }
-  .pdp-stickybar__details { margin-left: 0; }
-  #pdpStickyBar .pdp-stickybar__cta { flex: 1 1 auto; margin-left: 0.6rem; justify-content: center; }
-
-  /* ── FIX (mobile only): Preisdetails sheet foot — price + CTA didn't fit on one
-     row, so "In den Warenkorb" overflowed off the right edge. Stack them: price on
-     top, full-width CTA below. ── */
-  .sheet__foot { flex-direction: column; align-items: stretch; gap: 0.75rem; }
-  .sheet__price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.15rem 0.5rem; }
-  #bSheetCart { width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -616,8 +602,9 @@
    swatch via JS (hover isn't available on touch to reveal names). Swipe to browse
    the colour names, tap to select. */
 .swtouch .bx-swatches { display: flex; grid-template-columns: none; flex-wrap: nowrap;
-  overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
-  gap: 0.7rem; padding: 0.2rem 40% 0.5rem; scroll-padding: 0 40%; }
+  overflow-x: auto; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
+  gap: 0.7rem; padding: 0.2rem 0.75rem 0.5rem; scroll-padding: 0 0.75rem; }
+.swtouch .bx-swatches .pdp-swatch { scroll-snap-align: start; }
 .swtouch .bx-swatches::-webkit-scrollbar { display: none; }
 .swtouch .bx-swatches .pdp-swatch { flex: 0 0 5rem; scroll-snap-align: center; }
 
@@ -2006,4 +1993,57 @@ html { scroll-behavior: smooth; }
   .psx-anim { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
   .psx-anim.is-in { opacity: 1; transform: none; }
   .psx-parallax { will-change: transform; }
+}
+
+/* ==========================================================================
+   LARGE-PHONE PASS (≤ 767px) — the base mobile breakpoint (560px) is too low
+   for wide phones (~561–767px), where several components fall into a cramped
+   in-between layout. Realign them to the mobile treatment. Desktop / tablet
+   ≥ 768px is untouched.
+   ========================================================================== */
+@media (max-width: 47.9375rem) {
+
+  /* 1 · Config option cards → single-column rows (not cramped 2-col tiles) */
+  .cfgb .cfg-opts { grid-template-columns: 1fr; gap: 0.5rem; }
+  .cfgb .cfg-opts .cfg-opt { flex-direction: row; align-items: center; gap: 0.8rem; padding: 0.65rem 0.75rem; text-align: left; }
+  .cfgb .cfg-opts .cfg-opt__thumb { width: 3.25rem; height: 3.25rem; flex: none; border-radius: var(--radius); }
+  .cfgb .cfg-opts .cfg-opt__body { flex: 1 1 auto; min-width: 0; padding-right: 0; }
+  .cfgb .cfg-opts .cfg-opt__desc { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .cfgb .cfg-opts .cfg-opt__price { margin: 0 0 0 auto; align-self: center; padding-top: 0; text-align: right; white-space: nowrap; }
+  .cfgb .cfg-opts .cfg-opt__mark { display: none; }
+  .cfgb .cfg-opts .cfg-opt__rec { position: static; margin: 0 0 0 auto; align-self: center; }
+
+  /* 2 · Trust badges → single column so "10 Jahre Metzler Garantie" stops wrapping to 3 lines */
+  .pdp-b .hl__badges, .pdp-b .hl__badges--infeat { display: flex; flex-direction: column; align-items: stretch; gap: 0.5rem; }
+  .pdp-b .hl__badges--infeat .hl__badge { justify-content: flex-start; }
+  .pdp-b .hl__badges .hl__badge + .hl__badge,
+  .pdp-b .hl__badges--infeat .hl__badge + .hl__badge { border-left: 0; border-top: 0; }
+
+  /* 3 · Spec table (Datenblatt) → stacked, with the value pills flush-left under the
+     section title (they were indented by the key column) */
+  .dspec__row { grid-template-columns: 1fr; }
+  .dspec__key { border-right: 0; }
+  .dspec__val { padding-top: 0.15rem; padding-left: 1.15rem; }
+
+  /* 4 · Delivery table → let the value wrap cleanly (key stays a fixed narrow column) */
+  .bx-delivery__row { grid-template-columns: 6.5rem 1fr; }
+  .bx-delivery__key { padding: 0.7rem 0.6rem 0.7rem 0.75rem; }
+  .bx-delivery__val { padding: 0.7rem 0.75rem 0.7rem 0.6rem; }
+
+  /* 5 · Preisdetails sheet foot → stack price above a full-width CTA */
+  .sheet__foot { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+  .sheet__price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.15rem 0.5rem; }
+  #bSheetCart { width: 100%; }
+
+  /* 6 · Sticky purchase bar → chevron handle centred on top (opens the price sheet),
+     product title + price on the next row, CTA sized to fit beside them */
+  #pdpStickyBar .pdp-stickybar__inner { flex-wrap: wrap; align-items: center; column-gap: 0.6rem; row-gap: 0.15rem; padding-top: 0.15rem; padding-bottom: 0.5rem; }
+  .pdp-stickybar__details { order: -1; flex: 1 1 100%; justify-content: center; min-height: 0; height: auto; margin: 0; padding: 0.1rem 0; border: 0; background: none; }
+  .pdp-stickybar__details > span { display: none; }
+  .pdp-stickybar__details svg { width: 1.5rem; height: 1.5rem; color: var(--color-graphite-400); }
+  .pdp-stickybar__details:hover { border: 0; color: var(--color-graphite-600); }
+  .pdp-stickybar__info { display: flex; flex: 1 1 auto; min-width: 0; }
+  .pdp-stickybar__name { max-width: none; }
+  .pdp-stickybar__price { display: block; }
+  #pdpStickyBar .pdp-stickybar__cta { flex: 0 0 auto; margin-left: auto; padding: 0 1.1rem; }
 }
