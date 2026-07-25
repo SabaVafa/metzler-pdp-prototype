@@ -570,6 +570,20 @@
 
   /* ── SPEC LABELS → nudged off 10px for comfortable legibility ── */
   .pdp-b .pdp-specs__label { font-size: 0.8125rem; }
+
+  /* ── FIX (mobile only): sticky purchase bar — the product name was being crushed
+     to ~11px between the Details + CTA buttons (rendered as just "M"). Drop the name
+     block and let the CTA fill the row → clean [Details] [In den Warenkorb] bar. ── */
+  .pdp-stickybar__info { display: none; }
+  .pdp-stickybar__details { margin-left: 0; }
+  #pdpStickyBar .pdp-stickybar__cta { flex: 1 1 auto; margin-left: 0.6rem; justify-content: center; }
+
+  /* ── FIX (mobile only): Preisdetails sheet foot — price + CTA didn't fit on one
+     row, so "In den Warenkorb" overflowed off the right edge. Stack them: price on
+     top, full-width CTA below. ── */
+  .sheet__foot { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+  .sheet__price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.15rem 0.5rem; }
+  #bSheetCart { width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
