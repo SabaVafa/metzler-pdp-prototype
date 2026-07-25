@@ -2047,3 +2047,11 @@ html { scroll-behavior: smooth; }
   .pdp-stickybar__price { display: block; }
   #pdpStickyBar .pdp-stickybar__cta { flex: 0 0 auto; margin-left: auto; padding: 0 1.1rem; }
 }
+
+/* Technik tab rail on mobile: wrap the tabs instead of horizontally scrolling,
+   so every label shows fully (no tab clipped at the right edge). Desktop's
+   vertical sidebar (≥ 56rem) is unaffected. */
+@media (max-width: 55.9375rem) {
+  .techms__rail { flex-wrap: wrap; overflow-x: visible; }
+  .techms__tab { flex: 1 1 auto; justify-content: center; white-space: normal; }
+}
