@@ -2013,19 +2013,28 @@ html { scroll-behavior: smooth; }
   .cfgb .cfg-opts .cfg-opt__mark { display: none; }
   .cfgb .cfg-opts .cfg-opt__rec { position: static; margin: 0 0 0 auto; align-self: center; }
 
-  /* 2 · Trust badges → single column so "10 Jahre Metzler Garantie" stops wrapping to 3 lines.
-     Centre the content and give every badge the same frame (equal width + height). */
-  .pdp-b .hl__badges, .pdp-b .hl__badges--infeat { display: flex; flex-direction: column; align-items: stretch; gap: 0.5rem; }
+  /* 2 · Trust badges → keep both in ONE row with identical frames (equal width +
+     height), content centred. Stop the pre-line wrapping so "Garantie" never
+     spills to a 3rd line; shrink the seal a touch so it all fits on wide phones. */
+  .pdp-b .hl__badges, .pdp-b .hl__badges--infeat { display: flex; flex-direction: row; align-items: stretch; gap: 0.5rem; }
   .pdp-b .hl__badges .hl__badge,
-  .pdp-b .hl__badges--infeat .hl__badge { justify-content: center; min-height: 4.25rem; }
+  .pdp-b .hl__badges--infeat .hl__badge { flex: 1 1 0; min-width: 0; justify-content: center; gap: 0.5rem; padding: 0.55rem 0.4rem; }
   .pdp-b .hl__badges .hl__badge + .hl__badge,
-  .pdp-b .hl__badges--infeat .hl__badge + .hl__badge { border-left: 0; border-top: 0; }
+  .pdp-b .hl__badges--infeat .hl__badge + .hl__badge { border-left: 1px solid var(--color-graphite-300); border-top: 0; }
+  .pdp-b .hl__badge-pre { white-space: nowrap; font-size: 0.72rem; }
+  .pdp-b .hl__badge-txt b { font-size: 0.85rem; }
+  .pdp-b .hl__badge-seal { width: 32px; height: 32px; }
+  .pdp-b .hl__badge-seal--flag { width: 26px; height: 17px; }
 
-  /* 3 · Spec table (Datenblatt) → stacked, with the value pills flush-left under the
-     section title (they were indented by the key column) */
-  .dspec__row { grid-template-columns: 1fr; }
+  /* 3 · Spec table (Datenblatt) → block rows so the value pills sit flush-left,
+     perfectly aligned under each section title (grid was offsetting the value cell) */
+  .dspec__row { display: block; }
   .dspec__key { border-right: 0; }
-  .dspec__val { padding-top: 0.15rem; padding-left: 1.15rem; }
+  .dspec__val { padding-top: 0.15rem; margin-left: 0; }   /* kill the 40px indent so pills align under the title */
+  /* manufacturer / safety footer → clean vertical stack (was cluttered: address
+     wrapping with the safety button floated off to the right) */
+  .dspec__mfr { flex-direction: column; align-items: flex-start; gap: 0.7rem; }
+  .dspec__safety { margin-left: 0; }
 
   /* 4 · Delivery table → let the value wrap cleanly (key stays a fixed narrow column) */
   .bx-delivery__row { grid-template-columns: 8.5rem 1fr; }
@@ -2044,16 +2053,16 @@ html { scroll-behavior: smooth; }
   .pdp-stickybar__details > span { display: none; }
   .pdp-stickybar__details svg { width: 1.5rem; height: 1.5rem; color: var(--color-graphite-400); }
   .pdp-stickybar__details:hover { border: 0; color: var(--color-graphite-600); }
-  .pdp-stickybar__info { display: flex; flex: 1 1 auto; min-width: 0; }
-  .pdp-stickybar__name { max-width: none; }
+  .pdp-stickybar__info { display: flex; flex: 1 1 auto; min-width: 0; overflow: hidden; }
+  .pdp-stickybar__name { max-width: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .pdp-stickybar__price { display: block; }
   #pdpStickyBar .pdp-stickybar__cta { flex: 0 0 auto; margin-left: auto; padding: 0 1.1rem; }
 }
 
-/* Technik tab rail on mobile: wrap the tabs instead of horizontally scrolling,
-   so every label shows fully (no tab clipped at the right edge). Desktop's
-   vertical sidebar (≥ 56rem) is unaffected. */
+/* Technik rail on mobile: collapse the sidebar into a clean full-width vertical
+   list (same pattern as the desktop sidebar) — every option on its own aligned
+   row, nothing clipped or fragmented. Desktop sidebar (≥ 56rem) is unaffected. */
 @media (max-width: 55.9375rem) {
-  .techms__rail { flex-wrap: wrap; overflow-x: visible; }
-  .techms__tab { flex: 1 1 auto; justify-content: center; white-space: normal; }
+  .techms__rail { flex-direction: column; overflow-x: visible; gap: 0.15rem; }
+  .techms__tab { flex: none; width: 100%; justify-content: flex-start; white-space: normal; }
 }
