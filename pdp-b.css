@@ -2013,9 +2013,11 @@ html { scroll-behavior: smooth; }
   .cfgb .cfg-opts .cfg-opt__mark { display: none; }
   .cfgb .cfg-opts .cfg-opt__rec { position: static; margin: 0 0 0 auto; align-self: center; }
 
-  /* 2 · Trust badges → single column so "10 Jahre Metzler Garantie" stops wrapping to 3 lines */
+  /* 2 · Trust badges → single column so "10 Jahre Metzler Garantie" stops wrapping to 3 lines.
+     Centre the content and give every badge the same frame (equal width + height). */
   .pdp-b .hl__badges, .pdp-b .hl__badges--infeat { display: flex; flex-direction: column; align-items: stretch; gap: 0.5rem; }
-  .pdp-b .hl__badges--infeat .hl__badge { justify-content: flex-start; }
+  .pdp-b .hl__badges .hl__badge,
+  .pdp-b .hl__badges--infeat .hl__badge { justify-content: center; min-height: 4.25rem; }
   .pdp-b .hl__badges .hl__badge + .hl__badge,
   .pdp-b .hl__badges--infeat .hl__badge + .hl__badge { border-left: 0; border-top: 0; }
 
@@ -2026,7 +2028,7 @@ html { scroll-behavior: smooth; }
   .dspec__val { padding-top: 0.15rem; padding-left: 1.15rem; }
 
   /* 4 · Delivery table → let the value wrap cleanly (key stays a fixed narrow column) */
-  .bx-delivery__row { grid-template-columns: 6.5rem 1fr; }
+  .bx-delivery__row { grid-template-columns: 8.5rem 1fr; }
   .bx-delivery__key { padding: 0.7rem 0.6rem 0.7rem 0.75rem; }
   .bx-delivery__val { padding: 0.7rem 0.75rem 0.7rem 0.6rem; }
 
