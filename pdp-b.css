@@ -668,6 +668,10 @@
 .sheet__head, .sheet .cfgb-summary, .sheet__foot { width: 100%; max-width: 64rem; margin-left: auto; margin-right: auto; }
 /* hide the sticky purchase bar while the drawer is open (no duplicate price + CTA) */
 body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
+/* Keyboard open (a config text field is focused): hide the fixed sticky purchase bar.
+   iOS repositions position:fixed elements when the on-screen keyboard shows, which
+   otherwise floats the bar into the middle of the screen over the config content. */
+body.kbd-open .pdp-stickybar { display: none !important; }
 
 /* ── Sticky progress bar: cover the bleed gap above when stuck ── */
 .cfgb-sentinel { display: block; height: 0; }

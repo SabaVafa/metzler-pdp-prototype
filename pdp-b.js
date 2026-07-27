@@ -923,6 +923,19 @@
     syncStickyBar();
   }
 
+  /* Mobile: while a config text field is focused the on-screen keyboard makes iOS
+     reposition the fixed sticky purchase bar over the content — hide it until blur. */
+  (function () {
+    var cfgPanel = document.getElementById('cfgbPanel');
+    if (!cfgPanel || !document.body.classList.contains('swtouch')) return;
+    cfgPanel.addEventListener('focusin', function (e) {
+      if (e.target && e.target.matches && e.target.matches('input, textarea')) document.body.classList.add('kbd-open');
+    });
+    cfgPanel.addEventListener('focusout', function (e) {
+      if (e.target && e.target.matches && e.target.matches('input, textarea')) document.body.classList.remove('kbd-open');
+    });
+  })();
+
   /* ── Bottom-up price sheet (accessible page-wide) ── */
   var sheet = $('bSheet');
   function openSheet() { if (!sheet) return; renderSummary(); sheet.classList.add('is-open'); sheet.setAttribute('aria-hidden', 'false'); document.body.classList.add('cfg-sheet-open'); }
