@@ -2119,8 +2119,8 @@ body.is-scrolled #quickbar {
     margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--color-graphite-200); }
   .dspec__mfr > svg { flex: none; width: 0.95rem; height: 0.95rem; margin-top: 0.2rem; }
   .dspec__mfr > span { flex: 1 1 12rem; min-width: 0; }
-  .dspec__safety { flex: 1 0 100%; width: 100%; justify-content: center; margin: 0.75rem 0 0;
-    padding: 0.55rem 0.9rem; background: var(--color-red-50); }
+  .dspec__safety { order: -1; flex: 1 0 100%; width: 100%; justify-content: center; margin: 0 0 0.85rem;
+    padding: 0.55rem 0.9rem; background: var(--color-red-50); }   /* banner on top, manufacturer address below it */
 
   /* 4 · Delivery table → let the value wrap cleanly (key stays a fixed narrow column) */
   .bx-delivery__row { grid-template-columns: 8.5rem 1fr; }
