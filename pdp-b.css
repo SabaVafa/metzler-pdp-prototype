@@ -601,12 +601,20 @@
    Snap-scroller with a live caption: the "Ausführung — …" header follows the centred
    swatch via JS (hover isn't available on touch to reveal names). Swipe to browse
    the colour names, tap to select. */
-.swtouch .bx-swatches { display: flex; grid-template-columns: none; flex-wrap: nowrap;
+.swtouch .bx-swatches { display: flex; grid-template-columns: none; flex-wrap: nowrap; align-items: center;
   overflow-x: auto; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
-  gap: 0.7rem; padding: 0.2rem 0.75rem 0.5rem; scroll-padding: 0 0.75rem; }
-.swtouch .bx-swatches .pdp-swatch { scroll-snap-align: start; }
+  gap: 0.7rem; padding: 0.55rem 0.75rem; scroll-padding: 0 0.75rem; }
 .swtouch .bx-swatches::-webkit-scrollbar { display: none; }
-.swtouch .bx-swatches .pdp-swatch { flex: 0 0 5rem; scroll-snap-align: center; }
+.swtouch .bx-swatches .pdp-swatch { flex: 0 0 5rem; scroll-snap-align: center; justify-content: center; }
+/* Symmetric slots above and below each swatch keep the image vertically centred in
+   the row (content aligned above and below). The TOP slot turns into a short teal
+   line on the swatch currently centred in the strip — the one whose colour name has
+   just appeared in the "Farbe — …" caption — as a clue while sliding through them. */
+.swtouch .bx-swatches .pdp-swatch::before,
+.swtouch .bx-swatches .pdp-swatch::after {
+  content: ""; display: block; flex: none; height: 2px; width: 1.6rem; border-radius: 2px;
+  background: transparent; transition: background .18s ease; }
+.swtouch .bx-swatches .pdp-swatch.is-cur::before { background: var(--color-teal); }
 
 /* ── Preisdetails trigger (buy block) ── */
 .cfgb-detailsbtn { display: flex; align-items: center; gap: 0.6rem; width: 100%; padding: 0.75rem 0.9rem;

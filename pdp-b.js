@@ -519,6 +519,7 @@
           var r = b.getBoundingClientRect(), d = Math.abs((r.left + r.width / 2) - mid);
           if (d < best) { best = d; near = b; }
         });
+        sw.querySelectorAll('.pdp-swatch').forEach(function (b) { b.classList.toggle('is-cur', b === near); });
         if (near) setTxt('pdpFinishName', near.getAttribute('data-finish'));
       };
       sw.addEventListener('scroll', caption, { passive: true });
