@@ -816,7 +816,14 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
    place, one open at a time) and hides the wizard chrome (horizontal progress dock +
    Weiter/Zurück). Desktop keeps the wizard — untouched. ── */
 @media (max-width: 48rem) {
-  .pdp-b .cfgb .cfgb-dock { display: none; }
+  /* configuration progress bar — a compact step ribbon at the top of the config
+     (numbered steps, completed = filled, current = highlighted). In-flow, not
+     fixed (JS keeps it static on mobile). */
+  .pdp-b .cfgb .cfgb-dock { display: flex; position: static; z-index: auto;
+    padding: 0.9rem 1rem 1rem; background: none; border-bottom: 0; box-shadow: none; }
+  .pdp-b .cfgb .cfgb-dock.is-fixed, .pdp-b .cfgb .cfgb-dock.is-stuck { position: static; box-shadow: none; }
+  .pdp-b .cfgb .cfgb-dock .cfgb-bar__track { margin: 0; }   /* no edge-bleed on mobile */
+  .pdp-b .cfgb .cfgb-dock__title { justify-content: flex-start; margin-top: 0.6rem; }
   .pdp-b .cfgb .cfgb-nav { display: none; }
   .pdp-b .cfgb .cfgb-stage { padding: 0; }
   .pdp-b .cfgb .stepr { gap: 0.6rem; }

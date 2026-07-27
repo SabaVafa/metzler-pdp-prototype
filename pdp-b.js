@@ -642,7 +642,16 @@
       if (sec) { map[id] = l; secs.push(sec); }
     });
     if (!secs.length || !('IntersectionObserver' in window)) return;
-    function setActive(l) { links.forEach(function (x) { x.classList.toggle('is-active', x === l); }); }
+    var scroller = nav.querySelector('.psx-nav__inner') || nav;
+    function setActive(l) {
+      links.forEach(function (x) { x.classList.toggle('is-active', x === l); });
+      /* auto-slide the horizontal nav so the current section's tab is in view
+         (only when the nav actually overflows — i.e. mobile; desktop fits, no-op) */
+      if (!l || scroller.scrollWidth <= scroller.clientWidth + 2) return;
+      var sr = scroller.getBoundingClientRect(), lr = l.getBoundingClientRect();
+      var delta = (lr.left - sr.left) - (sr.width - lr.width) / 2;
+      if (Math.abs(delta) > 4) scroller.scrollBy({ left: delta, behavior: 'smooth' });
+    }
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { if (e.isIntersecting && map[e.target.id]) setActive(map[e.target.id]); });
     }, { rootMargin: '-118px 0px -66% 0px', threshold: 0 });
@@ -932,15 +941,12 @@
     var dockStuck = function () {
       var pin = headerEl ? Math.round(headerEl.getBoundingClientRect().height) : 104;
       if (dockEl.style.top !== pin + 'px') dockEl.style.top = pin + 'px';
-      if (mqMobile.matches && sentinelEl) {
-        /* Mobile: detach the ribbon as a full-width bar fixed below the header so
-           it persists across the WHOLE page (sticky is bounded by .cfgb). The
-           in-flow sentinel is the scroll reference; grow it to the dock's height
-           so the content below doesn't jump when the dock leaves the flow. */
-        var stuck = sentinelEl.getBoundingClientRect().top <= pin + 1;
-        dockEl.classList.toggle('is-stuck', stuck);
-        dockEl.classList.toggle('is-fixed', stuck);
-        sentinelEl.style.height = stuck ? dockEl.offsetHeight + 'px' : '';
+      if (mqMobile.matches) {
+        /* Mobile: the dock rides in-flow as a compact progress ribbon at the top of
+           the configurator — no fixed detach (its sticky is blocked by .cfgb's
+           overflow:clip, and a page-wide fixed bar overstayed its welcome). */
+        dockEl.classList.remove('is-fixed', 'is-stuck');
+        if (sentinelEl) sentinelEl.style.height = '';
       } else {
         dockEl.classList.remove('is-fixed');
         if (sentinelEl) sentinelEl.style.height = '';
