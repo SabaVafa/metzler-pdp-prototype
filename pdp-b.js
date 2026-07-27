@@ -205,9 +205,12 @@
 
   function markDone() {
     items.forEach(function (it, i) {
-      var done = i < reached && !it.classList.contains('is-active');
-      if (STEPS[i].key === 'anschluss') done = !!state.anschluss && !it.classList.contains('is-active');
+      var active = it.classList.contains('is-active');
+      var done = i < reached && !active;
+      if (STEPS[i].key === 'anschluss') done = !!state.anschluss && !active;
       it.classList.toggle('is-done', done);
+      var head = it.querySelector('.stepr__head');
+      if (head) head.setAttribute('aria-expanded', active ? 'true' : 'false');   /* keep header state in sync */
     });
   }
 
@@ -396,13 +399,20 @@
   document.querySelectorAll('#bSeg .cfgb-bar__step').forEach(function (b) {
     b.addEventListener('click', function () { openStep(parseInt(b.getAttribute('data-goto'), 10)); });
   });
-  /* Option A accordion (mobile): a step header opens its step in place. Headers are
-     display:none on desktop, so this is a no-op there. */
+  /* Option A accordion (mobile): a step header toggles its step in place — tap an
+     open section's chevron to collapse it, tap a closed one to open it (and collapse
+     the rest). Headers are display:none on desktop, so this is a no-op there. */
   document.querySelectorAll('#cfgbSteps .stepr__head').forEach(function (h) {
     h.addEventListener('click', function () {
       var it = h.closest('.stepr__item'); if (!it) return;
       var i = parseInt(it.getAttribute('data-step'), 10);
-      if (!isNaN(i)) openStep(i, true);
+      if (isNaN(i)) return;
+      if (it.classList.contains('is-active')) {
+        it.classList.remove('is-active');   /* collapse the open section */
+        refresh();
+      } else {
+        openStep(i, true);
+      }
     });
   });
 
