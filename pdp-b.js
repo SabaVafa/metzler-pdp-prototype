@@ -521,14 +521,14 @@
           if (d < best) { best = d; near = b; }
         });
         if (near) setTxt('pdpFinishName', near.getAttribute('data-finish'));
-        /* travelling indicator: glide a short line across the strip in sync with the
-           slide. Absolute inside the scroller, so offset by scrollLeft to keep it in
-           the viewport, then advance by the scroll fraction across the free width. */
-        if (swline) {
-          var range = sw.scrollWidth - sw.clientWidth;
-          var frac = range > 0 ? sw.scrollLeft / range : 0;
-          var travel = Math.max(0, sw.clientWidth - swline.offsetWidth);
-          swline.style.transform = 'translateX(' + (sw.scrollLeft + frac * travel) + 'px)';
+        /* Active-swatch indicator: sit the short line EXACTLY on the centre of the
+           swatch nearest the strip centre. Absolute inside the scroller and expressed
+           in content coords (offsetLeft), so it rides with that swatch as you scroll
+           and snaps to the next swatch's centre as the strip snaps — precise and
+           directly controlled by the scroll. The CSS transition smooths the hop. */
+        if (swline && near) {
+          var cx = near.offsetLeft + near.offsetWidth / 2 - swline.offsetWidth / 2;
+          swline.style.transform = 'translateX(' + Math.round(cx) + 'px)';
         }
       };
       sw.addEventListener('scroll', caption, { passive: true });
