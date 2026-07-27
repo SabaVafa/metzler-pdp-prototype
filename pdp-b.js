@@ -975,9 +975,36 @@
         dockEl.classList.toggle('is-stuck', pinned);
         if (sentinelEl) sentinelEl.style.height = pinned ? dockH + 'px' : '';
       } else {
-        dockEl.classList.remove('is-fixed');
-        if (sentinelEl) sentinelEl.style.height = '';
-        dockEl.classList.toggle('is-stuck', dockEl.getBoundingClientRect().top <= pin + 1);
+        /* Desktop: keep the step-dock fixed to the top for as long as the config
+           section is in the viewport — from when its top scrolls under the header
+           until its bottom rises back above the header line. position:fixed (not
+           sticky) so the ribbon never rides up early with the section's bottom. It
+           is constrained to the config column: left/width are measured from the
+           sentinel (which holds the dock's in-flow box), and the sentinel is grown
+           to the dock's height so the steps below don't jump. */
+        dockEl.classList.remove('is-fixed');   /* mobile-only full-bleed variant */
+        var cfgD = document.getElementById('cfgbPanel') || (dockEl.closest && dockEl.closest('.cfgb'));
+        var rD = cfgD ? cfgD.getBoundingClientRect() : null;
+        var dockHD = dockEl.offsetHeight;
+        /* .cfgb carries no transform (see CSS) so it isn't a containing block and
+           position:fixed resolves against the viewport. Fix while the config spans
+           the header line: from its top scrolling under the header until its bottom
+           rises back above it. */
+        var withinD = !!rD && rD.top <= pin + 1 && rD.bottom > pin + 1;
+        if (withinD) {
+          var geoD = (sentinelEl || dockEl).getBoundingClientRect();
+          dockEl.style.left = Math.round(geoD.left) + 'px';
+          dockEl.style.width = Math.round(geoD.width) + 'px';
+          dockEl.classList.add('is-fixed-dt');
+          dockEl.classList.add('is-stuck');
+          if (sentinelEl) sentinelEl.style.height = dockHD + 'px';
+        } else {
+          dockEl.classList.remove('is-fixed-dt');
+          dockEl.classList.remove('is-stuck');
+          dockEl.style.left = '';
+          dockEl.style.width = '';
+          if (sentinelEl) sentinelEl.style.height = '';
+        }
       }
     };
     window.addEventListener('scroll', dockStuck, { passive: true });

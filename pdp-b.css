@@ -667,12 +667,21 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 /* overflow:clip (not hidden) — still clips the rounded corners but doesn't
    create a scroll container, so the sticky dock below keeps working */
 .pdp-b .cfgb { padding: 0; gap: 0; overflow: clip; }
+/* No entrance transform on the config panel: a lingering transform would make .cfgb
+   a containing block, so the fixed step-dock (desktop) / full-bleed bar (mobile) would
+   resolve against .cfgb and get clipped instead of pinning to the viewport. opacity:1
+   guarantees the panel is visible even if the shared rise animation doesn't play. */
+.pdp-b .cfgb { transform: none; animation: none; opacity: 1; }
 .cfgb-bar { display: none !important; }   /* retire the old icon-and-line stepper (sentinel stays: it drives the dock's is-stuck flag) */
 
 .cfgb-dock { display: flex; flex-direction: column; padding: 0 1.35rem 1.15rem; background: var(--color-paper); border-bottom: 1px solid var(--color-graphite-200);
   position: sticky; top: 6.5rem; z-index: 7; }   /* pins below the 104px site header while scrolling the config */
 /* stuck → compact: only the ribbon stays pinned (kicker + step title collapse) */
 .cfgb-dock.is-stuck { padding: 0 1.35rem; box-shadow: 0 10px 18px -12px rgba(10,20,20,0.28); }
+/* Desktop: fixed to the top while the config section is in the viewport. JS sets
+   top (header height), left and width (config column) inline; z-index sits above the
+   sticky quickbar (45) so the ribbon reads as the top bar, not tucked behind it. */
+.cfgb-dock.is-fixed-dt { position: fixed; z-index: 46; border-radius: 0 0 var(--radius) var(--radius); }
 /* cap the strip above the pinned dock so scrolling options never peek through
    the header↔dock seam; the site header (higher z) covers the rest */
 .cfgb-dock.is-stuck::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%;
@@ -1614,7 +1623,11 @@ body.is-scrolled #quickbar {
 /* Beschreibung — pinned scrollytelling: sticky image (left) swaps as the text
    scenes (right) scroll past. Uses position:sticky, so no scroll-jacking. */
 .psx-story__grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(2rem,5vw,4.5rem); align-items: start; margin: clamp(1rem,2vw,1.75rem) 0 clamp(1.5rem,3vw,2.5rem); }
-.psx-story__media { position: sticky; top: 8.5rem; height: min(70vh, 34rem); border-radius: var(--radius-lg); overflow: hidden; background: var(--color-paper); }
+/* Sticky media: centre it in the viewport on tall screens (top = half the viewport
+   minus half the 34rem card), so the leftover column space splits evenly above and
+   below instead of leaving a big blank strip under the image. The max() keeps it
+   pinned just under the header on normal-height screens (its previous behaviour). */
+.psx-story__media { position: sticky; top: max(8.5rem, calc(50vh - 17rem)); height: min(70vh, 34rem); border-radius: var(--radius-lg); overflow: hidden; background: var(--color-paper); }
 .psx-story__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
   opacity: 0; transform: scale(1.06); transition: opacity .6s ease, transform 1.4s cubic-bezier(.2,.7,.2,1); }
 .psx-story__img.is-active { opacity: 1; transform: scale(1); }
