@@ -946,17 +946,17 @@
       var pin = headerEl ? Math.round(headerEl.getBoundingClientRect().height) : 104;
       if (dockEl.style.top !== pin + 'px') dockEl.style.top = pin + 'px';
       if (mqMobile.matches) {
-        /* Mobile: the progress ribbon fixes full-width to the top ONLY while the
-           config section spans the pin line — so it belongs to the config (enters
-           as you scroll in, releases as you scroll out), replacing the pinned
-           quickbar rather than floating across the whole page. */
+        /* Mobile: once the configurator scrolls under the header, the progress
+           ribbon fixes full-width to the top and STAYS pinned for the rest of the
+           page (replacing the pinned quickbar). It only releases if you scroll back
+           up above the config. */
         var cfg = document.getElementById('cfgbPanel') || (dockEl.closest && dockEl.closest('.cfgb'));
         var dockH = dockEl.offsetHeight;
         var r = cfg ? cfg.getBoundingClientRect() : null;
-        var withinConfig = !!r && r.top <= pin + 1 && r.bottom > pin + dockH;
-        dockEl.classList.toggle('is-fixed', withinConfig);
-        dockEl.classList.toggle('is-stuck', withinConfig);
-        if (sentinelEl) sentinelEl.style.height = withinConfig ? dockH + 'px' : '';
+        var pinned = !!r && r.top <= pin + 1;
+        dockEl.classList.toggle('is-fixed', pinned);
+        dockEl.classList.toggle('is-stuck', pinned);
+        if (sentinelEl) sentinelEl.style.height = pinned ? dockH + 'px' : '';
       } else {
         dockEl.classList.remove('is-fixed');
         if (sentinelEl) sentinelEl.style.height = '';
