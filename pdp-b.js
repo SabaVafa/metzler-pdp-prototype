@@ -963,6 +963,7 @@
   var sentinelEl = document.querySelector('.cfgb-sentinel');
   var navEl = document.querySelector('.psx-nav');   /* product-section nav that takes over the top slot below the config */
   var qbEl = document.getElementById('quickbar');   /* green contact bar the fixed dock must sit BELOW, not cover */
+  var dockFlowH = 0;   /* cached in-flow dock height for the sentinel (see below) */
   if (dockEl) {
     var mqMobile = window.matchMedia('(max-width: 640px)');
     var dockStuck = function () {
@@ -979,13 +980,18 @@
            (The former footer blank-strip was the iOS overscroll bounce, now fixed
            by overscroll-behavior-y:none.) */
         var cfg = document.getElementById('cfgbPanel') || (dockEl.closest && dockEl.closest('.cfgb'));
-        var dockH = dockEl.offsetHeight;
         var r = cfg ? cfg.getBoundingClientRect() : null;
         var navTop = navEl ? navEl.getBoundingClientRect().top : Infinity;
         var pinned = !!r && r.top <= pin + 1 && navTop > pin + 1;
         dockEl.classList.toggle('is-fixed', pinned);
         dockEl.classList.toggle('is-stuck', pinned);
-        if (sentinelEl) sentinelEl.style.height = pinned ? dockH + 'px' : '';
+        /* Hold the dock's IN-FLOW height in the sentinel — captured while unfixed, so
+           it's the full (non-compact) height. Reserving only the compact height while
+           fixed shifted the page ~59px at the pin, which moved the nav and fed back
+           into navTop → a flicker/oscillation at the config→nav handoff. Measured
+           after toggling the classes off so offsetHeight is the true flow height. */
+        if (!pinned && dockEl.offsetHeight) dockFlowH = dockEl.offsetHeight;
+        if (sentinelEl) sentinelEl.style.height = pinned ? dockFlowH + 'px' : '';
       } else {
         /* Desktop: keep the step-dock fixed to the top for as long as the config
            section is in the viewport — from when its top scrolls under the header
