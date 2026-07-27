@@ -646,11 +646,15 @@
     function setActive(l) {
       links.forEach(function (x) { x.classList.toggle('is-active', x === l); });
       /* auto-slide the horizontal nav so the current section's tab is in view
-         (only when the nav actually overflows — i.e. mobile; desktop fits, no-op) */
-      if (!l || scroller.scrollWidth <= scroller.clientWidth + 2) return;
+         (only when the nav overflows — i.e. mobile; desktop fits, no-op). Center
+         the tab, then CLAMP to [0, maxScroll] so it never over-scrolls past the
+         last tab into blank space. */
+      var max = scroller.scrollWidth - scroller.clientWidth;
+      if (!l || max <= 2) return;
       var sr = scroller.getBoundingClientRect(), lr = l.getBoundingClientRect();
-      var delta = (lr.left - sr.left) - (sr.width - lr.width) / 2;
-      if (Math.abs(delta) > 4) scroller.scrollBy({ left: delta, behavior: 'smooth' });
+      var tabLeft = (lr.left - sr.left) + scroller.scrollLeft;   /* tab's offset within the scroll content */
+      var target = Math.max(0, Math.min(max, tabLeft - (scroller.clientWidth - lr.width) / 2));
+      if (Math.abs(target - scroller.scrollLeft) > 4) scroller.scrollTo({ left: target, behavior: 'smooth' });
     }
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { if (e.isIntersecting && map[e.target.id]) setActive(map[e.target.id]); });
@@ -1093,7 +1097,7 @@
     root.style.setProperty('--pdp-header-h', h + 'px');
 
     if (!qb) return;
-    if (nav && desktop.matches && !reduce.matches) {
+    if (nav && !reduce.matches) {
       /* how far the section nav has pushed into the quickbar's pinned slot */
       var qbH = qb.offsetHeight;
       var navTop = nav.getBoundingClientRect().top;
