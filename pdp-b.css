@@ -679,9 +679,14 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
 /* stuck → compact: only the ribbon stays pinned (kicker + step title collapse) */
 .cfgb-dock.is-stuck { padding: 0 1.35rem; box-shadow: 0 10px 18px -12px rgba(10,20,20,0.28); }
 /* Desktop: fixed to the top while the config section is in the viewport. JS sets
-   top (header height), left and width (config column) inline; z-index sits above the
-   sticky quickbar (45) so the ribbon reads as the top bar, not tucked behind it. */
-.cfgb-dock.is-fixed-dt { position: fixed; z-index: 46; border-radius: 0 0 var(--radius) var(--radius); }
+   top (just below the green quickbar), left and width (config column) inline; z-index
+   sits above the sticky quickbar (45) so the ribbon reads as its own bar. */
+.cfgb-dock.is-fixed-dt { position: fixed; z-index: 46; border-radius: 0 0 var(--radius) var(--radius);
+  padding-top: 0.7rem; background: #fff; }   /* white breathing gap above the ribbon so it isn't glued to the green bar */
+/* the ::before paper backdrop (which caps the header↔dock seam in the sticky case)
+   paints in the dock's z-46 context, so below the quickbar it would cover the green
+   bar as a blank strip. The quickbar itself seals the seam here, so drop it. */
+.cfgb-dock.is-fixed-dt::before { display: none; }
 /* cap the strip above the pinned dock so scrolling options never peek through
    the header↔dock seam; the site header (higher z) covers the rest */
 .cfgb-dock.is-stuck::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%;
@@ -1433,6 +1438,14 @@ body.is-scrolled #quickbar {
 .psx-nav__inner { display: flex; gap: clamp(1.75rem, 4vw, 3.75rem); align-items: stretch;
   overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
 .psx-nav__inner::-webkit-scrollbar { display: none; }
+/* "Termin vereinbaren" action pinned to the right of the section nav — opens the same
+   Kontakt & Service modal as the green contact bar (via data-cm-open). */
+.psx-nav__termin { margin-left: auto; align-self: center; flex: none; display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.5rem 1rem; border: 1px solid var(--color-teal); border-radius: var(--radius-pill);
+  background: none; color: var(--color-teal); font-family: inherit; font-size: 0.9rem; font-weight: 700; line-height: 1;
+  white-space: nowrap; cursor: pointer; transition: background .15s ease, color .15s ease; }
+.psx-nav__termin svg { width: 1.05rem; height: 1.05rem; }
+.psx-nav__termin:hover { background: var(--color-teal); color: #fff; }
 .psx-nav__link { position: relative; display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap;
   padding: 1.05rem 0.15rem; font-size: 0.95rem; font-weight: 700; letter-spacing: -0.01em;
   color: var(--color-graphite-700); text-decoration: none; border-bottom: 2px solid transparent;
@@ -1669,7 +1682,11 @@ body.is-scrolled #quickbar {
 
 /* detailed list + sticky summary sidebar */
 .rvw-main { display: grid; grid-template-columns: minmax(0,1fr) 20rem; gap: clamp(1.5rem,3.5vw,3.5rem); align-items: start; }
-.rvw-summary { grid-column: 2; grid-row: 1; position: sticky; top: 7.75rem; }
+/* Centre the sticky rating box in the viewport on tall screens (top = half the
+   viewport minus half the ~25rem box), same treatment as the Beschreibung sticky
+   image, so it doesn't cling to the top leaving a big gap below. max() keeps the
+   original 7.75rem offset on normal-height screens. */
+.rvw-summary { grid-column: 2; grid-row: 1; position: sticky; top: max(7.75rem, calc(50vh - 12.5rem)); }
 .rvw-summary__inner { background: var(--color-paper); border: 1px solid var(--color-graphite-300); border-radius: var(--radius-xl); padding: clamp(1.5rem,2.5vw,2rem); }
 .rvw-summary__top { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
 .rvw-summary__score { font-size: 3rem; font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: var(--color-digital-black); }

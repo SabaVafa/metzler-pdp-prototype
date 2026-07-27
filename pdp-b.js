@@ -951,6 +951,7 @@
   var headerEl = document.querySelector('.header') || document.querySelector('header');
   var sentinelEl = document.querySelector('.cfgb-sentinel');
   var navEl = document.querySelector('.psx-nav');   /* product-section nav that takes over the top slot below the config */
+  var qbEl = document.getElementById('quickbar');   /* green contact bar the fixed dock must sit BELOW, not cover */
   if (dockEl) {
     var mqMobile = window.matchMedia('(max-width: 640px)');
     var dockStuck = function () {
@@ -987,12 +988,16 @@
         var rD = cfgD ? cfgD.getBoundingClientRect() : null;
         var dockHD = dockEl.offsetHeight;
         /* .cfgb carries no transform (see CSS) so it isn't a containing block and
-           position:fixed resolves against the viewport. Fix while the config spans
-           the header line: from its top scrolling under the header until its bottom
-           rises back above it. */
-        var withinD = !!rD && rD.top <= pin + 1 && rD.bottom > pin + 1;
+           position:fixed resolves against the viewport. The dock pins directly
+           BELOW the green quickbar (its rendered bottom) so it stacks under the
+           contact bar rather than covering it; when the quickbar has scrolled away
+           it falls back to the header line. Fix while the config spans that line:
+           from its top reaching the pin until its bottom rises back above it. */
+        var topPx = qbEl ? Math.max(pin, Math.round(qbEl.getBoundingClientRect().bottom)) : pin;
+        var withinD = !!rD && rD.top <= topPx + 1 && rD.bottom > topPx + 1;
         if (withinD) {
           var geoD = (sentinelEl || dockEl).getBoundingClientRect();
+          dockEl.style.top = topPx + 'px';
           dockEl.style.left = Math.round(geoD.left) + 'px';
           dockEl.style.width = Math.round(geoD.width) + 'px';
           dockEl.classList.add('is-fixed-dt');
