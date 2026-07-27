@@ -956,15 +956,16 @@
       var pin = headerEl ? Math.round(headerEl.getBoundingClientRect().height) : 104;
       if (dockEl.style.top !== pin + 'px') dockEl.style.top = pin + 'px';
       if (mqMobile.matches) {
-        /* Mobile: the progress ribbon fixes full-width to the top WHILE the config
-           section spans the pin line (replacing the pinned quickbar), then releases
-           cleanly once you scroll past the config — so it never leaves a grown
-           sentinel / fixed bar hanging around the footer (which produced a bottom
-           gap on iOS). */
+        /* Mobile: once the configurator scrolls under the header, the progress
+           ribbon fixes full-width to the top and STAYS pinned for the rest of the
+           page — it takes over the pinned quickbar's slot and never hands back to
+           the green contact bar. It only releases when you scroll back up above the
+           config. (The former footer blank-strip this caused was the iOS overscroll
+           bounce, now fixed by overscroll-behavior-y:none.) */
         var cfg = document.getElementById('cfgbPanel') || (dockEl.closest && dockEl.closest('.cfgb'));
         var dockH = dockEl.offsetHeight;
         var r = cfg ? cfg.getBoundingClientRect() : null;
-        var pinned = !!r && r.top <= pin + 1 && r.bottom > pin + dockH;
+        var pinned = !!r && r.top <= pin + 1;
         dockEl.classList.toggle('is-fixed', pinned);
         dockEl.classList.toggle('is-stuck', pinned);
         if (sentinelEl) sentinelEl.style.height = pinned ? dockH + 'px' : '';
