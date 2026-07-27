@@ -607,6 +607,10 @@
      Snapping trapped it — snap-align:start put the last swatches' snap points past the
      max scroll, so it kept springing back and never reached the 6th–8th. */
 .swtouch .bx-swatches::-webkit-scrollbar { display: none; }
+/* trailing scroll space so EVERY swatch — including the last (6th–8th) — can be
+   slid to the active/left position; without it the scroll maxed out with the last
+   swatches unreachable as the active one. */
+.swtouch .bx-swatches::after { content: ""; flex: 0 0 calc(100vw - 8rem); }
 .swtouch .bx-swatches .pdp-swatch { flex: 0 0 5rem; justify-content: center; }
 /* Symmetric slots above and below each swatch keep the image vertically centred in
    the row (content aligned above and below). Transparent — the active cue is the
