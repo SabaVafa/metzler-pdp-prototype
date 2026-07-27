@@ -816,14 +816,22 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
    place, one open at a time) and hides the wizard chrome (horizontal progress dock +
    Weiter/Zurück). Desktop keeps the wizard — untouched. ── */
 @media (max-width: 48rem) {
-  /* configuration progress bar — a compact step ribbon at the top of the config
-     (numbered steps, completed = filled, current = highlighted). In-flow, not
-     fixed (JS keeps it static on mobile). */
+  /* configuration progress bar — a compact step ribbon (numbered steps, completed =
+     filled, current = highlighted). In-flow at the top of the config; via JS
+     (bounded to the config section) it fixes full-width to the top, replacing the
+     pinned quickbar while you scroll THROUGH the config. */
   .pdp-b .cfgb .cfgb-dock { display: flex; position: static; z-index: auto;
     padding: 0.9rem 1rem 1rem; background: none; border-bottom: 0; box-shadow: none; }
-  .pdp-b .cfgb .cfgb-dock.is-fixed, .pdp-b .cfgb .cfgb-dock.is-stuck { position: static; box-shadow: none; }
   .pdp-b .cfgb .cfgb-dock .cfgb-bar__track { margin: 0; }   /* no edge-bleed on mobile */
   .pdp-b .cfgb .cfgb-dock__title { justify-content: flex-start; margin-top: 0.6rem; }
+  /* fixed state → a solid, full-width bar that reads as part of the config
+     (paper surface + hairline divider), pinned below the header. Not a floating chip. */
+  .pdp-b .cfgb .cfgb-dock.is-fixed {
+    position: fixed; left: 0; right: 0; width: 100%; z-index: 46;
+    padding: 0.7rem 1rem 0.75rem; background: var(--color-paper);
+    border-bottom: 1px solid var(--color-graphite-300);
+    box-shadow: 0 6px 14px -12px rgba(10,20,20,0.3); }
+  .pdp-b .cfgb .cfgb-dock.is-fixed .cfgb-dock__title { margin-top: 0.5rem; }
   .pdp-b .cfgb .cfgb-nav { display: none; }
   .pdp-b .cfgb .cfgb-stage { padding: 0; }
   .pdp-b .cfgb .stepr { gap: 0.6rem; }

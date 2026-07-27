@@ -946,11 +946,17 @@
       var pin = headerEl ? Math.round(headerEl.getBoundingClientRect().height) : 104;
       if (dockEl.style.top !== pin + 'px') dockEl.style.top = pin + 'px';
       if (mqMobile.matches) {
-        /* Mobile: the dock rides in-flow as a compact progress ribbon at the top of
-           the configurator — no fixed detach (its sticky is blocked by .cfgb's
-           overflow:clip, and a page-wide fixed bar overstayed its welcome). */
-        dockEl.classList.remove('is-fixed', 'is-stuck');
-        if (sentinelEl) sentinelEl.style.height = '';
+        /* Mobile: the progress ribbon fixes full-width to the top ONLY while the
+           config section spans the pin line — so it belongs to the config (enters
+           as you scroll in, releases as you scroll out), replacing the pinned
+           quickbar rather than floating across the whole page. */
+        var cfg = document.getElementById('cfgbPanel') || (dockEl.closest && dockEl.closest('.cfgb'));
+        var dockH = dockEl.offsetHeight;
+        var r = cfg ? cfg.getBoundingClientRect() : null;
+        var withinConfig = !!r && r.top <= pin + 1 && r.bottom > pin + dockH;
+        dockEl.classList.toggle('is-fixed', withinConfig);
+        dockEl.classList.toggle('is-stuck', withinConfig);
+        if (sentinelEl) sentinelEl.style.height = withinConfig ? dockH + 'px' : '';
       } else {
         dockEl.classList.remove('is-fixed');
         if (sentinelEl) sentinelEl.style.height = '';
