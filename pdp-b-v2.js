@@ -993,8 +993,19 @@
            contact bar rather than covering it; when the quickbar has scrolled away
            it falls back to the header line. Fix while the config spans that line:
            from its top reaching the pin until its bottom rises back above it. */
-        var topPx = qbEl ? Math.max(pin, Math.round(qbEl.getBoundingClientRect().bottom)) : pin;
-        var withinD = !!rD && rD.top <= topPx + 1 && rD.bottom > topPx + 1;
+        /* Pin below the quickbar using STABLE layout values (header height + the
+           quickbar's offsetHeight), NOT its live getBoundingClientRect().bottom.
+           The live rect shifts when the quickbar slides during the section-nav
+           handoff and jitters with sub-pixel scroll, which made the fixed bar jump;
+           offsetHeight is layout-only (unaffected by the slide transform or scroll). */
+        var topPx = pin + (qbEl ? qbEl.offsetHeight : 0);
+        /* Trigger the pin off the SENTINEL's top (the dock's in-flow anchor), not the
+           config panel's top — the dock sits a couple px below cfg.top (border), so
+           triggering on cfg.top snapped the dock ~2px when it pinned. The sentinel
+           marks exactly where the dock is in flow, so the fixed position (topPx)
+           matches the flow position at the flip → no jump. */
+        var anchorTop = sentinelEl ? sentinelEl.getBoundingClientRect().top : (rD ? rD.top : Infinity);
+        var withinD = !!rD && anchorTop <= topPx + 1 && rD.bottom > topPx + 1;
         if (withinD) {
           var geoD = (sentinelEl || dockEl).getBoundingClientRect();
           dockEl.style.top = topPx + 'px';
