@@ -515,20 +515,20 @@
     if (isTouch && sw) {
       var swline = sw.querySelector('.bx-swline');
       var caption = function () {
-        var mid = sw.getBoundingClientRect().left + sw.clientWidth / 2, near = null, best = Infinity;
+        /* Active swatch = the one nearest the strip's LEFT edge (left-aligned model):
+           at rest the first swatch sits flush-left, so it's reachable immediately, and
+           scrolling advances the active swatch one at a time. */
+        var edge = sw.getBoundingClientRect().left, near = null, best = Infinity;
         sw.querySelectorAll('.pdp-swatch').forEach(function (b) {
-          var r = b.getBoundingClientRect(), d = Math.abs((r.left + r.width / 2) - mid);
+          var d = Math.abs(b.getBoundingClientRect().left - edge);
           if (d < best) { best = d; near = b; }
         });
         if (near) setTxt('pdpFinishName', near.getAttribute('data-finish'));
-        /* Active-swatch indicator: sit the short line EXACTLY on the centre of the
-           swatch nearest the strip centre. Absolute inside the scroller and expressed
-           in content coords (offsetLeft), so it rides with that swatch as you scroll
-           and snaps to the next swatch's centre as the strip snaps — precise and
-           directly controlled by the scroll. The CSS transition smooths the hop. */
+        /* Indicator: align the short line to the active swatch's LEFT edge. Absolute
+           inside the scroller in content coords, so it rides with that swatch and hops
+           to the next as the active swatch changes — precise and scroll-controlled. */
         if (swline && near) {
-          var cx = near.offsetLeft + near.offsetWidth / 2 - swline.offsetWidth / 2;
-          swline.style.transform = 'translateX(' + Math.round(cx) + 'px)';
+          swline.style.transform = 'translateX(' + Math.round(near.offsetLeft) + 'px)';
         }
       };
       sw.addEventListener('scroll', caption, { passive: true });
