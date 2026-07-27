@@ -605,7 +605,7 @@
   overflow-x: auto; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
   gap: 0.7rem; padding: 0.75rem 0; scroll-padding: 0; }   /* no side padding: first swatch aligns with the content's left edge */
 .swtouch .bx-swatches::-webkit-scrollbar { display: none; }
-.swtouch .bx-swatches .pdp-swatch { flex: 0 0 5rem; scroll-snap-align: center; justify-content: center; }
+.swtouch .bx-swatches .pdp-swatch { flex: 0 0 5rem; scroll-snap-align: start; justify-content: center; }
 /* Symmetric slots above and below each swatch keep the image vertically centred in
    the row (content aligned above and below). Transparent — the active cue is the
    single travelling line below, not a per-swatch mark. */
