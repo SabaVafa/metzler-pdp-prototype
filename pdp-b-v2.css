@@ -1446,7 +1446,7 @@ body.is-scrolled #quickbar {
 /* "Termin vereinbaren" action pinned to the right of the section nav — opens the same
    Kontakt & Service modal as the green contact bar (via data-cm-open). */
 .psx-nav__termin { margin-left: auto; align-self: center; flex: none; display: inline-flex; align-items: center; gap: 0.45rem;
-  padding: 0.55rem 1.2rem; border: 0; border-radius: var(--radius-pill);
+  padding: 0.55rem 1.2rem; border: 0; border-radius: var(--radius);
   background: var(--color-teal); color: #fff; font-family: inherit; font-size: 0.9rem; font-weight: 700; line-height: 1;
   white-space: nowrap; cursor: pointer; transition: background .15s ease; }
 .psx-nav__termin svg { width: 1.05rem; height: 1.05rem; }
