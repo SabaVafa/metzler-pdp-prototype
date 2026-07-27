@@ -603,7 +603,7 @@
    the colour names, tap to select. */
 .swtouch .bx-swatches { position: relative; display: flex; grid-template-columns: none; flex-wrap: nowrap; align-items: center;
   overflow-x: auto; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
-  gap: 0.7rem; padding: 0.75rem 0.75rem 0.55rem; scroll-padding: 0 0.75rem; }
+  gap: 0.7rem; padding: 0.75rem; scroll-padding: 0 0.75rem; }
 .swtouch .bx-swatches::-webkit-scrollbar { display: none; }
 .swtouch .bx-swatches .pdp-swatch { flex: 0 0 5rem; scroll-snap-align: center; justify-content: center; }
 /* Symmetric slots above and below each swatch keep the image vertically centred in
@@ -864,7 +864,10 @@ body.kbd-open .pdp-stickybar { display: none !important; }
   .pdp-b .cfgb .cfgb-dock { display: flex; position: static; z-index: auto;
     padding: 0.9rem 1rem 1rem; background: none; border-bottom: 0; box-shadow: none; }
   .pdp-b .cfgb .cfgb-dock .cfgb-bar__track { margin: 0 -1rem; }   /* full-width ribbon: cancel the dock's 1rem side padding so the progress bar spans edge-to-edge */
-  .pdp-b .cfgb .cfgb-dock__title { justify-content: flex-start; margin-top: 0.6rem; }
+  .pdp-b .cfgb .cfgb-dock__title { justify-content: space-between; align-items: flex-start; margin-top: 0.6rem; }
+  /* required/optional flags sit far-right, top-aligned with the "Schritt X von 5"
+     eyebrow line, instead of inline after the step title */
+  .pdp-b .cfgb .stepr__title { justify-content: space-between; }
   /* fixed state → a solid, full-width bar that reads as part of the config
      (paper surface + hairline divider), pinned below the header. Not a floating chip. */
   .pdp-b .cfgb .cfgb-dock.is-fixed {
