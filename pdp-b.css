@@ -601,20 +601,25 @@
    Snap-scroller with a live caption: the "Ausführung — …" header follows the centred
    swatch via JS (hover isn't available on touch to reveal names). Swipe to browse
    the colour names, tap to select. */
-.swtouch .bx-swatches { display: flex; grid-template-columns: none; flex-wrap: nowrap; align-items: center;
+.swtouch .bx-swatches { position: relative; display: flex; grid-template-columns: none; flex-wrap: nowrap; align-items: center;
   overflow-x: auto; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
-  gap: 0.7rem; padding: 0.55rem 0.75rem; scroll-padding: 0 0.75rem; }
+  gap: 0.7rem; padding: 0.75rem 0.75rem 0.55rem; scroll-padding: 0 0.75rem; }
 .swtouch .bx-swatches::-webkit-scrollbar { display: none; }
 .swtouch .bx-swatches .pdp-swatch { flex: 0 0 5rem; scroll-snap-align: center; justify-content: center; }
 /* Symmetric slots above and below each swatch keep the image vertically centred in
-   the row (content aligned above and below). The TOP slot turns into a short teal
-   line on the swatch currently centred in the strip — the one whose colour name has
-   just appeared in the "Farbe — …" caption — as a clue while sliding through them. */
+   the row (content aligned above and below). Transparent — the active cue is the
+   single travelling line below, not a per-swatch mark. */
 .swtouch .bx-swatches .pdp-swatch::before,
 .swtouch .bx-swatches .pdp-swatch::after {
-  content: ""; display: block; flex: none; height: 2px; width: 1.6rem; border-radius: 2px;
-  background: transparent; transition: background .18s ease; }
-.swtouch .bx-swatches .pdp-swatch.is-cur::before { background: var(--color-teal); }
+  content: ""; display: block; flex: none; height: 2px; width: 1.6rem; background: transparent; }
+/* Single short teal line that TRAVELS along the top of the strip in sync with the
+   slide (its X is driven by scroll position in JS), as a live clue to where you are
+   in the colour set. Absolute inside the scroller; JS offsets by scrollLeft so it
+   glides across the viewport rather than scrolling away with the swatches. */
+.bx-swline { display: none; }
+.swtouch .bx-swline { display: block; position: absolute; top: 0.2rem; left: 0; z-index: 2;
+  height: 2px; width: 2rem; border-radius: 2px; background: var(--color-teal);
+  pointer-events: none; will-change: transform; }
 
 /* ── Preisdetails trigger (buy block) ── */
 .cfgb-detailsbtn { display: flex; align-items: center; gap: 0.6rem; width: 100%; padding: 0.75rem 0.9rem;
@@ -642,7 +647,7 @@
   transform: translateY(100%); transition: transform .34s cubic-bezier(.2,.7,.2,1); }
 .sheet.is-open .sheet__panel { transform: translateY(0); }
 .sheet__grip { width: 2.5rem; height: 0.3rem; border-radius: var(--radius-pill); background: var(--color-graphite-200); margin: 0.7rem auto 0.1rem; }
-.sheet__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.5rem 1.25rem 0.5rem; }
+.sheet__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.5rem 1.25rem 0.75rem; border-bottom: 1px solid var(--color-graphite-200); margin-bottom: 0.25rem; }
 .sheet__title { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .sheet__close { width: 2.2rem; height: 2.2rem; display: grid; place-items: center; border: 0; background: none; border-radius: 0; cursor: pointer; color: var(--color-graphite-600); }
 .sheet__close svg { width: 1.1rem; height: 1.1rem; }
@@ -854,7 +859,7 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
      pinned quickbar while you scroll THROUGH the config. */
   .pdp-b .cfgb .cfgb-dock { display: flex; position: static; z-index: auto;
     padding: 0.9rem 1rem 1rem; background: none; border-bottom: 0; box-shadow: none; }
-  .pdp-b .cfgb .cfgb-dock .cfgb-bar__track { margin: 0; }   /* no edge-bleed on mobile */
+  .pdp-b .cfgb .cfgb-dock .cfgb-bar__track { margin: 0 -1rem; }   /* full-width ribbon: cancel the dock's 1rem side padding so the progress bar spans edge-to-edge */
   .pdp-b .cfgb .cfgb-dock__title { justify-content: flex-start; margin-top: 0.6rem; }
   /* fixed state → a solid, full-width bar that reads as part of the config
      (paper surface + hairline divider), pinned below the header. Not a floating chip. */
@@ -867,7 +872,7 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
   .pdp-b .cfgb .cfgb-nav { display: none; }
   .pdp-b .cfgb .cfgb-stage { padding: 0; }
   .pdp-b .cfgb .stepr { gap: 0.6rem; }
-  .pdp-b .cfgb .stepr__item { display: block; border: 1px solid var(--color-graphite-200); border-radius: var(--radius); background: var(--color-white); }
+  .pdp-b .cfgb .stepr__item { display: block; border: 1px solid var(--color-graphite-200); border-radius: 0; background: var(--color-white); }
   .pdp-b .cfgb .stepr__item.is-active { border-color: var(--color-teal); box-shadow: 0 0.5rem 1.5rem rgba(1,82,83,0.08); }
   .pdp-b .cfgb .stepr__head { display: flex !important; }
   .pdp-b .cfgb .stepr__body { display: grid !important; grid-template-rows: 0fr !important; }

@@ -513,16 +513,26 @@
     var isTouch = params.get('touch') === '1' || (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches);
     document.body.classList.toggle('swtouch', !!isTouch);
     if (isTouch && sw) {
+      var swline = sw.querySelector('.bx-swline');
       var caption = function () {
         var mid = sw.getBoundingClientRect().left + sw.clientWidth / 2, near = null, best = Infinity;
         sw.querySelectorAll('.pdp-swatch').forEach(function (b) {
           var r = b.getBoundingClientRect(), d = Math.abs((r.left + r.width / 2) - mid);
           if (d < best) { best = d; near = b; }
         });
-        sw.querySelectorAll('.pdp-swatch').forEach(function (b) { b.classList.toggle('is-cur', b === near); });
         if (near) setTxt('pdpFinishName', near.getAttribute('data-finish'));
+        /* travelling indicator: glide a short line across the strip in sync with the
+           slide. Absolute inside the scroller, so offset by scrollLeft to keep it in
+           the viewport, then advance by the scroll fraction across the free width. */
+        if (swline) {
+          var range = sw.scrollWidth - sw.clientWidth;
+          var frac = range > 0 ? sw.scrollLeft / range : 0;
+          var travel = Math.max(0, sw.clientWidth - swline.offsetWidth);
+          swline.style.transform = 'translateX(' + (sw.scrollLeft + frac * travel) + 'px)';
+        }
       };
       sw.addEventListener('scroll', caption, { passive: true });
+      window.addEventListener('resize', caption, { passive: true });
       caption();
     }
   })();
