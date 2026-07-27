@@ -514,26 +514,30 @@
     document.body.classList.toggle('swtouch', !!isTouch);
     if (isTouch && sw) {
       var swline = sw.querySelector('.bx-swline');
-      var caption = function () {
-        /* Active swatch = the one nearest the strip's LEFT edge (left-aligned model):
-           at rest the first swatch sits flush-left, so it's reachable immediately, and
-           scrolling advances the active swatch one at a time. */
+      var swatchEls = [].slice.call(sw.querySelectorAll('.pdp-swatch'));   /* cached — the set never changes */
+      var ticking = false;
+      /* Active swatch = the one nearest the strip's LEFT edge (left-aligned model):
+         at rest the first swatch sits flush-left so it's reachable immediately, and
+         scrolling advances the active swatch one at a time. rAF-throttled to at most
+         one measure+write per frame so sliding stays smooth (the old handler ran the
+         whole getBoundingClientRect sweep + a text write on every scroll event). */
+      var update = function () {
+        ticking = false;
         var edge = sw.getBoundingClientRect().left, near = null, best = Infinity;
-        sw.querySelectorAll('.pdp-swatch').forEach(function (b) {
-          var d = Math.abs(b.getBoundingClientRect().left - edge);
-          if (d < best) { best = d; near = b; }
-        });
-        if (near) setTxt('pdpFinishName', near.getAttribute('data-finish'));
-        /* Indicator: align the short line to the active swatch's LEFT edge. Absolute
-           inside the scroller in content coords, so it rides with that swatch and hops
-           to the next as the active swatch changes — precise and scroll-controlled. */
-        if (swline && near) {
-          swline.style.transform = 'translateX(' + Math.round(near.offsetLeft) + 'px)';
+        for (var i = 0; i < swatchEls.length; i++) {
+          var d = Math.abs(swatchEls[i].getBoundingClientRect().left - edge);
+          if (d < best) { best = d; near = swatchEls[i]; }
         }
+        if (!near) return;
+        setTxt('pdpFinishName', near.getAttribute('data-finish'));
+        /* line aligns to the active swatch's left edge (content coords → rides with
+           that swatch, hops to the next as the active swatch changes) */
+        if (swline) swline.style.transform = 'translateX(' + Math.round(near.offsetLeft) + 'px)';
       };
-      sw.addEventListener('scroll', caption, { passive: true });
-      window.addEventListener('resize', caption, { passive: true });
-      caption();
+      var onScroll = function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+      sw.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      update();
     }
   })();
 
