@@ -687,6 +687,11 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
    paints in the dock's z-46 context, so below the quickbar it would cover the green
    bar as a blank strip. The quickbar itself seals the seam here, so drop it. */
 .cfgb-dock.is-fixed-dt::before { display: none; }
+/* No jump at the sticky→fixed handoff: the fixed dock carries a 0.7rem top gap
+   (white space above the ribbon over the quickbar), so the IN-FLOW desktop dock must
+   carry the same top offset — otherwise the ribbon drops 0.7rem the instant it pins.
+   Scoped to desktop (min-width 641px), where the fixed-dt behaviour applies. */
+@media (min-width: 40.0625rem) { .cfgb-dock { padding-top: 0.7rem; } }
 /* cap the strip above the pinned dock so scrolling options never peek through
    the header↔dock seam; the site header (higher z) covers the rest */
 .cfgb-dock.is-stuck::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%;
@@ -1441,11 +1446,11 @@ body.is-scrolled #quickbar {
 /* "Termin vereinbaren" action pinned to the right of the section nav — opens the same
    Kontakt & Service modal as the green contact bar (via data-cm-open). */
 .psx-nav__termin { margin-left: auto; align-self: center; flex: none; display: inline-flex; align-items: center; gap: 0.45rem;
-  padding: 0.5rem 1rem; border: 1px solid var(--color-teal); border-radius: var(--radius-pill);
-  background: none; color: var(--color-teal); font-family: inherit; font-size: 0.9rem; font-weight: 700; line-height: 1;
-  white-space: nowrap; cursor: pointer; transition: background .15s ease, color .15s ease; }
+  padding: 0.55rem 1.2rem; border: 0; border-radius: var(--radius-pill);
+  background: var(--color-teal); color: #fff; font-family: inherit; font-size: 0.9rem; font-weight: 700; line-height: 1;
+  white-space: nowrap; cursor: pointer; transition: background .15s ease; }
 .psx-nav__termin svg { width: 1.05rem; height: 1.05rem; }
-.psx-nav__termin:hover { background: var(--color-teal); color: #fff; }
+.psx-nav__termin:hover { background: var(--color-teal-hover); }
 .psx-nav__link { position: relative; display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap;
   padding: 1.05rem 0.15rem; font-size: 0.95rem; font-weight: 700; letter-spacing: -0.01em;
   color: var(--color-graphite-700); text-decoration: none; border-bottom: 2px solid transparent;
