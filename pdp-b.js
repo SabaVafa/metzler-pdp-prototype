@@ -645,10 +645,21 @@
       fAuthor.textContent = d.author; fDate.textContent = d.date;
       if (fAvatar) fAvatar.textContent = initials(d.author);
     }
+    /* Slide the thumbnail strip so the active thumb is fully in view (mobile scroller).
+       Centre it, then clamp to [0, maxScroll] so the arrows can always reach — and fully
+       reveal — the first and last thumbs instead of leaving them clipped by the arrows. */
+    function scrollThumbIntoView(i, instant) {
+      var b = thumbBtns[i]; if (!b) return;
+      var max = nav.scrollWidth - nav.clientWidth;
+      if (max <= 1) return;   /* desktop / not scrollable — no-op */
+      var target = Math.max(0, Math.min(max, b.offsetLeft - (nav.clientWidth - b.offsetWidth) / 2));
+      nav.scrollTo({ left: target, behavior: instant ? 'auto' : 'smooth' });
+    }
     function show(i) {
       if (i === idx) return;
       var first = idx === -1; idx = i; var d = data[i];
       thumbBtns.forEach(function (b, k) { b.setAttribute('aria-current', k === i ? 'true' : 'false'); });
+      scrollThumbIntoView(i, first);
       if (first) { apply(d); return; }
       card.classList.add('is-swapping');
       window.setTimeout(function () { apply(d); card.classList.remove('is-swapping'); }, 200);
