@@ -887,6 +887,9 @@ body.kbd-open .pdp-stickybar { display: none !important; }
   .pdp-b .cfgb .stepr__item { display: block; border: 1px solid var(--color-graphite-200); border-radius: 0; background: var(--color-white); }
   .pdp-b .cfgb .stepr__item.is-active { border-color: var(--color-teal); box-shadow: 0 0.5rem 1.5rem rgba(1,82,83,0.08); }
   .pdp-b .cfgb .stepr__head { display: flex !important; }
+  /* the section-header "Erforderlich" (green) duplicates the required flag already
+     shown in the progress dock above — drop it as redundant */
+  .pdp-b .cfgb .stepr__req { display: none; }
   .pdp-b .cfgb .stepr__body { display: grid !important; grid-template-rows: 0fr !important; }
   .pdp-b .cfgb .stepr__item.is-active .stepr__body { grid-template-rows: 1fr !important; }
   .pdp-b .cfgb .stepr__inner { overflow: hidden; }
