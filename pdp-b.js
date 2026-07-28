@@ -1205,12 +1205,13 @@
       var navTop = nav.getBoundingClientRect().top;
       var delta = Math.min(qbH, Math.max(0, (h + qbH) - navTop));
       var p = qbH ? delta / qbH : 0;   /* 0 → 1 handoff progress */
-      /* Baton-pass: the green contact bar slides up behind the header AND fades to
-         transparent as the section nav rises into its slot, so the nav is revealed
-         100% clear rather than sliding under an opaque bar. Fade a touch faster than
-         the slide (×1.4) so the bar is fully clear by the time the nav overlaps it. */
-      qb.style.transform = delta ? 'translate3d(0,' + (-delta) + 'px,0)' : '';
-      qb.style.opacity = p ? String(Math.max(0, 1 - p * 1.4)) : '';
+      /* Baton-pass: the contact bar stays PINNED under the header (it does not move) —
+         the section nav gradually slides UP UNDER it as you scroll, and the bar fades
+         from opaque to transparent in step (linear, so it stays visible through the
+         slide and is fully clear right as the nav lands). The nav is thus revealed 100%
+         clear and takes over as the sticky bar. */
+      qb.style.transform = '';
+      qb.style.opacity = p ? String(Math.max(0, 1 - p)) : '';
       /* once it starts fading it must not intercept taps meant for the section nav */
       qb.style.pointerEvents = p > 0.01 ? 'none' : '';
     } else {

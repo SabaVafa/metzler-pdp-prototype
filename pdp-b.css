@@ -1465,13 +1465,19 @@ html, body { overscroll-behavior-y: none; }
 
 /* ── Sticky handoff (desktop + mobile) ─────────────────────────────────────
    The green quickbar pins directly under the header while scrolling. As the
-   product-section nav (.psx-nav) rises into its slot, pdp-b.js slides the
-   quickbar up behind the header (translateY) so the section nav takes its place
-   — a clean baton-pass, not two stacked bars. */
+   product-section nav (.psx-nav) rises into its slot, pdp-b.js fades the quickbar
+   from opaque to transparent so the section nav slides up UNDER it and takes its
+   place — a clean baton-pass, not two stacked bars. */
 body.is-scrolled #quickbar {
   position: sticky; top: var(--pdp-header-h); z-index: 45;
   box-shadow: 0 8px 18px -14px rgba(1,40,40,0.55);
-  will-change: transform;
+  will-change: opacity;
+}
+/* Mobile: pin the contact bar ABOVE the section nav (which is z-index:50) so the nav
+   visibly slides UNDER it while it fades. Kept below the header (z-index:90). Mobile
+   only — desktop keeps the config-dock stacking untouched. */
+@media (max-width: 47.9375rem) {
+  body.is-scrolled #quickbar { z-index: 55; }
 }
 .psx-nav__inner { display: flex; gap: clamp(1.75rem, 4vw, 3.75rem); align-items: stretch;
   overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
