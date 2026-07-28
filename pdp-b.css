@@ -1322,7 +1322,7 @@ body.kbd-open .pdp-stickybar { display: none !important; }
 /* ── Summary — left zone of the panel, set apart by a soft tonal tint (a stats
    panel), not a divider line ── */
 .rv__summary { display: flex; flex-direction: column; justify-content: center; gap: 1.35rem;
-  padding: clamp(1.5rem, 3vw, 2.25rem); background: #E9ECF5; }   /* darker shade of --color-paper (#F5F6FA), same cool blue tint */
+  padding: clamp(1.5rem, 3vw, 2.25rem); background: var(--color-teal-50); }   /* soft mint-green tint, matching the info-icon backgrounds */
 
 /* score */
 .rv__score { text-align: center; }
