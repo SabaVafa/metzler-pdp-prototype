@@ -755,11 +755,14 @@ body.kbd-open .pdp-stickybar { display: none !important; }
      Snapping states is both reliable and crisp for a stepper. */
 }
 .cfgb-dock .cfgb-bar__step:first-child {
-  padding-left: 0.9rem;
+  /* extra right padding offsets the 10px arrow tip on the right so the number
+     centres in the visible chevron body, not the geometric box */
+  padding-left: 0.9rem; padding-right: 1.5rem;
   clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
 }
 .cfgb-dock .cfgb-bar__step:last-child {
-  padding-right: 0.9rem;
+  /* extra left padding offsets the 10px notch on the left, same reasoning */
+  padding-left: 1.5rem; padding-right: 0.9rem;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 10px 50%);
 }
 
