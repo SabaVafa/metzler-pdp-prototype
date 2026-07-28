@@ -607,9 +607,11 @@
      Snapping trapped it — snap-align:start put the last swatches' snap points past the
      max scroll, so it kept springing back and never reached the 6th–8th. */
 .swtouch .bx-swatches::-webkit-scrollbar { display: none; }
-/* trailing scroll space so the last swatches (6th–8th) can be slid into view — just
-   enough to bring the final swatch to centre, so there's no big blank gap at the end. */
-.swtouch .bx-swatches::after { content: ""; flex: 0 0 calc(50vw - 4.5rem); }
+/* trailing scroll space so EVERY swatch — including the last — can slide all the way
+   to the strip's left edge, which is where the JS marks the active swatch. Must be
+   (strip width − one swatch) = calc(100% − 5rem); the old 50vw value only reached the
+   CENTRE, so the final swatches never hit the left edge and the strip "stuck". */
+.swtouch .bx-swatches::after { content: ""; flex: 0 0 calc(100% - 5rem); }
 .swtouch .bx-swatches .pdp-swatch { flex: 0 0 5rem; justify-content: center; }
 /* Symmetric slots above and below each swatch keep the image vertically centred in
    the row (content aligned above and below). Transparent — the active cue is the
