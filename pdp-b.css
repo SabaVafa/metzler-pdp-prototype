@@ -2108,18 +2108,22 @@ body.is-scrolled #quickbar {
   .cfgb .cfg-opts .cfg-opt__mark { display: grid; position: relative; top: auto; right: auto; flex: none; margin: 0; }
   .cfgb .cfg-opts .cfg-opt__rec { position: static; margin: 0 0 0 auto; align-self: center; }
 
-  /* Product cards (Anschluss, Innenstationen — not the plain Gravur rows): move the
-     labels (price + status badge) onto a right-aligned top row so the thumbnail, name
-     and description get the full width below and no longer feel cramped. */
+  /* Product cards (Anschluss, Innenstationen — not the plain Gravur rows): the status
+     label pill (Empfohlen / Ausverkauft) sits on a right-aligned top row; the content
+     (thumb, name, description) and the price share the row below. Frees the title area
+     so cards don't feel cramped. */
   .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt {
     display: grid; grid-template-columns: auto 3.25rem minmax(0, 1fr) auto;
-    column-gap: 0.8rem; row-gap: 0.4rem; align-items: center; padding: 0.7rem 0.85rem; }
+    column-gap: 0.8rem; row-gap: 0.35rem; align-items: center; padding: 0.7rem 0.85rem; }
+  /* row 1 — the label pill, top-right */
+  .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt__rec,
+  .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt.is-unavailable .cfg-opt__badge {
+    position: static; grid-column: 1 / -1; grid-row: 1; justify-self: end; align-self: center; margin: 0; top: auto; right: auto; left: auto; }
+  /* row 2 — content + price */
   .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt__mark  { grid-column: 1; grid-row: 2; }
   .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt__thumb { grid-column: 2; grid-row: 2; }
-  .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt__body  { grid-column: 3 / -1; grid-row: 2; padding-right: 0; }
-  .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt__price { grid-column: 4; grid-row: 1; justify-self: end; align-self: center; margin: 0; padding: 0; text-align: right; white-space: nowrap; }
-  .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt.is-unavailable .cfg-opt__badge {
-    position: static; grid-column: 1 / 4; grid-row: 1; justify-self: end; align-self: center; top: auto; right: auto; left: auto; }
+  .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt__body  { grid-column: 3; grid-row: 2; padding-right: 0; }
+  .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt__price { grid-column: 4; grid-row: 2; justify-self: end; align-self: center; margin: 0; padding: 0; text-align: right; white-space: nowrap; }
 
   /* 2 · Trust badges → keep both in ONE row with identical frames (equal width +
      height), content centred. Stop the pre-line wrapping so "Garantie" never
