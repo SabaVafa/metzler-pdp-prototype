@@ -2136,6 +2136,9 @@ body.is-scrolled #quickbar {
   .pdp-b .hl__badge-pre { white-space: nowrap; font-size: 0.72rem; }
   .pdp-b .hl__badge-txt b { font-size: 0.85rem; }
   .pdp-b .hl__badge-seal { width: 26px; height: 26px; }   /* match the flag coin size */
+  /* the Garantie SVG only fills ~68% of its viewBox (transparent margin); scale it up
+     to crop that padding so the gold coin visually fills the 26px box like the flag */
+  .pdp-b .hl__badge-seal:not(.hl__badge-seal--flag) { transform: scale(1.48); }
   .pdp-b .hl__badge-seal--flag { width: 26px; height: 26px; }   /* square so border-radius:50% is a round flag coin, not a squashed oval */
 
   /* 3 · Spec table (Datenblatt) → block rows so the value pills sit flush-left,
