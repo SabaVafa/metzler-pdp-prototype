@@ -2157,6 +2157,10 @@ body.is-scrolled #quickbar {
   .dspec__row { display: block; }
   .dspec__key { border-right: 0; }
   .dspec__val { padding-top: 0.15rem; margin-left: 0; }   /* kill the 40px indent so pills align under the title */
+  /* Align the pill TEXT (not just the pill box) with the title text: pull the pill row
+     left by the chip's own left inset (border 1px + padding 0.65rem) so "IP-System" lines
+     up under "System". Plain-text value rows keep the normal 1.15rem inset. */
+  .dspec__val:not(.dspec__val--plain) { padding-left: calc(1.15rem - 0.65rem - 1px); }
   /* manufacturer / safety footer → one cohesive block anchored to the spec table by
      a hairline divider: the info icon leads the address inline, and the safety notice
      becomes a full-width tinted banner (was a lone outlined pill floating on its line). */
