@@ -32,6 +32,7 @@
     max-width: none; padding: 0; overflow: visible;
     -webkit-mask-image: none; mask-image: none; }
   .pdp-b .pdp-media .pdp-thumbs li { flex: initial; scroll-snap-align: none; }
+  .pdp-b .pdp-media .pdp-thumbs::after { display: none; }   /* the mobile fade-clearance spacer has no place in the desktop grid */
   .pdp-b .pdp-media .pdp-thumbs li:nth-child(n+11) { display: none; }   /* first 10 inline; rest in the lightbox */
   .pdp-b .pdp-media .pdp-thumbs button { width: 100%; height: auto; aspect-ratio: 1; padding: 0.5rem; }
   .pdp-b .pdp-media .pdp-thumbs__all:not([hidden]) { display: inline-flex; }
@@ -2140,10 +2141,15 @@ body.is-scrolled #quickbar {
   .pdp-b .hl__badges .hl__badge,
   .pdp-b .hl__badges--infeat .hl__badge { flex: 1 1 0; min-width: 0; justify-content: center; gap: 0.5rem; padding: 0.55rem 0.4rem; }
   .pdp-b .hl__badges .hl__badge + .hl__badge,
-  .pdp-b .hl__badges--infeat .hl__badge + .hl__badge { border-left: 1px solid var(--color-graphite-300); border-top: 0; }
+  /* separate framed chips in a row — restore ALL borders (the ≤560px stack rule zeroes
+     border-top/left for a vertical stack, but here they sit side by side with a gap) */
+  .pdp-b .hl__badges--infeat .hl__badge + .hl__badge { border-left: 1px solid var(--color-graphite-300); border-top: 1px solid var(--color-graphite-300); }
   .pdp-b .hl__badge-pre { white-space: nowrap; font-size: 0.72rem; }
   .pdp-b .hl__badge-txt b { font-size: 0.85rem; }
-  .pdp-b .hl__badge-seal { width: 26px; height: 26px; }   /* match the flag coin size (Garantie-hq.svg fills its viewBox, so no scale hack needed) */
+  /* The gold seal is a starburst (points + negative space), so at an equal box it reads
+     smaller than the solid flag disc — give it a larger box so the two marks look the
+     same size, mirroring the desktop ratio. */
+  .pdp-b .hl__badge-seal { width: 30px; height: 30px; }
   .pdp-b .hl__badge-seal--flag { width: 26px; height: 26px; }   /* square so border-radius:50% is a round flag coin, not a squashed oval */
 
   /* 3 · Spec table (Datenblatt) → block rows so the value pills sit flush-left,

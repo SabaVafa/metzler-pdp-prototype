@@ -109,6 +109,9 @@
   -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 2.25rem), transparent);
   mask-image: linear-gradient(90deg, #000 calc(100% - 2.25rem), transparent); }
 .pdp-thumbs::-webkit-scrollbar { display: none; }
+/* trailing spacer = the fade width, so at the end of the scroll the LAST thumbnail sits
+   clear of the right-edge fade mask instead of disappearing under it */
+.pdp-thumbs::after { content: ""; flex: 0 0 2.25rem; }
 .pdp-thumbs li { margin: 0; flex: none; scroll-snap-align: start; }
 .pdp-thumbs button {
   width: 5rem; height: 5rem; padding: 0.4rem; cursor: pointer;
