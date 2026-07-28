@@ -1204,9 +1204,19 @@
       var qbH = qb.offsetHeight;
       var navTop = nav.getBoundingClientRect().top;
       var delta = Math.min(qbH, Math.max(0, (h + qbH) - navTop));
+      var p = qbH ? delta / qbH : 0;   /* 0 → 1 handoff progress */
+      /* Baton-pass: the green contact bar slides up behind the header AND fades to
+         transparent as the section nav rises into its slot, so the nav is revealed
+         100% clear rather than sliding under an opaque bar. Fade a touch faster than
+         the slide (×1.4) so the bar is fully clear by the time the nav overlaps it. */
       qb.style.transform = delta ? 'translate3d(0,' + (-delta) + 'px,0)' : '';
+      qb.style.opacity = p ? String(Math.max(0, 1 - p * 1.4)) : '';
+      /* once it starts fading it must not intercept taps meant for the section nav */
+      qb.style.pointerEvents = p > 0.01 ? 'none' : '';
     } else {
       qb.style.transform = '';
+      qb.style.opacity = '';
+      qb.style.pointerEvents = '';
     }
   }
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
