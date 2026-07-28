@@ -516,22 +516,24 @@
       var swline = sw.querySelector('.bx-swline');
       var swatchEls = [].slice.call(sw.querySelectorAll('.pdp-swatch'));   /* cached — the set never changes */
       var ticking = false;
-      /* Active swatch = the one nearest the strip's LEFT edge (left-aligned model):
-         at rest the first swatch sits flush-left so it's reachable immediately, and
-         scrolling advances the active swatch one at a time. rAF-throttled to at most
-         one measure+write per frame so sliding stays smooth (the old handler ran the
-         whole getBoundingClientRect sweep + a text write on every scroll event). */
+      /* Active swatch = mapped from SCROLL PROGRESS across the whole strip: the first
+         swatch is active at rest and the last at max scroll, with the rest spread evenly
+         between. This replaces the old "nearest the left edge" model, which needed a
+         viewport-wide trailing gap to drag the final swatch to the left edge (that gap
+         left a big blank space at the end, and on narrow phones the strip ran out of
+         runway and "stuck" before the last swatches). rAF-throttled to one measure+write
+         per frame so sliding stays smooth. */
       var update = function () {
         ticking = false;
-        var edge = sw.getBoundingClientRect().left, near = null, best = Infinity;
-        for (var i = 0; i < swatchEls.length; i++) {
-          var d = Math.abs(swatchEls[i].getBoundingClientRect().left - edge);
-          if (d < best) { best = d; near = swatchEls[i]; }
-        }
+        var maxScroll = sw.scrollWidth - sw.clientWidth;
+        var frac = maxScroll > 0 ? sw.scrollLeft / maxScroll : 0;
+        var idx = Math.round(frac * (swatchEls.length - 1));
+        if (idx < 0) idx = 0; else if (idx > swatchEls.length - 1) idx = swatchEls.length - 1;
+        var near = swatchEls[idx];
         if (!near) return;
         setTxt('pdpFinishName', near.getAttribute('data-finish'));
-        /* line aligns to the active swatch's left edge (content coords → rides with
-           that swatch, hops to the next as the active swatch changes) */
+        /* line sits under the active swatch (content coords → rides with the scroll,
+           hops to the next swatch as the active index changes) */
         if (swline) swline.style.transform = 'translateX(' + Math.round(near.offsetLeft) + 'px)';
       };
       var onScroll = function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
