@@ -2136,7 +2136,7 @@ body.is-scrolled #quickbar {
   .pdp-b .hl__badge-pre { white-space: nowrap; font-size: 0.72rem; }
   .pdp-b .hl__badge-txt b { font-size: 0.85rem; }
   .pdp-b .hl__badge-seal { width: 32px; height: 32px; }
-  .pdp-b .hl__badge-seal--flag { width: 26px; height: 17px; }
+  .pdp-b .hl__badge-seal--flag { width: 26px; height: 26px; }   /* square so border-radius:50% is a round flag coin, not a squashed oval */
 
   /* 3 · Spec table (Datenblatt) → block rows so the value pills sit flush-left,
      perfectly aligned under each section title (grid was offsetting the value cell) */
