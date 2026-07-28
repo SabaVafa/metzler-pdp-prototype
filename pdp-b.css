@@ -2149,7 +2149,7 @@ body.is-scrolled #quickbar {
   /* The gold seal is a starburst (points + negative space), so at an equal box it reads
      smaller than the solid flag disc — give it a larger box so the two marks look the
      same size, mirroring the desktop ratio. */
-  .pdp-b .hl__badge-seal { width: 30px; height: 30px; }
+  .pdp-b .hl__badge-seal { width: 28px; height: 28px; }
   .pdp-b .hl__badge-seal--flag { width: 26px; height: 26px; }   /* square so border-radius:50% is a round flag coin, not a squashed oval */
 
   /* 3 · Spec table (Datenblatt) → block rows so the value pills sit flush-left,

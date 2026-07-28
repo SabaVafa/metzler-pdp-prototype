@@ -106,12 +106,12 @@
   min-width: 0; max-width: 100%;   /* let the strip scroll internally instead of stretching the page */
   overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity; scroll-padding: 2px;
   scrollbar-width: none; -ms-overflow-style: none;
-  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 2.25rem), transparent);
-  mask-image: linear-gradient(90deg, #000 calc(100% - 2.25rem), transparent); }
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 1.25rem), transparent);
+  mask-image: linear-gradient(90deg, #000 calc(100% - 1.25rem), transparent); }
 .pdp-thumbs::-webkit-scrollbar { display: none; }
-/* trailing spacer = the fade width, so at the end of the scroll the LAST thumbnail sits
-   clear of the right-edge fade mask instead of disappearing under it */
-.pdp-thumbs::after { content: ""; flex: 0 0 2.25rem; }
+/* small trailing spacer (fade width − the gap) so the LAST thumbnail scrolls just clear
+   of the right-edge fade — enough to not look cut off, without a big blank at the end */
+.pdp-thumbs::after { content: ""; flex: 0 0 0.625rem; }
 .pdp-thumbs li { margin: 0; flex: none; scroll-snap-align: start; }
 .pdp-thumbs button {
   width: 5rem; height: 5rem; padding: 0.4rem; cursor: pointer;
