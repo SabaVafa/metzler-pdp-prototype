@@ -888,7 +888,7 @@ body.kbd-open .pdp-stickybar { display: none !important; }
   .pdp-b .cfgb .cfgb-stage { padding: 0; }
   .pdp-b .cfgb .stepr { gap: 0.6rem; }
   .pdp-b .cfgb .stepr__item { display: block; border: 1px solid var(--color-graphite-200); border-radius: 0; background: var(--color-white); }
-  .pdp-b .cfgb .stepr__item.is-active { border-color: var(--color-teal); box-shadow: 0 0.5rem 1.5rem rgba(1,82,83,0.08); }
+  .pdp-b .cfgb .stepr__item.is-active { border-color: var(--color-graphite-200); box-shadow: 0 0.5rem 1.5rem rgba(1,82,83,0.08); }   /* no green ring around the expanded section */
   .pdp-b .cfgb .stepr__head { display: flex !important; }
   /* the section-header "Erforderlich" (green) duplicates the required flag already
      shown in the progress dock above — drop it as redundant */
@@ -2107,6 +2107,19 @@ body.is-scrolled #quickbar {
   /* show the selection control (checkbox / radio) on mobile too — parity with desktop */
   .cfgb .cfg-opts .cfg-opt__mark { display: grid; position: relative; top: auto; right: auto; flex: none; margin: 0; }
   .cfgb .cfg-opts .cfg-opt__rec { position: static; margin: 0 0 0 auto; align-self: center; }
+
+  /* Product cards (Anschluss, Innenstationen — not the plain Gravur rows): move the
+     labels (price + status badge) onto a right-aligned top row so the thumbnail, name
+     and description get the full width below and no longer feel cramped. */
+  .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt {
+    display: grid; grid-template-columns: auto 3.25rem minmax(0, 1fr) auto;
+    column-gap: 0.8rem; row-gap: 0.4rem; align-items: center; padding: 0.7rem 0.85rem; }
+  .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt__mark  { grid-column: 1; grid-row: 2; }
+  .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt__thumb { grid-column: 2; grid-row: 2; }
+  .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt__body  { grid-column: 3 / -1; grid-row: 2; padding-right: 0; }
+  .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt__price { grid-column: 4; grid-row: 1; justify-self: end; align-self: center; margin: 0; padding: 0; text-align: right; white-space: nowrap; }
+  .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt.is-unavailable .cfg-opt__badge {
+    position: static; grid-column: 1 / 4; grid-row: 1; justify-self: end; align-self: center; top: auto; right: auto; left: auto; }
 
   /* 2 · Trust badges → keep both in ONE row with identical frames (equal width +
      height), content centred. Stop the pre-line wrapping so "Garantie" never
