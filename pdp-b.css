@@ -2135,7 +2135,7 @@ body.is-scrolled #quickbar {
   .pdp-b .hl__badges--infeat .hl__badge + .hl__badge { border-left: 1px solid var(--color-graphite-300); border-top: 0; }
   .pdp-b .hl__badge-pre { white-space: nowrap; font-size: 0.72rem; }
   .pdp-b .hl__badge-txt b { font-size: 0.85rem; }
-  .pdp-b .hl__badge-seal { width: 32px; height: 32px; }
+  .pdp-b .hl__badge-seal { width: 26px; height: 26px; }   /* match the flag coin size */
   .pdp-b .hl__badge-seal--flag { width: 26px; height: 26px; }   /* square so border-radius:50% is a round flag coin, not a squashed oval */
 
   /* 3 · Spec table (Datenblatt) → block rows so the value pills sit flush-left,
