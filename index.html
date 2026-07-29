@@ -16,7 +16,7 @@
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=30" />
 <!-- Version B — inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=418" />
+<link rel="stylesheet" href="pdp-b.css?v=419" />
 </head>
 <body class="plp">
 
@@ -1464,13 +1464,18 @@
 <div class="pdp-lightbox" id="pdpLightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Alle Produktbilder">
   <div class="pdp-lightbox__backdrop" data-lb-close></div>
   <div class="pdp-lightbox__panel">
-    <div class="pdp-lightbox__head">
-      <span class="pdp-lightbox__title">Alle Bilder</span>
+    <div class="pdp-lightbox__bar">
+      <span class="pdp-lightbox__counter"><span id="pdpLbCur">1</span>&nbsp;/&nbsp;<span id="pdpLbTotal">30</span></span>
       <button type="button" class="pdp-lightbox__close" data-lb-close aria-label="Schließen">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
       </button>
     </div>
-    <div class="pdp-lightbox__grid" id="pdpLightboxGrid"></div>
+    <div class="pdp-lightbox__stage">
+      <button type="button" class="pdp-lightbox__nav pdp-lightbox__nav--prev" id="pdpLbPrev" aria-label="Vorheriges Bild"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <img class="pdp-lightbox__img" id="pdpLbImg" alt="">
+      <button type="button" class="pdp-lightbox__nav pdp-lightbox__nav--next" id="pdpLbNext" aria-label="Nächstes Bild"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+    <div class="pdp-lightbox__strip" id="pdpLbStrip"></div>
   </div>
 </div>
 
@@ -1844,6 +1849,6 @@
 </div>
 
 <script src="chrome.js?v=2"></script>
-<script src="pdp-b.js?v=118"></script>
+<script src="pdp-b.js?v=119"></script>
 </body>
 </html>

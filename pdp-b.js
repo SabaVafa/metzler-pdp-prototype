@@ -554,51 +554,81 @@
     if (im) { mainImg.style.opacity = '0'; window.setTimeout(function () { mainImg.src = im.getAttribute('src'); mainImg.alt = im.getAttribute('alt') || mainImg.alt; mainImg.style.opacity = '1'; }, 160); }
   });
 
-  /* ── Thumbnails beyond the inline limit → "Alle Bilder" lightbox.
-     A modal (page scroll locked behind it) avoids any nested-scroll conflict. ── */
+  /* ── Full-screen image viewer (lightbox): one big image with prev/next, a position
+     counter, and a sliding thumbnail strip along the bottom. Opens from the "Alle
+     Bilder" button or by clicking the main image; page scroll is locked behind it. ── */
   (function () {
-    var lb = $('pdpLightbox'), lbGrid = $('pdpLightboxGrid'), allBtn = $('pdpThumbsAll');
-    if (!thumbs || !lb || !lbGrid) return;
-    var items = [].slice.call(thumbs.querySelectorAll('li img'));
-    var LIMIT = 10;   /* must match the CSS `:nth-child(n+11)` inline limit */
+    var lb = $('pdpLightbox'), strip = $('pdpLbStrip'), lbImg = $('pdpLbImg'),
+        curEl = $('pdpLbCur'), totalEl = $('pdpLbTotal'),
+        prevBtn = $('pdpLbPrev'), nextBtn = $('pdpLbNext'), allBtn = $('pdpThumbsAll');
+    if (!thumbs || !lb || !strip || !lbImg) return;
+    var data = [].slice.call(thumbs.querySelectorAll('li img')).map(function (im) {
+      return { src: im.getAttribute('src'), alt: im.getAttribute('alt') || '' };
+    });
+    if (!data.length) return;
+    var LIMIT = 10;   /* first 10 inline; the button reveals the full set in the viewer */
+    if (allBtn && data.length > LIMIT) { var cnt = $('pdpThumbsCount'); if (cnt) cnt.textContent = data.length; allBtn.hidden = false; }
+    if (totalEl) totalEl.textContent = data.length;
 
-    if (allBtn && items.length > LIMIT) {
-      var cnt = $('pdpThumbsCount'); if (cnt) cnt.textContent = items.length;
-      allBtn.hidden = false;
+    var idx = 0, lastFocus = null;
+    var thumbBtns = data.map(function (d, i) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'pdp-lightbox__thumb';
+      b.setAttribute('aria-label', 'Bild ' + (i + 1));
+      var g = document.createElement('img'); g.src = d.src; g.alt = ''; g.loading = 'lazy';
+      b.appendChild(g);
+      b.addEventListener('click', function () { show(i); });
+      strip.appendChild(b); return b;
+    });
+
+    function scrollThumbIntoView(i) {
+      var b = thumbBtns[i]; if (!b) return;
+      var max = strip.scrollWidth - strip.clientWidth; if (max <= 1) return;
+      var target = Math.max(0, Math.min(max, b.offsetLeft - (strip.clientWidth - b.offsetWidth) / 2));
+      strip.scrollTo({ left: target, behavior: 'smooth' });
     }
-
-    var lastFocus = null;
+    function show(i) {
+      idx = (i + data.length) % data.length;   /* wrap at both ends */
+      var d = data[idx];
+      lbImg.src = d.src; lbImg.alt = d.alt;
+      if (curEl) curEl.textContent = idx + 1;
+      thumbBtns.forEach(function (b, k) { b.setAttribute('aria-current', k === idx ? 'true' : 'false'); });
+      scrollThumbIntoView(idx);
+      /* keep the page's main image + active inline thumb in sync with what's being viewed */
+      if (mainImg) { mainImg.src = d.src; mainImg.alt = d.alt || mainImg.alt; }
+      thumbs.querySelectorAll('button').forEach(function (x) {
+        var xi = x.querySelector('img');
+        x.setAttribute('aria-current', xi && xi.getAttribute('src') === d.src ? 'true' : 'false');
+      });
+    }
+    function currentMainIdx() {
+      var cur = mainImg ? mainImg.getAttribute('src') : null;
+      for (var j = 0; j < data.length; j++) { if (data[j].src === cur) return j; }
+      return 0;
+    }
+    function openAt(i) {
+      lastFocus = document.activeElement;
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';   /* lock the page so the modal owns the scroll */
+      show(i);
+      if (nextBtn) nextBtn.focus();
+    }
     function closeLb() {
       lb.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
       if (lastFocus && lastFocus.focus) lastFocus.focus();
     }
-    function openLb() {
-      lastFocus = document.activeElement;
-      lb.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';   /* lock the page so the modal owns the scroll */
-      var c = lb.querySelector('.pdp-lightbox__close'); if (c) c.focus();
-    }
 
-    items.forEach(function (im) {
-      var b = document.createElement('button'); b.type = 'button';
-      var g = document.createElement('img');
-      g.src = im.getAttribute('src'); g.alt = im.getAttribute('alt') || ''; g.loading = 'lazy';
-      b.appendChild(g);
-      b.addEventListener('click', function () {
-        if (mainImg) { mainImg.style.opacity = '0'; window.setTimeout(function () { mainImg.src = g.src; mainImg.alt = g.alt || mainImg.alt; mainImg.style.opacity = '1'; }, 160); }
-        thumbs.querySelectorAll('button').forEach(function (x) {
-          var xi = x.querySelector('img');
-          x.setAttribute('aria-current', xi && xi.getAttribute('src') === g.src ? 'true' : 'false');
-        });
-        closeLb();
-      });
-      lbGrid.appendChild(b);
-    });
-
-    if (allBtn) allBtn.addEventListener('click', openLb);
+    if (prevBtn) prevBtn.addEventListener('click', function () { show(idx - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { show(idx + 1); });
+    if (allBtn) allBtn.addEventListener('click', function () { openAt(currentMainIdx()); });
+    if (mainImg) { mainImg.style.cursor = 'zoom-in'; mainImg.addEventListener('click', function () { openAt(currentMainIdx()); }); }
     lb.addEventListener('click', function (e) { if (e.target.closest('[data-lb-close]')) closeLb(); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lb.getAttribute('aria-hidden') === 'false') closeLb(); });
+    document.addEventListener('keydown', function (e) {
+      if (lb.getAttribute('aria-hidden') !== 'false') return;
+      if (e.key === 'Escape') closeLb();
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); show(idx - 1); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); show(idx + 1); }
+    });
   })();
 
   /* ── Reviews: featured happy testimonial + customer-photo thumbnail nav.
