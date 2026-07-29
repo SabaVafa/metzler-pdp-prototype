@@ -1598,17 +1598,19 @@ body.is-scrolled #quickbar {
   grid-template-columns: 1fr; gap: clamp(0.85rem,1.5vw,1.15rem); }
 @media (min-width: 40rem)  { .nfeat__grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 60rem)  { .nfeat__grid { grid-template-columns: repeat(3, 1fr); } }
+/* glass cards on the teal panel (style borrowed from the XDM10 .hl-card): a faint
+   translucent-white fill + hairline light border, white text, lift + teal-glow on hover */
 .nfeat__card { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 0.55rem;
-  padding: clamp(1.25rem,2vw,1.6rem); background: var(--color-white); border-radius: var(--radius-lg);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
-  transition: transform .2s ease, box-shadow .25s ease; }
-.nfeat__card:hover { transform: translateY(-4px); box-shadow: 0 22px 38px -22px rgba(0,0,0,0.5); }
+  padding: clamp(1.25rem,2vw,1.6rem); background: rgba(255,255,255,0.055);
+  border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius-lg);
+  transition: transform .3s ease, background .3s ease, border-color .3s ease; }
+.nfeat__card:hover { transform: translateY(-6px); background: rgba(255,255,255,0.09); border-color: rgba(63,176,177,0.45); }
 .nfeat__cardtitle { position: relative; margin: 0; padding-bottom: 0.55rem; font-size: 1.0625rem; font-weight: 800;
-  letter-spacing: -0.01em; color: var(--color-digital-black); }
+  letter-spacing: -0.01em; color: #fff; }
 .nfeat__cardtitle::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 1.5rem;
-  background: var(--color-teal); border-radius: 2px; transition: width .25s ease; }
+  background: #3fb0b1; border-radius: 2px; transition: width .25s ease; }
 .nfeat__card:hover .nfeat__cardtitle::after { width: 3rem; }
-.nfeat__cardtext { margin: 0; font-size: 0.9rem; line-height: 1.55; color: var(--color-graphite-700); }
+.nfeat__cardtext { margin: 0; font-size: 0.9rem; line-height: 1.55; color: rgba(255,255,255,0.75); }
 
 /* ============================================================
    Kameratechnologie showcase — premium camera deep-dive.
