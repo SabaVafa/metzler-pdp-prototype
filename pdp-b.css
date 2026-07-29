@@ -1714,14 +1714,6 @@ body.is-scrolled #quickbar {
 .psx-story__media { position: sticky;
   top: max(1rem, calc(50vh - min(35vh, 17rem)));
   height: min(70vh, 34rem); border-radius: var(--radius-lg); overflow: hidden; background: var(--color-paper); }
-/* On shorter viewports (< ~932px) true viewport-centring would tuck the image up under
-   the nav. Centre it in the space BELOW the nav instead. Use a FIXED nav offset (≈9rem =
-   the compacted header + section-nav) rather than the live --pdp-header-h: the header
-   compacts on scroll, so a var-based top would make the sticky image DRIFT. A constant
-   keeps it genuinely fixed. top = navBottom/2 (4.5rem) + 50vh − halfHeight, floored. */
-@media (max-height: 931px) {
-  .psx-story__media { top: max(9rem, calc(4.5rem + 50vh - min(35vh, 17rem))); }
-}
 .psx-story__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
   opacity: 0; transform: scale(1.06); transition: opacity .6s ease, transform 1.4s cubic-bezier(.2,.7,.2,1); }
 .psx-story__img.is-active { opacity: 1; transform: scale(1); }
