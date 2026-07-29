@@ -264,8 +264,9 @@
 @keyframes ralpick-shake { 0%,100%{transform:none} 20%{transform:translateX(-5px)} 40%{transform:translateX(5px)} 60%{transform:translateX(-3px)} 80%{transform:translateX(3px)} }
 
 /* the search + grid live inside a framed panel; the search field is the main control */
-.ralpick__body { display: flex; flex-direction: column; gap: 0.85rem;
-  padding: 0.9rem; border: 1px solid var(--color-graphite-200); border-radius: var(--radius-lg); background: var(--color-paper); }
+/* collapsed = just the search field, no frame; the paper panel only appears once the palette opens */
+.ralpick__body { display: flex; flex-direction: column; gap: 0.85rem; }
+.ralpick.is-open .ralpick__body { padding: 0.9rem; border: 1px solid var(--color-graphite-200); border-radius: var(--radius-lg); background: var(--color-paper); }
 
 /* search bar — one box holding icon · input · clear · chevron toggle */
 .ralpick__search { position: relative; display: flex; align-items: center; gap: 0.4rem; height: 2.85rem;
