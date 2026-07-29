@@ -1980,9 +1980,7 @@ body.is-scrolled #quickbar {
 /* rail — design-system dark band (matches .nfeat): mint tint over the
    teal→teal-700→digital-black diagonal; the fill divides it from the white panel */
 .techms__rail { display: flex; flex-direction: row; gap: 0.2rem; padding: 0.6rem; overflow-x: auto; scrollbar-width: none;
-  background:
-    radial-gradient(120% 55% at 18% -5%, rgba(92,219,211,0.14) 0%, transparent 55%),
-    linear-gradient(160deg, var(--color-teal) 0%, var(--color-teal-700) 55%, var(--color-teal-900) 100%); }
+  background: linear-gradient(165deg, var(--color-teal) 0%, var(--color-teal-600) 45%, var(--color-teal-700) 100%); }
 .techms__rail::-webkit-scrollbar { display: none; }
 @media (min-width: 56rem) {
   .techms__rail { flex-direction: column; gap: 0.2rem; padding: 0.85rem 0.7rem; overflow: visible; }
