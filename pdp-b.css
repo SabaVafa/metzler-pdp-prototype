@@ -688,7 +688,7 @@
 /* CTA stays on a single line and sizes to its content */
 /* size the CTA to its content (comfy padding) and push it to the right so a clear gap
    opens between the price and the button, instead of the button filling the whole row */
-.sheet__foot .pdp-cta { flex: 0 1 auto; width: auto; min-width: 28rem; max-width: 60%; margin-left: auto; padding: 0 2.75rem; white-space: nowrap; background: var(--color-teal); box-shadow: 0 0.375rem 0.9rem rgba(1,82,83,0.15); }
+.sheet__foot .pdp-cta { flex: 0 1 auto; width: auto; min-width: 40rem; max-width: 78%; margin-left: auto; padding: 0 2.75rem; white-space: nowrap; background: var(--color-teal); box-shadow: 0 0.375rem 0.9rem rgba(1,82,83,0.15); }
 .sheet__foot .pdp-cta:hover { background: var(--color-teal-hover); }
 /* full-width bottom drawer — inner content comfortably centered on wide screens */
 .sheet__head, .sheet .cfgb-summary, .sheet__foot { width: 100%; max-width: 64rem; margin-left: auto; margin-right: auto; }
