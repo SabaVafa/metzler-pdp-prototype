@@ -452,6 +452,21 @@
     var panel = $('ralPick'), grid = $('ralGrid'), search = $('ralSearch'), clearBtn = $('ralClear'), empty = $('ralEmpty');
     if (!panel || !grid) return;
     var curQ = '';
+    var toggleBtn = $('ralToggle');
+
+    /* the picker sits collapsed by default — only the search field + chevron show.
+       The palette opens on the chevron, or when the field is focused / typed into,
+       and closes again after a tone is picked (or on an outside click). */
+    function openGrid()  { panel.classList.add('is-open');  if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'true'); }
+    function closeGrid() { panel.classList.remove('is-open'); if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false'); }
+    if (toggleBtn) toggleBtn.addEventListener('click', function () {
+      if (panel.classList.contains('is-open')) closeGrid();
+      else { openGrid(); if (search) search.focus(); }
+    });
+    if (search) { search.addEventListener('focus', openGrid); search.addEventListener('click', openGrid); }
+    document.addEventListener('click', function (e) {
+      if (panel.classList.contains('is-open') && !panel.contains(e.target)) closeGrid();
+    });
 
     grid.innerHTML = RAL.map(function (c) {
       return '<button type="button" class="ral-chip" role="option" aria-selected="false" data-code="' + c.code + '" data-fam="' + c.fam + '"'
@@ -480,7 +495,7 @@
       });
     }
 
-    if (search) search.addEventListener('input', function () { curQ = this.value; if (clearBtn) clearBtn.hidden = !this.value; applyFilter(); });
+    if (search) search.addEventListener('input', function () { curQ = this.value; if (clearBtn) clearBtn.hidden = !this.value; openGrid(); applyFilter(); });
     if (clearBtn) clearBtn.addEventListener('click', function () { search.value = ''; curQ = ''; this.hidden = true; applyFilter(); search.focus(); });
 
     grid.addEventListener('click', function (e) {
@@ -491,11 +506,12 @@
       /* mirror the chosen code into the search field — WITHOUT filtering, so the
          rest of the palette stays visible (curQ is left untouched) */
       if (search) { search.value = 'RAL ' + c.code; if (clearBtn) clearBtn.hidden = false; }
+      closeGrid();   /* selection made → collapse back to the field + chevron */
       refresh();
     });
 
     ralUI = {
-      open: function () { panel.classList.add('is-shown'); applyFilter(); sync(); },
+      open: function () { panel.classList.add('is-shown'); applyFilter(); sync(); closeGrid(); },
       close: function () { panel.classList.remove('is-shown'); },
       flash: function () { panel.classList.remove('is-invalid'); void panel.offsetWidth; panel.classList.add('is-invalid'); },
       sync: sync

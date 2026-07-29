@@ -267,9 +267,9 @@
 .ralpick__body { display: flex; flex-direction: column; gap: 0.85rem;
   padding: 0.9rem; border: 1px solid var(--color-graphite-200); border-radius: var(--radius-lg); background: var(--color-paper); }
 
-/* search bar — one box holding icon · input · clear · filter link */
+/* search bar — one box holding icon · input · clear · chevron toggle */
 .ralpick__search { position: relative; display: flex; align-items: center; gap: 0.4rem; height: 2.85rem;
-  padding: 0 0.55rem 0 0.85rem; background: var(--color-white);
+  padding: 0 0.35rem 0 0.85rem; background: var(--color-white);
   border: 1px solid var(--color-graphite-300); border-radius: var(--radius); }
 .ralpick__search:focus-within { border-color: var(--color-teal); }
 .ralpick__searchicon { flex: none; width: 1.1rem; height: 1.1rem; color: var(--color-graphite-500); }
@@ -281,8 +281,18 @@
 .ralpick__clear:hover { color: var(--color-graphite-700); }
 .ralpick__clear svg { width: 1.4rem; height: 1.4rem; }
 
-.ralpick__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); gap: 0.5rem;
+/* chevron toggle — opens/closes the palette; the picker sits collapsed (field + chevron only) by default */
+.ralpick__toggle { flex: none; display: grid; place-items: center; width: 2rem; height: 2rem;
+  border: 0; background: none; color: var(--color-graphite-500); cursor: pointer; }
+.ralpick__toggle:hover { color: var(--color-teal); }
+.ralpick__toggle svg { width: 1.35rem; height: 1.35rem; transition: transform .2s ease; }
+.ralpick__toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+/* palette + empty message are hidden while collapsed; they reveal when the picker is open */
+.ralpick__grid, .ralpick__empty { display: none; }
+.ralpick.is-open .ralpick__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); gap: 0.5rem;
   max-height: 17.5rem; overflow-y: auto; }
+.ralpick.is-open .ralpick__empty:not([hidden]) { display: block; }
 .ral-chip { position: relative; display: flex; flex-direction: column; justify-content: flex-end; gap: 0.1rem;
   height: 4.2rem; padding: 0.4rem 0.5rem; text-align: left; cursor: pointer;
   border: 1px solid rgba(0,0,0,0.12); border-radius: var(--radius); overflow: hidden; }

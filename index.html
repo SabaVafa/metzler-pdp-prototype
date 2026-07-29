@@ -16,7 +16,7 @@
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=30" />
 <!-- Version B — inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=435" />
+<link rel="stylesheet" href="pdp-b.css?v=438" />
 </head>
 <body class="plp">
 
@@ -456,7 +456,7 @@
               <div class="ralpick__search">
                 <svg class="ralpick__searchicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
                 <input class="ralpick__input" id="ralSearch" type="search" autocomplete="off" placeholder="RAL-Code oder Farbname suchen (z. B. 7016 oder Anthrazit)" aria-label="RAL-Farbe suchen">
-                <button type="button" class="ralpick__clear" id="ralClear" hidden aria-label="Suche löschen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+                <button type="button" class="ralpick__toggle" id="ralToggle" aria-expanded="false" aria-controls="ralGrid" aria-label="Farbpalette anzeigen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
               </div>
               <div class="ralpick__grid" id="ralGrid" role="listbox" aria-label="RAL-Farben"></div>
               <p class="ralpick__empty" id="ralEmpty" hidden>Keine Farbe gefunden — bitte Suche anpassen.</p>
@@ -1851,6 +1851,6 @@
 </div>
 
 <script src="chrome.js?v=2"></script>
-<script src="pdp-b.js?v=119"></script>
+<script src="pdp-b.js?v=122"></script>
 </body>
 </html>
