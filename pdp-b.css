@@ -994,7 +994,7 @@ body.kbd-open .pdp-stickybar { display: none !important; }
 .hl__badges--infeat .hl__badge + .hl__badge { border-left: 1px solid var(--color-graphite-300); }
 /* chips separate themselves via the gap — no centre rule */
 
-.hl__badge { display: flex; align-items: center; justify-content: center; gap: calc(0.7rem + 1px); padding: 0.35rem 0.9rem;
+.hl__badge { display: flex; align-items: center; justify-content: center; gap: calc(0.7rem + 3px); padding: 0.35rem 0.9rem;
   border: 0; background: none; text-decoration: none; color: inherit; min-width: 0; }
 .hl__badge + .hl__badge { border-left: 0; }
 /* Match the two marks by VISIBLE size, not box size: the gold rosette only fills
