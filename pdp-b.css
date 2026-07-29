@@ -1706,14 +1706,14 @@ body.is-scrolled #quickbar {
 /* Beschreibung — pinned scrollytelling: sticky image (left) swaps as the text
    scenes (right) scroll past. Uses position:sticky, so no scroll-jacking. */
 .psx-story__grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(2rem,5vw,4.5rem); align-items: start; margin: clamp(1rem,2vw,1.75rem) 0 var(--sx-blockgap); }
-/* Centre the media in the VISIBLE band — between the sticky nav on top (~194px) and the
-   sticky buy-bar at the bottom (~70px), not the raw viewport. Since the nav is taller than
-   the buy-bar, true 50vh-centring leaves extra space below; nudge down by half that
-   difference (~4rem = (194−70)/2) so the gaps above and below match. Fixed offset (no
-   --pdp-header-h) so the sticky image never drifts as the header changes. */
-.psx-story__media { position: sticky;
-  top: max(1rem, calc(50vh - min(35vh, 17rem) + 4rem));
-  height: min(70vh, 34rem); border-radius: var(--radius-lg); overflow: hidden; background: var(--color-paper); }
+/* Robust centring: pin a wrapper that spans the VISIBLE band (below the ~12rem nav, above
+   the ~4.5rem sticky buy-bar) and let flexbox centre the image inside it. No per-scroll
+   position math — so nothing to drift — and it centres whatever height the image happens
+   to be. Band bounds are fixed, so the pin itself never moves. */
+.psx-story__pin { position: sticky; top: 12rem; height: calc(100vh - 16.5rem);
+  display: flex; align-items: center; justify-content: center; }
+.psx-story__media { position: relative; width: 100%; height: min(70vh, 34rem); max-height: 100%;
+  border-radius: var(--radius-lg); overflow: hidden; background: var(--color-paper); }
 .psx-story__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
   opacity: 0; transform: scale(1.06); transition: opacity .6s ease, transform 1.4s cubic-bezier(.2,.7,.2,1); }
 .psx-story__img.is-active { opacity: 1; transform: scale(1); }
@@ -1851,6 +1851,7 @@ body.is-scrolled #quickbar {
 .psx-story__sceneimg { display: none; }
 @media (max-width: 56.25rem) {
   .psx-story__grid { grid-template-columns: 1fr; gap: 1rem; }
+  .psx-story__pin { display: contents; }   /* dissolve the sticky pin on mobile (media is hidden, scenes stack) */
   .psx-story__media { display: none; }
   .psx-story__scene { min-height: 0; opacity: 1; margin-bottom: 2.25rem; }
   .psx-story__sceneimg { display: block; aspect-ratio: 4 / 3; margin: 0 0 1rem; border-radius: var(--radius-lg); overflow: hidden; background: var(--color-paper); }
