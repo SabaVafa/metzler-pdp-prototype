@@ -2159,11 +2159,12 @@ body.is-scrolled #quickbar {
   /* 3 · Spec table (Datenblatt) → block rows so the value pills sit flush-left,
      perfectly aligned under each section title (grid was offsetting the value cell) */
   .dspec__row { display: block; }
-  /* Tighten the title→value gap so each label+pill reads as ONE unit that's vertically
-     centred in the row: the outer top (key pad-top) and bottom (val pad-bottom) stay
-     0.8rem while the gap between them shrinks, lifting the pill out of the lower half. */
-  .dspec__key { border-right: 0; padding-bottom: 0.35rem; }
-  .dspec__val { padding-top: 0; margin-left: 0; }   /* margin:0 (base) keeps the pill box flush-left under the title text */
+  /* Each section = a tinted title band (key, #F5F6FA) above a white value band (val).
+     Keep BOTH bands' vertical padding symmetric (base 0.8rem) so the title is centred in
+     its tinted band and the pill is centred in its white band — the pill was top-aligned
+     (padding-top:0) and looked like it hugged the title with empty space below. */
+  .dspec__key { border-right: 0; }
+  .dspec__val { margin-left: 0; }   /* margin:0 (base) keeps the pill box flush-left under the title; padding stays the symmetric 0.8rem base */
   /* manufacturer / safety footer → one cohesive block anchored to the spec table by
      a hairline divider: the info icon leads the address inline, and the safety notice
      becomes a full-width tinted banner (was a lone outlined pill floating on its line). */
