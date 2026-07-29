@@ -1710,12 +1710,13 @@ body.is-scrolled #quickbar {
 .psx-story__media { position: sticky;
   top: max(1rem, calc(50vh - min(35vh, 17rem)));
   height: min(70vh, 34rem); border-radius: var(--radius-lg); overflow: hidden; background: var(--color-paper); }
-/* On shorter viewports (< ~932px) the fixed nav is a large fraction of the height, so
-   true viewport-centring would tuck the image UP under the nav (cropped / bottom of the
-   frame short). Instead centre it in the space BELOW the nav — top = navBottom/2 + 50vh −
-   halfHeight — so it reads centred with no crop. Taller viewports keep true-centre above. */
+/* On shorter viewports (< ~932px) true viewport-centring would tuck the image up under
+   the nav. Centre it in the space BELOW the nav instead. Use a FIXED nav offset (≈9rem =
+   the compacted header + section-nav) rather than the live --pdp-header-h: the header
+   compacts on scroll, so a var-based top would make the sticky image DRIFT. A constant
+   keeps it genuinely fixed. top = navBottom/2 (4.5rem) + 50vh − halfHeight, floored. */
 @media (max-height: 931px) {
-  .psx-story__media { top: max(calc(var(--pdp-header-h) + 3.75rem), calc(var(--pdp-header-h) / 2 + 1.875rem + 50vh - min(35vh, 17rem))); }
+  .psx-story__media { top: max(9rem, calc(4.5rem + 50vh - min(35vh, 17rem))); }
 }
 .psx-story__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
   opacity: 0; transform: scale(1.06); transition: opacity .6s ease, transform 1.4s cubic-bezier(.2,.7,.2,1); }
@@ -1886,7 +1887,7 @@ body.is-scrolled #quickbar {
   background: radial-gradient(130% 140% at 100% 0%, rgba(1,82,83,0.07), transparent 55%);
   opacity: 0; transition: opacity .25s ease; }
 .psx-dl__item:hover { border-color: var(--color-teal); transform: translateY(-3px);
-  box-shadow: 0 20px 34px -20px rgba(1,82,83,0.5), 0 2px 6px -3px rgba(16,24,40,0.08); }
+  box-shadow: 0 4px 12px -8px rgba(1,82,83,0.28); }
 .psx-dl__item:hover::after { opacity: 1; }
 .psx-dl__item:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 3px; }
 
@@ -1896,7 +1897,7 @@ body.is-scrolled #quickbar {
   background: linear-gradient(158deg, #ffffff 0%, var(--color-teal-50) 100%);
   border: 1px solid var(--color-teal-75); color: var(--color-teal);
   font-size: 0.625rem; font-weight: 800; letter-spacing: 0.05em;
-  box-shadow: 0 3px 8px -4px rgba(1,82,83,0.35); transition: transform .2s ease; }
+  box-shadow: 0 1px 3px -2px rgba(1,82,83,0.25); transition: transform .2s ease; }
 .psx-dl__badge::before { content: ""; position: absolute; top: 0; right: 0; width: 0; height: 0;
   border-top: 0.75rem solid var(--color-white); border-left: 0.75rem solid transparent;
   border-top-right-radius: 0.55rem; filter: drop-shadow(-1px 1px 1px rgba(1,82,83,0.12)); }
