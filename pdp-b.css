@@ -994,7 +994,7 @@ body.kbd-open .pdp-stickybar { display: none !important; }
 .hl__badges--infeat .hl__badge + .hl__badge { border-left: 1px solid var(--color-graphite-300); }
 /* chips separate themselves via the gap — no centre rule */
 
-.hl__badge { display: flex; align-items: center; justify-content: center; gap: 0.7rem; padding: 0.35rem 0.9rem;
+.hl__badge { display: flex; align-items: center; justify-content: center; gap: calc(0.7rem + 1px); padding: 0.35rem 0.9rem;
   border: 0; background: none; text-decoration: none; color: inherit; min-width: 0; }
 .hl__badge + .hl__badge { border-left: 0; }
 /* Match the two marks by VISIBLE size, not box size: the gold rosette only fills
@@ -2142,7 +2142,7 @@ body.is-scrolled #quickbar {
      spills to a 3rd line; shrink the seal a touch so it all fits on wide phones. */
   .pdp-b .hl__badges, .pdp-b .hl__badges--infeat { display: flex; flex-direction: row; align-items: stretch; gap: 0.5rem; }
   .pdp-b .hl__badges .hl__badge,
-  .pdp-b .hl__badges--infeat .hl__badge { flex: 1 1 0; min-width: 0; justify-content: center; gap: 0.5rem; padding: 0.55rem 0.4rem; }
+  .pdp-b .hl__badges--infeat .hl__badge { flex: 1 1 0; min-width: 0; justify-content: center; gap: calc(0.5rem + 1px); padding: 0.55rem 0.4rem; }
   .pdp-b .hl__badges .hl__badge + .hl__badge,
   /* separate framed chips in a row — restore ALL borders (the ≤560px stack rule zeroes
      border-top/left for a vertical stack, but here they sit side by side with a gap) */
