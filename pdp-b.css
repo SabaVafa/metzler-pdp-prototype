@@ -1706,17 +1706,13 @@ body.is-scrolled #quickbar {
 /* Beschreibung — pinned scrollytelling: sticky image (left) swaps as the text
    scenes (right) scroll past. Uses position:sticky, so no scroll-jacking. */
 .psx-story__grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(2rem,5vw,4.5rem); align-items: start; margin: clamp(1rem,2vw,1.75rem) 0 var(--sx-blockgap); }
-/* Pin the image to the TOP of the content — it sticks just below the section nav (12rem)
-   and stays put there while the scenes scroll past. Simple and stable: a plain top-sticky,
-   no viewport math, no drift. */
-.psx-story__pin { position: sticky; top: 12rem; }
-.psx-story__media { position: relative; width: 100%; height: min(70vh, 34rem);
+/* Centre the image in the visible band on every screen: the pin spans from just below the
+   section nav (12rem) to just above the sticky buy-bar (100vh − 16.5rem) and flexbox
+   centres the image inside — equal gap above and below, no position math, no drift. */
+.psx-story__pin { position: sticky; top: 12rem; height: calc(100vh - 16.5rem);
+  display: flex; align-items: center; justify-content: center; }
+.psx-story__media { position: relative; width: 100%; height: min(70vh, 34rem); max-height: 100%;
   border-radius: var(--radius-lg); overflow: hidden; background: var(--color-paper); }
-/* Only on tall screens (plenty of vertical room) centre it in the visible band instead —
-   the pin spans below the nav to above the buy-bar and flexbox centres the image. */
-@media (min-height: 1000px) {
-  .psx-story__pin { height: calc(100vh - 16.5rem); display: flex; align-items: center; justify-content: center; }
-}
 .psx-story__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
   opacity: 0; transform: scale(1.06); transition: opacity .6s ease, transform 1.4s cubic-bezier(.2,.7,.2,1); }
 .psx-story__img.is-active { opacity: 1; transform: scale(1); }
