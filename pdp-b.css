@@ -66,8 +66,8 @@
 .pdp-lightbox__close:hover { background: rgba(255,255,255,0.22); }
 .pdp-lightbox__close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 .pdp-lightbox__close svg { width: 1.25rem; height: 1.25rem; }
-.pdp-lightbox__stage { position: relative; flex: 1; min-height: 0; display: grid; place-items: center; }
-.pdp-lightbox__img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: var(--radius-lg);
+.pdp-lightbox__stage { position: relative; flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.pdp-lightbox__img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: var(--radius-lg);
   background: #fff; box-shadow: 0 24px 60px -20px rgba(0,0,0,0.65); }
 .pdp-lightbox__nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
   display: grid; place-items: center; width: 3rem; height: 3rem; cursor: pointer;
@@ -688,7 +688,7 @@
 /* CTA stays on a single line and sizes to its content */
 /* size the CTA to its content (comfy padding) and push it to the right so a clear gap
    opens between the price and the button, instead of the button filling the whole row */
-.sheet__foot .pdp-cta { flex: 0 1 auto; width: auto; margin-left: auto; padding: 0 2.75rem; white-space: nowrap; background: var(--color-teal); box-shadow: 0 0.375rem 0.9rem rgba(1,82,83,0.15); }
+.sheet__foot .pdp-cta { flex: 0 1 auto; width: auto; min-width: 28rem; max-width: 60%; margin-left: auto; padding: 0 2.75rem; white-space: nowrap; background: var(--color-teal); box-shadow: 0 0.375rem 0.9rem rgba(1,82,83,0.15); }
 .sheet__foot .pdp-cta:hover { background: var(--color-teal-hover); }
 /* full-width bottom drawer — inner content comfortably centered on wide screens */
 .sheet__head, .sheet .cfgb-summary, .sheet__foot { width: 100%; max-width: 64rem; margin-left: auto; margin-right: auto; }
