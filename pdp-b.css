@@ -1601,10 +1601,12 @@ body.is-scrolled #quickbar {
 /* glass cards on the teal panel (style borrowed from the XDM10 .hl-card): a faint
    translucent-white fill + hairline light border, white text, lift + teal-glow on hover */
 .nfeat__card { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 0.55rem;
-  padding: clamp(1.25rem,2vw,1.6rem); background: rgba(255,255,255,0.055);
-  border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius-lg);
-  transition: transform .3s ease, background .3s ease, border-color .3s ease; }
-.nfeat__card:hover { transform: translateY(-6px); background: rgba(255,255,255,0.09); border-color: rgba(63,176,177,0.45); }
+  padding: clamp(1.25rem,2vw,1.6rem); background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18); border-radius: var(--radius-lg);
+  box-shadow: 0 2px 6px -2px rgba(0,20,20,0.35), inset 0 1px 0 rgba(255,255,255,0.08);
+  transition: transform .3s ease, background .3s ease, border-color .3s ease, box-shadow .3s ease; }
+.nfeat__card:hover { transform: translateY(-6px); background: rgba(255,255,255,0.12); border-color: rgba(63,176,177,0.55);
+  box-shadow: 0 14px 26px -14px rgba(0,20,20,0.5), inset 0 1px 0 rgba(255,255,255,0.12); }
 .nfeat__cardtitle { position: relative; margin: 0; padding-bottom: 0.55rem; font-size: 1.0625rem; font-weight: 800;
   letter-spacing: -0.01em; color: #fff; }
 .nfeat__cardtitle::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 1.5rem;
