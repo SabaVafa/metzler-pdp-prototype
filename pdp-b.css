@@ -1706,7 +1706,7 @@ body.is-scrolled #quickbar {
 .rvw-author { font-weight: 800; color: var(--color-digital-black); }
 
 /* happy carousel */
-.rvw-happy { margin: 0 0 clamp(2.5rem,5vw,4rem); }   /* tighter gap under the intro lead */
+.rvw-happy { margin: 0 0 var(--sx-blockgap); }   /* between-major-block rhythm (happy carousel → main reviews) */
 /* larger, more prominent stars on the carousel cards */
 .rvw-happy-card .rvw-stars { gap: 3px; }
 .rvw-happy-card .rvw-stars svg { width: 1.35rem; height: 1.35rem; }
@@ -1949,7 +1949,7 @@ body.is-scrolled #quickbar {
    One category at a time → no long scroll; the vertical rail is visually distinct
    from the horizontal mid-nav → no tabs-in-tabs. Collapses to a chip row on
    small screens. */
-.techms { margin-top: clamp(1.5rem,3vw,2rem); display: grid; grid-template-columns: 1fr;
+.techms { margin-top: 2rem; display: grid; grid-template-columns: 1fr;   /* title→content gap = the lead's 2rem, matching the other sections (Technik has no lead) */
   border: 1px solid var(--color-teal); border-radius: var(--radius-xl); overflow: hidden; background: var(--color-white); }
 @media (min-width: 56rem) { .techms { grid-template-columns: 17rem 1fr; } }
 
