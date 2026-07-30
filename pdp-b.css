@@ -1477,7 +1477,7 @@ body.kbd-open .pdp-stickybar { display: none !important; }
    A constant min-height keeps the card the same size across reviews so the thumbnails
    don't shift with review length — but the reservation is on the BLOCK, not the text,
    so short reviews get no awkward internal gap. */
-.rv__feature-body { min-width: 0; display: flex; flex-direction: column;
+.rv__feature-body { min-width: 0; display: flex; flex-direction: column; justify-content: center;
   gap: clamp(1rem, 1.5vw, 1.25rem); min-height: 25rem; }
 .rv__feature-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .rv__feature-cam { position: absolute; left: 0.75rem; bottom: 0.75rem; display: inline-flex; align-items: center; gap: 0.35rem;
@@ -1486,10 +1486,13 @@ body.kbd-open .pdp-stickybar { display: none !important; }
   padding: 0.32rem 0.65rem; border-radius: var(--radius-pill); }
 .rv__feature-cam svg { width: 0.9rem; height: 0.9rem; }
 
-/* review text grows to fill the space above the thumbnails and centers within it */
-.rv__feature-content { flex: 1 1 auto; justify-content: center; position: relative; display: flex; flex-direction: column; gap: 0.7rem;
+/* text block sizes to its content; the whole body stack (text + thumbnail nav) is
+   centered as one unit against the photo via .rv__feature-body's justify-content */
+.rv__feature-content { flex: 0 0 auto; justify-content: center; position: relative; display: flex; flex-direction: column; gap: 0.7rem;
   padding: 0; }
-.rv__feature-quote { position: absolute; top: -0.25rem; right: 0; width: 3rem; height: 3rem; color: var(--color-teal-50); pointer-events: none; }
+/* stars and the decorative quote share one row — quote right-aligned, both centred on the line */
+.rv__feature-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.rv__feature-quote { flex: none; width: 3rem; height: 3rem; color: var(--color-teal-50); pointer-events: none; }
 .rv__feature-stars { position: relative; }
 .rv__feature-stars svg { width: 1.2rem; height: 1.2rem; }
 .rv__feature-title { margin: 0; font-size: clamp(1.2rem, 2vw, 1.5rem); font-weight: 800; letter-spacing: -0.015em; line-height: 1.2; color: var(--color-digital-black); }
@@ -1501,9 +1504,12 @@ body.kbd-open .pdp-stickybar { display: none !important; }
 .rv__feature-who time { font-size: 0.75rem; color: var(--color-graphite-500); }
 
 /* crossfade when switching reviews */
-.rv__feature-media img, .rv__feature-content > :not(.rv__feature-quote) { transition: opacity .2s ease; }
+.rv__feature-media img, .rv__feature-stars, .rv__feature-title, .rv__feature-text, .rv__feature-foot { transition: opacity .2s ease; }
 .rv__feature-card.is-swapping .rv__feature-media img,
-.rv__feature-card.is-swapping .rv__feature-content > :not(.rv__feature-quote) { opacity: 0; }
+.rv__feature-card.is-swapping .rv__feature-stars,
+.rv__feature-card.is-swapping .rv__feature-title,
+.rv__feature-card.is-swapping .rv__feature-text,
+.rv__feature-card.is-swapping .rv__feature-foot { opacity: 0; }
 
 /* label + control row grouped; label clarifies the thumbnails are OTHER customers */
 .rv__navwrap { display: flex; flex-direction: column; gap: 0.65rem; }
