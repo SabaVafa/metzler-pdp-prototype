@@ -404,7 +404,7 @@
   background: var(--color-paper); border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   border-bottom: 1px solid var(--color-graphite-200); box-shadow: 0 8px 14px -10px rgba(10,20,20,0.18); }
 .cfgb-bar__row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-.cfgb-bar__title { font-size: 1rem; font-weight: 800; letter-spacing: -0.015em; color: var(--color-digital-black);
+.cfgb-bar__title { font-size: 1rem; font-weight: 700; letter-spacing: -0.015em; color: var(--color-digital-black);
   display: inline-flex; align-items: center; gap: 0.5rem; }
 .cfgb-bar__count { font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.01em; color: var(--color-teal);
   font-variant-numeric: tabular-nums; white-space: nowrap; transition: color .3s ease; }
@@ -752,7 +752,7 @@
 .sheet.is-open .sheet__panel { transform: translateY(0); }
 .sheet__grip { width: 2.5rem; height: 0.3rem; border-radius: var(--radius-pill); background: var(--color-graphite-200); margin: 0.7rem auto 0.1rem; }
 .sheet__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.5rem 1.25rem 0.75rem; border-bottom: 1px solid var(--color-graphite-200); margin-bottom: 0.25rem; }
-.sheet__title { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
+.sheet__title { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .sheet__close { width: 2.2rem; height: 2.2rem; display: grid; place-items: center; border: 0; background: none; border-radius: 0; cursor: pointer; color: var(--color-graphite-600); }
 .sheet__close svg { width: 1.1rem; height: 1.1rem; }
 .sheet__close:hover { color: var(--color-digital-black); }
@@ -1512,7 +1512,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .rv__feature-quote { flex: none; width: 3rem; height: 3rem; color: var(--color-teal-50); pointer-events: none; }
 .rv__feature-stars { position: relative; }
 .rv__feature-stars svg { width: 1.2rem; height: 1.2rem; }
-.rv__feature-title { margin: 0; font-size: clamp(1.2rem, 2vw, 1.5rem); font-weight: 800; letter-spacing: -0.015em; line-height: 1.2; color: var(--color-digital-black); }
+.rv__feature-title { margin: 0; font-size: clamp(1.2rem, 2vw, 1.5rem); font-weight: 700; letter-spacing: -0.015em; line-height: 1.2; color: var(--color-digital-black); }
 .rv__feature-text { margin: 0; font-size: 1rem; line-height: 1.6; color: var(--color-graphite-700);
   display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }   /* max 3 lines, truncate rest */
 .rv__feature-foot { display: flex; align-items: center; gap: 0.7rem; margin-top: 0.5rem; flex-wrap: wrap; }
@@ -1669,7 +1669,7 @@ body.is-scrolled #quickbar {
 .psx-descrow--rev .psx-descrow__media { order: 2; }
 .psx-descrow__media { margin: 0; border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4/3; background: var(--color-paper); }
 .psx-descrow__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.psx-descrow__copy h3 { margin: 0 0 0.5rem; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; line-height: 1.25; color: var(--color-digital-black); }
+.psx-descrow__copy h3 { margin: 0 0 0.5rem; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.25; color: var(--color-digital-black); }
 .psx-descrow__copy p { margin: 0; font-size: 1rem; line-height: 1.6; color: var(--color-graphite-700); }
 .psx-descrow--last { margin-bottom: 0; }
 /* video media + product-on-white (contain) variant */
@@ -1711,7 +1711,7 @@ body.is-scrolled #quickbar {
 .nfeat__eyebrow { display: inline-block; margin: 0 0 0.7rem; padding: 0.28rem 0.7rem; border-radius: var(--radius-pill);
   background: rgba(92,219,211,0.12); border: 1px solid rgba(92,219,211,0.24);
   font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-mint); }
-.nfeat__title { margin: 0 0 0.6rem; font-size: clamp(1.5rem,2.6vw,2.05rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; color: var(--color-white); }
+.nfeat__title { margin: 0 0 0.6rem; font-size: clamp(1.5rem,2.6vw,2.05rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; color: var(--color-white); }
 .nfeat__lead { margin: 0; font-size: 1rem; line-height: 1.6; color: rgba(255,255,255,0.78); }
 
 .nfeat__grid { list-style: none; margin: 0; padding: 0; display: grid;
@@ -1727,7 +1727,7 @@ body.is-scrolled #quickbar {
   transition: transform .3s ease, background .3s ease, border-color .3s ease, box-shadow .3s ease; }
 .nfeat__card:hover { transform: translateY(-6px); background: rgba(255,255,255,0.10); border-color: var(--color-mint);
   box-shadow: 0 14px 26px -14px rgba(0,20,20,0.5), inset 0 1px 0 rgba(255,255,255,0.12); }
-.nfeat__cardtitle { position: relative; margin: 0; padding-bottom: 0.55rem; font-size: 1.125rem; font-weight: 800;
+.nfeat__cardtitle { position: relative; margin: 0; padding-bottom: 0.55rem; font-size: 1.125rem; font-weight: 700;
   letter-spacing: -0.01em; color: var(--color-white); }
 .nfeat__cardtitle::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 1.5rem;
   background: var(--color-mint); border-radius: 2px; transition: width .25s ease; }
@@ -1743,7 +1743,7 @@ body.is-scrolled #quickbar {
 .camtech__head { max-width: 46rem; margin: 0 0 clamp(1.75rem,3.5vw,2.75rem); }
 .camtech__eyebrow { margin: 0 0 0.6rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em;
   text-transform: uppercase; color: var(--color-teal); }
-.camtech__title { margin: 0 0 0.85rem; font-size: clamp(1.5rem,2.6vw,2.05rem); font-weight: 800;
+.camtech__title { margin: 0 0 0.85rem; font-size: clamp(1.5rem,2.6vw,2.05rem); font-weight: 700;
   letter-spacing: -0.02em; line-height: 1.15; color: var(--color-digital-black); }
 .camtech__lead { margin: 0; font-size: 1.125rem; line-height: 1.6; color: var(--color-graphite-700); }
 .camtech__lead b { color: var(--color-digital-black); font-weight: 700; }
@@ -1792,7 +1792,7 @@ body.is-scrolled #quickbar {
 .camfeat__icon { display: inline-grid; place-items: center; width: 2.75rem; height: 2.75rem; margin-bottom: 0.9rem;
   border-radius: 50%; background: var(--color-teal-50); color: var(--color-teal); }
 .camfeat__icon svg { width: 1.5rem; height: 1.5rem; }
-.camfeat__title { margin: 0 0 0.45rem; font-size: 1rem; font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
+.camfeat__title { margin: 0 0 0.45rem; font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .camfeat__text { margin: 0; font-size: 0.9rem; line-height: 1.55; color: var(--color-graphite-700); }
 
 /* ── Foldaway spec sheet ── */
@@ -1853,7 +1853,7 @@ body.is-scrolled #quickbar {
 .rvw-happy-card .rvw-stars { gap: 3px; }
 .rvw-happy-card .rvw-stars svg { width: 1.35rem; height: 1.35rem; }
 .rvw-happy__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; }
-.rvw-happy__title { margin: 0; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
+.rvw-happy__title { margin: 0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .rvw-arrows { display: flex; gap: 0.5rem; flex: none; }
 .rvw-arrow { width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--color-graphite-300); border-radius: var(--radius); background: var(--color-white); color: var(--color-digital-black); cursor: pointer; transition: border-color .15s ease, color .15s ease, opacity .15s ease; }
 .rvw-arrow svg { width: 24px; height: 24px; }
@@ -1922,7 +1922,7 @@ body.is-scrolled #quickbar {
 .rvw-review:first-child { border-top: 0; padding-top: 0; }
 .rvw-review__head { display: flex; align-items: center; gap: 0.85rem; margin-bottom: 0.6rem; }
 .rvw-review__head .rvw-verified { margin-left: auto; }   /* push the badge to the right edge, consistent across reviews */
-.rvw-review__title { margin: 0 0 0.4rem; font-size: 1.125rem; font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
+.rvw-review__title { margin: 0 0 0.4rem; font-size: 1.125rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .rvw-review__text { margin: 0; font-size: 0.95rem; line-height: 1.65; color: var(--color-graphite-700); }
 /* Customer-uploaded photos — a compact thumbnail strip between the review text and
    its byline. Square tiles, capped at three per review; each opens a lightbox. */
@@ -1963,7 +1963,7 @@ body.is-scrolled #quickbar {
   opacity: 0.4; transition: opacity .4s ease; }
 .psx-story__scene.is-current { opacity: 1; }
 .psx-story__step { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.14em; color: var(--color-teal); }
-.psx-story__scene h3 { margin: 0; font-size: clamp(1.35rem,2.4vw,1.75rem); font-weight: 800; letter-spacing: -0.015em; line-height: 1.2; color: var(--color-digital-black); }
+.psx-story__scene h3 { margin: 0; font-size: clamp(1.35rem,2.4vw,1.75rem); font-weight: 700; letter-spacing: -0.015em; line-height: 1.2; color: var(--color-digital-black); }
 .psx-story__scene p { margin: 0; font-size: 1rem; line-height: 1.65; color: var(--color-graphite-700); max-width: 42ch; }
 
 /* Mobile shows each scene's own image inline (above its text) instead of the desktop
@@ -2036,7 +2036,7 @@ body.is-scrolled #quickbar {
 
 /* Technische Details */
 .psx-spec { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(20rem,100%),1fr)); gap: clamp(1.25rem,3vw,2.5rem) clamp(1.5rem,4vw,3.5rem); }
-.psx-spec__grouptitle { margin: 0 0 0.35rem; font-size: 0.8125rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-teal); }
+.psx-spec__grouptitle { margin: 0 0 0.35rem; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-teal); }
 .psx-spec__list { margin: 0; }
 .psx-spec__list > div { display: flex; justify-content: space-between; gap: 1rem; padding: 0.65rem 0; border-top: 1px solid var(--color-graphite-200); }
 .psx-spec__list dt { margin: 0; font-size: 0.875rem; color: var(--color-graphite-600); }
@@ -2051,7 +2051,7 @@ body.is-scrolled #quickbar {
    plain value for measurements), so it adapts to any product — one value or a
    dozen, few attributes or many. Closes with a quiet manufacturer/safety footer. */
 .dspec { margin-top: var(--sx-blockgap); }
-.dspec__title { margin: 0 0 clamp(1.1rem,2vw,1.4rem); font-size: clamp(1.15rem,1.9vw,1.4rem); font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
+.dspec__title { margin: 0 0 clamp(1.1rem,2vw,1.4rem); font-size: clamp(1.15rem,1.9vw,1.4rem); font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
 /* white surface with #DADADA (graphite-300) borders/dividers */
 .dspec__list { margin: 0; background: var(--color-white); border: 1px solid var(--color-graphite-300);
   border-radius: var(--radius-lg) var(--radius-lg) 0 0; border-bottom: 0; overflow: hidden;
@@ -2135,7 +2135,7 @@ body.is-scrolled #quickbar {
 .techms__panel { padding: clamp(1.25rem,2.5vw,2rem); }
 .techms__panel[hidden] { display: none; }
 .techms__phead { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 0.4rem 1rem; margin: 0 0 1.35rem; }
-.techms__ptitle { margin: 0 0 0.25rem; font-size: clamp(1.1rem,1.7vw,1.3rem); font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
+.techms__ptitle { margin: 0 0 0.25rem; font-size: clamp(1.1rem,1.7vw,1.3rem); font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .techms__pdesc { margin: 0; font-size: 0.9rem; line-height: 1.5; color: var(--color-graphite-600); }
 .techms__phint { display: inline-flex; align-items: center; gap: 0.35rem; flex: none; margin-top: 0.15rem; font-size: 0.75rem; font-weight: 600; color: var(--color-graphite-500); }
 .techms__phint svg { width: 16px; height: 16px; color: var(--color-teal); }
@@ -2156,7 +2156,7 @@ body.is-scrolled #quickbar {
 .techdia__group + .techdia__group { margin-top: clamp(2rem,4vw,3rem); }
 .techdia__grouphead { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
   margin: 0 0 1.1rem; padding-bottom: 0.7rem; border-bottom: 1px solid var(--color-graphite-200); }
-.techdia__grouptitle { margin: 0; font-size: clamp(1.05rem,1.6vw,1.2rem); font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
+.techdia__grouptitle { margin: 0; font-size: clamp(1.05rem,1.6vw,1.2rem); font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .techdia__groupmeta { margin: 0; font-size: 0.8125rem; color: var(--color-graphite-500); }
 
 .techdia__grid { list-style: none; margin: 0; padding: 0; display: grid;
