@@ -978,7 +978,10 @@ body.kbd-open .pdp-stickybar { display: none !important; }
   /* fixed state → a solid, full-width bar that reads as part of the config
      (paper surface + hairline divider), pinned below the header. Not a floating chip. */
   .pdp-b .cfgb .cfgb-dock.is-fixed {
-    position: fixed; left: 0; right: 0; width: 100%; z-index: 46;
+    /* z-index must clear the mobile quickbar (z-55) so the ribbon REPLACES it while you
+       scroll through the config (was z-46 → the green quickbar painted over the ribbon's
+       top edge). Stays below the site header (z-90). Matches the ≤640px rule's intent. */
+    position: fixed; left: 0; right: 0; width: 100%; z-index: 80;
     padding: 0.7rem 1rem 0.75rem; background: var(--color-paper);
     border-bottom: 1px solid var(--color-graphite-300);
     box-shadow: 0 6px 14px -12px rgba(10,20,20,0.3); }
