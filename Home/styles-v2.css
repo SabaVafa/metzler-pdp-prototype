@@ -1072,7 +1072,7 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
   font-weight: 900;
   color: var(--color-metzler-rot);
   letter-spacing: 0;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .hero-chip__hikvision span { color: var(--color-digital-black); }
 .hero-chip__flag {
@@ -1633,7 +1633,7 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
   font-variant-numeric: tabular-nums;
 }
 .reviews__tab-count {
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.45);
   font-variant-numeric: tabular-nums;
@@ -1746,7 +1746,7 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
   border-radius: 50%;
   background: rgba(1, 82, 83, 0.08);
   color: var(--color-teal);
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0.02em;
   display: inline-flex;
@@ -1878,7 +1878,7 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
   background: var(--color-white);
   border-radius: var(--r-m);
   border: 1px solid var(--color-graphite-300);
-  font-size: 12px;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: rgba(0, 0, 0, 0.55);
@@ -1896,7 +1896,7 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
 .faq__phone-hours {
   display: block;
   margin-top: 6px;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0;
   text-transform: none;
@@ -2108,7 +2108,7 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
   pointer-events: none;
 }
 .topshop-badge__icon {
-  font-size: 14px;
+  font-size: 0.875rem;
   margin-bottom: 3px;
   line-height: 1;
   filter: brightness(2);
@@ -2175,7 +2175,7 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
   align-items: center;
 }
 .footer__rating-stars {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #FAAD14;
   letter-spacing: 1px;
   line-height: 1;
@@ -2276,7 +2276,7 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
     flex: 0 0 auto;
     scroll-snap-align: start;
     padding: 10px 14px;
-    font-size: 13px;
+    font-size: 0.8125rem;
     gap: 8px;
   }
   .reviews__tab-logo { width: 16px; height: 16px; }
@@ -2334,7 +2334,7 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
 
   /* Tighten typography for the carousel cards */
   .trust__title {
-    font-size: 12px;
+    font-size: 0.75rem;
     min-height: 0;
     line-height: 1.25;
   }
@@ -2668,7 +2668,7 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
   .trust { max-width: 220px; flex: 0 0 24%; padding-inline: var(--sp-5); }
   /* Tablet cards have more room than mobile — bump the typography
      up one notch from the mobile carousel's 12/10 to read better. */
-  .trust__title { font-size: 13px; }
+  .trust__title { font-size: 0.8125rem; }
   .trust__sub { font-size: 11px; }
   .trustbar__inner { scroll-behavior: smooth; }
 
@@ -2902,7 +2902,7 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
     flex: 0 0 auto;
     scroll-snap-align: start;
     padding: 10px 14px;
-    font-size: 13px;
+    font-size: 0.8125rem;
     gap: 8px;
   }
   .reviews__tab-logo { width: 16px; height: 16px; }

@@ -496,7 +496,7 @@ body.cfg-lock { overflow: hidden; }
   .cfg-body__grid { grid-template-columns: 1fr; gap: 1.5rem; padding-bottom: 9rem; }
   .cfg-preview { position: static; }
   .cfg-preview__stage { aspect-ratio: 4/3; }
-  .cfg-bar__total { font-size: 1.05rem; }
+  .cfg-bar__total { font-size: 1rem; }
   .cfg-btn--cart { padding: 0 1.1rem; font-size: 0.875rem; }
   .cfg-btn--ghost { display: none; }
   .cfg-bar__chips, .cfg-bar__stepno { display: none; }

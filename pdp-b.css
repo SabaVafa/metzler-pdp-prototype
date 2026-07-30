@@ -60,7 +60,7 @@
 .pdp-lightbox__panel { position: absolute; inset: 0; display: flex; flex-direction: column;
   padding: clamp(0.75rem, 2vw, 1.5rem); gap: clamp(0.75rem, 2vw, 1.25rem); }
 .pdp-lightbox__bar { flex: none; display: flex; align-items: center; justify-content: space-between; color: var(--color-white); }
-.pdp-lightbox__counter { font-size: 0.9rem; font-weight: 700; letter-spacing: 0.03em; color: rgba(255,255,255,0.85); font-variant-numeric: tabular-nums; }
+.pdp-lightbox__counter { font-size: 0.875rem; font-weight: 700; letter-spacing: 0.03em; color: rgba(255,255,255,0.85); font-variant-numeric: tabular-nums; }
 .pdp-lightbox__close { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; cursor: pointer;
   background: none; border: 0; color: var(--color-white); transition: color .15s ease, transform .15s ease; }
 .pdp-lightbox__close:hover { color: rgba(255,255,255,0.7); transform: scale(1.08); }
@@ -752,7 +752,7 @@
 .sheet.is-open .sheet__panel { transform: translateY(0); }
 .sheet__grip { width: 2.5rem; height: 0.3rem; border-radius: var(--radius-pill); background: var(--color-graphite-200); margin: 0.7rem auto 0.1rem; }
 .sheet__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.5rem 1.25rem 0.75rem; border-bottom: 1px solid var(--color-graphite-200); margin-bottom: 0.25rem; }
-.sheet__title { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
+.sheet__title { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .sheet__close { width: 2.2rem; height: 2.2rem; display: grid; place-items: center; border: 0; background: none; border-radius: 0; cursor: pointer; color: var(--color-graphite-600); }
 .sheet__close svg { width: 1.1rem; height: 1.1rem; }
 .sheet__close:hover { color: var(--color-digital-black); }
@@ -1182,7 +1182,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .cfgb .cfg-choice__qty .cfg-opt__qty { gap: 0; align-items: stretch; border: 1px solid var(--color-graphite-300);
   border-radius: var(--radius); overflow: hidden; background: var(--color-white); }
 .cfgb .cfg-choice__qty .cfg-opt__qty button { width: 2.5rem; height: 2rem; border: 0; border-radius: 0; background: none;
-  color: var(--color-teal); font-size: 1.15rem; }
+  color: var(--color-teal); font-size: 1.125rem; }
 .cfgb .cfg-choice__qty .cfg-opt__qty button:hover { background: var(--color-teal-50); }
 .cfgb .cfg-choice__qty .cfg-opt__qty > span { min-width: 2.25rem; display: grid; place-items: center; padding: 0 0.35rem;
   border-left: 1px solid var(--color-graphite-200); border-right: 1px solid var(--color-graphite-200); }
@@ -1314,7 +1314,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .sum-qty span { min-width: 1.1rem; text-align: center; font-weight: 700; font-size: 0.8125rem; font-variant-numeric: tabular-nums; }
 .sum-row--total { border-top: 2px solid var(--color-graphite-200); margin-top: 0.1rem; padding-top: 0.7rem; }
 .sum-row--total .sum-row__name { font-weight: 700; }
-.sum-row--total .sum-row__price { font-size: 0.95rem; }
+.sum-row--total .sum-row__price { font-size: 0.875rem; }
 
 /* ── Sticky bottom bar — proper inset so content isn't edge-to-edge ── */
 #pdpStickyBar .pdp-stickybar__inner { padding: 0.8rem 1.75rem; gap: 1.1rem; }
@@ -1625,13 +1625,13 @@ body.is-scrolled #quickbar {
    Kontakt & Service modal as the green contact bar (via data-cm-open). */
 .psx-nav__termin { align-self: center; flex: none; display: inline-flex; align-items: center; gap: 0.45rem;
   padding: 0.55rem 1.2rem; border: 0; border-radius: var(--radius);
-  background: var(--color-teal); color: var(--color-white); font-family: inherit; font-size: 0.9rem; font-weight: 700; line-height: 1;
+  background: var(--color-teal); color: var(--color-white); font-family: inherit; font-size: 0.875rem; font-weight: 700; line-height: 1;
   white-space: nowrap; cursor: pointer; transition: background .15s ease; }
 .psx-nav__termin svg { width: 1.05rem; height: 1.05rem; }
 @media (max-width: 47.9375rem) { .psx-nav__termin svg { display: none; } }   /* mobile: label only, no calendar icon */
 .psx-nav__termin:hover { background: var(--color-teal-hover); }
 .psx-nav__link { position: relative; display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap;
-  padding: 1.05rem 0.15rem; font-size: 0.95rem; font-weight: 700; letter-spacing: -0.01em;
+  padding: 1.05rem 0.15rem; font-size: 0.875rem; font-weight: 700; letter-spacing: -0.01em;
   color: var(--color-graphite-700); text-decoration: none; border-bottom: 2px solid transparent;
   transition: color .15s, border-color .15s; }
 .psx-nav__link:hover { color: var(--color-digital-black); }
@@ -1732,7 +1732,7 @@ body.is-scrolled #quickbar {
 .nfeat__cardtitle::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 1.5rem;
   background: var(--color-mint); border-radius: 2px; transition: width .25s ease; }
 .nfeat__card:hover .nfeat__cardtitle::after { width: 3rem; }
-.nfeat__cardtext { margin: 0; font-size: 0.9rem; line-height: 1.55; color: rgba(255,255,255,0.75); }
+.nfeat__cardtext { margin: 0; font-size: 0.875rem; line-height: 1.55; color: rgba(255,255,255,0.75); }
 
 /* ============================================================
    Kameratechnologie showcase — premium camera deep-dive.
@@ -1793,12 +1793,12 @@ body.is-scrolled #quickbar {
   border-radius: 50%; background: var(--color-teal-50); color: var(--color-teal); }
 .camfeat__icon svg { width: 1.5rem; height: 1.5rem; }
 .camfeat__title { margin: 0 0 0.45rem; font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
-.camfeat__text { margin: 0; font-size: 0.9rem; line-height: 1.55; color: var(--color-graphite-700); }
+.camfeat__text { margin: 0; font-size: 0.875rem; line-height: 1.55; color: var(--color-graphite-700); }
 
 /* ── Foldaway spec sheet ── */
 .camtech__specs { margin-top: 1.5rem; border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg); overflow: hidden; }
 .camtech__specsbtn { display: flex; align-items: center; justify-content: space-between; gap: 1rem; cursor: pointer;
-  list-style: none; padding: 1rem 1.3rem; font-size: 0.95rem; font-weight: 700; color: var(--color-digital-black);
+  list-style: none; padding: 1rem 1.3rem; font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black);
   background: var(--color-paper); transition: color .15s ease; user-select: none; }
 .camtech__specsbtn::-webkit-details-marker { display: none; }
 .camtech__specsbtn:hover { color: var(--color-teal); }
@@ -1894,7 +1894,7 @@ body.is-scrolled #quickbar {
 .rvw-dist-bar { height: 6px; border-radius: var(--radius-pill); background: #e6e8ee; overflow: hidden; }
 .rvw-dist-bar i { display: block; height: 100%; background: var(--color-star); border-radius: var(--radius-pill); }
 .rvw-dist-val { text-align: right; font-variant-numeric: tabular-nums; }
-.rvw-cta { display: inline-flex; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; gap: 0.5rem; padding: 0.7rem 1.25rem; border: 2px solid var(--color-teal); border-radius: var(--radius); background: var(--color-white); color: var(--color-teal); font-size: 0.9rem; font-weight: 700; text-decoration: none; cursor: pointer; transition: background .15s ease, color .15s ease; }
+.rvw-cta { display: inline-flex; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; gap: 0.5rem; padding: 0.7rem 1.25rem; border: 2px solid var(--color-teal); border-radius: var(--radius); background: var(--color-white); color: var(--color-teal); font-size: 0.875rem; font-weight: 700; text-decoration: none; cursor: pointer; transition: background .15s ease, color .15s ease; }
 .rvw-cta:hover { background: var(--color-teal); color: var(--color-white); }
 /* "Wie funktionieren Bewertungen?" disclosure — quiet explanatory note under the
    CTA, divided by a hairline so it reads as secondary to the score + write-review
@@ -1923,7 +1923,7 @@ body.is-scrolled #quickbar {
 .rvw-review__head { display: flex; align-items: center; gap: 0.85rem; margin-bottom: 0.6rem; }
 .rvw-review__head .rvw-verified { margin-left: auto; }   /* push the badge to the right edge, consistent across reviews */
 .rvw-review__title { margin: 0 0 0.4rem; font-size: 1.125rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
-.rvw-review__text { margin: 0; font-size: 0.95rem; line-height: 1.65; color: var(--color-graphite-700); }
+.rvw-review__text { margin: 0; font-size: 0.875rem; line-height: 1.65; color: var(--color-graphite-700); }
 /* Customer-uploaded photos — a compact thumbnail strip between the review text and
    its byline. Square tiles, capped at three per review; each opens a lightbox. */
 .rvw-review__media { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.9rem 0 0; }
@@ -1950,7 +1950,7 @@ body.is-scrolled #quickbar {
 .rvw-review__foot { margin-top: 0.7rem; display: flex; align-items: center; gap: 0.6rem; font-size: 0.8125rem; }
 .rvw-review__foot .rvw-author { font-size: 0.8125rem; }
 .rvw-review__foot time { color: var(--color-graphite-700); }
-.rvw-list__more { align-self: flex-start; margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 700; color: var(--color-teal); text-decoration: none; }
+.rvw-list__more { align-self: flex-start; margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 700; color: var(--color-teal); text-decoration: none; }
 .rvw-list__more svg { width: 1.1rem; height: 1.1rem; transition: transform .15s ease; }
 .rvw-list__more:hover svg { transform: translateX(3px); }
 @media (max-width: 56.25rem) {
@@ -2059,11 +2059,11 @@ body.is-scrolled #quickbar {
 .dspec__row { display: grid; grid-template-columns: 1fr; }
 .dspec__row + .dspec__row { border-top: 1px solid var(--color-graphite-300); }
 @media (min-width: 40rem) { .dspec__row { grid-template-columns: minmax(11rem, 16rem) 1fr; } }
-.dspec__key { display: flex; align-items: center; flex-wrap: wrap; padding: 0.8rem 1.15rem; background: var(--color-paper); font-size: 0.9rem; font-weight: 700; line-height: 1.35; color: var(--color-digital-black); }
+.dspec__key { display: flex; align-items: center; flex-wrap: wrap; padding: 0.8rem 1.15rem; background: var(--color-paper); font-size: 0.875rem; font-weight: 700; line-height: 1.35; color: var(--color-digital-black); }
 @media (min-width: 40rem) { .dspec__key { border-right: 1px solid var(--color-graphite-300); } }
 .dspec__sub { margin-left: 0.4rem; font-size: 0.75rem; font-weight: 500; color: var(--color-graphite-700); white-space: nowrap; }
 .dspec__val { display: flex; flex-wrap: wrap; align-items: center; align-content: center; gap: 0.45rem 0.55rem; min-width: 0; margin: 0; padding: 0.8rem 1.15rem; }   /* margin:0 removes the browser's default 40px <dd> indent so the value block's left padding matches the title's */
-.dspec__val--plain { font-size: 0.95rem; font-weight: 700; color: var(--color-digital-black); font-variant-numeric: tabular-nums; }
+.dspec__val--plain { font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black); font-variant-numeric: tabular-nums; }
 /* clickable value chip (System, Farbe, Klingeltaster, Türöffner-Bedienung …) */
 .dspec__chip { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.65rem; border-radius: var(--radius-pill);
   background: var(--color-teal-50); border: 1px solid var(--color-teal-75); color: var(--color-teal);
@@ -2125,7 +2125,7 @@ body.is-scrolled #quickbar {
 .techms__tab:hover .techms__ico { color: var(--color-white); }
 .techms__tab.is-active .techms__ico { color: var(--color-teal); }
 .techms__tabtext { min-width: 0; flex: 1; }
-.techms__tablabel { display: block; font-size: 0.9rem; font-weight: 600; line-height: 1.3; letter-spacing: -0.005em; }
+.techms__tablabel { display: block; font-size: 0.875rem; font-weight: 600; line-height: 1.3; letter-spacing: -0.005em; }
 .techms__tabsub { display: none; }
 .techms__tab.is-active .techms__tablabel { font-weight: 700; }
 .techms__count { flex: none; font-size: 0.75rem; font-weight: 700; padding: 0; background: none; color: var(--color-mint); }
@@ -2136,7 +2136,7 @@ body.is-scrolled #quickbar {
 .techms__panel[hidden] { display: none; }
 .techms__phead { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 0.4rem 1rem; margin: 0 0 1.35rem; }
 .techms__ptitle { margin: 0 0 0.25rem; font-size: clamp(1.1rem,1.7vw,1.3rem); font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
-.techms__pdesc { margin: 0; font-size: 0.9rem; line-height: 1.5; color: var(--color-graphite-600); }
+.techms__pdesc { margin: 0; font-size: 0.875rem; line-height: 1.5; color: var(--color-graphite-600); }
 .techms__phint { display: inline-flex; align-items: center; gap: 0.35rem; flex: none; margin-top: 0.15rem; font-size: 0.75rem; font-weight: 600; color: var(--color-graphite-500); }
 .techms__phint svg { width: 16px; height: 16px; color: var(--color-teal); }
 /* datasheet card (Datenblatt panel) */
@@ -2177,7 +2177,7 @@ body.is-scrolled #quickbar {
   transition: opacity .2s ease, transform .2s ease; }
 .techdia__zoom svg { width: 1.1rem; height: 1.1rem; }
 .techdia__shot:hover .techdia__zoom, .techdia__shot:focus-visible .techdia__zoom { opacity: 1; transform: scale(1); }
-.techdia__caption { font-size: 0.9rem; font-weight: 600; line-height: 1.4; color: var(--color-graphite-700); }
+.techdia__caption { font-size: 0.875rem; font-weight: 600; line-height: 1.4; color: var(--color-graphite-700); }
 
 /* Diagram lightbox (injected by pdp-b.js) — reuses the review-lightbox look */
 .tdiag-lightbox { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center;
@@ -2185,7 +2185,7 @@ body.is-scrolled #quickbar {
 .tdiag-lightbox.is-open { display: flex; }
 .tdiag-lightbox figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 0.9rem; max-width: min(92vw, 1100px); }
 .tdiag-lightbox img { max-width: 100%; max-height: 80vh; background: var(--color-white); border-radius: var(--radius); box-shadow: 0 18px 50px rgba(0,0,0,0.45); }
-.tdiag-lightbox figcaption { color: rgba(255,255,255,0.9); font-size: 0.9rem; text-align: center; }
+.tdiag-lightbox figcaption { color: rgba(255,255,255,0.9); font-size: 0.875rem; text-align: center; }
 .tdiag-lightbox__close { position: absolute; top: clamp(0.75rem,2vw,1.4rem); right: clamp(0.75rem,2vw,1.4rem);
   width: 2.75rem; height: 2.75rem; display: grid; place-items: center; font-size: 1.6rem; line-height: 1; cursor: pointer;
   color: var(--color-white); background: none; border: 0; transition: color .15s ease, transform .15s ease; }
