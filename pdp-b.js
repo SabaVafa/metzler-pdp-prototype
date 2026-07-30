@@ -452,12 +452,16 @@
   /* ── Wunschfarbe: inline RAL picker — search field + palette, shown when
      Wunschfarbe is chosen (search by code or name); live preview ── */
   function setupRalPicker() {
-    var panel = $('ralPick'), trigger = $('ralTrigger'), grid = $('ralGrid'),
+    var panel = $('ralPick'), trigger = $('ralTrigger'), track = $('ralGrid'),
+        viewport = $('ralViewport'), pager = $('ralPager'),
+        prevBtn = $('ralPrev'), nextBtn = $('ralNext'), pageInfo = $('ralPageInfo'),
         search = $('ralSearch'), clearBtn = $('ralClear'), empty = $('ralEmpty'),
         fams = $('ralFams'), count = $('ralCount'),
         trigSwatch = $('ralTrigSwatch'), trigLabel = $('ralTrigLabel'), trigSub = $('ralTrigSub');
-    if (!panel || !grid || !trigger) return;
+    if (!panel || !track || !trigger) return;
     var curQ = '', curFam = 'all', TOTAL = RAL.length;
+    var PAGE_ROWS = 4, page = 0, pages = [], cols = 5;
+    var byCode = {}; RAL.forEach(function (c) { byCode[c.code] = c; });
 
     /* colour-family filter pills (representative dot per RAL group) */
     var FAM_DOT = { '1':'#F9A800','2':'#F44611','3':'#AF2B1E','4':'#6D3F5B','5':'#063971','6':'#276235','7':'#7A7B6D','8':'#6C3B2A' };
@@ -471,28 +475,65 @@
     }).join('');
     var famBtns = fams ? [].slice.call(fams.querySelectorAll('.ralpick__fam')) : [];
 
-    /* swatch grid */
-    grid.innerHTML = RAL.map(function (c) {
+    function chipHTML(c) {
       return '<button type="button" class="ral-chip" role="option" aria-selected="false" data-code="' + c.code + '" data-fam="' + c.fam + '"'
         + ' style="--chip:' + c.hex + ';color:' + ralInk(c.hex) + '" title="RAL ' + c.code + ' ' + esc(c.name) + '">'
         + '<span class="ral-chip__code">RAL ' + c.code + '</span><span class="ral-chip__name">' + esc(c.name) + '</span></button>';
-    }).join('');
-    var chips = [].slice.call(grid.querySelectorAll('.ral-chip'));
-    var byCode = {}; RAL.forEach(function (c) { byCode[c.code] = c; });
-
-    function applyFilter() {
-      var q = curQ.trim().toLowerCase(), shown = 0;
-      chips.forEach(function (ch) {
-        var code = ch.getAttribute('data-code');
-        var name = byCode[code] ? byCode[code].name.toLowerCase() : '';
-        var famOk = curFam === 'all' || ch.getAttribute('data-fam') === curFam;
-        var qOk = !q || code.indexOf(q) > -1 || name.indexOf(q) > -1 || ('ral ' + code).indexOf(q) > -1;
-        var vis = famOk && qOk;
-        ch.style.display = vis ? '' : 'none'; if (vis) shown++;
+    }
+    function filteredList() {
+      var q = curQ.trim().toLowerCase();
+      return RAL.filter(function (c) {
+        var famOk = curFam === 'all' || c.fam === curFam;
+        var qOk = !q || c.code.indexOf(q) > -1 || c.name.toLowerCase().indexOf(q) > -1 || ('ral ' + c.code).indexOf(q) > -1;
+        return famOk && qOk;
       });
-      if (empty) empty.hidden = shown > 0;
-      if (count) count.textContent = shown === TOTAL ? TOTAL + ' Töne' : shown + ' / ' + TOTAL;
-      grid.scrollTop = 0;
+    }
+    /* how many columns fit → keeps ~PAGE_ROWS rows per page across viewport sizes */
+    function computeCols() {
+      var w = (viewport && viewport.clientWidth) || 320;
+      return Math.max(1, Math.floor((w + 8) / (100 + 8)));   /* 6.25rem min col + 0.5rem gap */
+    }
+    function updateSlide() {
+      var n = pages.length;
+      track.style.transform = 'translateX(' + (-page * 100) + '%)';
+      if (pager) pager.hidden = n <= 1;
+      if (pageInfo) pageInfo.textContent = (n ? page + 1 : 0) + ' / ' + n;
+      if (prevBtn) prevBtn.disabled = page <= 0;
+      if (nextBtn) nextBtn.disabled = page >= n - 1;
+    }
+    function goTo(p) { page = Math.max(0, Math.min(pages.length - 1, p)); updateSlide(); }
+    /* paginate the filtered list into full-width pages and render them into the track */
+    function renderPages(reset) {
+      var list = filteredList();
+      cols = computeCols();
+      var per = cols * PAGE_ROWS, i;
+      pages = [];
+      for (i = 0; i < list.length; i += per) pages.push(list.slice(i, i + per));
+      if (reset) page = 0;
+      if (page > pages.length - 1) page = Math.max(0, pages.length - 1);
+      track.innerHTML = pages.map(function (pg) {
+        return '<div class="ralpick__page" style="grid-template-columns:repeat(' + cols + ',minmax(0,1fr))">' + pg.map(chipHTML).join('') + '</div>';
+      }).join('');
+      if (empty) empty.hidden = list.length > 0;
+      if (viewport) viewport.hidden = list.length === 0;   /* no empty 20rem box on a no-match search */
+      if (count) count.textContent = list.length === TOTAL ? TOTAL + ' Töne' : list.length + ' / ' + TOTAL;
+      updateSlide();
+      sync();
+    }
+    function pageOfSelected() {
+      if (state.ral) for (var i = 0; i < pages.length; i++) for (var j = 0; j < pages[i].length; j++) if (pages[i][j].code === state.ral.code) return i;
+      return 0;
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { goTo(page - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { goTo(page + 1); });
+
+    /* swipe — page on horizontal release past a threshold (vertical stays with the page) */
+    if (viewport) {
+      var x0 = null, dx = 0, dragging = false;
+      viewport.addEventListener('pointerdown', function (e) { if (e.pointerType === 'mouse' && e.button !== 0) return; x0 = e.clientX; dx = 0; dragging = true; });
+      viewport.addEventListener('pointermove', function (e) { if (dragging) dx = e.clientX - x0; });
+      window.addEventListener('pointerup', function () { if (!dragging) return; dragging = false; if (Math.abs(dx) > 40) goTo(page + (dx < 0 ? 1 : -1)); x0 = null; dx = 0; });
     }
 
     /* keep the pressed pill fully in view — nudge the filter strip (not the page) if it's clipped */
@@ -511,7 +552,7 @@
         if (on) activeBtn = b;
       });
       revealFam(activeBtn);
-      applyFilter();
+      renderPages(true);
     }
     if (fams) fams.addEventListener('click', function (e) { var b = e.target.closest('.ralpick__fam'); if (b) setFam(b.getAttribute('data-fam')); });
 
@@ -531,7 +572,7 @@
     }
 
     function sync() {
-      chips.forEach(function (ch) {
+      [].slice.call(track.querySelectorAll('.ral-chip')).forEach(function (ch) {
         var on = !!(state.ral && ch.getAttribute('data-code') === state.ral.code);
         ch.classList.toggle('is-selected', on); ch.setAttribute('aria-selected', on ? 'true' : 'false');
       });
@@ -543,22 +584,25 @@
 
     trigger.addEventListener('click', function () {
       if (panel.classList.contains('is-open')) closeGrid();
-      else { openGrid(); if (search) search.focus(); if (state.ral) { var sel = grid.querySelector('.ral-chip.is-selected'); if (sel) sel.scrollIntoView({ block: 'nearest' }); } }
+      else { openGrid(); if (search) search.focus(); goTo(pageOfSelected()); }
     });
     document.addEventListener('click', function (e) {
       if (panel.classList.contains('is-open') && !panel.contains(e.target)) closeGrid();
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && panel.classList.contains('is-open')) { closeGrid(); trigger.focus(); }
+      if (!panel.classList.contains('is-open')) return;
+      if (e.key === 'Escape') { closeGrid(); trigger.focus(); }
+      else if (e.key === 'ArrowRight' && document.activeElement !== search) goTo(page + 1);
+      else if (e.key === 'ArrowLeft'  && document.activeElement !== search) goTo(page - 1);
     });
 
     if (search) search.addEventListener('input', function () {
       curQ = this.value; if (clearBtn) clearBtn.hidden = !this.value;
-      if (this.value && curFam !== 'all') setFam('all'); else applyFilter();
+      if (this.value && curFam !== 'all') setFam('all'); else renderPages(true);
     });
-    if (clearBtn) clearBtn.addEventListener('click', function () { search.value = ''; curQ = ''; this.hidden = true; applyFilter(); search.focus(); });
+    if (clearBtn) clearBtn.addEventListener('click', function () { search.value = ''; curQ = ''; this.hidden = true; renderPages(true); search.focus(); });
 
-    grid.addEventListener('click', function (e) {
+    track.addEventListener('click', function (e) {
       var b = e.target.closest('.ral-chip'); if (!b) return;
       var c = byCode[b.getAttribute('data-code')]; if (!c) return;
       state.ral = { code: c.code, name: c.name, hex: c.hex };
@@ -568,12 +612,20 @@
       refresh();     /* refresh() → ralUI.sync() updates trigger + chip highlight */
     });
 
+    /* re-paginate when the viewport width changes (column count may change) */
+    var rz;
+    window.addEventListener('resize', function () {
+      if (!panel.classList.contains('is-open')) return;
+      clearTimeout(rz); rz = window.setTimeout(function () { renderPages(false); }, 150);
+    });
+
     ralUI = {
       open: function () { panel.classList.add('is-shown'); if (search) { search.value = ''; curQ = ''; } if (clearBtn) clearBtn.hidden = true; setFam('all'); sync(); closeGrid(); },
       close: function () { panel.classList.remove('is-shown'); closeGrid(); },
       flash: function () { openGrid(); panel.classList.remove('is-invalid'); void panel.offsetWidth; panel.classList.add('is-invalid'); },
       sync: sync
     };
+    renderPages(true);
     updateTrigger();
   }
   setupRalPicker();
