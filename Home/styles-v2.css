@@ -43,7 +43,7 @@
   --color-graphite-400: #BFBFC2;
   --color-graphite-450: #CCCCCC;
   --color-graphite-500: #A1A1A1;
-  --color-graphite-600: #7A7A82;
+  --color-graphite-600: #6A6A6A;
   --color-graphite-700: #54545C;
   --color-graphite-800: #2E2E36;
   --color-graphite-850: #333333;
@@ -57,12 +57,18 @@
   --black-80: rgba(0, 0, 0, 0.8);
   --white-50: rgba(255, 255, 255, 0.5);
 
+  /* Font weights — the three body weights (Design System) */
+  --font-regular: 400;   /* body copy */
+  --font-bold:    600;   /* emphasis */
+  --font-strong:  800;   /* strong emphasis */
+
   /* Type scale */
   --text-display: 2.875rem;     /* 46 */
   --text-h1: 1.875rem;          /* 30 */
   --text-h2: 1.5rem;            /* 24 */
   --text-h3: 1.25rem;           /* 20 */
   --text-h4: 1.125rem;          /* 18 */
+  --text-body-xl: 1.25rem;      /* 20 — large intro / callout copy */
   --text-body: 1rem;            /* 16 */
   --text-body-sm: 0.875rem;     /* 14 */
   --text-caption: 0.75rem;      /* 12 */

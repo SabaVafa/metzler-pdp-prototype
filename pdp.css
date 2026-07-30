@@ -22,7 +22,7 @@
   --ink-60: rgba(0, 0, 0, 0.6);   /* dividers / separators (also used by chrome.css) */
   --color-graphite-200: #E6E6E8; --color-graphite-300: #DADADA;
   --color-graphite-400: #BFBFC2; --color-graphite-500: #A1A1A1;
-  --color-graphite-600: #7A7A82; --color-graphite-700: #54545C;
+  --color-graphite-600: #6A6A6A; --color-graphite-700: #54545C;
   --color-graphite-800: #2E2E36;
   --radius: 0.25rem; --radius-lg: 0.5rem; --radius-xl: 0.75rem; --radius-pill: 624.94rem;
   --shadow-soft: 0 0.5rem 1.5rem rgba(26,23,27,0.06);
