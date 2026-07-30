@@ -582,9 +582,30 @@
     function openGrid()  { panel.classList.add('is-open');  trigger.setAttribute('aria-expanded', 'true'); }
     function closeGrid() { panel.classList.remove('is-open'); trigger.setAttribute('aria-expanded', 'false'); }
 
+    /* after the panel expands, if it's clipped (below the fold or under the sticky
+       header) scroll it into a good position — mainly a mobile need where the open
+       picker runs past the viewport */
+    var mqMobile = window.matchMedia('(max-width: 767px)');
+    function scrollPickerIntoView() {
+      window.setTimeout(function () {
+        var header = document.querySelector('.header');
+        var headBottom = header ? Math.max(0, header.getBoundingClientRect().bottom) : 0;
+        var r = panel.getBoundingClientRect();
+        var vh = window.innerHeight || document.documentElement.clientHeight;
+        if (r.bottom > vh - 8 || r.top < headBottom + 4) {
+          window.scrollTo({ top: window.scrollY + r.top - headBottom - 12, behavior: 'smooth' });
+        }
+      }, 360);   /* wait out the expand animation so the final height is measured */
+    }
+
     trigger.addEventListener('click', function () {
       if (panel.classList.contains('is-open')) closeGrid();
-      else { openGrid(); if (search) search.focus(); goTo(pageOfSelected()); }
+      else {
+        openGrid();
+        if (search && !mqMobile.matches) search.focus();   /* skip on mobile so the keyboard doesn't cover the swatches */
+        goTo(pageOfSelected());
+        scrollPickerIntoView();
+      }
     });
     document.addEventListener('click', function (e) {
       if (panel.classList.contains('is-open') && !panel.contains(e.target)) closeGrid();
@@ -622,7 +643,7 @@
     ralUI = {
       open: function () { panel.classList.add('is-shown'); if (search) { search.value = ''; curQ = ''; } if (clearBtn) clearBtn.hidden = true; setFam('all'); sync(); closeGrid(); },
       close: function () { panel.classList.remove('is-shown'); closeGrid(); },
-      flash: function () { openGrid(); panel.classList.remove('is-invalid'); void panel.offsetWidth; panel.classList.add('is-invalid'); },
+      flash: function () { openGrid(); panel.classList.remove('is-invalid'); void panel.offsetWidth; panel.classList.add('is-invalid'); scrollPickerIntoView(); },
       sync: sync
     };
     renderPages(true);
