@@ -38,7 +38,7 @@
 
   /* ── RAL Classic palette (Wunschfarbe picker) — code | German name | hex ── */
   var WUNSCHFARBE = 'Wunschfarbe nach RAL';
-  var RAL_FAMS = [['all', 'Alle'], ['1', 'Gelb'], ['2', 'Orange'], ['3', 'Rot'], ['4', 'Violett'], ['5', 'Blau'], ['6', 'Grün'], ['7', 'Grau'], ['8', 'Braun'], ['9', 'Weiß/Schwarz']];
+  var RAL_FAMS = [['all', 'Alle'], ['7', 'Grau'], ['9', 'Weiß/Schwarz'], ['1', 'Gelb'], ['2', 'Orange'], ['3', 'Rot'], ['4', 'Violett'], ['5', 'Blau'], ['6', 'Grün'], ['8', 'Braun']];
   var RAL = ('1000|Grünbeige|CDBA88 1001|Beige|D0B084 1002|Sandgelb|D2AA6D 1003|Signalgelb|F9A800 1004|Goldgelb|E49E00 ' +
     '1005|Honiggelb|CB8E00 1006|Maisgelb|E29000 1007|Narzissengelb|E88C00 1011|Braunbeige|AF804F 1012|Zitronengelb|DDAF27 ' +
     '1013|Perlweiß|E3D9C6 1014|Elfenbein|DDC49A 1015|Hellelfenbein|E6D2B5 1016|Schwefelgelb|F1DD38 1017|Safrangelb|F6A950 ' +
@@ -48,7 +48,7 @@
     '2000|Gelborange|ED760E 2001|Rotorange|C93C20 2002|Blutorange|CB2821 2003|Pastellorange|FF7514 2004|Reinorange|F44611 ' +
     '2005|Leuchtorange|FF2301 2007|Leuchthellorange|FFA420 2008|Hellrotorange|F75E25 2009|Verkehrsorange|F54021 2010|Signalorange|D84B20 ' +
     '2011|Tieforange|EC7C26 2012|Lachsorange|E55137 2013|Perlorange|C35831 ' +
-    '3000|Feuerrot|AF2B1E 3001|Signalrot|A52019 3002|Karminrot|A2231D 3003|Rubinrot|9B111E 3004|Purpurrot|75151E ' +
+    '3000|Feuerrot|AF2B1E 3001|Signalrot|A52019 3002|Karminrot|A2231D 3003|Rubinrot|C8273D 3004|Purpurrot|75151E ' +
     '3005|Weinrot|5E2129 3007|Schwarzrot|412227 3009|Oxidrot|642424 3011|Braunrot|781F19 3012|Beigerot|C1876B ' +
     '3013|Tomatenrot|A12312 3014|Altrosa|D36E70 3015|Hellrosa|EA899A 3016|Korallenrot|B32821 3017|Rosé|E63244 ' +
     '3018|Erdbeerrot|D53032 3020|Verkehrsrot|CC0605 3022|Lachsrot|D95030 3024|Leuchtrot|F80000 3026|Leuchthellrot|FE0000 ' +
@@ -62,7 +62,7 @@
     '5017|Verkehrsblau|063971 5018|Türkisblau|3F888F 5019|Capriblau|1B5583 5020|Ozeanblau|1F3A3D 5021|Wasserblau|256D7B ' +
     '5022|Nachtblau|252850 5023|Fernblau|49678D 5024|Pastellblau|5D9B9B 5025|Perlenzian|2A6478 5026|Perlnachtblau|102C54 ' +
     '6000|Patinagrün|327662 6001|Smaragdgrün|28713E 6002|Laubgrün|276235 6003|Olivgrün|4B573E 6004|Blaugrün|0E4243 ' +
-    '6005|Moosgrün|0F4336 6006|Grauoliv|3E3B32 6007|Flaschengrün|283424 6008|Braungrün|35382E 6009|Tannengrün|26392F ' +
+    '6005|Moosgrün|114232 6006|Grauoliv|3E3B32 6007|Flaschengrün|283424 6008|Braungrün|35382E 6009|Tannengrün|26392F ' +
     '6010|Grasgrün|3D642D 6011|Resedagrün|6C7156 6012|Schwarzgrün|303D3A 6013|Schilfgrün|7E7B52 6014|Gelboliv|474135 ' +
     '6015|Schwarzoliv|3B3C36 6016|Türkisgrün|026A52 6017|Maigrün|468641 6018|Gelbgrün|48A43F 6019|Weißgrün|BDECB6 ' +
     '6020|Chromoxidgrün|2E3A23 6021|Blassgrün|89AC76 6022|Braunoliv|3B3327 6024|Verkehrsgrün|308446 6025|Farngrün|587246 ' +
@@ -70,20 +70,23 @@
     '6033|Minttürkis|497E76 6034|Pastelltürkis|7FB0B2 6035|Perlgrün|1C542D 6036|Perlopalgrün|193F32 6037|Reingrün|008F39 6038|Leuchtgrün|00BB2D ' +
     '7000|Fehgrau|78858B 7001|Silbergrau|8A9597 7002|Olivgrau|817863 7003|Moosgrau|7A7B6D 7004|Signalgrau|9EA0A1 ' +
     '7005|Mausgrau|6B716F 7006|Beigegrau|756857 7008|Khakigrau|6D6552 7009|Grüngrau|4F5951 7010|Zeltgrau|4C514A ' +
-    '7011|Eisengrau|434B4D 7012|Basaltgrau|4E5452 7013|Braungrau|464531 7015|Schiefergrau|434750 7016|Anthrazitgrau|293133 ' +
+    '7011|Eisengrau|434B4D 7012|Basaltgrau|575D5E 7013|Braungrau|464531 7015|Schiefergrau|434750 7016|Anthrazitgrau|383E42 ' +
     '7021|Schwarzgrau|23282B 7022|Umbragrau|403A3A 7023|Betongrau|808076 7024|Graphitgrau|474A50 7026|Granitgrau|2F353B ' +
     '7030|Steingrau|8B8C7A 7031|Blaugrau|474B4E 7032|Kieselgrau|B8B799 7033|Zementgrau|7D8471 7034|Gelbgrau|8F8B66 ' +
-    '7035|Lichtgrau|D7D7D7 7036|Platingrau|7F7679 7037|Staubgrau|7D7F7D 7038|Achatgrau|B5B8B1 7039|Quarzgrau|6C6960 ' +
+    '7035|Lichtgrau|D7D7D7 7036|Platingrau|7F7679 7037|Staubgrau|7D7F7D 7038|Achatgrau|B5B8B1 7039|Quarzgrau|6B665E ' +
     '7040|Fenstergrau|9DA1AA 7042|Verkehrsgrau A|8D948D 7043|Verkehrsgrau B|4E5754 7044|Seidengrau|CAC4B0 7045|Telegrau 1|909090 ' +
     '7046|Telegrau 2|82898F 7047|Telegrau 4|D0D0D0 7048|Perlmausgrau|898176 ' +
     '8000|Grünbraun|826C34 8001|Ockerbraun|955F20 8002|Signalbraun|6C3B2A 8003|Lehmbraun|734222 8004|Kupferbraun|8E402A ' +
     '8007|Rehbraun|59351F 8008|Olivbraun|6F4F28 8011|Nussbraun|5B3A29 8012|Rotbraun|592321 8014|Sepiabraun|382C1E ' +
     '8015|Kastanienbraun|633A34 8016|Mahagonibraun|4C2F27 8017|Schokoladenbraun|45322E 8019|Graubraun|403A3A 8022|Schwarzbraun|212121 ' +
     '8023|Orangebraun|A65E2E 8024|Beigebraun|79553D 8025|Blassbraun|755C48 8028|Terrabraun|4E3B31 8029|Perlkupfer|763C28 ' +
-    '9001|Cremeweiß|FDF4E3 9002|Grauweiß|E7EBDA 9003|Signalweiß|F4F4F4 9004|Signalschwarz|282828 9005|Tiefschwarz|0A0A0A ' +
-    '9006|Weißaluminium|A5A5A5 9007|Graualuminium|8F8F8F 9010|Reinweiß|FFFFFF 9011|Graphitschwarz|1C1C1C 9016|Verkehrsweiß|F6F6F6 ' +
+    '9001|Cremeweiß|FDF4E3 9002|Grauweiß|E7EBDA 9003|Signalweiß|F4F4F4 9004|Signalschwarz|282828 9005|Tiefschwarz|000000 ' +
+    '9006|Weißaluminium|A5A5A5 9007|Graualuminium|AFAFAF 9010|Reinweiß|FFFFFF 9011|Graphitschwarz|1C1C1C 9016|Verkehrsweiß|FFFFFF ' +
     '9017|Verkehrsschwarz|1E1E1E 9018|Papyrusweiß|CFD3CD 9022|Perlhellgrau|9C9C9C 9023|Perldunkelgrau|828282')
-    .split(/\s+(?=\d{4}\|)/).map(function (s) { var p = s.split('|'); return { code: p[0], name: p[1], hex: '#' + p[2], fam: p[0].charAt(0) }; });
+    .split(/\s+(?=\d{4}\|)/).map(function (s) { var p = s.split('|'); return { code: p[0], name: p[1], hex: '#' + p[2], fam: p[0].charAt(0) }; })
+    /* neutral tones first (Grau 7xxx, then Weiß/Schwarz 9xxx), then the chromatic
+       families; stable sort keeps ascending code order within each family */
+    .sort(function (a, b) { var o = '791234568'; return o.indexOf(a.fam) - o.indexOf(b.fam); });
 
   var ralUI = null;   /* set by setupRalPicker() — { open, close, flash, sync } */
   var state = {
@@ -449,28 +452,29 @@
   /* ── Wunschfarbe: inline RAL picker — search field + palette, shown when
      Wunschfarbe is chosen (search by code or name); live preview ── */
   function setupRalPicker() {
-    var panel = $('ralPick'), grid = $('ralGrid'), search = $('ralSearch'), clearBtn = $('ralClear'), empty = $('ralEmpty');
-    if (!panel || !grid) return;
-    var curQ = '';
-    var toggleBtn = $('ralToggle');
+    var panel = $('ralPick'), trigger = $('ralTrigger'), grid = $('ralGrid'),
+        search = $('ralSearch'), clearBtn = $('ralClear'), empty = $('ralEmpty'),
+        fams = $('ralFams'), count = $('ralCount'),
+        trigSwatch = $('ralTrigSwatch'), trigLabel = $('ralTrigLabel'), trigSub = $('ralTrigSub');
+    if (!panel || !grid || !trigger) return;
+    var curQ = '', curFam = 'all', TOTAL = RAL.length;
 
-    /* the picker sits collapsed by default — only the search field + chevron show.
-       The palette opens on the chevron, or when the field is focused / typed into,
-       and closes again after a tone is picked (or on an outside click). */
-    function openGrid()  { panel.classList.add('is-open');  if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'true'); }
-    function closeGrid() { panel.classList.remove('is-open'); if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false'); }
-    if (toggleBtn) toggleBtn.addEventListener('click', function () {
-      if (panel.classList.contains('is-open')) closeGrid();
-      else { openGrid(); if (search) search.focus(); }
-    });
-    if (search) { search.addEventListener('focus', openGrid); search.addEventListener('click', openGrid); }
-    document.addEventListener('click', function (e) {
-      if (panel.classList.contains('is-open') && !panel.contains(e.target)) closeGrid();
-    });
+    /* colour-family filter pills (representative dot per RAL group) */
+    var FAM_DOT = { '1':'#F9A800','2':'#F44611','3':'#AF2B1E','4':'#6D3F5B','5':'#063971','6':'#276235','7':'#7A7B6D','8':'#6C3B2A' };
+    if (fams) fams.innerHTML = RAL_FAMS.map(function (f) {
+      var key = f[0], dotStyle;
+      if (key === 'all')      dotStyle = 'background:conic-gradient(from 90deg,#F9A800,#F44611,#AF2B1E,#6D3F5B,#063971,#276235,#6C3B2A,#F9A800)';
+      else if (key === '9')   dotStyle = 'background:linear-gradient(135deg,#fff 0 50%,#141414 50% 100%)';
+      else                    dotStyle = 'background:' + FAM_DOT[key];
+      return '<button type="button" class="ralpick__fam' + (key === 'all' ? ' is-active' : '') + '" role="tab" aria-selected="' + (key === 'all') + '" data-fam="' + key + '">'
+        + '<span class="ralpick__famdot" style="' + dotStyle + '"></span>' + esc(f[1]) + '</button>';
+    }).join('');
+    var famBtns = fams ? [].slice.call(fams.querySelectorAll('.ralpick__fam')) : [];
 
+    /* swatch grid */
     grid.innerHTML = RAL.map(function (c) {
       return '<button type="button" class="ral-chip" role="option" aria-selected="false" data-code="' + c.code + '" data-fam="' + c.fam + '"'
-        + ' style="background:' + c.hex + ';color:' + ralInk(c.hex) + '" title="RAL ' + c.code + ' ' + esc(c.name) + '">'
+        + ' style="--chip:' + c.hex + ';color:' + ralInk(c.hex) + '" title="RAL ' + c.code + ' ' + esc(c.name) + '">'
         + '<span class="ral-chip__code">RAL ' + c.code + '</span><span class="ral-chip__name">' + esc(c.name) + '</span></button>';
     }).join('');
     var chips = [].slice.call(grid.querySelectorAll('.ral-chip'));
@@ -481,21 +485,77 @@
       chips.forEach(function (ch) {
         var code = ch.getAttribute('data-code');
         var name = byCode[code] ? byCode[code].name.toLowerCase() : '';
-        var vis = !q || code.indexOf(q) > -1 || name.indexOf(q) > -1 || ('ral ' + code).indexOf(q) > -1;
+        var famOk = curFam === 'all' || ch.getAttribute('data-fam') === curFam;
+        var qOk = !q || code.indexOf(q) > -1 || name.indexOf(q) > -1 || ('ral ' + code).indexOf(q) > -1;
+        var vis = famOk && qOk;
         ch.style.display = vis ? '' : 'none'; if (vis) shown++;
       });
       if (empty) empty.hidden = shown > 0;
+      if (count) count.textContent = shown === TOTAL ? TOTAL + ' Töne' : shown + ' / ' + TOTAL;
+      grid.scrollTop = 0;
     }
-    /* highlight the chosen RAL in the grid (the selection is also mirrored in the
-       "Farbe — …" label + price above) */
+
+    /* keep the pressed pill fully in view — nudge the filter strip (not the page) if it's clipped */
+    function revealFam(btn) {
+      if (!fams || !btn) return;
+      var cr = fams.getBoundingClientRect(), br = btn.getBoundingClientRect(), pad = 10;
+      if (br.left < cr.left + pad) fams.scrollBy({ left: br.left - cr.left - pad, behavior: 'smooth' });
+      else if (br.right > cr.right - pad) fams.scrollBy({ left: br.right - cr.right + pad, behavior: 'smooth' });
+    }
+    function setFam(key) {
+      curFam = key;
+      var activeBtn = null;
+      famBtns.forEach(function (b) {
+        var on = b.getAttribute('data-fam') === key;
+        b.classList.toggle('is-active', on); b.setAttribute('aria-selected', on ? 'true' : 'false');
+        if (on) activeBtn = b;
+      });
+      revealFam(activeBtn);
+      applyFilter();
+    }
+    if (fams) fams.addEventListener('click', function (e) { var b = e.target.closest('.ralpick__fam'); if (b) setFam(b.getAttribute('data-fam')); });
+
+    /* collapsed trigger reflects the current selection at a glance */
+    function updateTrigger() {
+      if (state.ral) {
+        trigSwatch.classList.remove('ralpick__swatch--empty');
+        trigSwatch.style.background = state.ral.hex; trigSwatch.innerHTML = '';
+        trigLabel.textContent = 'RAL ' + state.ral.code;
+        trigSub.textContent = state.ral.name;
+      } else {
+        trigSwatch.classList.add('ralpick__swatch--empty');
+        trigSwatch.style.background = ''; trigSwatch.innerHTML = '';
+        trigLabel.textContent = 'Wunschfarbe wählen';
+        trigSub.textContent = 'RAL Classic — Farbton suchen & auswählen';
+      }
+    }
+
     function sync() {
       chips.forEach(function (ch) {
         var on = !!(state.ral && ch.getAttribute('data-code') === state.ral.code);
         ch.classList.toggle('is-selected', on); ch.setAttribute('aria-selected', on ? 'true' : 'false');
       });
+      updateTrigger();
     }
 
-    if (search) search.addEventListener('input', function () { curQ = this.value; if (clearBtn) clearBtn.hidden = !this.value; openGrid(); applyFilter(); });
+    function openGrid()  { panel.classList.add('is-open');  trigger.setAttribute('aria-expanded', 'true'); }
+    function closeGrid() { panel.classList.remove('is-open'); trigger.setAttribute('aria-expanded', 'false'); }
+
+    trigger.addEventListener('click', function () {
+      if (panel.classList.contains('is-open')) closeGrid();
+      else { openGrid(); if (search) search.focus(); if (state.ral) { var sel = grid.querySelector('.ral-chip.is-selected'); if (sel) sel.scrollIntoView({ block: 'nearest' }); } }
+    });
+    document.addEventListener('click', function (e) {
+      if (panel.classList.contains('is-open') && !panel.contains(e.target)) closeGrid();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && panel.classList.contains('is-open')) { closeGrid(); trigger.focus(); }
+    });
+
+    if (search) search.addEventListener('input', function () {
+      curQ = this.value; if (clearBtn) clearBtn.hidden = !this.value;
+      if (this.value && curFam !== 'all') setFam('all'); else applyFilter();
+    });
     if (clearBtn) clearBtn.addEventListener('click', function () { search.value = ''; curQ = ''; this.hidden = true; applyFilter(); search.focus(); });
 
     grid.addEventListener('click', function (e) {
@@ -503,19 +563,18 @@
       var c = byCode[b.getAttribute('data-code')]; if (!c) return;
       state.ral = { code: c.code, name: c.name, hex: c.hex };
       panel.classList.remove('is-invalid');
-      /* mirror the chosen code into the search field — WITHOUT filtering, so the
-         rest of the palette stays visible (curQ is left untouched) */
-      if (search) { search.value = 'RAL ' + c.code; if (clearBtn) clearBtn.hidden = false; }
-      closeGrid();   /* selection made → collapse back to the field + chevron */
-      refresh();
+      /* keep the palette open after a pick so the user can compare / re-choose;
+         it closes via the chevron, an outside click, or Esc */
+      refresh();     /* refresh() → ralUI.sync() updates trigger + chip highlight */
     });
 
     ralUI = {
-      open: function () { panel.classList.add('is-shown'); applyFilter(); sync(); closeGrid(); },
-      close: function () { panel.classList.remove('is-shown'); },
-      flash: function () { panel.classList.remove('is-invalid'); void panel.offsetWidth; panel.classList.add('is-invalid'); },
+      open: function () { panel.classList.add('is-shown'); if (search) { search.value = ''; curQ = ''; } if (clearBtn) clearBtn.hidden = true; setFam('all'); sync(); closeGrid(); },
+      close: function () { panel.classList.remove('is-shown'); closeGrid(); },
+      flash: function () { openGrid(); panel.classList.remove('is-invalid'); void panel.offsetWidth; panel.classList.add('is-invalid'); },
       sync: sync
     };
+    updateTrigger();
   }
   setupRalPicker();
 

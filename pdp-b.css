@@ -62,17 +62,18 @@
 .pdp-lightbox__bar { flex: none; display: flex; align-items: center; justify-content: space-between; color: #fff; }
 .pdp-lightbox__counter { font-size: 0.9rem; font-weight: 700; letter-spacing: 0.03em; color: rgba(255,255,255,0.85); font-variant-numeric: tabular-nums; }
 .pdp-lightbox__close { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; cursor: pointer;
-  background: rgba(255,255,255,0.1); border: 0; border-radius: 50%; color: #fff; transition: background .15s ease; }
-.pdp-lightbox__close:hover { background: rgba(255,255,255,0.22); }
+  background: none; border: 0; color: #fff; transition: color .15s ease, transform .15s ease; }
+.pdp-lightbox__close:hover { color: rgba(255,255,255,0.7); transform: scale(1.08); }
 .pdp-lightbox__close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 .pdp-lightbox__close svg { width: 1.25rem; height: 1.25rem; }
 .pdp-lightbox__stage { position: relative; flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .pdp-lightbox__img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: var(--radius-lg);
   background: #fff; box-shadow: 0 24px 60px -20px rgba(0,0,0,0.65); }
+/* nav arrows — design-system slider arrow: square var(--radius), white outline, inverts on hover (never circular) */
 .pdp-lightbox__nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
   display: grid; place-items: center; width: 3rem; height: 3rem; cursor: pointer;
-  background: rgba(255,255,255,0.12); border: 0; border-radius: 50%; color: #fff; transition: background .15s ease; }
-.pdp-lightbox__nav:hover { background: rgba(255,255,255,0.28); }
+  background: transparent; border: 1px solid #fff; border-radius: var(--radius); color: #fff; transition: background .15s ease, color .15s ease; }
+.pdp-lightbox__nav:hover { background: #fff; color: var(--color-digital-black); }
 .pdp-lightbox__nav:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 .pdp-lightbox__nav svg { width: 1.5rem; height: 1.5rem; }
 .pdp-lightbox__nav--prev { left: clamp(0.5rem, 2vw, 1.5rem); }
@@ -256,55 +257,106 @@
    only appears once a Wunschfarbe RAL tone is picked (not for standard finishes) */
 .bx-color__dot[hidden] { display: none; }
 
-/* ── WUNSCHFARBE · inline RAL picker — search + palette, shown when Wunschfarbe is chosen ── */
-.ralpick { display: none; margin-top: 0.1rem; }
-.ralpick.is-shown { display: block; animation: ralpick-in .22s ease; }
-@keyframes ralpick-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
-.ralpick.is-invalid .ralpick__body { animation: ralpick-shake .4s ease; }
+/* ── WUNSCHFARBE · premium RAL picker ─────────────────────────────────
+   Collapsed: a combobox trigger that previews the chosen tone.
+   Expanded:  a card with search + result count, colour-family filter, swatch grid. */
+.ralpick { display: none; margin-top: 0.5rem; }
+.ralpick.is-shown { display: block; }
 @keyframes ralpick-shake { 0%,100%{transform:none} 20%{transform:translateX(-5px)} 40%{transform:translateX(5px)} 60%{transform:translateX(-3px)} 80%{transform:translateX(3px)} }
 
-/* the search + grid live inside a framed panel; the search field is the main control */
-/* collapsed = just the search field, no frame; the paper panel only appears once the palette opens */
-.ralpick__body { display: flex; flex-direction: column; gap: 0.85rem; }
-.ralpick.is-open .ralpick__body { padding: 0.9rem; border: 1px solid var(--color-graphite-200); border-radius: var(--radius-lg); background: var(--color-paper); }
+/* collapsed trigger — combobox */
+.ralpick__trigger { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+  padding: 0.5rem 0.75rem; background: var(--color-white); cursor: pointer; text-align: left; font: inherit;
+  border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg);
+  transition: border-color .26s ease, box-shadow .26s ease, border-radius .26s ease; }
+.ralpick__trigger:hover { border-color: var(--color-graphite-400); }
+.ralpick__trigger:focus-visible { outline: none; border-color: var(--color-teal); box-shadow: 0 0 0 3px rgba(1,82,83,0.12); }
+/* open: the trigger becomes the header of one connected unit — teal border, squared
+   bottom, no separate glow, so it fuses seamlessly with the panel below */
+.ralpick.is-open .ralpick__trigger { border-color: var(--color-teal); box-shadow: none;
+  border-bottom-color: transparent; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.ralpick__trighead { display: flex; align-items: center; gap: 0.65rem; min-width: 0; }
+.ralpick__swatch { flex: none; width: 2.25rem; height: 2.25rem; border-radius: calc(var(--radius-lg) - 0.15rem);
+  display: grid; place-items: center; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.12); }
+.ralpick__swatch--empty { display: none; }
+.ralpick__swatch svg { width: 1.3rem; height: 1.3rem; }
+.ralpick__trigtext { display: flex; flex-direction: column; gap: 0.05rem; min-width: 0; }
+.ralpick__triglabel { font-size: 0.9375rem; font-weight: 700; color: var(--color-digital-black); line-height: 1.2;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ralpick__trigsub { font-size: 0.75rem; color: var(--color-graphite-600); line-height: 1.25;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ralpick__chev { flex: none; width: 1.25rem; height: 1.25rem; color: var(--color-graphite-500);
+  transition: transform .22s ease, color .18s ease; }
+.ralpick__trigger:hover .ralpick__chev { color: var(--color-teal); }
+.ralpick.is-open .ralpick__chev { transform: rotate(180deg); color: var(--color-teal); }
+.ralpick.is-invalid .ralpick__trigger { animation: ralpick-shake .4s ease; border-color: var(--color-red); box-shadow: 0 0 0 3px rgba(212,41,36,0.14); }
 
-/* search bar — one box holding icon · input · clear · chevron toggle */
-.ralpick__search { position: relative; display: flex; align-items: center; gap: 0.4rem; height: 2.85rem;
-  padding: 0 0.35rem 0 0.85rem; background: var(--color-white);
-  border: 1px solid var(--color-graphite-300); border-radius: var(--radius); }
-.ralpick__search:focus-within { border-color: var(--color-teal); }
-.ralpick__searchicon { flex: none; width: 1.1rem; height: 1.1rem; color: var(--color-graphite-500); }
+/* expanded panel — smooth height expand/collapse via grid-template-rows (0fr ↔ 1fr):
+   animates the real content height with no JS measuring, joined seamlessly under the
+   trigger as one elevated unit. */
+.ralpick__panel { display: grid; grid-template-rows: 0fr; opacity: 0; margin-top: 0;
+  background: var(--color-white); border: 1px solid transparent; border-top: 0;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg); box-shadow: none; will-change: grid-template-rows;
+  transition: grid-template-rows .32s cubic-bezier(.4,0,.2,1), opacity .22s ease .02s,
+              border-color .26s ease, box-shadow .32s ease; }
+.ralpick__panelinner { overflow: hidden; min-height: 0; }
+.ralpick__panelpad { padding: 0.85rem; }
+.ralpick.is-open .ralpick__panel { grid-template-rows: 1fr; opacity: 1;
+  border-color: var(--color-teal); box-shadow: var(--shadow-soft); }
+@media (prefers-reduced-motion: reduce) {
+  .ralpick__panel, .ralpick__trigger, .ralpick__chev { transition: none; }
+}
+
+/* search */
+.ralpick__search { position: relative; display: flex; align-items: center; gap: 0.5rem; height: 2.6rem;
+  padding: 0 0.45rem 0 0.75rem; background: var(--color-paper);
+  border: 1px solid var(--color-graphite-200); border-radius: var(--radius); transition: border-color .15s ease, box-shadow .15s ease, background .15s ease; }
+.ralpick__search:focus-within { border-color: var(--color-teal); background: var(--color-white); box-shadow: 0 0 0 3px rgba(1,82,83,0.10); }
+.ralpick__searchicon { flex: none; width: 1.05rem; height: 1.05rem; color: var(--color-graphite-500); }
 .ralpick__input { flex: 1 1 auto; min-width: 0; height: 100%; border: 0; background: none; outline: none;
   font: inherit; font-size: 0.9375rem; color: var(--color-digital-black); padding: 0; }
 .ralpick__input::-webkit-search-cancel-button { display: none; }
-.ralpick__clear { flex: none; display: grid; place-items: center; width: 2rem; height: 2rem;
-  border: 0; background: none; color: var(--color-graphite-500); cursor: pointer; }
-.ralpick__clear:hover { color: var(--color-graphite-700); }
-.ralpick__clear svg { width: 1.4rem; height: 1.4rem; }
+.ralpick__count { flex: none; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.01em; color: var(--color-graphite-600);
+  padding: 0.15rem 0.5rem; background: var(--color-white); border: 1px solid var(--color-graphite-200);
+  border-radius: var(--radius-pill); white-space: nowrap; }
+.ralpick__clear { flex: none; display: grid; place-items: center; width: 1.75rem; height: 1.75rem;
+  border: 0; background: none; color: var(--color-graphite-500); cursor: pointer; border-radius: var(--radius); }
+.ralpick__clear:hover { color: var(--color-graphite-800); background: var(--color-graphite-100); }
+.ralpick__clear svg { width: 1rem; height: 1rem; }
 
-/* chevron toggle — opens/closes the palette; the picker sits collapsed (field + chevron only) by default */
-.ralpick__toggle { flex: none; display: grid; place-items: center; width: 2rem; height: 2rem;
-  border: 0; background: none; color: var(--color-graphite-500); cursor: pointer; }
-.ralpick__toggle:hover { color: var(--color-teal); }
-.ralpick__toggle svg { width: 1.35rem; height: 1.35rem; transition: transform .2s ease; }
-.ralpick__toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+/* colour-family filter — minimal borderless chips; quiet grey hover, soft teal-tint active */
+.ralpick__fams { display: flex; gap: 0.15rem; margin: 0.75rem 0 0.65rem; padding-bottom: 0.15rem; overflow-x: auto;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.ralpick__fams::-webkit-scrollbar { display: none; }
+.ralpick__fam { flex: none; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.32rem 0.7rem;
+  font: inherit; font-size: 0.8125rem; font-weight: 500; letter-spacing: -0.005em; color: var(--color-graphite-600);
+  cursor: pointer; white-space: nowrap; background: transparent; border: 0; border-radius: var(--radius-pill);
+  transition: color .15s ease, background .15s ease; }
+.ralpick__fam:hover { color: var(--color-digital-black); background: var(--color-graphite-100); }
+.ralpick__fam.is-active { color: var(--color-teal); font-weight: 700; background: var(--color-teal-50); }
+.ralpick__famdot { flex: none; width: 0.5rem; height: 0.5rem; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.14); }
 
-/* palette + empty message are hidden while collapsed; they reveal when the picker is open */
-.ralpick__grid, .ralpick__empty { display: none; }
-.ralpick.is-open .ralpick__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); gap: 0.5rem;
-  max-height: 17.5rem; overflow-y: auto; }
-.ralpick.is-open .ralpick__empty:not([hidden]) { display: block; }
+/* swatch grid — custom slim scrollbar (always rendered so the height animation has content) */
+.ralpick__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.25rem, 1fr)); gap: 0.5rem;
+  max-height: 18rem; overflow-y: auto; padding: 0.25rem 0.4rem 0.25rem 0.25rem; }
+.ralpick__grid::-webkit-scrollbar { width: 0.5rem; }
+.ralpick__grid::-webkit-scrollbar-track { background: transparent; }
+.ralpick__grid::-webkit-scrollbar-thumb { background: var(--color-graphite-300); border-radius: var(--radius-pill); }
+.ralpick__grid::-webkit-scrollbar-thumb:hover { background: var(--color-graphite-400); }
+
 .ral-chip { position: relative; display: flex; flex-direction: column; justify-content: flex-end; gap: 0.1rem;
-  height: 4.2rem; padding: 0.4rem 0.5rem; text-align: left; cursor: pointer;
-  border: 1px solid rgba(0,0,0,0.12); border-radius: var(--radius); overflow: hidden; }
-.ral-chip:hover { border-color: rgba(0,0,0,0.28); }
-.ral-chip:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--color-teal); }
-/* selection: a thin inset ring — stays inside the tile, no layout shift, no clipping by the scroll box */
-.ral-chip.is-selected { box-shadow: inset 0 0 0 2px var(--color-teal); border-color: var(--color-teal); }
-.ral-chip__code { font-size: 0.75rem; font-weight: 700; line-height: 1.1; }
-.ral-chip__name { font-size: 0.625rem; line-height: 1.15; opacity: 0.92; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  height: 4.5rem; padding: 0.45rem 0.55rem; text-align: left; cursor: pointer; background: var(--chip); border: 0;
+  border-radius: var(--radius); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.10);
+  transition: transform .16s ease, box-shadow .16s ease; }
+.ral-chip:hover { transform: translateY(-2px); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.10), 0 6px 14px -6px rgba(0,0,0,0.45); }
+.ral-chip:focus-visible { outline: none; box-shadow: inset 0 0 0 2px #fff, inset 0 0 0 4px var(--color-teal); }
+.ral-chip.is-selected { box-shadow: inset 0 0 0 2px #fff, inset 0 0 0 4px var(--color-teal); }
+.ral-chip__code { font-size: 0.75rem; font-weight: 800; line-height: 1.1; }
+.ral-chip__name { font-size: 0.625rem; line-height: 1.15; opacity: 0.9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
 
-.ralpick__empty { margin: 0; padding: 1rem; text-align: center; font-size: 0.8125rem; color: var(--color-graphite-600); }
+.ralpick__empty { display: none; margin: 0.6rem 0 0; padding: 1.25rem 1rem; text-align: center; font-size: 0.8125rem;
+  color: var(--color-graphite-600); background: var(--color-paper); border-radius: var(--radius); }
+.ralpick__empty:not([hidden]) { display: block; }
 
 /* ── KONFIGURATION panel ── */
 .cfgb { display: flex; flex-direction: column; gap: 0.9rem; padding: 1.35rem; border-radius: var(--radius-lg);
@@ -1833,11 +1885,12 @@ body.is-scrolled #quickbar {
   box-shadow: 0 18px 50px rgba(0,0,0,0.45); }
 .rvw-lightbox__close { position: absolute; top: clamp(0.75rem, 2vw, 1.4rem); right: clamp(0.75rem, 2vw, 1.4rem);
   width: 2.75rem; height: 2.75rem; display: grid; place-items: center; font-size: 1.6rem; line-height: 1; cursor: pointer;
-  color: #fff; background: rgba(255,255,255,0.14); border: 0; border-radius: 50%; transition: background .15s ease; }
-.rvw-lightbox__close:hover { background: rgba(255,255,255,0.28); }
+  color: #fff; background: none; border: 0; transition: color .15s ease, transform .15s ease; }
+.rvw-lightbox__close:hover { color: rgba(255,255,255,0.7); transform: scale(1.08); }
+/* nav arrows — design-system slider arrow: square var(--radius), white outline, inverts on hover (never circular) */
 .rvw-lightbox__nav { flex: none; width: 2.75rem; height: 2.75rem; display: grid; place-items: center; font-size: 1.8rem; line-height: 1;
-  cursor: pointer; color: #fff; background: rgba(255,255,255,0.14); border: 0; border-radius: 50%; transition: background .15s ease; }
-.rvw-lightbox__nav:hover { background: rgba(255,255,255,0.28); }
+  cursor: pointer; color: #fff; background: transparent; border: 1px solid #fff; border-radius: var(--radius); transition: background .15s ease, color .15s ease; }
+.rvw-lightbox__nav:hover { background: #fff; color: var(--color-digital-black); }
 .rvw-review__foot { margin-top: 0.7rem; display: flex; align-items: center; gap: 0.6rem; font-size: 0.8125rem; }
 .rvw-review__foot .rvw-author { font-size: 0.8125rem; }
 .rvw-review__foot time { color: var(--color-graphite-700); }
@@ -2075,11 +2128,12 @@ body.is-scrolled #quickbar {
 .tdiag-lightbox figcaption { color: rgba(255,255,255,0.9); font-size: 0.9rem; text-align: center; }
 .tdiag-lightbox__close { position: absolute; top: clamp(0.75rem,2vw,1.4rem); right: clamp(0.75rem,2vw,1.4rem);
   width: 2.75rem; height: 2.75rem; display: grid; place-items: center; font-size: 1.6rem; line-height: 1; cursor: pointer;
-  color: #fff; background: rgba(255,255,255,0.14); border: 0; border-radius: 50%; transition: background .15s ease; }
-.tdiag-lightbox__close:hover { background: rgba(255,255,255,0.28); }
+  color: #fff; background: none; border: 0; transition: color .15s ease, transform .15s ease; }
+.tdiag-lightbox__close:hover { color: rgba(255,255,255,0.7); transform: scale(1.08); }
+/* nav arrows — design-system slider arrow: square var(--radius), white outline, inverts on hover (never circular) */
 .tdiag-lightbox__nav { flex: none; width: 2.75rem; height: 2.75rem; display: grid; place-items: center; font-size: 1.8rem; line-height: 1;
-  cursor: pointer; color: #fff; background: rgba(255,255,255,0.14); border: 0; border-radius: 50%; transition: background .15s ease; }
-.tdiag-lightbox__nav:hover { background: rgba(255,255,255,0.28); }
+  cursor: pointer; color: #fff; background: transparent; border: 1px solid #fff; border-radius: var(--radius); transition: background .15s ease, color .15s ease; }
+.tdiag-lightbox__nav:hover { background: #fff; color: var(--color-digital-black); }
 
 /* Frage / FAQ — ported from the produktionsprozess page (.faq), mapped to PDP tokens */
 .faq__inner { display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
