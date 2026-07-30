@@ -719,9 +719,13 @@
         var near = swatchEls[idx];
         if (!near) return;
         setTxt('pdpFinishName', near.getAttribute('data-finish'));
-        /* line sits under the active swatch (content coords → rides with the scroll,
-           hops to the next swatch as the active index changes) */
-        if (swline) swline.style.transform = 'translateX(' + Math.round(near.offsetLeft) + 'px)';
+        /* The line marks the SELECTED swatch, not the scroll position. Driving it from
+           scroll progress meant any scroll/resize/momentum-settle after a tap dragged it
+           back toward the first swatch (under the "Farbe — …" label). Anchor it to the
+           pressed swatch; fall back to the scroll-nearest one only until a colour is
+           chosen. Absolute inside the scroller → it rides with the swatch on scroll. */
+        var marked = sw.querySelector('.pdp-swatch[aria-pressed="true"]') || near;
+        if (swline) swline.style.transform = 'translateX(' + Math.round(marked.offsetLeft) + 'px)';
       };
       var onScroll = function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
       sw.addEventListener('scroll', onScroll, { passive: true });
