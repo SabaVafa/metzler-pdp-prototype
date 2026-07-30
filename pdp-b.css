@@ -1466,10 +1466,12 @@ body.kbd-open .pdp-stickybar { display: none !important; }
 .rv__track[hidden] { display: none; }   /* data source only */
 
 .rv__feature-card { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: clamp(1rem, 2vw, 1.5rem); align-items: center; }
+  grid-template-rows: 1fr auto; column-gap: clamp(1rem, 2vw, 1.5rem); row-gap: clamp(1rem, 1.5vw, 1.25rem);
+  align-items: stretch; }
 
-.rv__feature-media { position: relative; aspect-ratio: 4 / 3; border-radius: var(--radius);
-  overflow: hidden; background: var(--color-paper); }
+/* photo fills its column edge-to-edge and spans BOTH rows (full height of text + thumbnails) */
+.rv__feature-media { grid-column: 1; grid-row: 1 / 3; position: relative; border-radius: var(--radius);
+  overflow: hidden; background: var(--color-paper); min-height: 16rem; }
 .rv__feature-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .rv__feature-cam { position: absolute; left: 0.75rem; bottom: 0.75rem; display: inline-flex; align-items: center; gap: 0.35rem;
   font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.01em; color: #fff;
@@ -1477,7 +1479,7 @@ body.kbd-open .pdp-stickybar { display: none !important; }
   padding: 0.32rem 0.65rem; border-radius: var(--radius-pill); }
 .rv__feature-cam svg { width: 0.9rem; height: 0.9rem; }
 
-.rv__feature-content { position: relative; display: flex; flex-direction: column; gap: 0.7rem;
+.rv__feature-content { grid-column: 2; grid-row: 1; position: relative; display: flex; flex-direction: column; gap: 0.7rem;
   padding: 0; justify-content: center; }
 .rv__feature-quote { position: absolute; top: -0.25rem; right: 0; width: 3rem; height: 3rem; color: var(--color-teal-50); pointer-events: none; }
 .rv__feature-stars { position: relative; }
@@ -1496,7 +1498,7 @@ body.kbd-open .pdp-stickybar { display: none !important; }
 .rv__feature-card.is-swapping .rv__feature-content > :not(.rv__feature-quote) { opacity: 0; }
 
 /* label + control row grouped; label clarifies the thumbnails are OTHER customers */
-.rv__navwrap { display: flex; flex-direction: column; gap: 0.65rem; }
+.rv__navwrap { grid-column: 2; grid-row: 2; display: flex; flex-direction: column; gap: 0.65rem; }
 .rv__navlabel { margin: 0; text-align: center; font-size: 0.75rem; font-weight: 700;
   letter-spacing: 0.15em; line-height: 1.4; text-transform: uppercase; color: #6A6A6A; }
 /* one control row: prev · customer-photo thumbnails · next */
@@ -1529,9 +1531,11 @@ body.kbd-open .pdp-stickybar { display: none !important; }
   .rv__summary, .rv__carousel { min-width: 0; }
 }
 @media (max-width: 48rem) {
-  .rv__feature-card { grid-template-columns: minmax(0, 1fr); }
+  /* stack: photo, text, thumbnails — reset the desktop row/column spans */
+  .rv__feature-card { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; }
+  .rv__feature-media, .rv__feature-content, .rv__navwrap { grid-column: 1; grid-row: auto; }
   .rv__feature-card, .rv__feature-content, .rv__feature-media { min-width: 0; }
-  .rv__feature-media { aspect-ratio: 16 / 10; }
+  .rv__feature-media { aspect-ratio: 16 / 10; min-height: 0; }
   .rv__feature-text { max-width: none; }
   .rv__thumbsnav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; padding-bottom: 0.25rem; }
   .rv__thumbsnav::-webkit-scrollbar { display: none; }

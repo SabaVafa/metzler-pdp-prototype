@@ -547,13 +547,14 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
   .header__search-icon,
   .mobile-bar { display: none !important; }
 
-  /* Scrolled state — body gains .is-scrolled when scrollY exceeds
-     a threshold. The category strip hides and the compact
-     "Kategorien" pill appears in the top row as its replacement. */
-  body.is-scrolled .header__nav { display: none !important; }
+  /* Scrolled state — body gains .is-scrolled when scrollY exceeds a threshold; the compact
+     "Kategorien" pill appears in the top row. The category strip now lives OUTSIDE the sticky
+     header (see index.html) and simply scrolls away with the page — it is NOT display:none'd
+     here. Removing it from the pinned header used to shrink the header 53px and snap all
+     content (the progress-bar jump) up; scrolling it away avoids that with no gap or jump. */
   body.is-scrolled .header__kategorien { display: inline-flex; }
 
-  /* Desktop horizontal nav is forced visible */
+  /* Desktop horizontal nav is forced visible (it scrolls behind the pinned top bar) */
   .header__nav { display: block !important; }
 
   /* Search bar stays integrated into the top header row */
@@ -648,7 +649,12 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
 }
 
 .header__nav {
-  border-top: 1px solid var(--graphite-300);
+  /* strip now sits OUTSIDE the sticky header (scrolls away). Keep its own separator below,
+     and a z-index so it + its mega-panel sit above page content but below the pinned top bar. */
+  position: relative;
+  z-index: 49;
+  background: var(--white);
+  border-bottom: 1px solid var(--graphite-300);
 }
 .header__nav ul {
   display: flex;

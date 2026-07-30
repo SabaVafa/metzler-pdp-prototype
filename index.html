@@ -10,13 +10,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Cinzel:wght@600&family=Cormorant+Garamond:wght@600&family=Dancing+Script:wght@700&family=Great+Vibes&family=Montserrat:wght@600&family=Oswald:wght@500&family=Playfair+Display:wght@600&family=Roboto+Mono:wght@500&family=UnifrakturMaguntia&display=swap" />
 <!-- Design system (topbar · header · nav strip · mobile-nav · footer) — reused as-is -->
-<link rel="stylesheet" href="Home/styles-v2.css?v=9" />
+<link rel="stylesheet" href="Home/styles-v2.css?v=13" />
 <!-- Mega-menu dropdown, grabbed from the PLP -->
 <link rel="stylesheet" href="chrome.css?v=2" />
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=30" />
 <!-- Version B — inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=454" />
+<link rel="stylesheet" href="pdp-b.css?v=455" />
 </head>
 <body class="plp">
 
@@ -84,6 +84,8 @@
       </div>
     </div>
   </div>
+</header>
+
   <nav class="header__nav" aria-label="Hauptnavigation">
     <div class="container">
       <button class="header__nav-all" type="button" data-nav-toggle aria-controls="mobileNav" aria-expanded="false" aria-label="Alle Kategorien">
@@ -230,7 +232,6 @@
       </ul>
     </div>
   </nav>
-</header>
 
 <!-- ===== MOBILE SLIDE-IN NAV ===== -->
 <div class="mobile-nav" id="mobileNav" aria-hidden="true">
@@ -835,18 +836,18 @@
               <span class="rv__feature-who"><b id="rvFeatureAuthor"></b><time id="rvFeatureDate"></time></span>
             </div>
           </div>
-        </article>
 
-        <!-- label + control row grouped so the label sits tight above the thumbnails;
-             it clarifies each thumbnail is a different customer's review -->
-        <div class="rv__navwrap">
-          <p class="rv__navlabel">Weitere Bewertungen mit Foto</p>
-          <div class="rv__navrow">
-            <button type="button" class="rv__feature-arrow rv__feature-arrow--prev" aria-label="Vorherige Bewertung"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-            <div class="rv__thumbsnav" id="rvThumbsNav" aria-label="Kundenfotos – Bewertung wählen"></div>
-            <button type="button" class="rv__feature-arrow rv__feature-arrow--next" aria-label="Nächste Bewertung"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+          <!-- thumbnail nav sits BELOW the review text (in the content column), narrowed to
+               the text block; the photo spans the full height of both rows -->
+          <div class="rv__navwrap">
+            <p class="rv__navlabel">Weitere Bewertungen mit Foto</p>
+            <div class="rv__navrow">
+              <button type="button" class="rv__feature-arrow rv__feature-arrow--prev" aria-label="Vorherige Bewertung"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+              <div class="rv__thumbsnav" id="rvThumbsNav" aria-label="Kundenfotos – Bewertung wählen"></div>
+              <button type="button" class="rv__feature-arrow rv__feature-arrow--next" aria-label="Nächste Bewertung"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+            </div>
           </div>
-        </div>
+        </article>
 
         <!-- Data source (progressive enhancement): JS reads these to build the feature -->
         <ul class="rv__track" id="rvTrack" hidden>
@@ -1877,6 +1878,6 @@
 </div>
 
 <script src="chrome.js?v=2"></script>
-<script src="pdp-b.js?v=132"></script>
+<script src="pdp-b.js?v=134"></script>
 </body>
 </html>

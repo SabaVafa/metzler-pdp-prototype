@@ -602,9 +602,14 @@
       if (panel.classList.contains('is-open')) closeGrid();
       else {
         openGrid();
-        if (search && !mqMobile.matches) search.focus();   /* skip on mobile so the keyboard doesn't cover the swatches */
+        /* preventScroll so focusing the field doesn't make the browser scroll it into
+           view (that was the "surprising" page scroll on expand); skip focus on mobile
+           so the keyboard doesn't cover the swatches */
+        if (search && !mqMobile.matches) search.focus({ preventScroll: true });
         goTo(pageOfSelected());
-        scrollPickerIntoView();
+        /* only nudge the page on mobile (where the open picker runs past the viewport);
+           on desktop it fits, so don't auto-scroll */
+        if (mqMobile.matches) scrollPickerIntoView();
       }
     });
     document.addEventListener('click', function (e) {
