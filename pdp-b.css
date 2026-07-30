@@ -226,7 +226,7 @@
 /* ── AUSFÜHRUNG · Farbe (Variante) ── */
 .bx-color { display: flex; flex-direction: column; gap: 0.7rem; }
 .bx-color__head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-.bx-color__label { font-size: 0.9375rem; color: var(--color-graphite-700); }
+.bx-color__label { font-size: 0.875rem; color: var(--color-graphite-700); }
 .bx-color__label b { color: var(--color-digital-black); font-weight: 700; }
 .bx-color__art {
   font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; color: var(--color-graphite-500);
@@ -281,7 +281,7 @@
 .ralpick__swatch--empty { display: none; }
 .ralpick__swatch svg { width: 1.3rem; height: 1.3rem; }
 .ralpick__trigtext { display: flex; flex-direction: column; gap: 0.05rem; min-width: 0; }
-.ralpick__triglabel { font-size: 0.9375rem; font-weight: 700; color: var(--color-digital-black); line-height: 1.2;
+.ralpick__triglabel { font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black); line-height: 1.2;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ralpick__trigsub { font-size: 0.75rem; color: var(--color-graphite-600); line-height: 1.25;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -314,7 +314,7 @@
 .ralpick__search:focus-within { border-color: var(--color-teal); background: var(--color-white); box-shadow: 0 0 0 3px rgba(1,82,83,0.10); }
 .ralpick__searchicon { flex: none; width: 1.05rem; height: 1.05rem; color: var(--color-graphite-500); }
 .ralpick__input { flex: 1 1 auto; min-width: 0; height: 100%; border: 0; background: none; outline: none;
-  font: inherit; font-size: 0.9375rem; color: var(--color-digital-black); padding: 0; }
+  font: inherit; font-size: 0.875rem; color: var(--color-digital-black); padding: 0; }
 .ralpick__input::-webkit-search-cancel-button { display: none; }
 .ralpick__count { flex: none; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.01em; color: var(--color-graphite-600);
   padding: 0.15rem 0.5rem; background: var(--color-white); border: 1px solid var(--color-graphite-200);
@@ -408,7 +408,7 @@
   display: inline-flex; align-items: center; gap: 0.5rem; }
 .cfgb-bar__count { font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.01em; color: var(--color-teal);
   font-variant-numeric: tabular-nums; white-space: nowrap; transition: color .3s ease; }
-.cfgb-bar__count b { font-size: 0.9375rem; }
+.cfgb-bar__count b { font-size: 0.875rem; }
 .cfgb-bar.is-ready .cfgb-bar__count { color: var(--color-green); }
 
 /* (The old icon-and-line stepper styles lived here. That component is retired
@@ -440,7 +440,7 @@
 .stepr__item.is-flash { animation: cfgb-flash .6s ease; }
 @keyframes cfgb-flash { 0%,100%{box-shadow:0 0.5rem 1.5rem rgba(1,82,83,0.08)} 30%{box-shadow:0 0 0 3px rgba(1,82,83,0.28)} }
 .stepr__titles { display: flex; flex-direction: column; gap: 0.12rem; min-width: 0; flex: 1; }
-.stepr__title { font-size: 0.9375rem; font-weight: 700; color: var(--color-digital-black); display: flex; align-items: center; gap: 0.5rem; }
+.stepr__title { font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black); display: flex; align-items: center; gap: 0.5rem; }
 .stepr__pick { font-size: 0.8125rem; color: var(--color-graphite-600); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .stepr__item.is-active .stepr__pick { display: none; }
 .stepr__item:not(.is-done):not(.is-active) .stepr__pick { color: var(--color-teal); font-weight: 600; }
@@ -521,7 +521,7 @@
 .pdp-price--lead .pdp-price__amount { font-size: 2rem; letter-spacing: -0.025em; line-height: 1.05; }
 .pdp-price--lead .cfgb-price__label { font-size: 0.8125rem; letter-spacing: normal; }
 .pdp-price--lead .pdp-price__meta { font-size: 0.875rem; }
-.pdp-price--lead .pdp-avail__status { font-size: 0.9375rem; }
+.pdp-price--lead .pdp-avail__status { font-size: 0.875rem; }
 
 /* Preisdetails & Menge accordion lives in the checkout now (after the config); hide it
    until a colour is chosen — nothing to detail yet */
@@ -1016,11 +1016,11 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 
 .cfgb-nav { display: flex; gap: 0.75rem; padding: 1.3rem 1.35rem 1.4rem; }
 .cfgb-nav__back { border: 1px solid var(--color-graphite-300); background: var(--color-white); color: var(--color-graphite-700);
-  border-radius: var(--radius); padding: 0.8rem 1.4rem; font-family: inherit; font-size: 0.9375rem; font-weight: 700; cursor: pointer;
+  border-radius: var(--radius); padding: 0.8rem 1.4rem; font-family: inherit; font-size: 0.875rem; font-weight: 700; cursor: pointer;
   transition: border-color .15s, color .15s; }
 .cfgb-nav__back:hover { border-color: var(--color-teal); color: var(--color-teal); }
 .cfgb-nav__fwd { flex: 1; border: 0; background: var(--color-digital-black); color: #fff; border-radius: var(--radius);
-  padding: 0.8rem 1.4rem; font-family: inherit; font-size: 0.9375rem; font-weight: 700; cursor: pointer;
+  padding: 0.8rem 1.4rem; font-family: inherit; font-size: 0.875rem; font-weight: 700; cursor: pointer;
   transition: background .15s; box-shadow: 0 0.5rem 1.25rem rgba(26,23,27,0.18); }
 .cfgb-nav__fwd:hover { background: #000; }
 .cfgb-nav__back[hidden], .cfgb-nav__fwd[hidden] { display: none; }
@@ -1120,7 +1120,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
      previous seal graphic that didn't fill its box, and made the flag gap too wide). */
 .hl__badge-txt { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; text-align: left; }
 .hl__badge-pre { font-size: 0.78125rem; font-weight: 500; color: #5a6565; letter-spacing: 0.005em; }
-.hl__badge-txt b { font-size: 0.9375rem; font-weight: 800; letter-spacing: -0.012em; color: var(--color-digital-black); }
+.hl__badge-txt b { font-size: 0.875rem; font-weight: 800; letter-spacing: -0.012em; color: var(--color-digital-black); }
 
 /* validation shake — gentle single nudge, not a jitter */
 @keyframes cfgb-shake { 0%,100% { transform: translateX(0); } 30% { transform: translateX(-3px); } 65% { transform: translateX(3px); } }
@@ -1360,7 +1360,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 
 .cm-actions { position: relative; padding: 40px 40px 32px; background: #fff; display: flex; flex-direction: column; }
 .cm-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: .75rem; font-weight: 700; line-height: 1.4;
-  letter-spacing: .18em; text-transform: uppercase; color: var(--color-teal); margin: 0 0 12px; animation: cm-in-right .5s ease .2s both; }
+  letter-spacing: .18em; text-transform: uppercase; color: var(--color-graphite-600); margin: 0 0 12px; animation: cm-in-right .5s ease .2s both; }
 .cm-h2 { margin: 0 0 6px; font-size: 1.25rem; font-weight: 700; line-height: 1.35; letter-spacing: -.01em; color: #0e1414; animation: cm-in-right .5s ease .25s both; }
 .cm-sub { margin: 0 0 28px; font-size: .875rem; font-weight: 400; color: #5a6565; line-height: 1.5; animation: cm-in-right .5s ease .28s both; }
 
@@ -1463,7 +1463,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 /* CTA — mirrors the gallery's "Alle N Bilder ansehen" button (.pdp-thumbs__all):
    white, 1px grey border, teal text, radius-lg; hover = teal border + teal-50 */
 .rv__cta { display: flex; width: 100%; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.4rem;
-  font-size: 0.9375rem; font-weight: 700; letter-spacing: -0.01em; text-decoration: none;
+  font-size: 0.875rem; font-weight: 700; letter-spacing: -0.01em; text-decoration: none;
   color: var(--color-teal); background: var(--color-white); border: 1px solid var(--color-graphite-200);
   border-radius: var(--radius-lg); transition: background .16s, border-color .16s; }
 .rv__cta svg { width: 1.05rem; height: 1.05rem; transition: transform .16s; }
@@ -1513,7 +1513,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .rv__feature-stars { position: relative; }
 .rv__feature-stars svg { width: 1.2rem; height: 1.2rem; }
 .rv__feature-title { margin: 0; font-size: clamp(1.2rem, 2vw, 1.5rem); font-weight: 800; letter-spacing: -0.015em; line-height: 1.2; color: var(--color-digital-black); }
-.rv__feature-text { margin: 0; font-size: 1.0625rem; line-height: 1.6; color: var(--color-graphite-700);
+.rv__feature-text { margin: 0; font-size: 1rem; line-height: 1.6; color: var(--color-graphite-700);
   display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }   /* max 3 lines, truncate rest */
 .rv__feature-foot { display: flex; align-items: center; gap: 0.7rem; margin-top: 0.5rem; flex-wrap: wrap; }
 .rv__feature-who { display: flex; flex-direction: column; line-height: 1.25; }
@@ -1649,7 +1649,7 @@ body.is-scrolled #quickbar {
 
 .psx-eyebrow { margin: 0 0 0.6rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; line-height: 1.4; text-transform: uppercase; color: #6A6A6A; }
 .psx-title { margin: 0 0 1rem; font-size: clamp(1.6rem, 3vw, 2.25rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; color: var(--color-digital-black); }
-.psx-lead { margin: 0 0 2rem; max-width: 62ch; font-size: 1.0625rem; line-height: 1.6; color: var(--color-graphite-700); }
+.psx-lead { margin: 0 0 2rem; max-width: 62ch; font-size: 1.125rem; line-height: 1.6; color: var(--color-graphite-700); }
 
 /* Center the intro text block (eyebrow · title · lead) in the Bewertungen,
    Downloads and Technische-Details sections only — Beschreibung and FAQ keep
@@ -1678,7 +1678,7 @@ body.is-scrolled #quickbar {
 .psx-descrow__media--contain img, .psx-descrow__media--contain video { object-fit: contain; padding: clamp(0.75rem, 2vw, 1.5rem); }
 /* check-mark bullet list inside a feature row */
 .psx-descrow__copy ul:not(.psx-chips):not(.psx-dots) { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: 0.55rem; }
-.psx-descrow__copy ul:not(.psx-chips):not(.psx-dots) li { position: relative; padding-left: 1.6rem; font-size: 0.9375rem; line-height: 1.5; color: var(--color-graphite-700); }
+.psx-descrow__copy ul:not(.psx-chips):not(.psx-dots) li { position: relative; padding-left: 1.6rem; font-size: 0.875rem; line-height: 1.5; color: var(--color-graphite-700); }
 .psx-descrow__copy ul:not(.psx-chips):not(.psx-dots) li::before { content: ""; position: absolute; left: 0.15rem; top: 0.1em; width: 0.4rem; height: 0.72rem; border: solid var(--color-teal); border-width: 0 2px 2px 0; transform: rotate(45deg); }
 /* spec chips (camera / IP ratings / SIP) */
 .psx-chips { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.1rem 0 0; padding: 0; }
@@ -1727,7 +1727,7 @@ body.is-scrolled #quickbar {
   transition: transform .3s ease, background .3s ease, border-color .3s ease, box-shadow .3s ease; }
 .nfeat__card:hover { transform: translateY(-6px); background: rgba(255,255,255,0.10); border-color: var(--color-mint);
   box-shadow: 0 14px 26px -14px rgba(0,20,20,0.5), inset 0 1px 0 rgba(255,255,255,0.12); }
-.nfeat__cardtitle { position: relative; margin: 0; padding-bottom: 0.55rem; font-size: 1.0625rem; font-weight: 800;
+.nfeat__cardtitle { position: relative; margin: 0; padding-bottom: 0.55rem; font-size: 1.125rem; font-weight: 800;
   letter-spacing: -0.01em; color: #fff; }
 .nfeat__cardtitle::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 1.5rem;
   background: var(--color-mint); border-radius: 2px; transition: width .25s ease; }
@@ -1745,7 +1745,7 @@ body.is-scrolled #quickbar {
   text-transform: uppercase; color: var(--color-teal); }
 .camtech__title { margin: 0 0 0.85rem; font-size: clamp(1.5rem,2.6vw,2.05rem); font-weight: 800;
   letter-spacing: -0.02em; line-height: 1.15; color: var(--color-digital-black); }
-.camtech__lead { margin: 0; font-size: 1.0625rem; line-height: 1.6; color: var(--color-graphite-700); }
+.camtech__lead { margin: 0; font-size: 1.125rem; line-height: 1.6; color: var(--color-graphite-700); }
 .camtech__lead b { color: var(--color-digital-black); font-weight: 700; }
 
 /* ── Hero: FOV demo + headline numbers ── */
@@ -1873,7 +1873,7 @@ body.is-scrolled #quickbar {
 .rvw-happy-quote { margin: 0; font-size: 1rem; line-height: 1.6; color: var(--color-digital-black);
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; }
 .rvw-happy-foot { margin-top: auto; display: flex; flex-direction: column; gap: 0.4rem; padding-top: 0.35rem; }
-.rvw-happy-foot .rvw-author { font-size: 0.9375rem; }
+.rvw-happy-foot .rvw-author { font-size: 0.875rem; }
 .rvw-meta { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
 .rvw-meta time { font-size: 0.8125rem; color: var(--color-graphite-700); }
 
@@ -1922,7 +1922,7 @@ body.is-scrolled #quickbar {
 .rvw-review:first-child { border-top: 0; padding-top: 0; }
 .rvw-review__head { display: flex; align-items: center; gap: 0.85rem; margin-bottom: 0.6rem; }
 .rvw-review__head .rvw-verified { margin-left: auto; }   /* push the badge to the right edge, consistent across reviews */
-.rvw-review__title { margin: 0 0 0.4rem; font-size: 1.0625rem; font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
+.rvw-review__title { margin: 0 0 0.4rem; font-size: 1.125rem; font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .rvw-review__text { margin: 0; font-size: 0.95rem; line-height: 1.65; color: var(--color-graphite-700); }
 /* Customer-uploaded photos — a compact thumbnail strip between the review text and
    its byline. Square tiles, capped at three per review; each opens a lightbox. */
@@ -1964,7 +1964,7 @@ body.is-scrolled #quickbar {
 .psx-story__scene.is-current { opacity: 1; }
 .psx-story__step { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.14em; color: var(--color-teal); }
 .psx-story__scene h3 { margin: 0; font-size: clamp(1.35rem,2.4vw,1.75rem); font-weight: 800; letter-spacing: -0.015em; line-height: 1.2; color: var(--color-digital-black); }
-.psx-story__scene p { margin: 0; font-size: 1.0625rem; line-height: 1.65; color: var(--color-graphite-700); max-width: 42ch; }
+.psx-story__scene p { margin: 0; font-size: 1rem; line-height: 1.65; color: var(--color-graphite-700); max-width: 42ch; }
 
 /* Mobile shows each scene's own image inline (above its text) instead of the desktop
    sticky cross-fade — so every image is seen, not just the first. Hidden on desktop. */
@@ -2021,7 +2021,7 @@ body.is-scrolled #quickbar {
 .psx-dl__item:hover .psx-dl__badge { transform: translateY(-2px) rotate(-3deg); }
 
 .psx-dl__text { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; flex: 1; }
-.psx-dl__text b { font-size: 0.9375rem; font-weight: 700; line-height: 1.3; color: var(--color-digital-black); }
+.psx-dl__text b { font-size: 0.875rem; font-weight: 700; line-height: 1.3; color: var(--color-digital-black); }
 .psx-dl__text span { font-size: 0.8125rem; color: var(--color-graphite-700); }
 
 /* circular download button — arrow nudges down on hover */
@@ -2148,7 +2148,7 @@ body.is-scrolled #quickbar {
   background: linear-gradient(158deg,#fff,var(--color-teal-50)); border: 1px solid var(--color-teal-75); color: var(--color-teal);
   font-size: 0.625rem; font-weight: 800; letter-spacing: 0.05em; }
 .techms__doc-body { display: flex; flex-direction: column; gap: 0.2rem; flex: 1; min-width: 0; }
-.techms__doc-body b { font-size: 0.9375rem; font-weight: 700; color: var(--color-digital-black); }
+.techms__doc-body b { font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black); }
 .techms__doc-body span { font-size: 0.8125rem; color: var(--color-graphite-600); }
 .techms__doc-icon { flex: none; width: 1.35rem; height: 1.35rem; color: var(--color-teal); }
 
@@ -2202,7 +2202,7 @@ body.is-scrolled #quickbar {
 .faq__support h3 { margin: 0; font-size: 1.375rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .faq__support p { margin: 0.75rem 0 0; font-size: 0.875rem; line-height: 1.6; color: var(--color-graphite-700); }
 .faq__cta { display: inline-flex; width: 100%; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 1.5rem;
-  padding: 0.8rem 1.4rem; font-size: 0.9375rem; font-weight: 700; text-decoration: none; color: #fff;
+  padding: 0.8rem 1.4rem; font-size: 0.875rem; font-weight: 700; text-decoration: none; color: #fff;
   background: var(--color-teal); border-radius: var(--radius); transition: background .15s; }
 .faq__cta:hover { background: var(--color-teal-600); }
 .faq__cta svg { width: 1.05rem; height: 1.05rem; }
@@ -2219,7 +2219,7 @@ body.is-scrolled #quickbar {
 .faq__item::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--color-teal); transform: scaleY(0); transition: transform .25s ease; }
 .faq__item[open]::before { transform: scaleY(1); }
 .faq__q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; text-align: left;
-  padding: 1.4rem 1.25rem; font-size: 1.0625rem; font-weight: 700; color: var(--color-digital-black); cursor: pointer; list-style: none; transition: color .18s ease; }
+  padding: 1.4rem 1.25rem; font-size: 1.125rem; font-weight: 700; color: var(--color-digital-black); cursor: pointer; list-style: none; transition: color .18s ease; }
 .faq__q::-webkit-details-marker { display: none; }
 .faq__item[open] .faq__q { color: var(--color-teal); }
 /* plain chevron, no circle — reset the ring the Home design-system rule adds, to

@@ -199,7 +199,7 @@
 .mega-panel .mega-poster__eyebrow {
   margin-bottom: 8px;
   font-size: 0.6875rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
-  color: var(--color-teal);                           /* brand teal accent on the grey panel */
+  color: var(--color-graphite-600);                   /* DS §19: section kicker is graphite-600 on light */
 }
 .mega-panel .mega-poster__title {
   margin: 0; font-size: 1.25rem; font-weight: 600; line-height: 1.22; letter-spacing: -0.01em; color: var(--color-digital-black);
