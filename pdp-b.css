@@ -2342,7 +2342,7 @@ body.is-scrolled #quickbar {
   /* 6 · Sticky purchase bar → chevron handle centred on top (opens the price sheet),
      then a single NON-wrapping row: title+price on the left (title truncates with
      ellipsis), CTA on the right. Chevron is absolute so it never forces a wrap. */
-  #pdpStickyBar .pdp-stickybar__inner { position: relative; flex-wrap: nowrap; align-items: center; gap: 0.6rem; padding-top: 1.9rem; padding-bottom: 0.95rem; }
+  #pdpStickyBar .pdp-stickybar__inner { position: relative; flex-wrap: nowrap; align-items: center; gap: 0.6rem; padding-top: 3rem; padding-bottom: 0.95rem; }   /* clear the chevron handle (top:0, ~2.3rem tall) so the content row below has a real gap and both are easy to tap */
   /* chevron handle: a generous, centred tap target that isn't glued to the top edge */
   .pdp-stickybar__details { position: absolute; top: 0; left: 50%; transform: translateX(-50%);
     flex: none; width: auto; min-height: 0; height: auto; margin: 0; padding: 0.45rem 2rem 0.35rem; border: 0; background: none; }
