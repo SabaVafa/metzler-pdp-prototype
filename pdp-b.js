@@ -425,6 +425,14 @@
     var b = e.target.closest('.pdp-swatch'); if (!b) return;
     this.querySelectorAll('.pdp-swatch').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
     b.setAttribute('aria-pressed', 'true');
+    /* Touch: the travelling line is driven by SCROLL progress, so a plain tap (no
+       scroll) never moves it — it stays parked at the far left, under the "Farbe — …"
+       label. Slide it under the tapped swatch here (same offsetLeft model as the
+       scroll handler). */
+    if (document.body.classList.contains('swtouch')) {
+      var swln = this.querySelector('.bx-swline');
+      if (swln) swln.style.transform = 'translateX(' + Math.round(b.offsetLeft) + 'px)';
+    }
     state.finish = b.getAttribute('data-finish'); state.finishDelta = parseFloat(b.getAttribute('data-delta')) || 0;
     state.article = b.getAttribute('data-article') || state.article;
     var img = $('pdpMainImg'); if (img) { img.style.opacity = '0.35'; window.setTimeout(function () { img.style.opacity = '1'; }, 200); }

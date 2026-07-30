@@ -1498,7 +1498,9 @@ body.kbd-open .pdp-stickybar { display: none !important; }
 .rv__feature-stars svg { width: 1.2rem; height: 1.2rem; }
 .rv__feature-title { margin: 0; font-size: clamp(1.2rem, 2vw, 1.5rem); font-weight: 800; letter-spacing: -0.015em; line-height: 1.2; color: var(--color-digital-black); }
 .rv__feature-text { margin: 0; font-size: 1.0625rem; line-height: 1.6; color: var(--color-graphite-700);
-  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }   /* max 4 lines, truncate rest */
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+  min-height: calc(1.6em * 4); }   /* max 4 lines, truncate rest; reserve the full 4-line height
+     so shorter reviews keep the same block size → the thumbnails below never shift */
 .rv__feature-foot { display: flex; align-items: center; gap: 0.7rem; margin-top: 0.5rem; flex-wrap: wrap; }
 .rv__feature-who { display: flex; flex-direction: column; line-height: 1.25; }
 .rv__feature-who b { font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black); }
