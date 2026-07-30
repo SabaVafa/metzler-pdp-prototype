@@ -772,10 +772,20 @@
 .sheet__head, .sheet .cfgb-summary, .sheet__foot { width: 100%; max-width: 64rem; margin-left: auto; margin-right: auto; }
 /* hide the sticky purchase bar while the drawer is open (no duplicate price + CTA) */
 body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
-/* Keyboard open (a config text field is focused): hide the fixed sticky purchase bar.
-   iOS repositions position:fixed elements when the on-screen keyboard shows, which
-   otherwise floats the bar into the middle of the screen over the config content. */
-body.kbd-open .pdp-stickybar { display: none !important; }
+/* Keyboard open (a config text field is focused): neutralise every pinned bar.
+   iOS shrinks the VISUAL viewport (not the layout viewport) when the on-screen keyboard
+   shows, which detaches all position:sticky/fixed bars so they float over the content
+   (e.g. review thumbnails ended up above the site header). Keeping them truly pinned is
+   not possible while the keyboard is up — a WebKit limitation — so instead:
+   • sticky chrome (header, quickbar, section nav) drops to normal flow → it scrolls
+     cleanly with the page instead of glitch-floating;
+   • the fixed bars (purchase bar, config ribbon) are hidden.
+   Everything is restored the instant the field blurs (.kbd-open removed). */
+body.kbd-open .header,
+body.kbd-open #quickbar,
+body.kbd-open .psx-nav { position: static !important; }
+body.kbd-open .pdp-stickybar,
+body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 
 /* ── Sticky progress bar: cover the bleed gap above when stuck ── */
 .cfgb-sentinel { display: block; height: 0; }
