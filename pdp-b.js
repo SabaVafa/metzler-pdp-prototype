@@ -622,6 +622,32 @@
       else if (e.key === 'ArrowLeft'  && document.activeElement !== search) goTo(page - 1);
     });
 
+    /* Auto-collapse once the open picker has scrolled fully past (its bottom rises above
+       the sticky header). It's off-screen, so collapse INSTANTLY and compensate the scroll
+       by the removed height — the content you're reading stays put, no jump. Scrolling back
+       up reveals the tidy collapsed trigger with the chosen tone. */
+    var ralPanelEl = $('ralPanel');
+    var acPending = false;
+    function autoCollapsePastView() {
+      acPending = false;
+      if (!panel.classList.contains('is-open')) return;
+      var hdr = document.querySelector('.header');
+      var headBottom = hdr ? Math.max(0, hdr.getBoundingClientRect().bottom) : 0;
+      var r = panel.getBoundingClientRect();
+      if (r.bottom > headBottom + 2) return;                 /* still (partly) in view — leave open */
+      var s = window.scrollY, beforeH = r.height;
+      if (ralPanelEl) ralPanelEl.style.transition = 'none';  /* instant collapse (it's off-screen) */
+      closeGrid();
+      void panel.offsetHeight;                               /* force sync reflow */
+      var afterH = panel.getBoundingClientRect().height;
+      window.scrollTo(0, Math.max(0, s - (beforeH - afterH)));  /* keep the visible content put */
+      if (ralPanelEl) window.requestAnimationFrame(function () { ralPanelEl.style.transition = ''; });
+    }
+    window.addEventListener('scroll', function () {
+      if (!panel.classList.contains('is-open')) return;
+      if (!acPending) { acPending = true; window.requestAnimationFrame(autoCollapsePastView); }
+    }, { passive: true });
+
     if (search) search.addEventListener('input', function () {
       curQ = this.value; if (clearBtn) clearBtn.hidden = !this.value;
       if (this.value && curFam !== 'all') setFam('all'); else renderPages(true);

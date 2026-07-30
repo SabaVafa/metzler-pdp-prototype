@@ -1465,13 +1465,17 @@ body.kbd-open .pdp-stickybar { display: none !important; }
   padding: clamp(1.25rem, 2.5vw, 1.75rem); }
 .rv__track[hidden] { display: none; }   /* data source only */
 
+/* equal-height 2-column: photo | (text + thumbnails). align-items:stretch makes the photo
+   column match the text column's height exactly — image edge-to-edge, no top/bottom padding. */
 .rv__feature-card { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  grid-template-rows: 1fr auto; column-gap: clamp(1rem, 2vw, 1.5rem); row-gap: clamp(1rem, 1.5vw, 1.25rem);
-  align-items: stretch; }
+  gap: clamp(1rem, 2vw, 1.5rem); align-items: stretch; }
 
-/* photo fills its column edge-to-edge and spans BOTH rows (full height of text + thumbnails) */
-.rv__feature-media { grid-column: 1; grid-row: 1 / 3; position: relative; border-radius: var(--radius);
-  overflow: hidden; background: var(--color-paper); min-height: 16rem; }
+.rv__feature-media { margin: 0; position: relative; border-radius: var(--radius);
+  overflow: hidden; background: var(--color-paper); min-height: 16rem; }   /* kill the <figure> UA margin (top/bottom 1em, left/right 40px) → true edge-to-edge */
+
+/* right column: review text on top, thumbnail nav below (fixed 4-line text keeps them stable) */
+.rv__feature-body { min-width: 0; display: flex; flex-direction: column; justify-content: center;
+  gap: clamp(1rem, 1.5vw, 1.25rem); }
 .rv__feature-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .rv__feature-cam { position: absolute; left: 0.75rem; bottom: 0.75rem; display: inline-flex; align-items: center; gap: 0.35rem;
   font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.01em; color: #fff;
@@ -1479,14 +1483,15 @@ body.kbd-open .pdp-stickybar { display: none !important; }
   padding: 0.32rem 0.65rem; border-radius: var(--radius-pill); }
 .rv__feature-cam svg { width: 0.9rem; height: 0.9rem; }
 
-.rv__feature-content { grid-column: 2; grid-row: 1; position: relative; display: flex; flex-direction: column; gap: 0.7rem;
-  padding: 0; justify-content: center; }
+.rv__feature-content { position: relative; display: flex; flex-direction: column; gap: 0.7rem;
+  padding: 0; }
 .rv__feature-quote { position: absolute; top: -0.25rem; right: 0; width: 3rem; height: 3rem; color: var(--color-teal-50); pointer-events: none; }
 .rv__feature-stars { position: relative; }
 .rv__feature-stars svg { width: 1.2rem; height: 1.2rem; }
 .rv__feature-title { margin: 0; font-size: clamp(1.2rem, 2vw, 1.5rem); font-weight: 800; letter-spacing: -0.015em; line-height: 1.2; color: var(--color-digital-black); }
 .rv__feature-text { margin: 0; font-size: 1.0625rem; line-height: 1.6; color: var(--color-graphite-700);
-  display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+  min-height: calc(4 * 1.6em); }   /* max 4 lines, and RESERVE 4 lines so the thumbnails below don't shift with review length */
 .rv__feature-foot { display: flex; align-items: center; gap: 0.7rem; margin-top: 0.5rem; flex-wrap: wrap; }
 .rv__feature-who { display: flex; flex-direction: column; line-height: 1.25; }
 .rv__feature-who b { font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black); }
@@ -1498,7 +1503,7 @@ body.kbd-open .pdp-stickybar { display: none !important; }
 .rv__feature-card.is-swapping .rv__feature-content > :not(.rv__feature-quote) { opacity: 0; }
 
 /* label + control row grouped; label clarifies the thumbnails are OTHER customers */
-.rv__navwrap { grid-column: 2; grid-row: 2; display: flex; flex-direction: column; gap: 0.65rem; }
+.rv__navwrap { display: flex; flex-direction: column; gap: 0.65rem; }
 .rv__navlabel { margin: 0; text-align: center; font-size: 0.75rem; font-weight: 700;
   letter-spacing: 0.15em; line-height: 1.4; text-transform: uppercase; color: #6A6A6A; }
 /* one control row: prev · customer-photo thumbnails · next */
@@ -1531,10 +1536,9 @@ body.kbd-open .pdp-stickybar { display: none !important; }
   .rv__summary, .rv__carousel { min-width: 0; }
 }
 @media (max-width: 48rem) {
-  /* stack: photo, text, thumbnails — reset the desktop row/column spans */
-  .rv__feature-card { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; }
-  .rv__feature-media, .rv__feature-content, .rv__navwrap { grid-column: 1; grid-row: auto; }
-  .rv__feature-card, .rv__feature-content, .rv__feature-media { min-width: 0; }
+  /* stack: photo on top, then text + thumbnails */
+  .rv__feature-card { grid-template-columns: minmax(0, 1fr); }
+  .rv__feature-card, .rv__feature-content, .rv__feature-media, .rv__feature-body { min-width: 0; }
   .rv__feature-media { aspect-ratio: 16 / 10; min-height: 0; }
   .rv__feature-text { max-width: none; }
   .rv__thumbsnav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; padding-bottom: 0.25rem; }
