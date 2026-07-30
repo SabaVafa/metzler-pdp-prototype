@@ -1601,12 +1601,16 @@ body.is-scrolled #quickbar {
 @media (max-width: 47.9375rem) {
   body.is-scrolled #quickbar { z-index: 55; }
 }
-.psx-nav__inner { display: flex; gap: clamp(1.75rem, 4vw, 3.75rem); align-items: stretch;
-  overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
-.psx-nav__inner::-webkit-scrollbar { display: none; }
+.psx-nav__inner { display: flex; gap: 1rem; align-items: stretch; }
+/* Only the tab links scroll horizontally; the CTA is a non-scrolling sibling that stays
+   pinned at the right edge (was buried at the far end of the scroll on mobile). flex:1 +
+   min-width:0 lets this strip fill the row and shrink/scroll inside its own box. */
+.psx-nav__tabs { display: flex; gap: clamp(1.75rem, 4vw, 3.75rem); align-items: stretch;
+  flex: 1 1 auto; min-width: 0; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+.psx-nav__tabs::-webkit-scrollbar { display: none; }
 /* "Termin vereinbaren" action pinned to the right of the section nav — opens the same
    Kontakt & Service modal as the green contact bar (via data-cm-open). */
-.psx-nav__termin { margin-left: auto; align-self: center; flex: none; display: inline-flex; align-items: center; gap: 0.45rem;
+.psx-nav__termin { align-self: center; flex: none; display: inline-flex; align-items: center; gap: 0.45rem;
   padding: 0.55rem 1.2rem; border: 0; border-radius: var(--radius);
   background: var(--color-teal); color: #fff; font-family: inherit; font-size: 0.9rem; font-weight: 700; line-height: 1;
   white-space: nowrap; cursor: pointer; transition: background .15s ease; }
