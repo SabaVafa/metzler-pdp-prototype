@@ -323,6 +323,9 @@
   border: 0; background: none; color: var(--color-graphite-500); cursor: pointer; border-radius: var(--radius); }
 .ralpick__clear:hover { color: var(--color-graphite-800); background: var(--color-graphite-100); }
 .ralpick__clear svg { width: 1rem; height: 1rem; }
+/* the class display above outranks the UA [hidden] rule — restore hiding so the clear
+   (×) only shows once text is entered, matching the page's general search bar */
+.ralpick__clear[hidden] { display: none; }
 
 /* colour-family filter — minimal borderless chips; quiet grey hover, soft teal-tint active */
 .ralpick__fams { display: flex; gap: 0.15rem; margin: 0.75rem 0 0.65rem; padding-bottom: 0.15rem; overflow-x: auto;
@@ -333,7 +336,7 @@
   cursor: pointer; white-space: nowrap; background: transparent; border: 0; border-radius: var(--radius-pill);
   transition: color .15s ease, background .15s ease; }
 .ralpick__fam:hover { color: var(--color-digital-black); background: var(--color-graphite-100); }
-.ralpick__fam.is-active { color: var(--color-teal); font-weight: 700; background: var(--color-teal-50); }
+.ralpick__fam.is-active { color: var(--color-teal); font-weight: 700; background: var(--color-graphite-100); }
 .ralpick__famdot { flex: none; width: 0.5rem; height: 0.5rem; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.14); }
 
 /* swatch grid — custom slim scrollbar (always rendered so the height animation has content) */
@@ -350,7 +353,9 @@
   transition: transform .16s ease, box-shadow .16s ease; }
 .ral-chip:hover { transform: translateY(-2px); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.10), 0 6px 14px -6px rgba(0,0,0,0.45); }
 .ral-chip:focus-visible { outline: none; box-shadow: inset 0 0 0 2px #fff, inset 0 0 0 4px var(--color-teal); }
-.ral-chip.is-selected { box-shadow: inset 0 0 0 2px #fff, inset 0 0 0 4px var(--color-teal); }
+/* selected: replace the grey hairline with a clean 2px teal border — the same weight
+   and colour as selected option cards in the configurator */
+.ral-chip.is-selected { box-shadow: inset 0 0 0 2px var(--color-teal); }
 .ral-chip__code { font-size: 0.75rem; font-weight: 800; line-height: 1.1; }
 .ral-chip__name { font-size: 0.625rem; line-height: 1.15; opacity: 0.9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
 
