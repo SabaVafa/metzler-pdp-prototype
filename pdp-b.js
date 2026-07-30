@@ -1057,7 +1057,7 @@
     this.querySelectorAll('.cfg-opt').forEach(function (x) { x.classList.remove('is-selected'); });
     if (wasSel) { state.strom = 'Standard'; state.stromDelta = 0; }   /* deselect → back to Standard (inklusive) */
     else { b.classList.add('is-selected'); syncGroupState('bStrom', b); }
-    if (!hasStrom()) state.stromQty = 1;
+    state.stromQty = 1;   /* every card click (select / switch / deselect) starts a fresh quantity — never carry the previous item's qty over to another option */
     refresh();
   });
 
