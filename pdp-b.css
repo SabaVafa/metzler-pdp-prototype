@@ -1643,7 +1643,7 @@ body.is-scrolled #quickbar {
 @media (max-width: 47.9375rem) { .psx-nav__termin svg { display: none; } }   /* mobile: label only, no calendar icon */
 .psx-nav__termin:hover { background: var(--color-teal-hover); }
 .psx-nav__link { position: relative; display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap;
-  padding: 1.05rem 0.15rem; font-size: 0.875rem; font-weight: 700; letter-spacing: -0.01em;
+  padding: 1.05rem 0.15rem; font-size: 1rem; font-weight: 700; letter-spacing: -0.01em;
   color: var(--color-graphite-700); text-decoration: none; border-bottom: 2px solid transparent;
   transition: color .15s, border-color .15s; }
 .psx-nav__link:hover { color: var(--color-digital-black); }
