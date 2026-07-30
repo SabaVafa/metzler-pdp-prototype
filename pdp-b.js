@@ -449,12 +449,30 @@
   });
   /* preview any colour's full name in the prominent label on hover/focus (no click needed) */
   if (sw) {
-    var previewName = function (e) { var b = e.target.closest('.pdp-swatch'); if (b) setTxt('pdpFinishName', b.getAttribute('data-finish')); };
-    var restoreName = function () { setTxt('pdpFinishName', finishText() || 'Bitte Farbe wählen'); };
+    /* Desktop: a short teal line sits on top of the swatch whose name is currently
+       shown — i.e. the hovered/focused one, falling back to the selected swatch at
+       rest (hidden when nothing is chosen yet). Mirrors the mobile travelling line,
+       but driven by hover. (The touch build drives .bx-swline via scroll instead.) */
+    var swlineD = sw.querySelector('.bx-swline');
+    var moveSwlineTo = function (el) {
+      if (!swlineD || document.body.classList.contains('swtouch')) return;
+      if (!el) { swlineD.classList.remove('is-on'); return; }
+      var lineW = swlineD.offsetWidth || 28;
+      var x = Math.round(el.offsetLeft + (el.offsetWidth - lineW) / 2);
+      var y = Math.round(el.offsetTop);
+      swlineD.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+      swlineD.classList.add('is-on');
+    };
+    var restSwlineToSelected = function () { moveSwlineTo(sw.querySelector('.pdp-swatch[aria-pressed="true"]')); };
+
+    var previewName = function (e) { var b = e.target.closest('.pdp-swatch'); if (b) { setTxt('pdpFinishName', b.getAttribute('data-finish')); moveSwlineTo(b); } };
+    var restoreName = function () { setTxt('pdpFinishName', finishText() || 'Bitte Farbe wählen'); restSwlineToSelected(); };
     sw.addEventListener('mouseover', previewName);
     sw.addEventListener('mouseout', restoreName);
     sw.addEventListener('focusin', previewName);
     sw.addEventListener('focusout', restoreName);
+    window.addEventListener('resize', restSwlineToSelected, { passive: true });
+    restSwlineToSelected();   /* initial position (selected swatch, or hidden if none) */
   }
 
   /* ── Wunschfarbe: inline RAL picker — search field + palette, shown when
