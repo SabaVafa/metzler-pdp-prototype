@@ -1471,7 +1471,8 @@ body.kbd-open .pdp-stickybar { display: none !important; }
   gap: clamp(1rem, 2vw, 1.5rem); align-items: stretch; }
 
 .rv__feature-media { margin: 0; position: relative; border-radius: var(--radius);
-  overflow: hidden; background: var(--color-paper); min-height: 16rem; }   /* kill the <figure> UA margin (top/bottom 1em, left/right 40px) → true edge-to-edge */
+  overflow: hidden; background: var(--color-paper);
+  aspect-ratio: 1 / 1; align-self: center; }   /* always square (never stretched by the taller text column); kill the <figure> UA margin → true edge-to-edge */
 
 /* right column: review text (centered, grows) on top, thumbnail nav pinned below.
    A constant min-height keeps the card the same size across reviews so the thumbnails
@@ -1548,7 +1549,7 @@ body.kbd-open .pdp-stickybar { display: none !important; }
   /* stack: photo on top, then text + thumbnails */
   .rv__feature-card { grid-template-columns: minmax(0, 1fr); }
   .rv__feature-card, .rv__feature-content, .rv__feature-media, .rv__feature-body { min-width: 0; }
-  .rv__feature-media { aspect-ratio: 16 / 10; min-height: 0; }
+  .rv__feature-media { aspect-ratio: 1 / 1; min-height: 0; }
   .rv__feature-body { min-height: 0; }   /* no reserved height when stacked */
   .rv__feature-text { max-width: none; }
   .rv__thumbsnav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; padding-bottom: 0.25rem; }
