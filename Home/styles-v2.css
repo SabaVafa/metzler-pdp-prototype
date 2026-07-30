@@ -114,7 +114,7 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: var(--text-body);
   line-height: var(--lh-body);
-  color: var(--color-black);
+  color: var(--color-graphite-800);
   background: var(--color-white);
   -webkit-font-smoothing: antialiased;
 }
@@ -168,7 +168,7 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
   margin-top: var(--sp-4);
   font-size: var(--text-h4);
   line-height: 1.5;
-  color: rgba(0, 0, 0, 0.72);
+  color: var(--color-graphite-700);
   max-width: 56ch;
 }
 
@@ -186,8 +186,8 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
   transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
   white-space: nowrap;
 }
-.btn--primary { background: #006D75; color: var(--color-white); }
-.btn--primary:hover { background: #015253; }
+.btn--primary { background: var(--color-teal); color: var(--color-white); }
+.btn--primary:hover { background: var(--color-teal-600); }
 .btn--secondary {
   background: transparent;
   color: var(--color-teal);
@@ -1497,10 +1497,10 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
   font-size: var(--text-body);
   justify-content: center;
   border-radius: var(--r-m);
-  background: #006D75;
+  background: var(--color-teal);
   color: var(--color-white);
 }
-.awards__cta:hover { background: #015253; }
+.awards__cta:hover { background: var(--color-teal-600); }
 /* Editorial composition — clean, no rotation, restrained.
    Photo + siegel at bottom-right corner overlap, year strip
    below for typographic anchor. */
@@ -1865,7 +1865,7 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
 }
 .faq__support .btn { margin-top: var(--sp-6); width: 100%; justify-content: center; }
 .faq__support .btn--primary { background: var(--color-teal); }
-.faq__support .btn--primary:hover { background: #006D75; }
+.faq__support .btn--primary:hover { background: var(--color-teal-600); }
 .faq__phone {
   margin-top: var(--sp-6);
   padding: var(--sp-5);
