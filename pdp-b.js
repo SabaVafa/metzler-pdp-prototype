@@ -610,10 +610,8 @@
       if (panel.classList.contains('is-open')) closeGrid();
       else {
         openGrid();
-        /* preventScroll so focusing the field doesn't make the browser scroll it into
-           view (that was the "surprising" page scroll on expand); skip focus on mobile
-           so the keyboard doesn't cover the swatches */
-        if (search && !mqMobile.matches) search.focus({ preventScroll: true });
+        /* Don't auto-focus the search on any breakpoint — the picker opens in its
+           default (unfocused) state; the user taps the field when they want to search. */
         goTo(pageOfSelected());
         /* only nudge the page on mobile (where the open picker runs past the viewport);
            on desktop it fits, so don't auto-scroll */
