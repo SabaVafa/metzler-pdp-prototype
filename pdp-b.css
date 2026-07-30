@@ -1487,10 +1487,13 @@ body.kbd-open .pdp-stickybar { display: none !important; }
   padding: 0.32rem 0.65rem; border-radius: var(--radius-pill); }
 .rv__feature-cam svg { width: 0.9rem; height: 0.9rem; }
 
-/* text block sizes to its content; the whole body stack (text + thumbnail nav) is
-   centered as one unit against the photo via .rv__feature-body's justify-content */
-.rv__feature-content { flex: 0 0 auto; justify-content: center; position: relative; display: flex; flex-direction: column; gap: 0.7rem;
-  padding: 0; }
+/* The stars→title→text→name group is TOP-packed, so the author name always hugs the
+   review text (never pushed down). A min-height reserves the tallest case (a full
+   4-line review), making this block a CONSTANT height on every slide — so the thumbnail
+   nav below it sits at a FIXED position regardless of how long each review is. The
+   leftover space on shorter reviews falls below the name, not between text and name. */
+.rv__feature-content { flex: 0 0 auto; justify-content: flex-start; min-height: 17.5rem;
+  position: relative; display: flex; flex-direction: column; gap: 0.7rem; padding: 0; }
 /* stars and the decorative quote share one row — quote right-aligned, both centred on the line */
 .rv__feature-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .rv__feature-quote { flex: none; width: 3rem; height: 3rem; color: var(--color-teal-50); pointer-events: none; }
@@ -1498,9 +1501,7 @@ body.kbd-open .pdp-stickybar { display: none !important; }
 .rv__feature-stars svg { width: 1.2rem; height: 1.2rem; }
 .rv__feature-title { margin: 0; font-size: clamp(1.2rem, 2vw, 1.5rem); font-weight: 800; letter-spacing: -0.015em; line-height: 1.2; color: var(--color-digital-black); }
 .rv__feature-text { margin: 0; font-size: 1.0625rem; line-height: 1.6; color: var(--color-graphite-700);
-  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
-  min-height: calc(1.6em * 4); }   /* max 4 lines, truncate rest; reserve the full 4-line height
-     so shorter reviews keep the same block size → the thumbnails below never shift */
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }   /* max 4 lines, truncate rest */
 .rv__feature-foot { display: flex; align-items: center; gap: 0.7rem; margin-top: 0.5rem; flex-wrap: wrap; }
 .rv__feature-who { display: flex; flex-direction: column; line-height: 1.25; }
 .rv__feature-who b { font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black); }
@@ -2293,11 +2294,15 @@ body.is-scrolled #quickbar {
      (padding-top:0) and looked like it hugged the title with empty space below. */
   .dspec__key { border-right: 0; }
   .dspec__val { margin-left: 0; }   /* margin:0 (base) keeps the pill box flush-left under the title; padding stays the symmetric 0.8rem base */
-  /* manufacturer / safety footer → one cohesive block anchored to the spec table by
-     a hairline divider: the info icon leads the address inline, and the safety notice
-     becomes a full-width tinted banner (was a lone outlined pill floating on its line). */
+  /* manufacturer / safety footer → fused to the spec table as one continuous card:
+     the table's bottom edge is opened (no border / square corners) and the footer
+     carries the matching side+bottom borders with a rounded bottom, so it reads as the
+     table's foot rather than a note floating in the gap below it. The info icon leads
+     the address inline; the safety notice is a full-width tinted banner on top. */
+  .dspec__list { border-bottom: 0; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
   .dspec__mfr { flex-direction: row; flex-wrap: wrap; align-items: flex-start; gap: 0.25rem 0.5rem;
-    margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--color-graphite-200); }
+    margin-top: 0; padding: 1rem 1.15rem; background: var(--color-white);
+    border: 1px solid var(--color-graphite-300); border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
   .dspec__mfr > svg { flex: none; width: 0.95rem; height: 0.95rem; margin-top: 0.2rem; }
   .dspec__mfr > span { flex: 1 1 12rem; min-width: 0; }
   .dspec__safety { order: -1; flex: 1 0 100%; width: 100%; justify-content: center; margin: 0 0 0.85rem;
