@@ -2143,10 +2143,13 @@ body.is-scrolled #quickbar {
   border: 1px solid var(--color-teal); border-radius: var(--radius-xl); overflow: hidden; background: var(--color-white); }
 @media (min-width: 56rem) { .techms { grid-template-columns: 17rem 1fr; } }
 
-/* rail — design-system dark band (matches .nfeat): mint tint over the
-   teal→teal-700→digital-black diagonal; the fill divides it from the white panel */
+/* rail — design-system dark band, consistent with .nfeat: a fixed-size soft top
+   spotlight over a gentle in-hue teal→teal-700 vertical deepening (aspect-independent,
+   so it reads the same on the tall desktop column and the short mobile row) */
 .techms__rail { display: flex; flex-direction: row; gap: 0.2rem; padding: 0.6rem; overflow-x: auto; scrollbar-width: none;
-  background: linear-gradient(165deg, var(--color-teal) 0%, var(--color-teal-600) 45%, var(--color-teal-700) 100%); }
+  background:
+    radial-gradient(1100px 500px at 50% -80px, rgba(92,219,211,0.16) 0%, transparent 60%),
+    linear-gradient(180deg, var(--color-teal) 0%, var(--color-teal-700) 100%); }
 .techms__rail::-webkit-scrollbar { display: none; }
 @media (min-width: 56rem) {
   .techms__rail { flex-direction: column; gap: 0.2rem; padding: 0.85rem 0.7rem; overflow: visible; }
