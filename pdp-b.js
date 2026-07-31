@@ -454,16 +454,17 @@
        rest (hidden when nothing is chosen yet). Mirrors the mobile travelling line,
        but driven by hover. (The touch build drives .bx-swline via scroll instead.) */
     var swlineD = sw.querySelector('.bx-swline');
-    var swAll = [].slice.call(sw.querySelectorAll('.pdp-swatch'));
-    /* Left-aligned to the swatch (same model as the mobile line: translate to the
-       swatch's offset). Always visible — no fade. */
+    /* Left-aligned to the swatch (translate to its offset). Shown only for a hovered
+       or selected swatch; passing no element hides it (fades out). */
     var moveSwlineTo = function (el) {
-      if (!swlineD || document.body.classList.contains('swtouch') || !el) return;
+      if (!swlineD || document.body.classList.contains('swtouch')) return;
+      if (!el) { swlineD.classList.remove('is-on'); return; }
       swlineD.style.transform = 'translate(' + Math.round(el.offsetLeft) + 'px,' + Math.round(el.offsetTop) + 'px)';
+      swlineD.classList.add('is-on');
     };
-    /* rest on the selected swatch, or the first one — mirrors the mobile line, which is
-       always shown on the active (or first) swatch */
-    var restSwlineToSelected = function () { moveSwlineTo(sw.querySelector('.pdp-swatch[aria-pressed="true"]') || swAll[0]); };
+    /* rest on the SELECTED swatch; hidden entirely when no colour is chosen yet
+       (label reads "Bitte Farbe wählen") */
+    var restSwlineToSelected = function () { moveSwlineTo(sw.querySelector('.pdp-swatch[aria-pressed="true"]')); };
 
     var previewName = function (e) { var b = e.target.closest('.pdp-swatch'); if (b) { setTxt('pdpFinishName', b.getAttribute('data-finish')); moveSwlineTo(b); } };
     var restoreName = function () { setTxt('pdpFinishName', finishText() || 'Bitte Farbe wählen'); restSwlineToSelected(); };
