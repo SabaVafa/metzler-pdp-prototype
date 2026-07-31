@@ -1041,9 +1041,11 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .bx-color__label b { font-size: 1rem; color: var(--color-graphite-800); font-weight: 500; }
 
 /* ── Payment methods — maximized, tidy wrap ── */
-.pdp-b .pdp-pay { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.55rem; max-width: 27rem; margin: 0 auto; }
-.pdp-b .pdp-pay img { height: 2.1rem; width: auto; opacity: 1; border: 0; border-radius: var(--radius);
-  background: var(--color-white); padding: 0.3rem 0.45rem; box-sizing: border-box; }
+/* single row — never wrap; the chips shrink to fit the width (logos scale via object-fit) */
+.pdp-b .pdp-pay { display: flex; flex-wrap: nowrap; justify-content: center; align-items: center; gap: 0.3rem; max-width: 100%; margin: 0 auto; }
+.pdp-b .pdp-pay img { flex: 0 1 auto; min-width: 0; height: 1.75rem; width: auto; max-width: 100%; object-fit: contain;
+  opacity: 1; border: 0; border-radius: var(--radius);
+  background: var(--color-white); padding: 0.22rem 0.3rem; box-sizing: border-box; }
 
 /* ── Service & Beratung — cards mirror the Metzler contact-modal ".row":
    teal-tinted gradient icon box · bold title + grey sub · teal chevron, in a
