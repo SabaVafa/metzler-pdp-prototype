@@ -743,8 +743,18 @@
         if (swline) swline.style.transform = 'translateX(' + Math.round(near.offsetLeft) + 'px)';
       };
       var onScroll = function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+      /* On resize keep the line on the SELECTED swatch — NOT the scroll-progress one.
+         The first colour tap unlocks the config and dispatches a resize; routing that
+         through the scroll-progress update() reset the line to the first swatch, so the
+         very first interaction never appeared to move it. Fall back to scroll-progress
+         only while nothing is selected yet. */
+      var onResize = function () {
+        var sel = sw.querySelector('.pdp-swatch[aria-pressed="true"]');
+        if (sel) { if (swline) swline.style.transform = 'translateX(' + Math.round(sel.offsetLeft) + 'px)'; }
+        else onScroll();
+      };
       sw.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', onScroll, { passive: true });
+      window.addEventListener('resize', onResize, { passive: true });
       update();
     }
   })();
