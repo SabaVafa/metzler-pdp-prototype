@@ -1268,7 +1268,13 @@
         dockEl.classList.remove('is-fixed');   /* mobile-only full-bleed variant */
         var cfgD = document.getElementById('cfgbPanel') || (dockEl.closest && dockEl.closest('.cfgb'));
         var rD = cfgD ? cfgD.getBoundingClientRect() : null;
-        var dockHD = dockEl.offsetHeight;
+        /* Reserve the dock's IN-FLOW (full, non-compact) height in the sentinel — cache
+           it while the dock is NOT fixed. Re-measuring offsetHeight while fixed returns
+           the COMPACT (.is-stuck) height, so the sentinel shrank on every scroll tick
+           after the pin — jumping the page and, via rD.bottom, oscillating pin/unpin at
+           the config bottom (exactly where the user reaches the CTA). Mirrors the mobile
+           branch's dockFlowH cache. */
+        if (!dockEl.classList.contains('is-fixed-dt') && dockEl.offsetHeight) dockFlowH = dockEl.offsetHeight;
         /* .cfgb carries no transform (see CSS) so it isn't a containing block and
            position:fixed resolves against the viewport. The dock pins directly
            BELOW the green quickbar (its rendered bottom) so it stacks under the
@@ -1295,7 +1301,7 @@
           dockEl.style.width = Math.round(geoD.width) + 'px';
           dockEl.classList.add('is-fixed-dt');
           dockEl.classList.add('is-stuck');
-          if (sentinelEl) sentinelEl.style.height = dockHD + 'px';
+          if (sentinelEl) sentinelEl.style.height = dockFlowH + 'px';
         } else {
           dockEl.classList.remove('is-fixed-dt');
           dockEl.classList.remove('is-stuck');
