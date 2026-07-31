@@ -1220,18 +1220,16 @@
     syncStickyBar();
   }
 
-  /* Mobile: any text field in the config OR the RAL picker opens the on-screen keyboard,
-     which on iOS shrinks the visual viewport and detaches every fixed/sticky bar — the
-     header, nav, quickbar and dock float and the layout is ruined. Flag body.kbd-open so
-     the CSS neutralises them until blur. The RAL search lives OUTSIDE #cfgbPanel, so it
-     needs its own binding (a config-panel-only listener never caught it). */
+  /* Mobile: while a config text field is focused the on-screen keyboard makes iOS
+     reposition the fixed sticky purchase bar over the content — hide it until blur. */
   (function () {
-    if (!document.body.classList.contains('swtouch')) return;
-    var roots = [document.getElementById('cfgbPanel'), document.getElementById('ralPick')].filter(Boolean);
-    var isField = function (t) { return t && t.matches && t.matches('input, textarea'); };
-    roots.forEach(function (root) {
-      root.addEventListener('focusin', function (e) { if (isField(e.target)) document.body.classList.add('kbd-open'); });
-      root.addEventListener('focusout', function (e) { if (isField(e.target)) document.body.classList.remove('kbd-open'); });
+    var cfgPanel = document.getElementById('cfgbPanel');
+    if (!cfgPanel || !document.body.classList.contains('swtouch')) return;
+    cfgPanel.addEventListener('focusin', function (e) {
+      if (e.target && e.target.matches && e.target.matches('input, textarea')) document.body.classList.add('kbd-open');
+    });
+    cfgPanel.addEventListener('focusout', function (e) {
+      if (e.target && e.target.matches && e.target.matches('input, textarea')) document.body.classList.remove('kbd-open');
     });
   })();
 
