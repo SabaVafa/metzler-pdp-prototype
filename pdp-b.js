@@ -1418,10 +1418,10 @@
   lb.setAttribute('aria-modal', 'true');
   lb.setAttribute('aria-label', 'Kundenfoto zur Bewertung');
   lb.innerHTML =
-    '<button type="button" class="rvw-lightbox__close" aria-label="Schließen">×</button>' +
-    '<button type="button" class="rvw-lightbox__nav" data-dir="prev" aria-label="Vorheriges Foto">‹</button>' +
+    '<button type="button" class="rvw-lightbox__close" aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button>' +
+    '<button type="button" class="rvw-lightbox__nav" data-dir="prev" aria-label="Vorheriges Foto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>' +
     '<img alt="Kundenfoto zur Bewertung">' +
-    '<button type="button" class="rvw-lightbox__nav" data-dir="next" aria-label="Nächstes Foto">›</button>';
+    '<button type="button" class="rvw-lightbox__nav" data-dir="next" aria-label="Nächstes Foto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>';
   document.body.appendChild(lb);
 
   var img = lb.querySelector('img');
@@ -1577,10 +1577,10 @@
   lb.setAttribute('aria-modal', 'true');
   lb.setAttribute('aria-label', 'Anschlussschema');
   lb.innerHTML =
-    '<button type="button" class="tdiag-lightbox__close" aria-label="Schließen">×</button>' +
-    '<button type="button" class="tdiag-lightbox__nav" data-dir="prev" aria-label="Vorheriges Schema">‹</button>' +
+    '<button type="button" class="tdiag-lightbox__close" aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button>' +
+    '<button type="button" class="tdiag-lightbox__nav" data-dir="prev" aria-label="Vorheriges Schema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>' +
     '<figure><img alt=""><figcaption></figcaption></figure>' +
-    '<button type="button" class="tdiag-lightbox__nav" data-dir="next" aria-label="Nächstes Schema">›</button>';
+    '<button type="button" class="tdiag-lightbox__nav" data-dir="next" aria-label="Nächstes Schema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>';
   document.body.appendChild(lb);
 
   var img = lb.querySelector('img');

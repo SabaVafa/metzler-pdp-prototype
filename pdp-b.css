@@ -1438,7 +1438,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .cm-close { position: absolute; top: 1.25rem; right: 1.25rem; z-index: 2; width: 2rem; height: 2rem; border-radius: .25rem;
   background: transparent; border: 0; color: var(--color-graphite-600); cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
   transition: background .15s ease, color .15s ease; }
-.cm-close svg { width: 14px; height: 14px; }
+.cm-close svg { width: 1.15rem; height: 1.15rem; }   /* centered lightbox X — matches the other popups' close icon */
 .cm-close:hover { color: #0e1414; background: #f4f6f6; }
 
 @media (max-width: 767px) {
@@ -1990,10 +1990,12 @@ body.is-scrolled #quickbar {
   width: 2.75rem; height: 2.75rem; display: grid; place-items: center; font-size: 1.6rem; line-height: 1; cursor: pointer;
   color: var(--color-white); background: none; border: 0; transition: color .15s ease, transform .15s ease; }
 .rvw-lightbox__close:hover { color: rgba(255,255,255,0.7); transform: scale(1.08); }
+.rvw-lightbox__close svg { width: 1.25rem; height: 1.25rem; }
 /* nav arrows — design-system slider arrow: square var(--radius), white outline, inverts on hover (never circular) */
-.rvw-lightbox__nav { flex: none; width: 2.75rem; height: 2.75rem; display: grid; place-items: center; font-size: 1.8rem; line-height: 1;
+.rvw-lightbox__nav { flex: none; width: 2.75rem; height: 2.75rem; display: grid; place-items: center; line-height: 1;
   cursor: pointer; color: var(--color-white); background: transparent; border: 1px solid var(--color-white); border-radius: var(--radius); transition: background .15s ease, color .15s ease; }
 .rvw-lightbox__nav:hover { background: var(--color-white); color: var(--color-digital-black); }
+.rvw-lightbox__nav svg { width: 1.5rem; height: 1.5rem; }
 .rvw-review__foot { margin-top: 0.7rem; display: flex; align-items: center; gap: 0.6rem; font-size: 0.8125rem; }
 .rvw-review__foot .rvw-author { font-size: 0.8125rem; }
 .rvw-review__foot time { color: var(--color-graphite-700); }
@@ -2240,10 +2242,12 @@ body.is-scrolled #quickbar {
   width: 2.75rem; height: 2.75rem; display: grid; place-items: center; font-size: 1.6rem; line-height: 1; cursor: pointer;
   color: var(--color-white); background: none; border: 0; transition: color .15s ease, transform .15s ease; }
 .tdiag-lightbox__close:hover { color: rgba(255,255,255,0.7); transform: scale(1.08); }
+.tdiag-lightbox__close svg { width: 1.25rem; height: 1.25rem; }
 /* nav arrows — design-system slider arrow: square var(--radius), white outline, inverts on hover (never circular) */
-.tdiag-lightbox__nav { flex: none; width: 2.75rem; height: 2.75rem; display: grid; place-items: center; font-size: 1.8rem; line-height: 1;
+.tdiag-lightbox__nav { flex: none; width: 2.75rem; height: 2.75rem; display: grid; place-items: center; line-height: 1;
   cursor: pointer; color: var(--color-white); background: transparent; border: 1px solid var(--color-white); border-radius: var(--radius); transition: background .15s ease, color .15s ease; }
 .tdiag-lightbox__nav:hover { background: var(--color-white); color: var(--color-digital-black); }
+.tdiag-lightbox__nav svg { width: 1.5rem; height: 1.5rem; }
 
 /* Frage / FAQ — ported from the produktionsprozess page (.faq), mapped to PDP tokens */
 .faq__inner { display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
