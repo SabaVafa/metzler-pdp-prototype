@@ -720,16 +720,19 @@
       window.scrollTo(0, Math.max(0, s - (beforeH - afterH)));  /* keep the visible content put */
       if (ralPanelEl) window.requestAnimationFrame(function () { ralPanelEl.style.transition = ''; });
     }
-    if ('onscrollend' in window) {
-      window.addEventListener('scrollend', collapseIfExited, { passive: true });
-    } else {
-      var acTimer = null;
-      window.addEventListener('scroll', function () {
-        if (!panel.classList.contains('is-open')) return;
-        if (acTimer) clearTimeout(acTimer);
-        acTimer = setTimeout(collapseIfExited, 160);         /* ~idle ≈ scroll finished */
-      }, { passive: true });
-    }
+    /* Debounced-idle is the RELIABLE trigger — it fires on every browser once the scroll has
+       been quiet for a moment (true idle ≈ fling finished, so the re-anchor doesn't fight
+       momentum → no jump). scrollend, WHERE it actually fires, collapses a touch sooner/cleaner
+       — but it's registered IN ADDITION to the debounce, never instead: some mobile browsers
+       report scrollend support yet don't fire it for the main document, which left the panel
+       stuck open. Both call the same idempotent collapse. */
+    var acTimer = null;
+    window.addEventListener('scroll', function () {
+      if (!panel.classList.contains('is-open')) return;
+      if (acTimer) clearTimeout(acTimer);
+      acTimer = setTimeout(collapseIfExited, 220);           /* wait out the fling, then collapse */
+    }, { passive: true });
+    if ('onscrollend' in window) window.addEventListener('scrollend', collapseIfExited, { passive: true });
 
     if (search) search.addEventListener('input', function () {
       curQ = this.value; if (clearBtn) clearBtn.hidden = !this.value;
