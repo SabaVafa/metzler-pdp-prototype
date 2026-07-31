@@ -719,7 +719,13 @@
       closeGrid();
       void panel.offsetHeight;                               /* force sync reflow */
       var afterH = panel.getBoundingClientRect().height;
+      /* re-anchor the scroll INSTANTLY. The page sets html{scroll-behavior:smooth}, which would
+         otherwise ANIMATE this compensation — the content visibly glides (the "jump"). Force an
+         instant jump-cut by neutralising scroll-behavior for just this one scrollTo. */
+      var de = document.documentElement, prevSB = de.style.scrollBehavior;
+      de.style.scrollBehavior = 'auto';
       window.scrollTo(0, Math.max(0, s - (beforeH - afterH)));  /* keep the visible content put */
+      de.style.scrollBehavior = prevSB;
       if (ralPanelEl) window.requestAnimationFrame(function () { ralPanelEl.style.transition = ''; });
     }
     function scheduleCollapse() {
@@ -734,9 +740,12 @@
         else if (acTimer) { clearTimeout(acTimer); acTimer = null; }   /* back in view → cancel */
       }, { threshold: 0 }).observe(panel);
     }
-    /* scroll (debounced) + scrollend are extra idle triggers; both re-check the IO boolean and
-       feed the same idempotent collapse, so whichever fires first at rest does the job. */
+    /* scroll (debounced), scrollend, and touchend are extra idle triggers; all re-check the IO
+       boolean / rect and feed the same idempotent collapse, so whichever fires first at rest does
+       the job. touchend is the iOS safety net — it fires reliably on finger-lift even when
+       scrollend is absent (older iOS) or scroll events are sparse during momentum. */
     window.addEventListener('scroll', scheduleCollapse, { passive: true });
+    window.addEventListener('touchend', scheduleCollapse, { passive: true });
     if ('onscrollend' in window) window.addEventListener('scrollend', doCollapse, { passive: true });
 
     if (search) search.addEventListener('input', function () {
