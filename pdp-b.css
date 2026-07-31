@@ -725,16 +725,15 @@
   height: 2px; width: 2rem; border-radius: 2px; background: var(--color-teal);
   pointer-events: none; will-change: transform; }
 
-/* Desktop (hover-capable, non-touch): the same short teal line, but it sits on top
-   of the swatch whose name is currently shown — the hovered swatch, falling back to
-   the selected one at rest. Positioned by JS (translate to the swatch's offset). */
+/* Desktop (hover-capable, non-touch): the SAME line as mobile — identical width and
+   left-aligned placement above the active swatch, always visible — the only difference
+   is that hover (not scroll) drives which swatch it sits on. Positioned by JS via
+   translate to the swatch's offset (left edge). */
 @media (hover: hover) {
   body:not(.swtouch) .bx-swatches { position: relative; }
-  body:not(.swtouch) .bx-swline { display: block; position: absolute; top: -0.35rem; left: 0; z-index: 2;
-    height: 2px; width: 1.75rem; border-radius: 2px; background: var(--color-teal);
-    opacity: 0; pointer-events: none; will-change: transform;
-    transition: transform .18s ease, opacity .18s ease; }
-  body:not(.swtouch) .bx-swline.is-on { opacity: 1; }
+  body:not(.swtouch) .bx-swline { display: block; position: absolute; top: -0.55rem; left: 0; z-index: 2;
+    height: 2px; width: 2rem; border-radius: 2px; background: var(--color-teal);
+    pointer-events: none; will-change: transform; }
 }
 
 /* ── Preisdetails trigger (buy block) ── */

@@ -454,16 +454,16 @@
        rest (hidden when nothing is chosen yet). Mirrors the mobile travelling line,
        but driven by hover. (The touch build drives .bx-swline via scroll instead.) */
     var swlineD = sw.querySelector('.bx-swline');
+    var swAll = [].slice.call(sw.querySelectorAll('.pdp-swatch'));
+    /* Left-aligned to the swatch (same model as the mobile line: translate to the
+       swatch's offset). Always visible — no fade. */
     var moveSwlineTo = function (el) {
-      if (!swlineD || document.body.classList.contains('swtouch')) return;
-      if (!el) { swlineD.classList.remove('is-on'); return; }
-      var lineW = swlineD.offsetWidth || 28;
-      var x = Math.round(el.offsetLeft + (el.offsetWidth - lineW) / 2);
-      var y = Math.round(el.offsetTop);
-      swlineD.style.transform = 'translate(' + x + 'px,' + y + 'px)';
-      swlineD.classList.add('is-on');
+      if (!swlineD || document.body.classList.contains('swtouch') || !el) return;
+      swlineD.style.transform = 'translate(' + Math.round(el.offsetLeft) + 'px,' + Math.round(el.offsetTop) + 'px)';
     };
-    var restSwlineToSelected = function () { moveSwlineTo(sw.querySelector('.pdp-swatch[aria-pressed="true"]')); };
+    /* rest on the selected swatch, or the first one — mirrors the mobile line, which is
+       always shown on the active (or first) swatch */
+    var restSwlineToSelected = function () { moveSwlineTo(sw.querySelector('.pdp-swatch[aria-pressed="true"]') || swAll[0]); };
 
     var previewName = function (e) { var b = e.target.closest('.pdp-swatch'); if (b) { setTxt('pdpFinishName', b.getAttribute('data-finish')); moveSwlineTo(b); } };
     var restoreName = function () { setTxt('pdpFinishName', finishText() || 'Bitte Farbe wählen'); restSwlineToSelected(); };
