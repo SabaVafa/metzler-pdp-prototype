@@ -374,9 +374,13 @@
   transition: transform .16s ease, box-shadow .16s ease; }
 .ral-chip:hover { transform: translateY(-2px); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.10), 0 6px 14px -6px rgba(0,0,0,0.45); }
 .ral-chip:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--color-white), inset 0 0 0 4px var(--color-teal); }
-/* selected: a white + near-black double ring so the marker stays visible on ANY RAL
-   tone — the white inner ring reads on dark tiles, the dark outer ring on light tiles */
-.ral-chip.is-selected { box-shadow: inset 0 0 0 2px var(--color-white), inset 0 0 0 4px var(--color-digital-black); }
+/* selected: a bold, unique Metzler-red ring (distinct from the teal UI used everywhere
+   else) sandwiched by thin white lines, so the marker stands out and stays visible on
+   ANY RAL tone — including red tiles, where the white lines separate ring from fill */
+.ral-chip.is-selected { box-shadow:
+  inset 0 0 0 1px var(--color-white),
+  inset 0 0 0 4px var(--color-metzler-rot),
+  inset 0 0 0 5px var(--color-white); }
 .ral-chip__code { font-size: 0.75rem; font-weight: 800; line-height: 1.1; }
 .ral-chip__name { font-size: 0.625rem; line-height: 1.15; opacity: 0.9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
 
