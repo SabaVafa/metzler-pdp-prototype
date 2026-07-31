@@ -691,37 +691,12 @@
       else if (e.key === 'ArrowLeft'  && document.activeElement !== search) goTo(page - 1);
     });
 
-    /* Auto-collapse once the open picker has scrolled fully past (its bottom rises above
-       the sticky header). It's off-screen, so collapse and compensate the scroll by the
-       removed height — the content you're reading stays put. Scrolling back up reveals the
-       tidy collapsed trigger with the chosen tone.
-       IMPORTANT: this is DEBOUNCED to scroll-idle. Collapsing mid-fling made the scroll
-       compensation fight the momentum (iOS especially), producing a visible jump on a fast
-       scroll-past. Waiting until scrolling settles (~140 ms) means the collapse + scroll
-       adjustment happen atomically while nothing is moving — invisible. During the fling the
-       panel just stays open off-screen. */
-    var ralPanelEl = $('ralPanel');
-    var acTimer = null;
-    function autoCollapsePastView() {
-      acTimer = null;
-      if (!panel.classList.contains('is-open')) return;
-      var hdr = document.querySelector('.header');
-      var headBottom = hdr ? Math.max(0, hdr.getBoundingClientRect().bottom) : 0;
-      var r = panel.getBoundingClientRect();
-      if (r.bottom > headBottom + 2) return;                 /* back (partly) in view — leave open */
-      var s = window.scrollY, beforeH = r.height;
-      if (ralPanelEl) ralPanelEl.style.transition = 'none';  /* instant collapse (it's off-screen) */
-      closeGrid();
-      void panel.offsetHeight;                               /* force sync reflow */
-      var afterH = panel.getBoundingClientRect().height;
-      window.scrollTo(0, Math.max(0, s - (beforeH - afterH)));  /* keep the visible content put */
-      if (ralPanelEl) window.requestAnimationFrame(function () { ralPanelEl.style.transition = ''; });
-    }
-    window.addEventListener('scroll', function () {
-      if (!panel.classList.contains('is-open')) return;
-      if (acTimer) clearTimeout(acTimer);                    /* defer while the scroll is still moving */
-      acTimer = setTimeout(autoCollapsePastView, 140);
-    }, { passive: true });
+    /* No scroll-based auto-collapse. The picker used to collapse once scrolled past the
+       header and re-anchor the scroll by the removed height — but ANY layout change above
+       the viewport + scroll compensation produces a visible jump on a fast scroll-past
+       (worst on iOS momentum scrolling), and debouncing only delayed the same jump. The
+       panel is off-screen while scrolled past, so leaving it open costs nothing and the
+       scroll stays perfectly smooth. Collapse via the chevron, an outside click, or Esc. */
 
     if (search) search.addEventListener('input', function () {
       curQ = this.value; if (clearBtn) clearBtn.hidden = !this.value;
