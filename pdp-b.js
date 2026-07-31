@@ -563,12 +563,23 @@
       window.addEventListener('pointerup', function () { if (!dragging) return; dragging = false; if (Math.abs(dx) > 40) goTo(page + (dx < 0 ? 1 : -1)); x0 = null; dx = 0; });
     }
 
-    /* keep the pressed pill fully in view — nudge the filter strip (not the page) if it's clipped */
+    /* keep the pressed pill fully in view — nudge the filter strip (not the page) if it's
+       clipped. Scroll to an ABSOLUTE target (from the pill's content offset), never a
+       relative scrollBy: fast successive selections issued additive smooth scrollBy
+       deltas that stacked and overshot ("extra movements"). scrollTo retargets to the
+       latest pill instead, so the strip settles in one clean move. */
     function revealFam(btn) {
       if (!fams || !btn) return;
-      var cr = fams.getBoundingClientRect(), br = btn.getBoundingClientRect(), pad = 10;
-      if (br.left < cr.left + pad) fams.scrollBy({ left: br.left - cr.left - pad, behavior: 'smooth' });
-      else if (br.right > cr.right - pad) fams.scrollBy({ left: br.right - cr.right + pad, behavior: 'smooth' });
+      var pad = 10;
+      var left = btn.offsetLeft, right = left + btn.offsetWidth;
+      var viewL = fams.scrollLeft, viewR = viewL + fams.clientWidth;
+      var target = null;
+      if (left < viewL + pad) target = left - pad;
+      else if (right > viewR - pad) target = right - fams.clientWidth + pad;
+      if (target != null) {
+        target = Math.max(0, Math.min(target, fams.scrollWidth - fams.clientWidth));
+        fams.scrollTo({ left: target, behavior: 'smooth' });
+      }
     }
     function setFam(key) {
       curFam = key;
