@@ -658,6 +658,16 @@
         }
       }, 360);   /* wait out the expand animation so the final height is measured */
     }
+    /* bring the picker trigger (the "field" that shows the chosen tone) up under the
+       sticky header — used after a pick on mobile so the selection is confirmed on screen */
+    function scrollFieldIntoView() {
+      var header = document.querySelector('.header');
+      var headBottom = header ? Math.max(0, header.getBoundingClientRect().bottom) : 0;
+      var r = trigger.getBoundingClientRect();
+      if (r.top < headBottom + 8) {
+        window.scrollTo({ top: window.scrollY + r.top - headBottom - 12, behavior: 'smooth' });
+      }
+    }
 
     trigger.addEventListener('click', function () {
       if (panel.classList.contains('is-open')) closeGrid();
@@ -721,6 +731,10 @@
       /* keep the palette open after a pick so the user can compare / re-choose;
          it closes via the chevron, an outside click, or Esc */
       refresh();     /* refresh() → ralUI.sync() updates trigger + chip highlight */
+      /* mobile: a pick deep in the grid leaves the picker "field" (trigger showing the
+         chosen tone) scrolled off the top — bring it back into view so the selection
+         is visibly confirmed */
+      if (mqMobile.matches) scrollFieldIntoView();
     });
 
     /* re-paginate when the viewport width changes (column count may change) */
