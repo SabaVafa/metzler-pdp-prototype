@@ -331,6 +331,12 @@
 .ralpick__fams { display: flex; gap: 0.15rem; margin: 0.75rem 0 0.65rem; padding-bottom: 0.15rem; overflow-x: auto;
   overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .ralpick__fams::-webkit-scrollbar { display: none; }
+/* desktop: draggable strip — grab cursor + no text selection while dragging */
+@media (hover: hover) {
+  .ralpick__fams { cursor: grab; }
+  .ralpick__fams.is-dragging { cursor: grabbing; user-select: none; }
+  .ralpick__fams.is-dragging .ralpick__fam { cursor: grabbing; }
+}
 .ralpick__fam { flex: none; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.32rem 0.7rem;
   font: inherit; font-size: 0.8125rem; font-weight: 500; letter-spacing: -0.005em; color: var(--color-graphite-600);
   cursor: pointer; white-space: nowrap; background: transparent; border: 0; border-radius: var(--radius-pill);
