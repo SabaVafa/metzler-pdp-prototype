@@ -1349,13 +1349,6 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .sum-row--total .sum-row__price { font-size: 0.875rem; }
 
 /* ── Sticky bottom bar — proper inset so content isn't edge-to-edge ── */
-/* Elevation that stays harmonious on ANY background. The base light hairline
-   (pdp.css border-top) reads as a harsh bright line where the bar overlays the dark
-   teal "Neue Features" panel; drop it and lean on a soft, layered dark shadow — a crisp
-   micro-shadow for definition on light sections plus a soft ambient lift. Both are dark,
-   so on dark backgrounds they simply recede and the white bar's own contrast separates
-   it cleanly (no stray light line). */
-#pdpStickyBar { border-top: 0; box-shadow: 0 -1px 1px rgba(26,23,27,0.05), 0 -10px 28px -12px rgba(26,23,27,0.16); }
 #pdpStickyBar .pdp-stickybar__inner { padding: 0.8rem 1.75rem; gap: 1.1rem; }
 #pdpStickyBar .pdp-stickybar__cta { padding: 0 1.6rem; margin-left: 0.6rem; }
 @media (max-width: 900px) {
@@ -1742,12 +1735,10 @@ body.is-scrolled #quickbar {
    from the title. Responsive 3 → 2 → 1 columns. ==================== */
 .nfeat { margin: var(--sx-blockgap) 0 0; padding: clamp(1.75rem,3.5vw,3rem) clamp(1.25rem,3vw,2.75rem);
   border-radius: var(--radius-xl);
-  /* Soft, evenly-spread dark-teal band: a broad, centred mint highlight up top over a
-     gentle in-hue teal→teal-700 descent — no concentrated bright corner or off-hue
-     near-black blob (the old 135° teal→digital-black diagonal pooled dark in one corner) */
+  /* Design-system dark band: mint tint over the teal→teal-700→digital-black diagonal */
   background:
-    radial-gradient(150% 130% at 50% -25%, rgba(92,219,211,0.10) 0%, transparent 62%),
-    linear-gradient(165deg, var(--color-teal) 0%, var(--color-teal-700) 100%);
+    radial-gradient(120% 120% at 85% -10%, rgba(92,219,211,0.12) 0%, transparent 55%),
+    linear-gradient(135deg, var(--color-teal) 0%, var(--color-teal-700) 60%, var(--color-digital-black) 100%);
   color: var(--color-white); }
 .nfeat__head { text-align: center; max-width: 44rem; margin: 0 auto clamp(1.5rem,3vw,2.25rem); }
 .nfeat__eyebrow { display: inline-block; margin: 0 0 0.7rem; padding: 0.28rem 0.7rem; border-radius: var(--radius-pill);
