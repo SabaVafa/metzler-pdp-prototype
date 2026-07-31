@@ -698,17 +698,22 @@
       else if (e.key === 'ArrowLeft'  && document.activeElement !== search) goTo(page - 1);
     });
 
-    /* Auto-collapse once the open picker has fully scrolled off the TOP of the viewport.
-       Detection is viewport-relative (panel bottom ≤ 0) — no dependency on a `.header`
-       selector, which resolved differently on mobile and left the panel stuck open. The
-       collapse removes the panel's off-screen height and re-anchors the scroll by that amount;
-       done at scroll-idle so the re-anchor never fights momentum → no jump. */
+    /* Auto-collapse once the open picker has scrolled off the top of the viewport.
+       The "is it off-screen?" state is owned by an IntersectionObserver (a reliable boolean),
+       NOT a fresh getBoundingClientRect() read at fire time — on mobile that rect is sometimes
+       momentarily stale right after a scroll, which made the collapse bail out intermittently
+       ("sometimes works, sometimes not"). The collapse itself removes the off-screen height and
+       re-anchors the scroll by that amount, done at scroll-idle so it never fights momentum
+       → no jump. (Falls back to a rect check only where IntersectionObserver is unavailable.) */
     var ralPanelEl = $('ralPanel');
-    var acTimer = null;
-    function isExited() { return panel.getBoundingClientRect().bottom <= 0; }   /* fully above the fold */
+    var acTimer = null, hasIO = 'IntersectionObserver' in window, offscreen = false;
+    /* off-screen if EITHER signal says so: the IntersectionObserver boolean (immune to the
+       stale-rect problem) OR a live rect read (catches anything IO hasn't reported yet). Both
+       are false while the picker is in view, so this never collapses prematurely. */
+    function exited() { return offscreen || panel.getBoundingClientRect().bottom <= 0; }
     function doCollapse() {
       acTimer = null;
-      if (!panel.classList.contains('is-open') || !isExited()) return;   /* closed or back in view */
+      if (!panel.classList.contains('is-open') || !exited()) return;   /* closed or back in view */
       var s = window.scrollY, beforeH = panel.getBoundingClientRect().height;
       if (ralPanelEl) ralPanelEl.style.transition = 'none';  /* instant collapse (it's off-screen) */
       closeGrid();
@@ -718,18 +723,19 @@
       if (ralPanelEl) window.requestAnimationFrame(function () { ralPanelEl.style.transition = ''; });
     }
     function scheduleCollapse() {
-      if (!panel.classList.contains('is-open') || !isExited()) return;
+      if (!panel.classList.contains('is-open') || !exited()) return;
       if (acTimer) clearTimeout(acTimer);
-      acTimer = window.setTimeout(doCollapse, 200);          /* wait out the fling, then collapse */
+      acTimer = window.setTimeout(doCollapse, 180);          /* wait out the fling, then collapse */
     }
-    /* IntersectionObserver = the reliable "left the viewport" signal on mobile (fires without
-       depending on scroll-event cadence). scroll+scrollend are extra idle triggers. All three
-       feed the same idle-gated, idempotent collapse. */
-    if ('IntersectionObserver' in window) {
+    if (hasIO) {
       new IntersectionObserver(function (es) {
-        if (!es[0].isIntersecting && es[0].boundingClientRect.bottom <= 0) scheduleCollapse();
+        offscreen = !es[0].isIntersecting;                   /* picker sits near the page top, so "not intersecting" == scrolled off the top */
+        if (offscreen) scheduleCollapse();
+        else if (acTimer) { clearTimeout(acTimer); acTimer = null; }   /* back in view → cancel */
       }, { threshold: 0 }).observe(panel);
     }
+    /* scroll (debounced) + scrollend are extra idle triggers; both re-check the IO boolean and
+       feed the same idempotent collapse, so whichever fires first at rest does the job. */
     window.addEventListener('scroll', scheduleCollapse, { passive: true });
     if ('onscrollend' in window) window.addEventListener('scrollend', doCollapse, { passive: true });
 
