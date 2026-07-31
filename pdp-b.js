@@ -134,8 +134,15 @@
   function needsRal() { return state.finish === WUNSCHFARBE && !state.ral; }
   /* legible ink (dark/light) for a swatch background, by perceived luminance */
   function ralInk(hex) {
-    var r = parseInt(hex.substr(1, 2), 16), g = parseInt(hex.substr(3, 2), 16), b = parseInt(hex.substr(5, 2), 16);
-    return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 ? 'rgba(0,0,0,0.85)' : 'rgba(255,255,255,0.96)';
+    /* Pick black or white by actual WCAG contrast ratio against the swatch — not a simple
+       brightness threshold, which underrates saturated yellows/oranges/golds (they'd get
+       unreadable white text). WCAG relative luminance (sRGB → linear), then compare the
+       contrast of black vs white and keep whichever reads better. */
+    function lin(c) { c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
+    var L = 0.2126 * lin(parseInt(hex.substr(1, 2), 16))
+          + 0.7152 * lin(parseInt(hex.substr(3, 2), 16))
+          + 0.0722 * lin(parseInt(hex.substr(5, 2), 16));
+    return (L + 0.05) / 0.05 >= 1.05 / (L + 0.05) ? 'rgba(0,0,0,0.85)' : 'rgba(255,255,255,0.96)';
   }
 
   /* ── Central refresh ── */
