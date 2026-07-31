@@ -698,21 +698,18 @@
       else if (e.key === 'ArrowLeft'  && document.activeElement !== search) goTo(page - 1);
     });
 
-    /* Auto-collapse once the open picker has scrolled fully past the sticky header — but
-       ONLY after the scroll has completely finished. The collapse removes the panel's height
-       above the viewport and re-anchors the scroll by that amount; doing it mid-scroll made
-       the re-anchor fight the momentum and produced a visible jump. `scrollend` fires only
-       once the fling has fully settled, so the collapse + re-anchor happen while nothing is
-       moving — invisible, no jump. (Debounced-idle fallback where scrollend is unsupported.)
-       While scrolling past, the panel just stays open off-screen. */
+    /* Auto-collapse once the open picker has fully scrolled off the TOP of the viewport.
+       Detection is viewport-relative (panel bottom ≤ 0) — no dependency on a `.header`
+       selector, which resolved differently on mobile and left the panel stuck open. The
+       collapse removes the panel's off-screen height and re-anchors the scroll by that amount;
+       done at scroll-idle so the re-anchor never fights momentum → no jump. */
     var ralPanelEl = $('ralPanel');
-    function collapseIfExited() {
-      if (!panel.classList.contains('is-open')) return;
-      var hdr = document.querySelector('.header');
-      var headBottom = hdr ? Math.max(0, hdr.getBoundingClientRect().bottom) : 0;
-      var r = panel.getBoundingClientRect();
-      if (r.bottom > headBottom + 2) return;                 /* still (partly) in view — leave open */
-      var s = window.scrollY, beforeH = r.height;
+    var acTimer = null;
+    function isExited() { return panel.getBoundingClientRect().bottom <= 0; }   /* fully above the fold */
+    function doCollapse() {
+      acTimer = null;
+      if (!panel.classList.contains('is-open') || !isExited()) return;   /* closed or back in view */
+      var s = window.scrollY, beforeH = panel.getBoundingClientRect().height;
       if (ralPanelEl) ralPanelEl.style.transition = 'none';  /* instant collapse (it's off-screen) */
       closeGrid();
       void panel.offsetHeight;                               /* force sync reflow */
@@ -720,19 +717,21 @@
       window.scrollTo(0, Math.max(0, s - (beforeH - afterH)));  /* keep the visible content put */
       if (ralPanelEl) window.requestAnimationFrame(function () { ralPanelEl.style.transition = ''; });
     }
-    /* Debounced-idle is the RELIABLE trigger — it fires on every browser once the scroll has
-       been quiet for a moment (true idle ≈ fling finished, so the re-anchor doesn't fight
-       momentum → no jump). scrollend, WHERE it actually fires, collapses a touch sooner/cleaner
-       — but it's registered IN ADDITION to the debounce, never instead: some mobile browsers
-       report scrollend support yet don't fire it for the main document, which left the panel
-       stuck open. Both call the same idempotent collapse. */
-    var acTimer = null;
-    window.addEventListener('scroll', function () {
-      if (!panel.classList.contains('is-open')) return;
+    function scheduleCollapse() {
+      if (!panel.classList.contains('is-open') || !isExited()) return;
       if (acTimer) clearTimeout(acTimer);
-      acTimer = setTimeout(collapseIfExited, 220);           /* wait out the fling, then collapse */
-    }, { passive: true });
-    if ('onscrollend' in window) window.addEventListener('scrollend', collapseIfExited, { passive: true });
+      acTimer = window.setTimeout(doCollapse, 200);          /* wait out the fling, then collapse */
+    }
+    /* IntersectionObserver = the reliable "left the viewport" signal on mobile (fires without
+       depending on scroll-event cadence). scroll+scrollend are extra idle triggers. All three
+       feed the same idle-gated, idempotent collapse. */
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        if (!es[0].isIntersecting && es[0].boundingClientRect.bottom <= 0) scheduleCollapse();
+      }, { threshold: 0 }).observe(panel);
+    }
+    window.addEventListener('scroll', scheduleCollapse, { passive: true });
+    if ('onscrollend' in window) window.addEventListener('scrollend', doCollapse, { passive: true });
 
     if (search) search.addEventListener('input', function () {
       curQ = this.value; if (clearBtn) clearBtn.hidden = !this.value;
