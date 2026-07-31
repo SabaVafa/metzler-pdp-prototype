@@ -691,12 +691,38 @@
       else if (e.key === 'ArrowLeft'  && document.activeElement !== search) goTo(page - 1);
     });
 
-    /* No scroll-based auto-collapse. The picker used to collapse once scrolled past the
-       header and re-anchor the scroll by the removed height — but ANY layout change above
-       the viewport + scroll compensation produces a visible jump on a fast scroll-past
-       (worst on iOS momentum scrolling), and debouncing only delayed the same jump. The
-       panel is off-screen while scrolled past, so leaving it open costs nothing and the
-       scroll stays perfectly smooth. Collapse via the chevron, an outside click, or Esc. */
+    /* Auto-collapse once the open picker has scrolled fully past the sticky header — but
+       ONLY after the scroll has completely finished. The collapse removes the panel's height
+       above the viewport and re-anchors the scroll by that amount; doing it mid-scroll made
+       the re-anchor fight the momentum and produced a visible jump. `scrollend` fires only
+       once the fling has fully settled, so the collapse + re-anchor happen while nothing is
+       moving — invisible, no jump. (Debounced-idle fallback where scrollend is unsupported.)
+       While scrolling past, the panel just stays open off-screen. */
+    var ralPanelEl = $('ralPanel');
+    function collapseIfExited() {
+      if (!panel.classList.contains('is-open')) return;
+      var hdr = document.querySelector('.header');
+      var headBottom = hdr ? Math.max(0, hdr.getBoundingClientRect().bottom) : 0;
+      var r = panel.getBoundingClientRect();
+      if (r.bottom > headBottom + 2) return;                 /* still (partly) in view — leave open */
+      var s = window.scrollY, beforeH = r.height;
+      if (ralPanelEl) ralPanelEl.style.transition = 'none';  /* instant collapse (it's off-screen) */
+      closeGrid();
+      void panel.offsetHeight;                               /* force sync reflow */
+      var afterH = panel.getBoundingClientRect().height;
+      window.scrollTo(0, Math.max(0, s - (beforeH - afterH)));  /* keep the visible content put */
+      if (ralPanelEl) window.requestAnimationFrame(function () { ralPanelEl.style.transition = ''; });
+    }
+    if ('onscrollend' in window) {
+      window.addEventListener('scrollend', collapseIfExited, { passive: true });
+    } else {
+      var acTimer = null;
+      window.addEventListener('scroll', function () {
+        if (!panel.classList.contains('is-open')) return;
+        if (acTimer) clearTimeout(acTimer);
+        acTimer = setTimeout(collapseIfExited, 160);         /* ~idle ≈ scroll finished */
+      }, { passive: true });
+    }
 
     if (search) search.addEventListener('input', function () {
       curQ = this.value; if (clearBtn) clearBtn.hidden = !this.value;
