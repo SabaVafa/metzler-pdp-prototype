@@ -706,14 +706,13 @@
        re-anchors the scroll by that amount, done at scroll-idle so it never fights momentum
        → no jump. (Falls back to a rect check only where IntersectionObserver is unavailable.) */
     var ralPanelEl = $('ralPanel');
-    var acTimer = null, hasIO = 'IntersectionObserver' in window, offscreen = false;
+    var hasIO = 'IntersectionObserver' in window, offscreen = false;
     /* off-screen if EITHER signal says so: the IntersectionObserver boolean (immune to the
        stale-rect problem) OR a live rect read (catches anything IO hasn't reported yet). Both
        are false while the picker is in view, so this never collapses prematurely. */
     function exited() { return offscreen || panel.getBoundingClientRect().bottom <= 0; }
     function doCollapse() {
-      acTimer = null;
-      if (!panel.classList.contains('is-open') || !exited()) return;   /* closed or back in view */
+      if (!panel.classList.contains('is-open') || !exited()) return;   /* closed or still in view */
       var s = window.scrollY, beforeH = panel.getBoundingClientRect().height;
       if (ralPanelEl) ralPanelEl.style.transition = 'none';  /* instant collapse (it's off-screen) */
       closeGrid();
@@ -728,24 +727,18 @@
       de.style.scrollBehavior = prevSB;
       if (ralPanelEl) window.requestAnimationFrame(function () { ralPanelEl.style.transition = ''; });
     }
-    function scheduleCollapse() {
-      if (!panel.classList.contains('is-open') || !exited()) return;
-      if (acTimer) clearTimeout(acTimer);
-      acTimer = window.setTimeout(doCollapse, 180);          /* wait out the fling, then collapse */
-    }
+    /* Collapse the MOMENT the picker leaves the top of the viewport — no idle wait. The user
+       wants it gone as soon as they've scrolled past it, not when they stop at the page bottom.
+       Fire on the IntersectionObserver's exit and on every scroll (doCollapse no-ops until the
+       picker is actually off the top); touchend/scrollend are extra catch-alls. */
     if (hasIO) {
       new IntersectionObserver(function (es) {
         offscreen = !es[0].isIntersecting;                   /* picker sits near the page top, so "not intersecting" == scrolled off the top */
-        if (offscreen) scheduleCollapse();
-        else if (acTimer) { clearTimeout(acTimer); acTimer = null; }   /* back in view → cancel */
+        if (offscreen) doCollapse();
       }, { threshold: 0 }).observe(panel);
     }
-    /* scroll (debounced), scrollend, and touchend are extra idle triggers; all re-check the IO
-       boolean / rect and feed the same idempotent collapse, so whichever fires first at rest does
-       the job. touchend is the iOS safety net — it fires reliably on finger-lift even when
-       scrollend is absent (older iOS) or scroll events are sparse during momentum. */
-    window.addEventListener('scroll', scheduleCollapse, { passive: true });
-    window.addEventListener('touchend', scheduleCollapse, { passive: true });
+    window.addEventListener('scroll', doCollapse, { passive: true });
+    window.addEventListener('touchend', doCollapse, { passive: true });
     if ('onscrollend' in window) window.addEventListener('scrollend', doCollapse, { passive: true });
 
     if (search) search.addEventListener('input', function () {
