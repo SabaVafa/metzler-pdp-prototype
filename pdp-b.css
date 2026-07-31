@@ -1065,6 +1065,13 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .pdp-b .pdp-pay img { flex: 0 0 auto; height: 2.15rem; width: auto; max-width: 100%; object-fit: contain;
   opacity: 1; border: 0; border-radius: var(--radius);
   background: var(--color-white); padding: 0.25rem 0.35rem; box-sizing: border-box; }
+/* Desktop (buybox is a two-column track): force a single row. The column is too narrow
+   for 10 logos at full size, so drop the wrap + width cap, tighten the gap/padding, and
+   let the logos size down just enough (object-fit keeps them crisp) to fit one line. */
+@media (min-width: 56.25rem) {
+  .pdp-b .pdp-pay { flex-wrap: nowrap; gap: 0.25rem; max-width: none; }
+  .pdp-b .pdp-pay img { flex: 0 1 auto; min-width: 0; height: 2rem; padding: 0.18rem 0.25rem; }
+}
 
 /* ── Service & Beratung — cards mirror the Metzler contact-modal ".row":
    teal-tinted gradient icon box · bold title + grey sub · teal chevron, in a
