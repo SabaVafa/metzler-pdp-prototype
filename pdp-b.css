@@ -2017,6 +2017,11 @@ body.is-scrolled #quickbar {
 .psx-story__step { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.14em; color: var(--color-teal); }
 .psx-story__scene h3 { margin: 0; font-size: clamp(1.35rem,2.4vw,1.75rem); font-weight: 700; letter-spacing: -0.015em; line-height: 1.2; color: var(--color-digital-black); }
 .psx-story__scene p { margin: 0; font-size: 1rem; line-height: 1.65; color: var(--color-graphite-700); max-width: 42ch; }
+/* scene fact bullets — teal check marks, matching the page's feature-bullet style */
+.psx-facts { list-style: none; margin: 0.9rem 0 0; padding: 0; display: grid; gap: 0.5rem; max-width: 42ch; }
+.psx-facts li { position: relative; padding-left: 1.6rem; font-size: 0.9375rem; line-height: 1.5; color: var(--color-graphite-700); }
+.psx-facts li::before { content: ""; position: absolute; left: 0.15rem; top: 0.15em; width: 0.4rem; height: 0.72rem; border: solid var(--color-teal); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.psx-facts a { color: var(--color-teal); text-decoration: underline; text-underline-offset: 2px; }
 
 /* Mobile shows each scene's own image inline (above its text) instead of the desktop
    sticky cross-fade — so every image is seen, not just the first. Hidden on desktop. */
