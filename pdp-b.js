@@ -654,10 +654,19 @@
        header) scroll it into a good position — mainly a mobile need where the open
        picker runs past the viewport */
     var mqMobile = window.matchMedia('(max-width: 767px)');
+    /* height occluded at the top = the sticky header PLUS the "Info & Hilfecenter"
+       quickbar that pins beneath it on mobile — otherwise a scrolled-up element
+       lands under the quickbar. Use whichever bar reaches furthest down right now. */
+    function stickyTopOffset() {
+      var header = document.querySelector('.header');
+      var qb = document.getElementById('quickbar');
+      var hb = header ? header.getBoundingClientRect().bottom : 0;
+      var qbb = qb ? qb.getBoundingClientRect().bottom : 0;
+      return Math.max(0, hb, qbb);
+    }
     function scrollPickerIntoView() {
       window.setTimeout(function () {
-        var header = document.querySelector('.header');
-        var headBottom = header ? Math.max(0, header.getBoundingClientRect().bottom) : 0;
+        var headBottom = stickyTopOffset();
         var r = panel.getBoundingClientRect();
         var vh = window.innerHeight || document.documentElement.clientHeight;
         if (r.bottom > vh - 8 || r.top < headBottom + 4) {
@@ -666,14 +675,13 @@
       }, 360);   /* wait out the expand animation so the final height is measured */
     }
     /* bring the picker trigger (the "field" that shows the chosen tone) up under the
-       sticky header — used after a pick on mobile so the selection is confirmed on screen */
+       sticky header + quickbar — used after a pick on mobile so the selection is confirmed on screen */
     function scrollFieldIntoView() {
-      var header = document.querySelector('.header');
-      var headBottom = header ? Math.max(0, header.getBoundingClientRect().bottom) : 0;
+      var headBottom = stickyTopOffset();
       var r = trigger.getBoundingClientRect();
       /* always bring the field (showing the just-picked RAL code) to just under the
-         sticky header, whether it's scrolled above the top or below the fold — so the
-         auto-filled code is confirmed on screen after every pick */
+         pinned top bars, whether it's scrolled above the top or below the fold — so
+         the auto-filled code is fully confirmed on screen after every pick */
       var target = Math.max(0, window.scrollY + r.top - headBottom - 12);
       if (Math.abs(target - window.scrollY) > 4) {
         var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
