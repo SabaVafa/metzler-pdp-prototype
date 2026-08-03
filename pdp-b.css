@@ -2067,16 +2067,19 @@ body.is-scrolled #quickbar {
 .rvw-lb__thumb[aria-selected="true"] { opacity: 1; border-color: var(--color-teal); }
 
 @media (max-width: 52rem) {
-  /* stack as a column; header pinned to the very top, then image, then body */
-  .rvw-lb { display: flex; flex-direction: column; width: min(30rem, 100%); max-height: 90vh; }
-  .rvw-lb__head { order: 1; }
-  .rvw-lb__stage { order: 2; flex: none; height: min(48vh, 22rem); }
-  .rvw-lb__body { order: 3; flex: 1 1 auto; }
+  /* mobile = a scrollable sheet: the whole card scrolls with a sticky header,
+     so the image and the FULL review text/gallery flow naturally — the text is
+     never squeezed into a tiny inner scroll box */
+  .rvw-lb { display: flex; flex-direction: column; width: min(30rem, 100%); max-height: 90vh;
+    overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
+  .rvw-lb__head { order: 1; position: sticky; top: 0; z-index: 4; background: var(--color-white); }
+  .rvw-lb__stage { order: 2; flex: none; height: 42vh; }
+  .rvw-lb__body { order: 3; flex: none; overflow: visible; }
+  .rvw-lb__text { flex: none; min-height: 0; overflow: visible; padding-right: 0; }
+  /* gallery flows right after the full text; symmetric top/bottom padding, no divider */
+  .rvw-lb__gallery { margin-top: 0; padding-top: clamp(1.35rem, 2.4vw, 1.9rem); border-top: 0; }
   .rvw-lb__nav { width: 2.4rem; height: 2.4rem; }
   .rvw-lb__nav svg { width: 1.2rem; height: 1.2rem; }
-  /* gallery: top padding matches the body's bottom padding (symmetric), no divider,
-     which frees vertical space for the review text */
-  .rvw-lb__gallery { margin-top: 0; padding-top: clamp(1.35rem, 2.4vw, 1.9rem); border-top: 0; }
 }
 @media (prefers-reduced-motion: reduce) { .rvw-lb { animation: none; } }
 .rvw-review__foot { margin-top: 0.7rem; display: flex; align-items: center; gap: 0.6rem; font-size: 0.8125rem; }
