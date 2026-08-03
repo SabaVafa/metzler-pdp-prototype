@@ -2084,6 +2084,11 @@ body.is-scrolled #quickbar {
   .rvw-lb__nav svg { width: 1.2rem; height: 1.2rem; }
 }
 @media (prefers-reduced-motion: reduce) { .rvw-lb { animation: none; } }
+/* Mobile "Info & Hilfecenter" quickbar: entries are placeholders for now — the panel
+   still expands/collapses, but the individual links are non-interactive. */
+@media (max-width: 767px) {
+  .quickbar .qa, .quickbar .qa-cta { pointer-events: none; cursor: default; }
+}
 .rvw-review__foot { margin-top: 0.7rem; display: flex; align-items: center; gap: 0.6rem; font-size: 0.8125rem; }
 .rvw-review__foot .rvw-author { font-size: 0.8125rem; }
 .rvw-review__foot time { color: var(--color-graphite-700); }
