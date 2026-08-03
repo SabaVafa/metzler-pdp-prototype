@@ -1918,15 +1918,9 @@ body.is-scrolled #quickbar {
 /* Mobile: show 2.5 cards per row (the half-card peek signals more to scroll).
    Cards + internals scale down to stay premium/legible at the smaller size. */
 @media (max-width: 47.9375rem) {
-  .rvw-carousel { gap: 0.6rem; scroll-padding-left: 0; }
-  .rvw-carousel .rvw-happy-card { flex: 0 0 calc((100% - 1.2rem) / 2.5); border-radius: var(--radius-lg); }
-  .rvw-carousel .rvw-happy-card__body { padding: 0.7rem 0.8rem 0.85rem; gap: 0.5rem; }
-  .rvw-carousel .rvw-happy-card .rvw-stars { gap: 2px; }
-  .rvw-carousel .rvw-happy-card .rvw-stars svg { width: 0.95rem; height: 0.95rem; }
-  .rvw-carousel .rvw-happy-quote { font-size: 0.8125rem; line-height: 1.5; -webkit-line-clamp: 4; line-clamp: 4; }
-  .rvw-carousel .rvw-happy-foot { gap: 0.2rem; padding-top: 0; }
-  .rvw-carousel .rvw-happy-foot .rvw-author { font-size: 0.75rem; }
-  .rvw-carousel .rvw-happy-foot time { font-size: 0.6875rem; }
+  /* 1.5 cards per row — one full card plus a half-card peek to signal more to scroll */
+  .rvw-carousel { gap: 0.75rem; }
+  .rvw-carousel .rvw-happy-card { flex: 0 0 calc((100% - 0.75rem) / 1.5); }
 }
 .rvw-happy-card__body { flex: 1; display: flex; flex-direction: column; gap: 0.85rem; padding: 1.25rem 1.4rem 1.4rem; }
 .rvw-happy-quote { margin: 0; font-size: 1rem; line-height: 1.6; color: var(--color-digital-black);
@@ -1974,6 +1968,13 @@ body.is-scrolled #quickbar {
 .rvw-review__title { margin: 0 0 0.4rem; font-size: 1.125rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .rvw-review__text { margin: 0; font-size: 0.875rem; line-height: 1.65; color: var(--color-graphite-700);
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; line-clamp: 4; overflow: hidden; }
+/* tap/click a truncated review to expand it in place (a real button gives keyboard access) */
+.rvw-review__text.is-clamped { cursor: pointer; }
+.rvw-review__text.is-expanded { -webkit-line-clamp: unset; line-clamp: unset; overflow: visible; cursor: pointer; }
+.rvw-review__more { display: inline-block; margin-top: 0.45rem; padding: 0; background: none; border: 0; cursor: pointer;
+  font: inherit; font-size: 0.8125rem; font-weight: 700; color: var(--color-teal); }
+.rvw-review__more:hover { color: var(--color-teal-600); }
+.rvw-review__more:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; border-radius: 2px; }
 /* Customer-uploaded photos — a compact thumbnail strip between the review text and
    its byline. Square tiles, capped at three per review; each opens a lightbox. */
 .rvw-review__media { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.9rem 0 0; }

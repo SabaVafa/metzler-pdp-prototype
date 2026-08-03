@@ -1443,6 +1443,34 @@
 })();
 
 /* ============================================================
+   Review list: expand a 4-line-clamped review when tapped. A real
+   "mehr lesen" button is added after each truncated review for
+   keyboard access; the text itself is also clickable.
+   ============================================================ */
+(function () {
+  'use strict';
+  var texts = [].slice.call(document.querySelectorAll('.rvw-review__text'));
+  if (!texts.length) return;
+  texts.forEach(function (t) {
+    if (t.scrollHeight <= t.clientHeight + 1) return;   /* not truncated → leave it */
+    t.classList.add('is-clamped');
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'rvw-review__more';
+    btn.textContent = 'mehr lesen';
+    btn.setAttribute('aria-expanded', 'false');
+    t.insertAdjacentElement('afterend', btn);
+    function toggle() {
+      var exp = t.classList.toggle('is-expanded');
+      btn.textContent = exp ? 'weniger anzeigen' : 'mehr lesen';
+      btn.setAttribute('aria-expanded', exp ? 'true' : 'false');
+    }
+    t.addEventListener('click', toggle);
+    btn.addEventListener('click', toggle);
+  });
+})();
+
+/* ============================================================
    Review photo lightbox — a premium two-pane viewer. The clicked
    photo opens on a dark image stage (left) beside the full review
    context (right): customer identity, star rating, verified badge,
