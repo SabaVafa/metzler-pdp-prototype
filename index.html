@@ -936,9 +936,9 @@
         <div class="psx-story__pin">
         <div class="psx-story__media" aria-hidden="true">
           <img class="psx-story__img is-active" data-scene="0" src="Description/31101-Z1.webp" alt="">
-          <video class="psx-story__img" data-scene="1" src="Description/vdm10-lens-animation.mp4" poster="Description/31101-Z2.webp" autoplay muted loop playsinline preload="metadata"></video>
+          <video class="psx-story__img" data-scene="1" src="Description/vdm10-lens-animation.mp4" poster="Description/31101-Z2.webp" muted loop playsinline preload="none"></video>
           <img class="psx-story__img" data-scene="2" src="Description/31101-Z5.webp" alt="">
-          <video class="psx-story__img" data-scene="3" src="Description/rgb-taster-4zu3.mp4" autoplay muted loop playsinline preload="metadata"></video>
+          <video class="psx-story__img" data-scene="3" src="Description/rgb-taster-4zu3.mp4" muted loop playsinline preload="none"></video>
           <img class="psx-story__img" data-scene="4" src="Description/sicherheits-tueroeffner-sprechanlage.webp" alt="">
           <img class="psx-story__img" data-scene="5" src="Description/Einbrecher-VDM10-Colson.webp" alt="">
           <img class="psx-story__img" data-scene="7" src="Description/twophones.webp" alt="">
@@ -959,7 +959,7 @@
             </ul>
           </article>
           <article class="psx-story__scene" data-scene="1">
-            <figure class="psx-story__sceneimg"><video src="Description/vdm10-lens-animation.mp4" poster="Description/31101-Z2.webp" autoplay muted loop playsinline preload="metadata"></video></figure>
+            <figure class="psx-story__sceneimg"><video src="Description/vdm10-lens-animation.mp4" poster="Description/31101-Z2.webp" muted loop playsinline preload="none"></video></figure>
             <h3>Ultraweitwinkel 2 MP Kameraobjektiv mit großem Bildsensor &amp; WDR</h3>
             <p>Die VDM10 Sprechanlage bietet durch die Kooperation mit HIKVISION einen Bildsensor, der von der Größe und Leistungsfähigkeit im Bereich der Sprechanlagen einmalig ist. Durch die Mehrlinsentechnologie wird ein absolut verzerrfreies Bild mit 146° Blickwinkel in glasklarer FullHD Auflösung in Echtzeit ohne Verzögerung oder Flackern an die Innenstationen sowie Ihr Smartphone übertragen. Durch 2 integrierte RTSP-Streams kann die Sprechanlage zusätzlich als Überwachungskamera in weiteren Applikationen genutzt werden.</p>
             <ul class="psx-chips">
@@ -977,7 +977,7 @@
             </ul>
           </article>
           <article class="psx-story__scene" data-scene="3">
-            <figure class="psx-story__sceneimg"><video src="Description/rgb-taster-4zu3.mp4" autoplay muted loop playsinline preload="metadata"></video></figure>
+            <figure class="psx-story__sceneimg"><video src="Description/rgb-taster-4zu3.mp4" muted loop playsinline preload="none"></video></figure>
             <h3>Drucktaster mit einstellbarer LED-Farbe</h3>
             <p>Damit die Beleuchtung Ihrer Video-Türsprechanlage ideal zu Ihnen und Ihrem Eingangsbereich passt, lässt sich die LED-Farbe jederzeit einstellen.</p>
             <ul class="psx-dots" aria-label="Verfügbare LED-Farben">
@@ -1743,181 +1743,12 @@
   </div>
 </footer>
 
-<!-- ===== CONFIGURATOR OVERLAY (immersive, guided) ===== -->
-<div class="cfg" id="pdpConfigurator" role="dialog" aria-modal="true" aria-label="VDM10 konfigurieren" aria-hidden="true" tabindex="-1">
-  <div class="cfg-head">
-    <div class="container cfg-head__row">
-      <div class="cfg-head__title">
-        <span class="cfg-head__eyebrow">Konfigurator · nach Maß</span>
-        <span class="cfg-head__name">Metzler VDM10 2.0 <span class="pdp-title__sep">|</span> Colson</span>
-      </div>
-      <div class="cfg-head__actions">
-        <button class="cfg-save" id="cfgSave" type="button">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
-          Konfiguration speichern
-        </button>
-        <button class="cfg-close" id="cfgClose" type="button" aria-label="Konfigurator schließen">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
-        </button>
-      </div>
-    </div>
-    <div class="container">
-      <div class="cfg-rail" id="cfgRail">
-        <button class="cfg-rail__step is-done" data-goto="0" type="button"><b>1</b> Farbe</button>
-        <button class="cfg-rail__step is-active" data-goto="1" type="button"><b>2</b> Gravur <span class="opt">optional</span></button>
-        <button class="cfg-rail__step" data-goto="2" type="button"><b>3</b> Innenstation</button>
-        <button class="cfg-rail__step" data-goto="3" type="button"><b>4</b> Taster-LED <span class="opt">optional</span></button>
-        <button class="cfg-rail__step" data-goto="4" type="button"><b>5</b> Zubehör <span class="opt">optional</span></button>
-        <button class="cfg-rail__step" data-goto="5" type="button"><b>6</b> Übersicht</button>
-        <span class="cfg-rail__ind" id="cfgRailInd" aria-hidden="true"></span>
-      </div>
-    </div>
-  </div>
-
-  <div class="cfg-body">
-    <div class="container cfg-body__grid">
-
-      <!-- Context-aware preview -->
-      <div class="cfg-preview">
-        <div class="cfg-preview__stage">
-          <img class="cfg-preview__img" id="cfgPreviewImg" src="Product Image/Sprechanlage/video-station.png" alt="Vorschau Ihrer Konfiguration">
-          <span class="cfg-preview__engrave" id="cfgEngrave"></span>
-        </div>
-        <div class="cfg-preview__meta">
-          <span class="cfg-preview__chip">Farbe: <b id="cfgPrevFinish">Anthrazit RAL 7016</b></span>
-          <span class="cfg-preview__chip" id="cfgPrevInnen" hidden>Innenstation: <b>—</b></span>
-        </div>
-      </div>
-
-      <!-- Steps -->
-      <div class="cfg-steps">
-
-        <!-- 1 Farbe -->
-        <section class="cfg-step" data-step="0">
-          <div class="cfg-step__head"><span class="cfg-step__n">Schritt 1</span></div>
-          <h2>Farbe wählen</h2>
-          <p class="cfg-step__sub">Pulverbeschichtet in Ihrer Wunschfarbe — jede Oberfläche wird in Handarbeit in Süddeutschland gefertigt.</p>
-          <div class="cfg-swatches" id="cfgSwatches">
-            <button class="cfg-swatch" data-finish="Anthrazit RAL 7016" data-delta="0" aria-pressed="true" type="button"><img src="assets/swatches/anthrazit-ral7016.jpg" alt="Anthrazit RAL 7016"></button>
-            <button class="cfg-swatch" data-finish="Verkehrsweiß RAL 9016" data-delta="0" aria-pressed="false" type="button"><img src="assets/swatches/verkehrsweiss-ral9016.jpg" alt="Verkehrsweiß RAL 9016"></button>
-            <button class="cfg-swatch" data-finish="Graualuminium RAL 9007" data-delta="0" aria-pressed="false" type="button"><img src="assets/swatches/graualuminium-ral9007.jpg" alt="Graualuminium RAL 9007"></button>
-            <button class="cfg-swatch" data-finish="Eisenglimmer DB 703" data-delta="0" aria-pressed="false" type="button"><img src="assets/swatches/eisenglimmer-db703.jpg" alt="Eisenglimmer DB 703"></button>
-            <button class="cfg-swatch" data-finish="Tiefschwarz RAL 9005" data-delta="0" aria-pressed="false" type="button"><img src="assets/swatches/tiefschwarz-ral9005.jpg" alt="Tiefschwarz RAL 9005"></button>
-            <button class="cfg-swatch" data-finish="Edelstahl gebürstet" data-delta="0" aria-pressed="false" type="button"><img src="assets/swatches/edelstahl-gebuerstet.jpg" alt="Edelstahl gebürstet"></button>
-            <button class="cfg-swatch" data-finish="Linen Tex Black" data-delta="0" aria-pressed="false" type="button"><img src="assets/swatches/linen-tex-black.jpg" alt="Linen Tex Black"></button>
-            <button class="cfg-swatch" data-finish="Wunschfarbe nach RAL" data-delta="49" aria-pressed="false" type="button"><img src="assets/swatches/wunschfarbe-nach-ral.jpg" alt="Wunschfarbe nach RAL"></button>
-          </div>
-          <div class="cfg-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg><span>Jede Oberfläche wird pulverbeschichtet und in Handarbeit veredelt — mit <a href="https://edelstahl-tuerklingel.de/metzler-garantieerklaerung" target="_blank" rel="noopener">10 Jahren Metzler Garantie</a>.</span></div>
-        </section>
-
-        <!-- 2 Gravur -->
-        <section class="cfg-step is-active" data-step="1">
-          <div class="cfg-step__head"><span class="cfg-step__n">Schritt 2</span><span class="cfg-step__opt">optional</span></div>
-          <h2>Gravur</h2>
-          <p class="cfg-step__sub">Individuelles Namensschild per Lasergravur — kein Verblassen oder Verwischen, selbst nach Jahren.</p>
-          <div class="cfg-opts">
-            <button class="cfg-opt is-selected" data-gravur="off" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Ohne Gravur</span><span class="cfg-opt__desc">Neutrales Namensschild</span></span><span class="cfg-opt__price is-incl">inklusive</span></button>
-            <button class="cfg-opt" data-gravur="on" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Mit Namensgravur</span><span class="cfg-opt__desc">Ihr Name in gewählter Schriftart</span></span><span class="cfg-opt__price is-incl">inklusive</span></button>
-          </div>
-          <div class="cfg-field" id="cfgGravurField">
-            <input class="cfg-input" id="cfgGravurText" type="text" maxlength="20" placeholder="Ihr Name (z. B. Vossberg)" aria-label="Gravurtext">
-            <div class="cfg-fonts" id="cfgFonts" aria-label="Schriftart">
-              <button class="cfg-font is-selected" data-font="Serif" type="button" style="font-family:Georgia,'Times New Roman',serif">Vossberg</button>
-              <button class="cfg-font" data-font="Grotesk" type="button" style="font-family:Arial,Helvetica,sans-serif;font-weight:700">Vossberg</button>
-              <button class="cfg-font" data-font="Mono" type="button" style="font-family:'Courier New',monospace;letter-spacing:.06em">Vossberg</button>
-            </div>
-          </div>
-          <div class="cfg-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg><span>Ihre Gravur erscheint sofort in der Vorschau links — dauerhaft lasergraviert, UV- und witterungsbeständig.</span></div>
-          <button type="button" data-skip class="cfg-skip">Diesen Schritt überspringen</button>
-        </section>
-
-        <!-- 3 Innenstation -->
-        <section class="cfg-step" data-step="2">
-          <div class="cfg-step__head"><span class="cfg-step__n">Schritt 3</span></div>
-          <h2>Innenstation</h2>
-          <p class="cfg-step__sub">Sehen, sprechen, öffnen — per Touch-Display im Haus oder kostenlos über die Metzler-App.</p>
-          <div class="cfg-opts" id="cfgInnen">
-            <button class="cfg-opt is-selected" data-innen="Nur App" data-delta="0" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M11 18.5h2"/></svg></span><span class="cfg-opt__body"><span class="cfg-opt__name">Nur Smartphone-App</span><span class="cfg-opt__desc">Kostenlos &amp; abofrei · iOS und Android</span></span><span class="cfg-opt__price is-incl">kostenlos</span></button>
-            <button class="cfg-opt" data-innen="Innenstation Home" data-delta="149" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/innenstation.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Innenstation Home</span><span class="cfg-opt__desc">Touch-Display · Live-Video · WLAN</span></span><span class="cfg-opt__price">+149 €*</span></button>
-            <button class="cfg-opt" data-innen="Innenstation Pro" data-delta="249" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/touch-display-station.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Innenstation Pro</span><span class="cfg-opt__desc">Größeres Display · Playback</span></span><span class="cfg-opt__price">+249 €*</span></button>
-            <button class="cfg-opt" data-innen="Innenstation Ultra" data-delta="349" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/touch-display-station.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Innenstation Ultra</span><span class="cfg-opt__desc">Top-Display · weitere IP-Kameras</span></span><span class="cfg-opt__price">+349 €*</span></button>
-          </div>
-          <div class="cfg-field" id="cfgInnenQtyWrap">
-            <div class="cfg-opt" style="cursor:default"><span class="cfg-opt__body"><span class="cfg-opt__name">Anzahl Innenstationen</span><span class="cfg-opt__desc">Für mehrere Räume erweiterbar</span></span><span class="cfg-opt__qty"><button data-q="-1" type="button" aria-label="weniger">−</button><span id="cfgInnenQty">1</span><button data-q="1" type="button" aria-label="mehr">+</button></span></div>
-          </div>
-          <div class="cfg-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg><span>Alle Innenstationen lassen sich kombinieren und jederzeit erweitern — auch nachträglich.</span></div>
-        </section>
-
-        <!-- 4 Taster-LED -->
-        <section class="cfg-step" data-step="3">
-          <div class="cfg-step__head"><span class="cfg-step__n">Schritt 4</span><span class="cfg-step__opt">optional</span></div>
-          <h2>Klingeltaster-LED</h2>
-          <p class="cfg-step__sub">Die Beleuchtung des Klingeltasters passt sich Ihrem Eingang an — jederzeit einstellbar, inklusive.</p>
-          <div class="cfg-led" id="cfgLed">
-            <button class="is-selected" data-led="Weiß" style="background:#fff" title="Weiß" aria-label="Weiß" type="button"></button>
-            <button data-led="Grün" style="background:#22c55e" title="Grün" aria-label="Grün" type="button"></button>
-            <button data-led="Rot" style="background:#ef4444" title="Rot" aria-label="Rot" type="button"></button>
-            <button data-led="Blau" style="background:#2563eb" title="Blau" aria-label="Blau" type="button"></button>
-            <button data-led="Hellblau" style="background:#7dd3fc" title="Hellblau" aria-label="Hellblau" type="button"></button>
-            <button data-led="Lila" style="background:#a855f7" title="Lila" aria-label="Lila" type="button"></button>
-            <button data-led="Gelb" style="background:#facc15" title="Gelb" aria-label="Gelb" type="button"></button>
-            <button data-led="Aus" style="background:#1a171b" title="Aus" aria-label="Aus" type="button"></button>
-          </div>
-          <div class="cfg-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg><span>Die LED-Farbe können Sie später jederzeit direkt am Gerät oder in der App ändern.</span></div>
-          <button type="button" data-skip class="cfg-skip">Diesen Schritt überspringen</button>
-        </section>
-
-        <!-- 5 Zubehör -->
-        <section class="cfg-step" data-step="4">
-          <div class="cfg-step__head"><span class="cfg-step__n">Schritt 5</span><span class="cfg-step__opt">optional</span></div>
-          <h2>Zubehör &amp; Sicherheit</h2>
-          <p class="cfg-step__sub">Ergänzen Sie Ihre Anlage — alles vorkonfiguriert und aufeinander abgestimmt geliefert.</p>
-          <div class="cfg-opts">
-            <button class="cfg-opt cfg-opt--check" data-extra="Sicherheitsmodul für Türöffner" data-delta="39" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Sicherheitsmodul für Türöffner</span><span class="cfg-opt__desc">Getrennte, sichere Türsteuerung</span></span><span class="cfg-opt__price">+39 €*</span></button>
-            <button class="cfg-opt cfg-opt--check" data-extra="Zusätzliche IP-Kamera" data-delta="99" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Zusätzliche IP-Kamera</span><span class="cfg-opt__desc">Erweitert das Sichtfeld · RTSP</span></span><span class="cfg-opt__price">+99 €*</span></button>
-            <button class="cfg-opt cfg-opt--check" data-extra="Ersatz-Namensschild" data-delta="34.99" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Ersatz-Namensschild mit Gravur</span><span class="cfg-opt__desc">Selbstklebend · 1 Klingeltaster</span></span><span class="cfg-opt__price">+34,99 €</span></button>
-            <button class="cfg-opt cfg-opt--check" data-extra="PoE-Netzteil" data-delta="29" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">PoE-Netzteil</span><span class="cfg-opt__desc">Stromversorgung über Netzwerk</span></span><span class="cfg-opt__price">+29 €*</span></button>
-          </div>
-          <div class="cfg-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg><span>Alles wird aufeinander abgestimmt und anschlussfertig vorkonfiguriert geliefert.</span></div>
-          <button type="button" data-skip class="cfg-skip">Ohne Zubehör fortfahren</button>
-        </section>
-
-        <!-- 6 Übersicht -->
-        <section class="cfg-step" data-step="5">
-          <div class="cfg-step__head"><span class="cfg-step__n">Schritt 6</span></div>
-          <h2>Ihre Konfiguration</h2>
-          <p class="cfg-step__sub">Alles geprüft? Ihre individuell gefertigte VDM10 — bereit für den Warenkorb.</p>
-          <div class="cfg-summary" id="cfgSummary"></div>
-        </section>
-
-      </div>
-    </div>
-  </div>
-
-  <div class="cfg-bar">
-    <div class="container cfg-bar__row">
-      <div class="cfg-bar__summary">
-        <div class="cfg-bar__label">Gesamt</div>
-        <div class="cfg-bar__total" id="cfgTotal" aria-live="polite">699,00 €</div>
-        <div class="cfg-bar__meta">inkl. USt. · Lieferung <span class="ph">TT.MM. – TT.MM.</span></div>
-      </div>
-      <div class="cfg-bar__chips" id="cfgChips" aria-hidden="true"></div>
-      <div class="cfg-bar__actions">
-        <span class="cfg-bar__stepno" id="cfgStepNo">Schritt 2 von 6</span>
-        <button class="cfg-btn cfg-btn--ghost" id="cfgPrev" type="button">Zurück</button>
-        <button class="cfg-btn cfg-btn--next" id="cfgNext" type="button">Weiter <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></button>
-        <button class="cfg-btn cfg-btn--cart" id="cfgCart" type="button" hidden>In den Warenkorb <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="cfg-toast" id="cfgToast" role="status" aria-live="polite">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
   <span id="cfgToastMsg">In den Warenkorb gelegt</span>
 </div>
 
 <script src="chrome.js?v=2"></script>
-<script src="pdp-b.js?v=172"></script>
+<script src="pdp-b.js?v=173"></script>
 </body>
 </html>

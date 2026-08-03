@@ -1106,6 +1106,19 @@
       entries.forEach(function (e) { if (e.isIntersecting) activate(e.target.getAttribute('data-scene')); });
     }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
     scenes.forEach(function (s) { io.observe(s); });
+
+    /* Play story videos only while on-screen. The off-breakpoint copies are
+       display:none, so they never intersect → never load (preload=none). */
+    var vids = [].slice.call(document.querySelectorAll('.psx-story video'));
+    if (vids.length) {
+      var vio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { var p = e.target.play(); if (p && p.catch) p.catch(function () {}); }
+          else { e.target.pause(); }
+        });
+      }, { threshold: 0.1 });
+      vids.forEach(function (v) { vio.observe(v); });
+    }
   })();
 
   var mtoggle = document.querySelector('.pdp-media__toggle');
