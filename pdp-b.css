@@ -1980,14 +1980,20 @@ body.is-scrolled #quickbar {
   padding: clamp(0.75rem, 3vw, 2.5rem); }
 .rvw-lightbox.is-open { display: flex; }
 .rvw-lightbox__backdrop { position: absolute; inset: 0; background: rgba(8,10,12,0.78); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
-.rvw-lb { position: relative; z-index: 1; display: flex; width: min(64rem, 100%); max-height: min(88vh, 42rem);
+/* card is a grid: image spans the left column full-height; header (top) and body
+   (scroll) stack in the right column */
+.rvw-lb { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr 0.85fr; grid-template-rows: auto minmax(0, 1fr);
+  width: min(64rem, 100%); max-height: min(88vh, 42rem);
   background: var(--color-white); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-modal);
   animation: rvwLbIn .22s cubic-bezier(.2,.7,.3,1) both; }
+.rvw-lb__stage { grid-column: 1; grid-row: 1 / 3; }
+.rvw-lb__head { grid-column: 2; grid-row: 1; }
+.rvw-lb__body { grid-column: 2; grid-row: 2; }
 @keyframes rvwLbIn { from { opacity: 0; transform: translateY(0.75rem) scale(0.985); } to { opacity: 1; transform: none; } }
 
-/* Close — a floating white pill that reads on both the dark stage and the white panel */
+/* Close — bare icon button; square press/tap feedback (never circular) */
 .rvw-lb__close { flex: none; width: 2.25rem; height: 2.25rem; display: grid; place-items: center; cursor: pointer;
-  color: var(--color-graphite-600); background: transparent; border: 0; border-radius: 999px; }
+  color: var(--color-graphite-600); background: transparent; border: 0; border-radius: var(--radius); }
 .rvw-lb__close:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
 .rvw-lb__close svg { width: 1.25rem; height: 1.25rem; }
 
@@ -2013,14 +2019,12 @@ body.is-scrolled #quickbar {
 .rvw-lb__nav:focus-visible { outline: 2px solid var(--color-white); outline-offset: 2px; }
 .rvw-lb__nav svg { width: 1.4rem; height: 1.4rem; }
 
-/* Context panel */
-.rvw-lb__panel { flex: 0.85 1 0%; min-width: 0; min-height: 0; display: flex; flex-direction: column; }
-/* panel title bar — anchors the review context and holds the close control */
-.rvw-lb__head { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+/* title bar — anchors the review context and holds the close control */
+.rvw-lb__head { min-width: 0; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
   padding: 0.9rem clamp(1.25rem, 2.2vw, 1.75rem); border-bottom: 1px solid var(--color-graphite-300); }
 .rvw-lb__headtitle { margin: 0; font-size: 1.0625rem; font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
 /* body is a fixed-height column: title/meta pinned top, text scrolls, gallery pinned bottom */
-.rvw-lb__body { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; overflow: hidden;
+.rvw-lb__body { min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden;
   padding: clamp(1.35rem, 2.4vw, 1.9rem); }
 /* top row — review title (left) paired with the star rating (right);
    sized so a typical title fits on one line beside the stars */
@@ -2063,11 +2067,16 @@ body.is-scrolled #quickbar {
 .rvw-lb__thumb[aria-selected="true"] { opacity: 1; border-color: var(--color-teal); }
 
 @media (max-width: 52rem) {
-  .rvw-lb { flex-direction: column; width: min(30rem, 100%); max-height: 90vh; }
-  .rvw-lb__stage { flex: none; height: min(48vh, 22rem); }
-  .rvw-lb__panel { flex: 1 1 auto; }
+  /* stack as a column; header pinned to the very top, then image, then body */
+  .rvw-lb { display: flex; flex-direction: column; width: min(30rem, 100%); max-height: 90vh; }
+  .rvw-lb__head { order: 1; }
+  .rvw-lb__stage { order: 2; flex: none; height: min(48vh, 22rem); }
+  .rvw-lb__body { order: 3; flex: 1 1 auto; }
   .rvw-lb__nav { width: 2.4rem; height: 2.4rem; }
   .rvw-lb__nav svg { width: 1.2rem; height: 1.2rem; }
+  /* gallery: top padding matches the body's bottom padding (symmetric), no divider,
+     which frees vertical space for the review text */
+  .rvw-lb__gallery { margin-top: 0; padding-top: clamp(1.35rem, 2.4vw, 1.9rem); border-top: 0; }
 }
 @media (prefers-reduced-motion: reduce) { .rvw-lb { animation: none; } }
 .rvw-review__foot { margin-top: 0.7rem; display: flex; align-items: center; gap: 0.6rem; font-size: 0.8125rem; }

@@ -1430,8 +1430,7 @@
         '<img class="rvw-lb__img" alt="Kundenfoto zur Bewertung">' +
         '<button type="button" class="rvw-lb__nav" data-dir="next" aria-label="Nächstes Foto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>' +
       '</div>' +
-      '<div class="rvw-lb__panel">' +
-        '<div class="rvw-lb__head">' +
+      '<div class="rvw-lb__head">' +
           '<h2 class="rvw-lb__headtitle">Kundenbewertung</h2>' +
           '<button type="button" class="rvw-lb__close" data-close aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button>' +
         '</div>' +
@@ -1447,7 +1446,6 @@
           '<div class="rvw-lb__thumbs" role="tablist" aria-label="Weitere Fotos dieser Bewertung"></div>' +
         '</div>' +
         '</div>' +
-      '</div>' +
     '</div>';
   document.body.appendChild(lb);
 
