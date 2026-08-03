@@ -1452,6 +1452,7 @@
   var img      = lb.querySelector('.rvw-lb__img');
   var navs     = [].slice.call(lb.querySelectorAll('.rvw-lb__nav'));
   var closeBtn = lb.querySelector('.rvw-lb__close');
+  var bodyEl   = lb.querySelector('.rvw-lb__body');
   var curEl    = lb.querySelector('.rvw-lb__cur');
   var totalEl  = lb.querySelector('.rvw-lb__total');
   var thumbs   = lb.querySelector('.rvw-lb__thumbs');
@@ -1505,7 +1506,11 @@
       g.src = shot.getAttribute('data-full');
       g.alt = '';
       b.appendChild(g);
-      b.addEventListener('click', function () { show(i); });
+      b.addEventListener('click', function () {
+        show(i);
+        /* bring the (fixed) image back into view after picking a photo */
+        if (bodyEl) { try { bodyEl.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { bodyEl.scrollTop = 0; } }
+      });
       thumbs.appendChild(b);
     });
   }

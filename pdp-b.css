@@ -2067,14 +2067,16 @@ body.is-scrolled #quickbar {
 .rvw-lb__thumb[aria-selected="true"] { opacity: 1; border-color: var(--color-teal); }
 
 @media (max-width: 52rem) {
-  /* mobile = a scrollable sheet: the whole card scrolls with a sticky header,
-     so the image and the FULL review text/gallery flow naturally — the text is
-     never squeezed into a tiny inner scroll box */
-  .rvw-lb { display: flex; flex-direction: column; width: min(30rem, 100%); max-height: 90vh;
-    overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
-  .rvw-lb__head { order: 1; position: sticky; top: 0; z-index: 4; background: var(--color-white); }
+  /* mobile: header + image stay FIXED at the top; only the review body scrolls
+     beneath them, so the image remains visible while reading the review */
+  .rvw-lb { display: flex; flex-direction: column; width: min(30rem, 100%); max-height: 90vh; overflow: hidden; }
+  .rvw-lb__head { order: 1; flex: none; }
   .rvw-lb__stage { order: 2; flex: none; height: 42vh; }
-  .rvw-lb__body { order: 3; flex: none; overflow: visible; }
+  .rvw-lb__body { order: 3; flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.18) transparent; }
+  .rvw-lb__body::-webkit-scrollbar { width: 5px; }
+  .rvw-lb__body::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.18); border-radius: 999px; }
+  .rvw-lb__body::-webkit-scrollbar-button { display: none; }
   .rvw-lb__text { flex: none; min-height: 0; overflow: visible; padding-right: 0; }
   /* gallery flows right after the full text; symmetric top/bottom padding, no divider */
   .rvw-lb__gallery { margin-top: 0; padding-top: clamp(1.35rem, 2.4vw, 1.9rem); border-top: 0; }
