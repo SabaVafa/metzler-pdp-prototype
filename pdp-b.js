@@ -840,6 +840,14 @@
     if (b.parentElement && b.parentElement.scrollIntoView) b.parentElement.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     var im = b.querySelector('img');
     if (im) { mainImg.style.opacity = '0'; window.setTimeout(function () { mainImg.src = im.getAttribute('src'); mainImg.alt = im.getAttribute('alt') || mainImg.alt; mainImg.style.opacity = '1'; }, 160); }
+    /* desktop: scroll up so the full main product image is in view (below the sticky header) */
+    if (window.matchMedia && window.matchMedia('(min-width: 64rem)').matches) {
+      var hdr = document.querySelector('.header');
+      var off = (hdr ? hdr.getBoundingClientRect().height : 0) + 16;
+      var se = document.scrollingElement || document.documentElement;
+      var targetY = mainImg.getBoundingClientRect().top + se.scrollTop - off;
+      if (targetY < se.scrollTop - 2) window.scrollTo({ top: targetY, behavior: 'smooth' });
+    }
   });
 
   /* ── Full-screen image viewer (lightbox): one big image with prev/next, a position
