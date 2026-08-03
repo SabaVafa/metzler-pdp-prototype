@@ -1014,7 +1014,7 @@
       if (sec) { map[id] = l; secs.push(sec); }
     });
     if (!secs.length || !('IntersectionObserver' in window)) return;
-    var scroller = nav.querySelector('.psx-nav__inner') || nav;
+    var scroller = nav.querySelector('.psx-nav__tabs') || nav.querySelector('.psx-nav__inner') || nav;
     function setActive(l) {
       links.forEach(function (x) { x.classList.toggle('is-active', x === l); });
       /* auto-slide the horizontal nav so the current section's tab is in view
