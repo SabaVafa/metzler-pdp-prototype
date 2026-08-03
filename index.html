@@ -18,9 +18,10 @@
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=35" />
 <!-- Version B — inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=535" />
+<link rel="stylesheet" href="pdp-b.css?v=536" />
 </head>
 <body class="plp">
+<a class="skip-link" href="#pdpMain">Zum Inhalt springen</a>
 
 <!-- ===== SVG ICON SPRITE (from home design system) ===== -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -78,7 +79,7 @@
       </button>
       <div class="header__search">
         <svg><use href="#i-search"/></svg>
-        <input type="search" placeholder="Suchen — Türklingel, Briefkasten, Sprechanlage…" />
+        <input type="search" aria-label="Produkte suchen" placeholder="Suchen — Türklingel, Briefkasten, Sprechanlage…" />
       </div>
       <div class="header__icons">
         <a class="icon-btn" href="#" aria-label="Mein Konto"><img src="Home/ICONS/profile.svg" alt="" /></a>
@@ -156,7 +157,7 @@
                 </div>
                 <div class="mega-poster__content">
                   <span class="mega-poster__eyebrow">3D Konfigurator</span>
-                  <h3 class="mega-poster__title">Briefkastenanlage individuell gestalten</h3>
+                  <p class="mega-poster__title">Briefkastenanlage individuell gestalten</p>
                   <p class="mega-poster__features">Design · Farbe · Montageart</p>
                   <a class="mega-poster__cta" href="#">Jetzt konfigurieren</a>
                 </div>
@@ -217,7 +218,7 @@
                 </div>
                 <div class="mega-poster__content">
                   <span class="mega-poster__eyebrow">Video-Türsprechanlage</span>
-                  <h3 class="mega-poster__title">XDM10 – nachrüsten ohne neue Kabel</h3>
+                  <p class="mega-poster__title">XDM10 – nachrüsten ohne neue Kabel</p>
                   <p class="mega-poster__features">2-Draht-BUS · App-Anbindung · HD-Video</p>
                   <a class="mega-poster__cta" href="#">Mehr erfahren</a>
                 </div>
@@ -238,7 +239,7 @@
 <!-- ===== MOBILE SLIDE-IN NAV ===== -->
 <div class="mobile-nav" id="mobileNav" aria-hidden="true">
   <div class="mobile-nav__backdrop" data-close></div>
-  <aside class="mobile-nav__panel" role="dialog" aria-label="Mobile Navigation">
+  <aside class="mobile-nav__panel" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
     <div class="mobile-nav__head">
       <img src="Home/Logo/Metzler_Logo-rot-schwarz.svg" alt="Metzler" />
       <button class="mobile-nav__close" data-close aria-label="Menü schließen">×</button>
@@ -320,7 +321,7 @@
   </div>
 </nav>
 
-<main class="pdp pdp-b">
+<main class="pdp pdp-b" id="pdpMain" tabindex="-1">
 
   <!-- ===== SECTION 1 · ABOVE-THE-FOLD HERO ===== -->
   <section class="pdp-hero" id="ueberblick" aria-label="Produktübersicht">
@@ -507,7 +508,7 @@
               <button class="cfgb-bar__step" type="button" data-goto="3" aria-label="Schritt 4: Stromversorgung"><span class="cfgb-bar__num">4</span><span class="cfgb-bar__label">Strom</span></button>
               <button class="cfgb-bar__step" type="button" data-goto="4" aria-label="Schritt 5: Erweiterungen und Zubehör"><span class="cfgb-bar__num">5</span><span class="cfgb-bar__label">Zubehör</span></button>
             </div>
-            <h3 class="cfgb-dock__title"><span class="cfgb-dock__titletext"><span class="cfgb-dock__n" id="bStepN">Schritt 1 von 5</span><span class="cfgb-dock__name"><span id="bStepName">Anschluss</span></span></span><span class="cfgb-dock__flag" id="bStepFlag">erforderlich</span></h3>
+            <div class="cfgb-dock__title" role="status" aria-live="polite"><span class="cfgb-dock__titletext"><span class="cfgb-dock__n" id="bStepN">Schritt 1 von 5</span><span class="cfgb-dock__name"><span id="bStepName">Anschluss</span></span></span><span class="cfgb-dock__flag" id="bStepFlag">erforderlich</span></div>
           </div>
           <div class="cfgb-bar">
             <div class="cfgb-bar__row">
@@ -1161,7 +1162,7 @@
 
     <div class="container psx-sec__inner">
       <p class="psx-eyebrow">Bewertungen</p>
-      <h2 class="psx-title" id="sxRevTitle">Das sagen unsere Kunden</h2>
+      <h2 class="psx-title" id="sxRevTitle">Alle Bewertungen</h2>
       <p class="psx-lead">Durchschnittlich <b>4,5&nbsp;von&nbsp;5</b> Sternen aus <b>63&nbsp;verifizierten Bewertungen</b> – echte Erfahrungen von Metzler-Kunden.</p>
 
       <!-- ── Happy reviews carousel ── -->
@@ -1533,7 +1534,7 @@
   <div class="pdp-lightbox__backdrop" data-lb-close></div>
   <div class="pdp-lightbox__panel">
     <div class="pdp-lightbox__bar">
-      <span class="pdp-lightbox__counter"><span id="pdpLbCur">1</span>&nbsp;/&nbsp;<span id="pdpLbTotal">30</span></span>
+      <span class="pdp-lightbox__counter" aria-live="polite"><span id="pdpLbCur">1</span>&nbsp;/&nbsp;<span id="pdpLbTotal">30</span></span>
       <button type="button" class="pdp-lightbox__close" data-lb-close aria-label="Schließen">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
       </button>
@@ -1917,6 +1918,6 @@
 </div>
 
 <script src="chrome.js?v=2"></script>
-<script src="pdp-b.js?v=171"></script>
+<script src="pdp-b.js?v=172"></script>
 </body>
 </html>

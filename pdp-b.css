@@ -2526,3 +2526,31 @@ body.is-scrolled #quickbar {
   .techms__rail { flex-direction: column; overflow-x: visible; gap: 0.15rem; }
   .techms__tab { flex: none; width: 100%; justify-content: flex-start; white-space: normal; }
 }
+
+/* ============================================================
+   Accessibility
+   ============================================================ */
+/* Skip-to-content link — hidden until focused (keyboard entry point) */
+.skip-link { position: fixed; top: 0.5rem; left: 0.5rem; z-index: 2000;
+  padding: 0.6rem 1rem; background: var(--color-teal); color: var(--color-white);
+  border-radius: var(--radius); font-size: 0.875rem; font-weight: 700; text-decoration: none;
+  box-shadow: var(--shadow-modal); transform: translateY(-160%); transition: transform .15s ease; }
+.skip-link:focus { transform: translateY(0); outline: 2px solid var(--color-white); outline-offset: 2px; }
+#pdpMain:focus { outline: none; }   /* programmatic focus target, no visible ring */
+
+/* Comfortable tap targets for standalone controls on mobile (WCAG 2.5.5/2.5.8) */
+@media (max-width: 47.9375rem) {
+  .pdp-media__toggle button { min-height: 44px; }
+  .bx-share { min-height: 44px; }
+}
+
+/* Honour reduced-motion for every animation/transition and programmatic smooth scroll */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  html { scroll-behavior: auto !important; }
+}

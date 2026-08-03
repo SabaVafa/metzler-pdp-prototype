@@ -846,7 +846,10 @@
       var off = (hdr ? hdr.getBoundingClientRect().height : 0) + 16;
       var se = document.scrollingElement || document.documentElement;
       var targetY = mainImg.getBoundingClientRect().top + se.scrollTop - off;
-      if (targetY < se.scrollTop - 2) window.scrollTo({ top: targetY, behavior: 'smooth' });
+      if (targetY < se.scrollTop - 2) {
+        var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.scrollTo({ top: targetY, behavior: rm ? 'auto' : 'smooth' });
+      }
     }
   });
 
@@ -1259,6 +1262,7 @@
       var show = r.bottom <= 0 || r.top >= window.innerHeight;   /* CTA fully out of view */
       bar.classList.toggle('is-visible', show);
       bar.setAttribute('aria-hidden', show ? 'false' : 'true');
+      bar.inert = !show;   /* when hidden, keep its controls out of the tab order */
     };
     window.addEventListener('scroll', syncStickyBar, { passive: true });
     window.addEventListener('resize', syncStickyBar, { passive: true });
@@ -1433,7 +1437,7 @@
     '<div class="rvw-lightbox__backdrop" data-close></div>' +
     '<div class="rvw-lb" role="document">' +
       '<div class="rvw-lb__stage">' +
-        '<div class="rvw-lb__counter"><span class="rvw-lb__cur">1</span> / <span class="rvw-lb__total">1</span></div>' +
+        '<div class="rvw-lb__counter" aria-live="polite"><span class="rvw-lb__cur">1</span> / <span class="rvw-lb__total">1</span></div>' +
         '<button type="button" class="rvw-lb__nav" data-dir="prev" aria-label="Vorheriges Foto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>' +
         '<img class="rvw-lb__img" alt="Kundenfoto zur Bewertung">' +
         '<button type="button" class="rvw-lb__nav" data-dir="next" aria-label="Nächstes Foto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>' +
@@ -1770,4 +1774,67 @@
       tabs[n].focus();
     });
   });
+})();
+
+/* ============================================================
+   A11y: mobile quickbar links are placeholders — keep them out of the
+   tab order and non-activatable (matches the pointer-events:none CSS).
+   ============================================================ */
+(function () {
+  'use strict';
+  var qb = document.getElementById('quickbar');
+  if (!qb) return;
+  var items = [].slice.call(qb.querySelectorAll('.qa, .qa-cta'));
+  if (!items.length) return;
+  var mq = window.matchMedia('(max-width: 767px)');
+  function sync() {
+    var mobile = mq.matches;
+    items.forEach(function (el) {
+      if (mobile) { el.setAttribute('tabindex', '-1'); el.setAttribute('aria-disabled', 'true'); }
+      else { el.removeAttribute('tabindex'); el.removeAttribute('aria-disabled'); }
+    });
+  }
+  /* block keyboard/programmatic activation while disabled */
+  qb.addEventListener('click', function (e) {
+    var el = e.target.closest('.qa, .qa-cta');
+    if (el && el.getAttribute('aria-disabled') === 'true') { e.preventDefault(); e.stopPropagation(); }
+  }, true);
+  (mq.addEventListener ? mq.addEventListener('change', sync) : mq.addListener(sync));
+  sync();
+})();
+
+/* ============================================================
+   A11y: focus trap for modal dialogs. Keeps Tab focus within the
+   top-most open [aria-modal="true"] dialog (aria-modal already tells
+   screen readers to constrain to it). Non-modal panels are untouched.
+   ============================================================ */
+(function () {
+  'use strict';
+  var SEL = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+  function openModal() {
+    var mods = [].slice.call(document.querySelectorAll('[role="dialog"][aria-modal="true"]'));
+    var open = mods.filter(function (d) {
+      if (d.getAttribute('aria-hidden') === 'true') return false;
+      var s = window.getComputedStyle(d);
+      return s.display !== 'none' && s.visibility !== 'hidden';
+    });
+    return open.length ? open[open.length - 1] : null;   /* top-most in DOM order */
+  }
+  function focusables(dlg) {
+    return [].slice.call(dlg.querySelectorAll(SEL)).filter(function (el) {
+      var r = el.getBoundingClientRect();
+      return (r.width > 0 || r.height > 0) && window.getComputedStyle(el).visibility !== 'hidden';
+    });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab') return;
+    var dlg = openModal();
+    if (!dlg) return;
+    var f = focusables(dlg);
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1], active = document.activeElement;
+    if (!dlg.contains(active)) { e.preventDefault(); first.focus(); return; }
+    if (e.shiftKey && active === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && active === last) { e.preventDefault(); first.focus(); }
+  }, true);
 })();
