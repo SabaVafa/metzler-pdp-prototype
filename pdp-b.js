@@ -671,8 +671,13 @@
       var header = document.querySelector('.header');
       var headBottom = header ? Math.max(0, header.getBoundingClientRect().bottom) : 0;
       var r = trigger.getBoundingClientRect();
-      if (r.top < headBottom + 8) {
-        window.scrollTo({ top: window.scrollY + r.top - headBottom - 12, behavior: 'smooth' });
+      /* always bring the field (showing the just-picked RAL code) to just under the
+         sticky header, whether it's scrolled above the top or below the fold — so the
+         auto-filled code is confirmed on screen after every pick */
+      var target = Math.max(0, window.scrollY + r.top - headBottom - 12);
+      if (Math.abs(target - window.scrollY) > 4) {
+        var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.scrollTo({ top: target, behavior: rm ? 'auto' : 'smooth' });
       }
     }
 
