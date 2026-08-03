@@ -1616,7 +1616,9 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
   .rv__feature-media { aspect-ratio: 1 / 1; min-height: 0; }
   .rv__feature-body { min-height: 0; }   /* no reserved height when stacked */
   .rv__feature-text { max-width: none; }
-  .rv__thumbsnav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; padding-bottom: 0.25rem; }
+  /* overflow-x:auto also clips the Y axis, so pad top+bottom equally, otherwise
+     the active thumbnail's teal top border is cut off (invisible) */
+  .rv__thumbsnav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; padding: 0.25rem 0; }
   .rv__thumbsnav::-webkit-scrollbar { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1676,7 +1678,7 @@ body.is-scrolled #quickbar {
   background: var(--color-teal); color: var(--color-white); font-family: inherit; font-size: 0.875rem; font-weight: 700; line-height: 1;
   white-space: nowrap; cursor: pointer; transition: background .15s ease; }
 .psx-nav__termin svg { width: 1.05rem; height: 1.05rem; }
-@media (max-width: 47.9375rem) { .psx-nav__termin svg { display: none; } }   /* mobile: label only, no calendar icon */
+@media (max-width: 47.9375rem) { .psx-nav__termin { display: none; } }   /* mobile: hide the CTA so the section tabs get the full width */
 .psx-nav__termin:hover { background: var(--color-teal-hover); }
 .psx-nav__link { position: relative; display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap;
   padding: 1.05rem 0.15rem; font-size: 1rem; font-weight: 700; letter-spacing: -0.01em;
