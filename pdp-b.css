@@ -69,15 +69,16 @@
 .pdp-lightbox__stage { position: relative; flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .pdp-lightbox__img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: var(--radius-lg);
   background: var(--color-white); box-shadow: 0 24px 60px -20px rgba(0,0,0,0.65); }
-/* nav arrows — design-system slider arrow: square var(--radius), white outline, inverts on hover (never circular) */
+/* nav arrows — design-system slider arrow: square var(--radius), translucent dark fill + white outline, inverts on hover (never circular) */
 .pdp-lightbox__nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
-  display: grid; place-items: center; width: 3rem; height: 3rem; cursor: pointer;
-  background: transparent; border: 1px solid var(--color-white); border-radius: var(--radius); color: var(--color-white); transition: background .15s ease, color .15s ease; }
+  display: grid; place-items: center; width: 2.75rem; height: 2.75rem; cursor: pointer;
+  background: rgba(0,0,0,0.28); border: 1px solid rgba(255,255,255,0.85); border-radius: var(--radius); color: var(--color-white);
+  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); transition: background .15s ease, color .15s ease; }
 .pdp-lightbox__nav:hover { background: var(--color-white); color: var(--color-digital-black); }
 .pdp-lightbox__nav:focus-visible { outline: 2px solid var(--color-white); outline-offset: 2px; }
-.pdp-lightbox__nav svg { width: 1.5rem; height: 1.5rem; }
-.pdp-lightbox__nav--prev { left: clamp(0.5rem, 2vw, 1.5rem); }
-.pdp-lightbox__nav--next { right: clamp(0.5rem, 2vw, 1.5rem); }
+.pdp-lightbox__nav svg { width: 1.4rem; height: 1.4rem; }
+.pdp-lightbox__nav--prev { left: clamp(0.5rem, 1.5vw, 1rem); }
+.pdp-lightbox__nav--next { right: clamp(0.5rem, 1.5vw, 1rem); }
 .pdp-lightbox__strip { flex: none; display: flex; gap: 0.5rem; overflow-x: auto; padding: 0.25rem;
   scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth; justify-content: center; }
 .pdp-lightbox__strip::after { content: ""; flex: 0 0 0.25rem; }   /* tiny trailing pad for the last thumb */
@@ -90,8 +91,8 @@
 .pdp-lightbox__thumb:focus-visible { outline: 2px solid var(--color-white); outline-offset: 2px; opacity: 1; }
 .pdp-lightbox__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 @media (max-width: 48rem) {
-  .pdp-lightbox__nav { width: 2.5rem; height: 2.5rem; }
-  .pdp-lightbox__nav svg { width: 1.25rem; height: 1.25rem; }
+  .pdp-lightbox__nav { width: 2.4rem; height: 2.4rem; }
+  .pdp-lightbox__nav svg { width: 1.2rem; height: 1.2rem; }
   .pdp-lightbox__thumb { width: 3.5rem; height: 3.5rem; }
   .pdp-lightbox__strip { justify-content: flex-start; }   /* many thumbs → left-anchored scroll on mobile */
 }
@@ -1951,20 +1952,10 @@ body.is-scrolled #quickbar {
    action. Collapsed by default: the summary row is the tap target, the body reveals
    on open and the chevron rotates to signal state. */
 .rvw-howto { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--color-graphite-300); }
-.rvw-howto__title { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
-  margin: 0; font-size: 0.8125rem; font-weight: 700; color: var(--color-digital-black);
-  cursor: pointer; list-style: none; user-select: none; }
-.rvw-howto__title::-webkit-details-marker { display: none; }   /* strip native disclosure triangle (Safari/Chrome) */
-.rvw-howto__title:hover { color: var(--color-teal); }
-.rvw-howto__chev { flex: none; width: 1.05rem; height: 1.05rem; color: var(--color-graphite-600);
-  transition: transform .2s ease; }
-.rvw-howto[open] .rvw-howto__chev { transform: rotate(180deg); }
-.rvw-howto[open] .rvw-howto__title { color: var(--color-teal); }
-/* explicit collapse — guarantees the body hides when closed even where the UA's
-   native <details> hiding is unavailable; redundant-but-harmless in modern browsers */
-.rvw-howto:not([open]) .rvw-howto__body { display: none; }
-.rvw-howto__text { margin: 0.55rem 0 0; font-size: 0.75rem; line-height: 1.55; color: var(--color-graphite-700); }
-.rvw-howto__link { display: inline-block; margin-top: 0.6rem; font-size: 0.75rem; font-weight: 600;
+/* Legally required info — always visible (no longer a collapsible disclosure) */
+.rvw-howto__title { margin: 0; font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black); }
+.rvw-howto__text { margin: 0.55rem 0 0; font-size: 0.8125rem; line-height: 1.55; color: var(--color-graphite-700); }
+.rvw-howto__link { display: inline-block; margin-top: 0.6rem; font-size: 0.8125rem; font-weight: 600;
   color: var(--color-teal); text-decoration: underline; text-underline-offset: 2px; }
 .rvw-howto__link:hover { color: var(--color-teal-600); }
 .rvw-list { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; }
@@ -1984,21 +1975,101 @@ body.is-scrolled #quickbar {
 .rvw-shot:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
 .rvw-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
 /* Lightbox overlay (injected once by JS) */
+/* ── Premium review-photo viewer — dark image stage + white context panel ── */
 .rvw-lightbox { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center;
-  gap: 0.5rem; padding: clamp(1rem, 4vw, 3rem); background: rgba(10,12,14,0.82); }
+  padding: clamp(0.75rem, 3vw, 2.5rem); }
 .rvw-lightbox.is-open { display: flex; }
-.rvw-lightbox img { max-width: min(90vw, 880px); max-height: 88vh; border-radius: var(--radius);
-  box-shadow: 0 18px 50px rgba(0,0,0,0.45); }
-.rvw-lightbox__close { position: absolute; top: clamp(0.75rem, 2vw, 1.4rem); right: clamp(0.75rem, 2vw, 1.4rem);
-  width: 2.75rem; height: 2.75rem; display: grid; place-items: center; font-size: 1.6rem; line-height: 1; cursor: pointer;
-  color: var(--color-white); background: none; border: 0; transition: color .15s ease, transform .15s ease; }
-.rvw-lightbox__close:hover { color: rgba(255,255,255,0.7); transform: scale(1.08); }
-.rvw-lightbox__close svg { width: 1.25rem; height: 1.25rem; }
+.rvw-lightbox__backdrop { position: absolute; inset: 0; background: rgba(8,10,12,0.78); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+.rvw-lb { position: relative; z-index: 1; display: flex; width: min(64rem, 100%); max-height: min(88vh, 42rem);
+  background: var(--color-white); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-modal);
+  animation: rvwLbIn .22s cubic-bezier(.2,.7,.3,1) both; }
+@keyframes rvwLbIn { from { opacity: 0; transform: translateY(0.75rem) scale(0.985); } to { opacity: 1; transform: none; } }
+
+/* Close — a floating white pill that reads on both the dark stage and the white panel */
+.rvw-lb__close { flex: none; width: 2.25rem; height: 2.25rem; display: grid; place-items: center; cursor: pointer;
+  color: var(--color-graphite-600); background: transparent; border: 0; border-radius: 999px; }
+.rvw-lb__close:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
+.rvw-lb__close svg { width: 1.25rem; height: 1.25rem; }
+
+/* Image stage */
+.rvw-lb__stage { position: relative; flex: 1.15 1 0%; min-width: 0; display: flex; align-items: center; justify-content: center;
+  overflow: hidden; background: radial-gradient(120% 120% at 50% 0%, #16191d 0%, #0b0d10 100%); }
+.rvw-lb__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* subtle top scrim keeps the photo counter legible over a full-bleed photo */
+.rvw-lb__stage::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5rem; z-index: 1; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0)); }
+.rvw-lb__counter { position: absolute; top: clamp(0.75rem, 2vw, 1.1rem); left: clamp(0.75rem, 2vw, 1.1rem); z-index: 3;
+  padding: 0.28rem 0.65rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.03em;
+  color: rgba(255,255,255,0.92); background: rgba(0,0,0,0.5); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  font-variant-numeric: tabular-nums; }
 /* nav arrows — design-system slider arrow: square var(--radius), white outline, inverts on hover (never circular) */
-.rvw-lightbox__nav { flex: none; width: 2.75rem; height: 2.75rem; display: grid; place-items: center; line-height: 1;
-  cursor: pointer; color: var(--color-white); background: transparent; border: 1px solid var(--color-white); border-radius: var(--radius); transition: background .15s ease, color .15s ease; }
-.rvw-lightbox__nav:hover { background: var(--color-white); color: var(--color-digital-black); }
-.rvw-lightbox__nav svg { width: 1.5rem; height: 1.5rem; }
+.rvw-lb__nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
+  width: 2.75rem; height: 2.75rem; display: grid; place-items: center; line-height: 1; cursor: pointer;
+  color: var(--color-white); background: rgba(0,0,0,0.28); border: 1px solid rgba(255,255,255,0.85); border-radius: var(--radius);
+  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); transition: background .15s ease, color .15s ease; }
+.rvw-lb__nav[data-dir="prev"] { left: clamp(0.5rem, 1.5vw, 1rem); }
+.rvw-lb__nav[data-dir="next"] { right: clamp(0.5rem, 1.5vw, 1rem); }
+.rvw-lb__nav:hover { background: var(--color-white); color: var(--color-digital-black); }
+.rvw-lb__nav:focus-visible { outline: 2px solid var(--color-white); outline-offset: 2px; }
+.rvw-lb__nav svg { width: 1.4rem; height: 1.4rem; }
+
+/* Context panel */
+.rvw-lb__panel { flex: 0.85 1 0%; min-width: 0; min-height: 0; display: flex; flex-direction: column; }
+/* panel title bar — anchors the review context and holds the close control */
+.rvw-lb__head { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 0.9rem clamp(1.25rem, 2.2vw, 1.75rem); border-bottom: 1px solid var(--color-graphite-300); }
+.rvw-lb__headtitle { margin: 0; font-size: 1.0625rem; font-weight: 800; letter-spacing: -0.01em; color: var(--color-digital-black); }
+/* body is a fixed-height column: title/meta pinned top, text scrolls, gallery pinned bottom */
+.rvw-lb__body { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; overflow: hidden;
+  padding: clamp(1.35rem, 2.4vw, 1.9rem); }
+/* top row — review title (left) paired with the star rating (right);
+   sized so a typical title fits on one line beside the stars */
+.rvw-lb__top { flex: none; display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.rvw-lb__title { flex: 1 1 auto; margin: 0; font-size: 1.0625rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.35; color: var(--color-digital-black); }
+.rvw-lb__stars.rvw-lb__stars { flex: none; margin-top: 0.1rem; }
+.rvw-lb__stars svg { width: 1.15rem; height: 1.15rem; }
+/* meta line — "author | date" plus the verified label, muted */
+.rvw-lb__meta { flex: none; margin: 0.5rem 0 0; display: flex; align-items: center; flex-wrap: wrap; gap: 0 0.5rem;
+  font-size: 0.8125rem; color: var(--color-graphite-600); }
+.rvw-lb__date::before { content: "|"; margin-right: 0.5rem; color: var(--color-graphite-300); }
+/* verified label — identical to the review-list .rvw-verified (no pill) */
+.rvw-lb__badge { margin-left: auto; display: inline-flex; align-items: center; gap: 0.3rem; flex: none;
+  font-size: 0.75rem; font-weight: 700; white-space: nowrap; color: var(--color-teal); }
+.rvw-lb__badge svg { width: 0.85rem; height: 0.85rem; }
+/* text is the scroll region: it grows to fill the space so the photo gallery
+   always sits pinned at the bottom; scrolls internally when the review is long */
+.rvw-lb__text { flex: 1 1 auto; min-height: 0; overflow-y: auto; margin: 1.15rem 0 0; padding-right: 0.5rem;
+  font-size: 0.9375rem; line-height: 1.7; color: var(--color-graphite-700);
+  scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.18) transparent; }
+/* minimal scrollbar — thin pill thumb, no track, no stepper buttons */
+.rvw-lb__text::-webkit-scrollbar { width: 5px; }
+.rvw-lb__text::-webkit-scrollbar-track { background: transparent; }
+.rvw-lb__text::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.18); border-radius: 999px; }
+.rvw-lb__text::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.32); }
+.rvw-lb__text::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+/* photo gallery — flows directly beneath the review as a connected section
+   (a hairline divider ties it to the text); styled identically to the
+   review-preview thumbnail nav (.rv__thumbnav-btn) for a consistent system */
+.rvw-lb__gallery { flex: none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--color-graphite-200); }
+.rvw-lb__gallery-label { margin: 0 0 0.65rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em;
+  line-height: 1.4; text-transform: uppercase; color: var(--color-graphite-600); }
+.rvw-lb__thumbs { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.rvw-lb__thumb { flex: none; width: 3.5rem; height: 3.5rem; padding: 0; cursor: pointer; overflow: hidden;
+  background: var(--color-white); border: 1px solid var(--color-graphite-200); border-radius: var(--radius);
+  opacity: 0.6; transition: opacity .18s, transform .18s, border-color .18s; }
+.rvw-lb__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rvw-lb__thumb:hover { opacity: 1; transform: translateY(-2px); }
+.rvw-lb__thumb:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
+.rvw-lb__thumb[aria-selected="true"] { opacity: 1; border-color: var(--color-teal); }
+
+@media (max-width: 52rem) {
+  .rvw-lb { flex-direction: column; width: min(30rem, 100%); max-height: 90vh; }
+  .rvw-lb__stage { flex: none; height: min(48vh, 22rem); }
+  .rvw-lb__panel { flex: 1 1 auto; }
+  .rvw-lb__nav { width: 2.4rem; height: 2.4rem; }
+  .rvw-lb__nav svg { width: 1.2rem; height: 1.2rem; }
+}
+@media (prefers-reduced-motion: reduce) { .rvw-lb { animation: none; } }
 .rvw-review__foot { margin-top: 0.7rem; display: flex; align-items: center; gap: 0.6rem; font-size: 0.8125rem; }
 .rvw-review__foot .rvw-author { font-size: 0.8125rem; }
 .rvw-review__foot time { color: var(--color-graphite-700); }
@@ -2252,10 +2323,18 @@ body.is-scrolled #quickbar {
 .tdiag-lightbox__close:hover { color: rgba(255,255,255,0.7); transform: scale(1.08); }
 .tdiag-lightbox__close svg { width: 1.25rem; height: 1.25rem; }
 /* nav arrows — design-system slider arrow: square var(--radius), white outline, inverts on hover (never circular) */
-.tdiag-lightbox__nav { flex: none; width: 2.75rem; height: 2.75rem; display: grid; place-items: center; line-height: 1;
-  cursor: pointer; color: var(--color-white); background: transparent; border: 1px solid var(--color-white); border-radius: var(--radius); transition: background .15s ease, color .15s ease; }
+.tdiag-lightbox__nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+  width: 2.75rem; height: 2.75rem; display: grid; place-items: center; line-height: 1;
+  cursor: pointer; color: var(--color-white); background: rgba(0,0,0,0.28); border: 1px solid rgba(255,255,255,0.85); border-radius: var(--radius);
+  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); transition: background .15s ease, color .15s ease; }
+.tdiag-lightbox__nav[data-dir="prev"] { left: clamp(0.5rem, 1.5vw, 1rem); }
+.tdiag-lightbox__nav[data-dir="next"] { right: clamp(0.5rem, 1.5vw, 1rem); }
 .tdiag-lightbox__nav:hover { background: var(--color-white); color: var(--color-digital-black); }
-.tdiag-lightbox__nav svg { width: 1.5rem; height: 1.5rem; }
+.tdiag-lightbox__nav svg { width: 1.4rem; height: 1.4rem; }
+@media (max-width: 48rem) {
+  .tdiag-lightbox__nav { width: 2.4rem; height: 2.4rem; }
+  .tdiag-lightbox__nav svg { width: 1.2rem; height: 1.2rem; }
+}
 
 /* Frage / FAQ — ported from the produktionsprozess page (.faq), mapped to PDP tokens */
 .faq__inner { display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }

@@ -1405,9 +1405,11 @@
 })();
 
 /* ============================================================
-   Review photo lightbox — customer-uploaded images (max 3/review).
-   Thumbnails (.rvw-shot) open a full-size overlay with prev/next
-   scoped to the clicked review's photo group. No dependencies.
+   Review photo lightbox — a premium two-pane viewer. The clicked
+   photo opens on a dark image stage (left) beside the full review
+   context (right): customer identity, star rating, verified badge,
+   title, text and date — all pulled live from the review card.
+   Prev/next + a thumbnail rail page through that customer's photos.
    ============================================================ */
 (function () {
   'use strict';
@@ -1420,31 +1422,120 @@
   lb.setAttribute('aria-modal', 'true');
   lb.setAttribute('aria-label', 'Kundenfoto zur Bewertung');
   lb.innerHTML =
-    '<button type="button" class="rvw-lightbox__close" aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button>' +
-    '<button type="button" class="rvw-lightbox__nav" data-dir="prev" aria-label="Vorheriges Foto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>' +
-    '<img alt="Kundenfoto zur Bewertung">' +
-    '<button type="button" class="rvw-lightbox__nav" data-dir="next" aria-label="Nächstes Foto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>';
+    '<div class="rvw-lightbox__backdrop" data-close></div>' +
+    '<div class="rvw-lb" role="document">' +
+      '<div class="rvw-lb__stage">' +
+        '<div class="rvw-lb__counter"><span class="rvw-lb__cur">1</span> / <span class="rvw-lb__total">1</span></div>' +
+        '<button type="button" class="rvw-lb__nav" data-dir="prev" aria-label="Vorheriges Foto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>' +
+        '<img class="rvw-lb__img" alt="Kundenfoto zur Bewertung">' +
+        '<button type="button" class="rvw-lb__nav" data-dir="next" aria-label="Nächstes Foto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>' +
+      '</div>' +
+      '<div class="rvw-lb__panel">' +
+        '<div class="rvw-lb__head">' +
+          '<h2 class="rvw-lb__headtitle">Kundenbewertung</h2>' +
+          '<button type="button" class="rvw-lb__close" data-close aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button>' +
+        '</div>' +
+        '<div class="rvw-lb__body">' +
+        '<div class="rvw-lb__top">' +
+          '<h3 class="rvw-lb__title"></h3>' +
+          '<span class="rvw-stars rvw-stars--lg rvw-lb__stars" role="img"></span>' +
+        '</div>' +
+        '<p class="rvw-lb__meta"><span class="rvw-lb__author"></span><time class="rvw-lb__date"></time><span class="rvw-lb__badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span></p>' +
+        '<div class="rvw-lb__text"></div>' +
+        '<div class="rvw-lb__gallery">' +
+          '<span class="rvw-lb__gallery-label"></span>' +
+          '<div class="rvw-lb__thumbs" role="tablist" aria-label="Weitere Fotos dieser Bewertung"></div>' +
+        '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
   document.body.appendChild(lb);
 
-  var img = lb.querySelector('img');
-  var navs = [].slice.call(lb.querySelectorAll('.rvw-lightbox__nav'));
-  var closeBtn = lb.querySelector('.rvw-lightbox__close');
+  var img      = lb.querySelector('.rvw-lb__img');
+  var navs     = [].slice.call(lb.querySelectorAll('.rvw-lb__nav'));
+  var closeBtn = lb.querySelector('.rvw-lb__close');
+  var curEl    = lb.querySelector('.rvw-lb__cur');
+  var totalEl  = lb.querySelector('.rvw-lb__total');
+  var thumbs   = lb.querySelector('.rvw-lb__thumbs');
+  var gallery  = lb.querySelector('.rvw-lb__gallery');
+  var galLabel = lb.querySelector('.rvw-lb__gallery-label');
+  var authorEl = lb.querySelector('.rvw-lb__author');
+  var dateEl   = lb.querySelector('.rvw-lb__date');
+  var badgeEl  = lb.querySelector('.rvw-lb__badge');
+  var starsEl  = lb.querySelector('.rvw-lb__stars');
+  var titleEl  = lb.querySelector('.rvw-lb__title');
+  var textEl   = lb.querySelector('.rvw-lb__text');
+
   var group = [], idx = 0, lastFocus = null;
+
+  /* Pull the review card's context so the panel mirrors the on-page review. */
+  function fillPanel(review) {
+    var author = 'Gast', date = '', title = '', text = '', starsHTML = '', verified = false;
+    if (review) {
+      var a = review.querySelector('.rvw-author'); if (a) author = a.textContent.trim();
+      var t = review.querySelector('.rvw-review__foot time'); if (t) date = t.textContent.trim();
+      var h = review.querySelector('.rvw-review__title'); if (h) title = h.textContent.trim();
+      var p = review.querySelector('.rvw-review__text'); if (p) text = p.textContent.trim();
+      var s = review.querySelector('.rvw-stars'); if (s) starsHTML = s.innerHTML;
+      verified = !!review.querySelector('.rvw-verified');
+      var lbl = s && s.getAttribute('aria-label');   /* "5 von 5 Sternen" */
+      if (lbl && starsEl) starsEl.setAttribute('aria-label', lbl);
+    }
+    authorEl.textContent = author;
+    dateEl.textContent = date;
+    titleEl.textContent = title;
+    titleEl.style.display = title ? '' : 'none';
+    textEl.textContent = text;
+    starsEl.innerHTML = starsHTML;
+    starsEl.style.display = starsHTML ? '' : 'none';
+    badgeEl.style.display = verified ? '' : 'none';
+  }
+
+  function buildThumbs() {
+    thumbs.innerHTML = '';
+    var multi = group.length > 1;
+    gallery.style.display = multi ? '' : 'none';
+    if (galLabel) galLabel.textContent = 'Alle Fotos (' + group.length + ')';
+    if (!multi) return;
+    group.forEach(function (shot, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'rvw-lb__thumb';
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-label', 'Foto ' + (i + 1));
+      var g = document.createElement('img');
+      g.src = shot.getAttribute('data-full');
+      g.alt = '';
+      b.appendChild(g);
+      b.addEventListener('click', function () { show(i); });
+      thumbs.appendChild(b);
+    });
+  }
 
   function show(i) {
     idx = (i + group.length) % group.length;
-    img.src = group[idx].getAttribute('data-full');
-    img.alt = (group[idx].querySelector('img') || {}).alt || 'Kundenfoto zur Bewertung';
+    var shot = group[idx];
+    img.src = shot.getAttribute('data-full');
+    img.alt = (shot.querySelector('img') || {}).alt || 'Kundenfoto zur Bewertung';
     var multi = group.length > 1;
+    curEl.textContent = idx + 1;
+    lb.querySelector('.rvw-lb__counter').style.display = multi ? '' : 'none';
     navs.forEach(function (b) { b.style.display = multi ? '' : 'none'; });
+    [].slice.call(thumbs.children).forEach(function (b, k) {
+      b.setAttribute('aria-selected', k === idx ? 'true' : 'false');
+    });
   }
   function open(shot) {
     var media = shot.closest('.rvw-review__media');
     group = media ? [].slice.call(media.querySelectorAll('.rvw-shot')) : [shot];
     lastFocus = shot;
+    fillPanel(shot.closest('.rvw-review'));
+    totalEl.textContent = group.length;
+    buildThumbs();
     show(group.indexOf(shot));
     lb.classList.add('is-open');
     document.body.style.overflow = 'hidden';
+    if (textEl) textEl.scrollTop = 0;
     closeBtn.focus();
   }
   function close() {
@@ -1456,8 +1547,8 @@
 
   shots.forEach(function (s) { s.addEventListener('click', function () { open(s); }); });
   lb.addEventListener('click', function (e) {
-    if (e.target === lb || e.target === closeBtn) { close(); return; }
-    var nav = e.target.closest('.rvw-lightbox__nav');
+    if (e.target.closest('[data-close]')) { close(); return; }
+    var nav = e.target.closest('.rvw-lb__nav');
     if (nav) show(idx + (nav.getAttribute('data-dir') === 'next' ? 1 : -1));
   });
   document.addEventListener('keydown', function (e) {
@@ -1622,7 +1713,7 @@
 
   shots.forEach(function (s) { s.addEventListener('click', function () { open(s); }); });
   lb.addEventListener('click', function (e) {
-    if (e.target === lb || e.target === closeBtn) { close(); return; }
+    if (e.target === lb || e.target.closest('.tdiag-lightbox__close')) { close(); return; }
     var nav = e.target.closest('.tdiag-lightbox__nav');
     if (nav) show(idx + (nav.getAttribute('data-dir') === 'next' ? 1 : -1));
   });
