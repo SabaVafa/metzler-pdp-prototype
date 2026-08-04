@@ -18,7 +18,7 @@
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=35" />
 <!-- Version B — inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=551" />
+<link rel="stylesheet" href="pdp-b.css?v=552" />
 </head>
 <body class="plp">
 <a class="skip-link" href="#pdpMain">Zum Inhalt springen</a>
@@ -1751,6 +1751,7 @@
 <!-- Eine Frage zum Produkt stellen — form modal opened by the "Zum Kundensupport" CTA (spec ported from the VDM10 working page) -->
 <div class="qf-overlay" id="questionModal" hidden>
   <div class="qf-dialog" role="dialog" aria-modal="true" aria-labelledby="qfHeadTitle">
+    <div class="qf-grip" aria-hidden="true"></div>
     <div class="qf-head">
       <span class="qf-head-t" id="qfHeadTitle">Eine Frage zum Produkt stellen</span>
       <button class="qf-close" id="qfClose" type="button" aria-label="Schließen"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
@@ -1760,27 +1761,27 @@
         <form class="qf-form" id="questionForm" novalidate>
           <div class="qf-field">
             <div class="qf-wrap qf-wrap--area" id="qfFrageWrap">
-              <textarea id="qfFrage" class="qf-control" placeholder=" " rows="5" required></textarea>
+              <textarea id="qfFrage" class="qf-control" name="frage" placeholder=" " rows="5" required aria-required="true"></textarea>
               <label for="qfFrage">Ihre Frage <span class="qf-req">*</span></label>
             </div>
           </div>
           <div class="qf-row">
             <div class="qf-field">
               <div class="qf-wrap" id="qfVornameWrap">
-                <input type="text" id="qfVorname" class="qf-control" placeholder=" " required>
+                <input type="text" id="qfVorname" class="qf-control" name="vorname" autocomplete="given-name" autocapitalize="words" enterkeyhint="next" placeholder=" " required aria-required="true">
                 <label for="qfVorname">Vorname <span class="qf-req">*</span></label>
               </div>
             </div>
             <div class="qf-field">
               <div class="qf-wrap" id="qfNachnameWrap">
-                <input type="text" id="qfNachname" class="qf-control" placeholder=" " required>
+                <input type="text" id="qfNachname" class="qf-control" name="nachname" autocomplete="family-name" autocapitalize="words" enterkeyhint="next" placeholder=" " required aria-required="true">
                 <label for="qfNachname">Nachname <span class="qf-req">*</span></label>
               </div>
             </div>
           </div>
           <div class="qf-field">
             <div class="qf-wrap" id="qfMailWrap">
-              <input type="email" id="qfMail" class="qf-control" placeholder=" " required>
+              <input type="email" id="qfMail" class="qf-control" name="email" inputmode="email" autocomplete="email" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" placeholder=" " required aria-required="true">
               <label for="qfMail">E-Mail <span class="qf-req">*</span></label>
             </div>
           </div>
@@ -1804,6 +1805,6 @@
 </div>
 
 <script src="chrome.js?v=2"></script>
-<script src="pdp-b.js?v=185"></script>
+<script src="pdp-b.js?v=186"></script>
 </body>
 </html>

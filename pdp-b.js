@@ -2090,11 +2090,15 @@
   if (vv) { vv.addEventListener('resize', syncViewport); vv.addEventListener('scroll', syncViewport); }
   mqSheet.addEventListener('change', function () { if (modal.hidden) return; mqSheet.matches ? syncViewport() : clearViewport(); });
 
-  function setError(f, on) {
+  function setError(f, on, text) {
     f.wrap.classList.toggle('qf--error', on);
+    f.input.setAttribute('aria-invalid', on ? 'true' : 'false');
     var msg = f.wrap.querySelector('.qf-error-msg');
-    if (on && !msg) { msg = document.createElement('span'); msg.className = 'qf-error-msg'; msg.textContent = 'Bitte ausfüllen'; f.wrap.appendChild(msg); }
-    else if (!on && msg) { msg.remove(); }
+    if (on) {
+      if (!msg) { msg = document.createElement('span'); msg.className = 'qf-error-msg'; msg.id = f.input.id + '-err'; f.wrap.appendChild(msg); }
+      msg.textContent = text || 'Bitte ausfüllen';
+      f.input.setAttribute('aria-describedby', msg.id);
+    } else if (msg) { msg.remove(); f.input.removeAttribute('aria-describedby'); }
   }
   reqFields.forEach(function (f) { f.input.addEventListener('input', function () { if (f.input.value.trim()) setError(f, false); }); });
 
@@ -2110,7 +2114,10 @@
     lockScroll();
     modal.hidden = false;
     syncViewport();
-    var first = reqFields[0]; if (first) window.setTimeout(function () { first.input.focus(); }, 40);
+    /* Focus the first field on desktop for a quick start; on the mobile sheet, don't —
+       auto-popping the keyboard the instant the sheet slides up feels aggressive. */
+    var first = reqFields[0];
+    if (first && !mqSheet.matches) window.setTimeout(function () { first.input.focus(); }, 40);
   }
   function close() {
     modal.hidden = true;
@@ -2130,11 +2137,15 @@
 
   if (form) form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var ok = true;
-    reqFields.forEach(function (f) { var empty = !f.input.value.trim(); setError(f, empty); if (empty) ok = false; });
+    var firstBad = null;
+    reqFields.forEach(function (f) { var empty = !f.input.value.trim(); setError(f, empty); if (empty && !firstBad) firstBad = f; });
+    var mailF = reqFields[reqFields.length - 1];
     var mail = document.getElementById('qfMail');
-    if (mail && mail.value && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail.value)) { setError(reqFields[reqFields.length - 1], true); ok = false; }
-    if (!ok) return;
+    if (mail && mail.value.trim() && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail.value)) {
+      setError(mailF, true, 'Bitte geben Sie eine gültige E-Mail-Adresse ein.');
+      if (!firstBad) firstBad = mailF;
+    }
+    if (firstBad) { firstBad.input.focus(); return; }
     if (formView) formView.hidden = true;
     if (success) success.hidden = false;
   });
@@ -2152,4 +2163,54 @@
     if (e.shiftKey && active === first) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && active === last) { e.preventDefault(); first.focus(); }
   }, true);
+
+  /* Enter advances to the next field on the single-line name inputs (rather than
+     submitting the half-filled form); Enter on the last field still submits. */
+  ['qfVorname', 'qfNachname'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter') return;
+      e.preventDefault();
+      var next = document.getElementById(id === 'qfVorname' ? 'qfNachname' : 'qfMail');
+      if (next) next.focus();
+    });
+  });
+
+  /* Swipe the sheet down to dismiss (mobile only). Drag starts on the grip or header,
+     so it never interferes with scrolling or typing in the body. */
+  (function () {
+    var handles = [modal.querySelector('.qf-grip'), modal.querySelector('.qf-head')].filter(Boolean);
+    if (!dialog || !handles.length) return;
+    var startY = 0, dy = 0, dragging = false;
+    function pt(e) { return e.touches && e.touches[0] ? e.touches[0] : e; }
+    function start(e) {
+      if (!mqSheet.matches || modal.hidden || e.target.closest('.qf-close')) return;   /* leave the ✕ a plain tap */
+      startY = pt(e).clientY; dy = 0; dragging = true;
+      dialog.classList.add('qf-dragging');
+    }
+    function move(e) {
+      if (!dragging) return;
+      dy = Math.max(0, pt(e).clientY - startY);
+      dialog.style.transform = 'translateY(' + dy + 'px)';
+    }
+    function end() {
+      if (!dragging) return;
+      dragging = false;
+      dialog.classList.remove('qf-dragging');
+      dialog.classList.add('qf-settling');
+      var threshold = Math.min(140, dialog.getBoundingClientRect().height * 0.28);
+      if (dy > threshold) {
+        dialog.style.transform = 'translateY(100%)';
+        window.setTimeout(function () { dialog.classList.remove('qf-settling'); dialog.style.transform = ''; close(); }, 220);
+      } else {
+        dialog.style.transform = '';
+        window.setTimeout(function () { dialog.classList.remove('qf-settling'); }, 260);
+      }
+    }
+    handles.forEach(function (el) { el.addEventListener('touchstart', start, { passive: true }); });
+    document.addEventListener('touchmove', move, { passive: true });
+    document.addEventListener('touchend', end);
+    document.addEventListener('touchcancel', end);
+  })();
 })();
