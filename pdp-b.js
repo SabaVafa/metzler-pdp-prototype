@@ -2042,3 +2042,85 @@
     else if (!e.shiftKey && active === last) { e.preventDefault(); first.focus(); }
   }, true);
 })();
+
+/* ============================================================
+   "Eine Frage zum Produkt stellen" — form modal opened by the
+   "Zum Kundensupport" CTA in the FAQ block. Required-field
+   validation + success state; behaviour ported from the VDM10
+   working page, namespaced to this module.
+   ============================================================ */
+(function () {
+  'use strict';
+  var modal = document.getElementById('questionModal');
+  if (!modal) return;
+  var dialog   = modal.querySelector('.qf-dialog');
+  var form     = document.getElementById('questionForm');
+  var formView = document.getElementById('qfFormView');
+  var success  = document.getElementById('qfSuccess');
+  var closeBtn = document.getElementById('qfClose');
+  var reqFields = [['qfFrage', 'qfFrageWrap'], ['qfVorname', 'qfVornameWrap'], ['qfNachname', 'qfNachnameWrap'], ['qfMail', 'qfMailWrap']]
+    .map(function (p) { return { input: document.getElementById(p[0]), wrap: document.getElementById(p[1]) }; })
+    .filter(function (f) { return f.input && f.wrap; });
+  var lastFocus = null;
+
+  function setError(f, on) {
+    f.wrap.classList.toggle('qf--error', on);
+    var msg = f.wrap.querySelector('.qf-error-msg');
+    if (on && !msg) { msg = document.createElement('span'); msg.className = 'qf-error-msg'; msg.textContent = 'Bitte ausfüllen'; f.wrap.appendChild(msg); }
+    else if (!on && msg) { msg.remove(); }
+  }
+  reqFields.forEach(function (f) { f.input.addEventListener('input', function () { if (f.input.value.trim()) setError(f, false); }); });
+
+  function resetForm() {
+    if (formView) formView.hidden = false;
+    if (success) success.hidden = true;
+    if (form) form.reset();
+    reqFields.forEach(function (f) { setError(f, false); });
+  }
+  function open() {
+    resetForm();
+    lastFocus = document.activeElement;
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    var first = reqFields[0]; if (first) window.setTimeout(function () { first.input.focus(); }, 40);
+  }
+  function close() {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-qf-open]')) { e.preventDefault(); open(); }
+  });
+  if (closeBtn) closeBtn.addEventListener('click', close);
+  modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) close(); });
+  /* placeholder Datenschutz link shouldn't jump the page */
+  modal.querySelectorAll('.qf-link').forEach(function (a) { a.addEventListener('click', function (e) { if (a.getAttribute('href') === '#') e.preventDefault(); }); });
+
+  if (form) form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var ok = true;
+    reqFields.forEach(function (f) { var empty = !f.input.value.trim(); setError(f, empty); if (empty) ok = false; });
+    var mail = document.getElementById('qfMail');
+    if (mail && mail.value && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail.value)) { setError(reqFields[reqFields.length - 1], true); ok = false; }
+    if (!ok) return;
+    if (formView) formView.hidden = true;
+    if (success) success.hidden = false;
+  });
+  var sClose = document.getElementById('qfSuccessClose');
+  if (sClose) sClose.addEventListener('click', function () { close(); window.setTimeout(resetForm, 250); });
+
+  /* focus trap while open */
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab' || modal.hidden || !dialog) return;
+    var f = [].slice.call(dialog.querySelectorAll('a[href], button:not([disabled]), textarea, input, [tabindex]:not([tabindex="-1"])'))
+      .filter(function (el) { return el.offsetParent !== null; });
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1], active = document.activeElement;
+    if (!dialog.contains(active)) { e.preventDefault(); first.focus(); return; }
+    if (e.shiftKey && active === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && active === last) { e.preventDefault(); first.focus(); }
+  }, true);
+})();

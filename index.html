@@ -18,7 +18,7 @@
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=35" />
 <!-- Version B — inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=547" />
+<link rel="stylesheet" href="pdp-b.css?v=549" />
 </head>
 <body class="plp">
 <a class="skip-link" href="#pdpMain">Zum Inhalt springen</a>
@@ -1494,7 +1494,7 @@
         <aside class="faq__support">
           <h3>Beratung gewünscht?</h3>
           <p>Unser Fachteam beantwortet Ihre Frage zum Artikel persönlich — zu Anschluss, Montage und Konfiguration. Kostenlos und unverbindlich.</p>
-          <a class="faq__cta" href="#">Zum Kundensupport</a>
+          <a class="faq__cta" href="#" data-qf-open>Zum Kundensupport</a>
           <div class="faq__phone">
             Sprechanlagen-Hotline
             <strong>+49 (0) 7121 / 317 7333</strong>
@@ -1748,7 +1748,62 @@
   <span id="cfgToastMsg">In den Warenkorb gelegt</span>
 </div>
 
+<!-- Eine Frage zum Produkt stellen — form modal opened by the "Zum Kundensupport" CTA (spec ported from the VDM10 working page) -->
+<div class="qf-overlay" id="questionModal" hidden>
+  <div class="qf-dialog" role="dialog" aria-modal="true" aria-labelledby="qfHeadTitle">
+    <div class="qf-head">
+      <span class="qf-head-t" id="qfHeadTitle">Eine Frage zum Produkt stellen</span>
+      <button class="qf-close" id="qfClose" type="button" aria-label="Schließen"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="qf-body">
+      <div id="qfFormView">
+        <form class="qf-form" id="questionForm" novalidate>
+          <div class="qf-field">
+            <div class="qf-wrap qf-wrap--area" id="qfFrageWrap">
+              <textarea id="qfFrage" class="qf-control" placeholder=" " rows="5" required></textarea>
+              <label for="qfFrage">Ihre Frage <span class="qf-req">*</span></label>
+            </div>
+          </div>
+          <div class="qf-row">
+            <div class="qf-field">
+              <div class="qf-wrap" id="qfVornameWrap">
+                <input type="text" id="qfVorname" class="qf-control" placeholder=" " required>
+                <label for="qfVorname">Vorname <span class="qf-req">*</span></label>
+              </div>
+            </div>
+            <div class="qf-field">
+              <div class="qf-wrap" id="qfNachnameWrap">
+                <input type="text" id="qfNachname" class="qf-control" placeholder=" " required>
+                <label for="qfNachname">Nachname <span class="qf-req">*</span></label>
+              </div>
+            </div>
+          </div>
+          <div class="qf-field">
+            <div class="qf-wrap" id="qfMailWrap">
+              <input type="email" id="qfMail" class="qf-control" placeholder=" " required>
+              <label for="qfMail">E-Mail <span class="qf-req">*</span></label>
+            </div>
+          </div>
+          <div class="qf-foot">
+            <p class="qf-note">(<span class="qf-req">*</span> = Pflichtfelder)</p>
+            <p class="qf-note">Bitte beachten Sie unsere <a href="#" class="qf-link">Datenschutzerklärung</a>.</p>
+            <button type="submit" class="qf-submit">Frage abschicken</button>
+          </div>
+        </form>
+      </div>
+      <div class="qf-success" id="qfSuccess" hidden>
+        <div class="qf-success-art" aria-hidden="true">
+          <svg viewBox="0 0 140 140"><circle cx="70" cy="70" r="46" fill="var(--color-teal-50)"/><path d="M50 71l13 13 27-29" fill="none" stroke="var(--color-teal)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3 class="qf-success-h">Frage gesendet – danke!</h3>
+        <p class="qf-success-p">Wir haben Ihre Frage erhalten und melden uns werktags innerhalb von zwei Stunden per E-Mail bei Ihnen.</p>
+        <button type="button" class="qf-submit" id="qfSuccessClose">Schließen</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="chrome.js?v=2"></script>
-<script src="pdp-b.js?v=183"></script>
+<script src="pdp-b.js?v=184"></script>
 </body>
 </html>
