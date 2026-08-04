@@ -1021,7 +1021,7 @@
       var sec = document.getElementById(id);
       if (sec) { map[id] = l; secs.push(sec); }
     });
-    if (!secs.length || !('IntersectionObserver' in window)) return;
+    if (!secs.length) return;
     var scroller = nav.querySelector('.psx-nav__tabs') || nav.querySelector('.psx-nav__inner') || nav;
     function setActive(l) {
       links.forEach(function (x) { x.classList.toggle('is-active', x === l); });
@@ -1036,43 +1036,64 @@
       var target = Math.max(0, Math.min(max, tabLeft - (scroller.clientWidth - lr.width) / 2));
       if (Math.abs(target - scroller.scrollLeft) > 4) scroller.scrollTo({ left: target, behavior: 'smooth' });
     }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting && map[e.target.id]) setActive(map[e.target.id]); });
-    }, { rootMargin: '-118px 0px -66% 0px', threshold: 0 });
-    secs.forEach(function (s) { io.observe(s); });
-
-    /* ── Precise tab navigation ─────────────────────────────────────────
-       Native anchor scroll (href="#id") + a static scroll-margin-top landed
-       imprecisely: the sticky obstruction (site header + this nav) is a
-       VARIABLE height and the header animates (transition:all / morphs to
-       fixed on tablet), so the browser's one-shot target was already stale
-       by the time the smooth scroll arrived — the section tucked under the
-       nav or overshot. We drive the scroll ourselves with a rAF tween that
-       re-reads the live header+nav height EVERY frame, so it converges on the
-       exact spot no matter how the header morphs mid-flight, and snaps clean
-       on the last frame. */
+    /* Shared geometry: the sticky obstruction above a section = site header + this nav. */
     var root = document.documentElement;
     var siteHeader = document.querySelector('.header');
     var reduceMoNav = window.matchMedia('(prefers-reduced-motion: reduce)');
     var NAV_GAP = 10;                       /* breathing room under the pinned nav */
     var animId = null, savedSB = '';
     function pinnedObstruction() {
-      /* height of everything pinned above a section once scrolled: site header + this nav */
       var hh = siteHeader ? siteHeader.getBoundingClientRect().height : 0;
       return hh + nav.getBoundingClientRect().height;
     }
     function targetFor(sec) {
       return Math.max(0, Math.round(window.pageYOffset + sec.getBoundingClientRect().top - pinnedObstruction() - NAV_GAP));
     }
+
+    /* ── Scroll-spy: highlight the section currently under the nav ────────
+       Deterministic + direction-independent. The old IntersectionObserver
+       highlighted whichever intersecting section landed LAST in the entries
+       array, so scrolling UP lit the lower ("next") tab instead of the one at
+       the top. Instead we pick the LAST section whose top has crossed above
+       the pinned nav (the activation line), recomputed from live positions on
+       every scroll frame. */
+    secs.sort(function (a, b) { return a.getBoundingClientRect().top - b.getBoundingClientRect().top; });
+    var navigating = false, lastActiveLink = null;
+    function syncActive() {
+      if (navigating || !secs.length) return;
+      var line = pinnedObstruction() + 4, chosen = secs[0];
+      for (var i = 0; i < secs.length; i++) {
+        if (secs[i].getBoundingClientRect().top <= line) chosen = secs[i]; else break;
+      }
+      var l = map[chosen.id];
+      if (l && l !== lastActiveLink) { lastActiveLink = l; setActive(l); }
+    }
+    var spyTick = false;
+    function onSpyScroll() { if (!spyTick) { spyTick = true; window.requestAnimationFrame(function () { spyTick = false; syncActive(); }); } }
+    window.addEventListener('scroll', onSpyScroll, { passive: true });
+    window.addEventListener('resize', onSpyScroll, { passive: true });
+    window.addEventListener('load', syncActive);
+    syncActive();
+
+    /* ── Precise tab navigation ─────────────────────────────────────────
+       Native anchor scroll (href="#id") + a static scroll-margin-top landed
+       imprecisely: the obstruction is VARIABLE height and the header morphs,
+       so the browser's one-shot target was stale on arrival. We drive the
+       scroll with a rAF tween that re-reads the live header+nav height every
+       frame, converging exactly however the header morphs mid-flight. While a
+       tween runs, `navigating` freezes the scroll-spy so the highlight doesn't
+       sweep through every tab we fly past. */
     function stopAnim() {
       if (animId) { window.cancelAnimationFrame(animId); animId = null; root.style.scrollBehavior = savedSB; }
+      navigating = false;                  /* a real gesture / cancel resumes the scroll-spy */
     }
     function goTo(sec, link) {
-      if (link) setActive(link);           /* highlight immediately — feels responsive */
       stopAnim();
+      navigating = true;
+      if (link) { lastActiveLink = link; setActive(link); }   /* highlight immediately — feels responsive */
       savedSB = root.style.scrollBehavior;
       root.style.scrollBehavior = 'auto';  /* neutralise CSS smooth — we drive it frame-by-frame */
-      if (reduceMoNav.matches) { window.scrollTo(0, targetFor(sec)); root.style.scrollBehavior = savedSB; return; }
+      if (reduceMoNav.matches) { window.scrollTo(0, targetFor(sec)); root.style.scrollBehavior = savedSB; navigating = false; return; }
       var start = window.pageYOffset, t0 = null, DUR = 460;
       animId = window.requestAnimationFrame(function step(ts) {
         if (t0 === null) t0 = ts;
@@ -1080,7 +1101,7 @@
         var e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;   /* easeInOutQuad */
         window.scrollTo(0, Math.round(start + (targetFor(sec) - start) * e));   /* re-read target each frame */
         if (t < 1) { animId = window.requestAnimationFrame(step); }
-        else { window.scrollTo(0, targetFor(sec)); animId = null; root.style.scrollBehavior = savedSB; }
+        else { window.scrollTo(0, targetFor(sec)); animId = null; root.style.scrollBehavior = savedSB; navigating = false; }
       });
     }
     /* a real user gesture cancels our tween instead of the two fighting each other */
