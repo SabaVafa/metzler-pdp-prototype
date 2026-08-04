@@ -105,7 +105,7 @@
 /* ── Identity ── */
 .pdp-b .pdp-eyebrow { font-size: 0.75rem; letter-spacing: 0.22em; }
 .pdp-b .pdp-title {
-  font-size: 1.6875rem; line-height: 1.35; letter-spacing: 0; font-weight: 700;   /* 27px */
+  font-size: 1.5rem; line-height: 1.35; letter-spacing: 0; font-weight: 700;   /* 24px (DS H2) */
   max-width: none; margin: 0; text-wrap: wrap;   /* greedy fill (not "pretty", which shortens lines) */
 }
 .pdp-b .pdp-title .pdp-title__sep { color: var(--ink-60); font-weight: 300; margin: 0 0.3em; }

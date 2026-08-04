@@ -154,6 +154,17 @@
     var sp = $('bStickyPrice'); if (sp) sp.innerHTML = (state.finish ? 'konfiguriert · ' : 'ab ') + '<b>' + t + '</b>';
 
     setTxt('pdpFinishName', finishText() || 'Bitte Farbe wählen');
+    /* Product title carries the colour only once a complete colour is chosen
+       (Wunschfarbe still needs a RAL tone) — not before, and not on hover. */
+    var titleColor = $('pdpTitleColor');
+    if (titleColor) {
+      if (state.finish && !needsRal()) {
+        titleColor.innerHTML = '&nbsp;<span class="pdp-title__sep">|</span> ';
+        titleColor.appendChild(document.createTextNode(finishText()));
+      } else {
+        titleColor.textContent = '';
+      }
+    }
     setTxt('bArticleInline', state.article || '—');
     var sf = $('pdpStickyFinish'); if (sf) sf.textContent = finishText() || 'Farbe wählen';
 
