@@ -2552,7 +2552,7 @@ body.is-scrolled #quickbar {
 
 /* Comfortable tap targets for standalone controls on mobile (WCAG 2.5.5/2.5.8) */
 @media (max-width: 47.9375rem) {
-  .pdp-media__toggle button { min-height: 44px; }
+  .pdp-media__toggle button { min-height: 36px; }
   .bx-share { min-height: 44px; }
 }
 
