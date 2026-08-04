@@ -2061,7 +2061,34 @@
   var reqFields = [['qfFrage', 'qfFrageWrap'], ['qfVorname', 'qfVornameWrap'], ['qfNachname', 'qfNachnameWrap'], ['qfMail', 'qfMailWrap']]
     .map(function (p) { return { input: document.getElementById(p[0]), wrap: document.getElementById(p[1]) }; })
     .filter(function (f) { return f.input && f.wrap; });
-  var lastFocus = null;
+  var lastFocus = null, scrollLockY = 0;
+  var vv = window.visualViewport;
+  var mqSheet = window.matchMedia('(max-width: 47.9375rem)');
+
+  /* Scroll lock — position:fixed (not just overflow:hidden, which iOS ignores) so the
+     page behind the modal can't scroll; the scroll position is restored on close. */
+  function lockScroll() {
+    scrollLockY = window.pageYOffset;
+    var b = document.body;
+    b.style.position = 'fixed'; b.style.top = -scrollLockY + 'px'; b.style.left = '0'; b.style.right = '0'; b.style.width = '100%'; b.style.overflow = 'hidden';
+  }
+  function unlockScroll() {
+    var b = document.body;
+    b.style.position = ''; b.style.top = ''; b.style.left = ''; b.style.right = ''; b.style.width = ''; b.style.overflow = '';
+    window.scrollTo(0, scrollLockY);
+  }
+
+  /* Keep the open sheet inside the VISUAL viewport so the on-screen keyboard never
+     covers the submit button (mobile sheet only; no-op on the centred desktop dialog). */
+  function syncViewport() {
+    if (modal.hidden || !vv || !mqSheet.matches) return;
+    modal.style.top = vv.offsetTop + 'px';
+    modal.style.height = vv.height + 'px';
+    modal.style.bottom = 'auto';
+  }
+  function clearViewport() { modal.style.top = ''; modal.style.height = ''; modal.style.bottom = ''; }
+  if (vv) { vv.addEventListener('resize', syncViewport); vv.addEventListener('scroll', syncViewport); }
+  mqSheet.addEventListener('change', function () { if (modal.hidden) return; mqSheet.matches ? syncViewport() : clearViewport(); });
 
   function setError(f, on) {
     f.wrap.classList.toggle('qf--error', on);
@@ -2080,13 +2107,15 @@
   function open() {
     resetForm();
     lastFocus = document.activeElement;
+    lockScroll();
     modal.hidden = false;
-    document.body.style.overflow = 'hidden';
+    syncViewport();
     var first = reqFields[0]; if (first) window.setTimeout(function () { first.input.focus(); }, 40);
   }
   function close() {
     modal.hidden = true;
-    document.body.style.overflow = '';
+    clearViewport();
+    unlockScroll();
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
 

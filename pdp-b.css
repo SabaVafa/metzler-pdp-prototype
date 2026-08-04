@@ -2471,6 +2471,16 @@ body.is-scrolled #quickbar {
 .qf-success-art svg { width: 100%; height: 100%; display: block; }
 .qf-success-h { margin: 0 0 0.5rem; font-size: 1.375rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .qf-success-p { margin: 0 0 1.5rem; max-width: 22rem; font-size: 0.9375rem; line-height: 1.55; color: var(--color-graphite-700); }
+/* Mobile: dock to the bottom and slide up as a sheet (rounded top corners only) */
+@media (max-width: 47.9375rem) {
+  .qf-overlay { align-items: flex-end; padding: 0; }
+  /* max-height is a % of the overlay, which JS sizes to the visual viewport while
+     open — so when the keyboard opens the sheet shrinks to sit above it, keeping
+     the submit button reachable instead of hidden behind the keyboard. */
+  .qf-dialog { max-width: none; width: 100%; max-height: 92%;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0; animation: qfSheet .3s cubic-bezier(.4,0,.2,1); }
+}
+@keyframes qfSheet { from { transform: translateY(100%); } to { transform: none; } }
 @media (prefers-reduced-motion: reduce) { .qf-dialog, .qf-success { animation: none; } }
 
 .faq__list { display: flex; flex-direction: column; gap: 0; margin-top: 1.25rem; }
