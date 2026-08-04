@@ -1050,22 +1050,38 @@
       return Math.max(0, Math.round(window.pageYOffset + sec.getBoundingClientRect().top - pinnedObstruction() - NAV_GAP));
     }
 
-    /* ── Scroll-spy: highlight the section currently under the nav ────────
+    /* ── Scroll-spy: highlight the section MOST visible in the viewport ───
        Deterministic + direction-independent. The old IntersectionObserver
        highlighted whichever intersecting section landed LAST in the entries
-       array, so scrolling UP lit the lower ("next") tab instead of the one at
-       the top. Instead we pick the LAST section whose top has crossed above
-       the pinned nav (the activation line), recomputed from live positions on
-       every scroll frame. */
+       array, so scrolling up lit the lower ("next") tab. Instead we measure how
+       much of each section is actually on screen (below the pinned nav) and
+       light the one showing the most — recomputed from live positions every
+       scroll frame, so up and down agree and it always reflects what you see. */
     secs.sort(function (a, b) { return a.getBoundingClientRect().top - b.getBoundingClientRect().top; });
-    var navigating = false, lastActiveLink = null;
+    var navigating = false, lastActiveLink = null, pinnedLink = null, pinAt = 0;
+    /* Visible height of a section within the content area (the viewport BELOW the
+       pinned nav — content hidden behind the nav doesn't count as visible). */
+    function visibleHeight(el) {
+      var r = el.getBoundingClientRect();
+      return Math.min(r.bottom, window.innerHeight) - Math.max(r.top, pinnedObstruction());
+    }
+    /* Active section = the one showing the MOST of its content in the viewport. */
+    function activeSection() {
+      var best = secs[0], bestVis = -Infinity;
+      for (var i = 0; i < secs.length; i++) {
+        var vis = visibleHeight(secs[i]);
+        if (vis > bestVis) { bestVis = vis; best = secs[i]; }
+      }
+      return best;
+    }
     function syncActive() {
       if (navigating || !secs.length) return;
-      var line = pinnedObstruction() + 4, chosen = secs[0];
-      for (var i = 0; i < secs.length; i++) {
-        if (secs[i].getBoundingClientRect().top <= line) chosen = secs[i]; else break;
-      }
-      var l = map[chosen.id];
+      var l;
+      /* Right after a tab tap we PIN that tab lit until the user actually scrolls
+         away — otherwise a short section could hand "most visible" straight to a
+         taller neighbour below it and the tapped tab would flip immediately. */
+      if (pinnedLink && Math.abs(window.pageYOffset - pinAt) <= 2) { l = pinnedLink; }
+      else { pinnedLink = null; l = map[activeSection().id]; }
       if (l && l !== lastActiveLink) { lastActiveLink = l; setActive(l); }
     }
     var spyTick = false;
@@ -1086,6 +1102,13 @@
     function stopAnim() {
       if (animId) { window.cancelAnimationFrame(animId); animId = null; root.style.scrollBehavior = savedSB; }
       navigating = false;                  /* a real gesture / cancel resumes the scroll-spy */
+      pinnedLink = null;                   /* and releases any tab pinned by the last tap */
+    }
+    function land(sec, link) {             /* settle exactly on target + pin the tapped tab */
+      window.scrollTo(0, targetFor(sec));
+      root.style.scrollBehavior = savedSB;
+      navigating = false;
+      pinnedLink = link || null; pinAt = window.pageYOffset;
     }
     function goTo(sec, link) {
       stopAnim();
@@ -1093,7 +1116,7 @@
       if (link) { lastActiveLink = link; setActive(link); }   /* highlight immediately — feels responsive */
       savedSB = root.style.scrollBehavior;
       root.style.scrollBehavior = 'auto';  /* neutralise CSS smooth — we drive it frame-by-frame */
-      if (reduceMoNav.matches) { window.scrollTo(0, targetFor(sec)); root.style.scrollBehavior = savedSB; navigating = false; return; }
+      if (reduceMoNav.matches) { land(sec, link); return; }
       var start = window.pageYOffset, t0 = null, DUR = 460;
       animId = window.requestAnimationFrame(function step(ts) {
         if (t0 === null) t0 = ts;
@@ -1101,7 +1124,7 @@
         var e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;   /* easeInOutQuad */
         window.scrollTo(0, Math.round(start + (targetFor(sec) - start) * e));   /* re-read target each frame */
         if (t < 1) { animId = window.requestAnimationFrame(step); }
-        else { window.scrollTo(0, targetFor(sec)); animId = null; root.style.scrollBehavior = savedSB; navigating = false; }
+        else { animId = null; land(sec, link); }
       });
     }
     /* a real user gesture cancels our tween instead of the two fighting each other */
