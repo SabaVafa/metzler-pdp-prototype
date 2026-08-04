@@ -1055,6 +1055,40 @@
     window.addEventListener('resize', updateNavScroll, { passive: true });
     window.addEventListener('load', updateNavScroll);
     updateNavScroll();
+
+    /* First-glance affordance: the moment the nav comes into view on a touch
+       device, nudge the strip (0 → peek → 0) so the motion + revealed next tab
+       make it obvious it's swipeable — before the user touches anything. Runs
+       once; skipped on desktop, when it fits, or under reduced motion. */
+    var mqTouch = window.matchMedia('(max-width: 767px)');
+    var reduceMo = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var hinted = false;
+    function tween(to, dur, done) {
+      var from = scroller.scrollLeft, t0 = null;
+      function step(ts) {
+        if (t0 === null) t0 = ts;
+        var t = Math.min(1, (ts - t0) / dur);
+        var e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;   /* easeInOutQuad */
+        scroller.scrollLeft = from + (to - from) * e;
+        if (t < 1) window.requestAnimationFrame(step); else if (done) done();
+      }
+      window.requestAnimationFrame(step);
+    }
+    function scrollHint() {
+      if (hinted || !mqTouch.matches) return;
+      var max = scroller.scrollWidth - scroller.clientWidth;
+      if (max <= 8 || scroller.scrollLeft > 4) return;   /* nothing to reveal / already moved */
+      hinted = true;
+      if (reduceMo.matches) return;                      /* fade already communicates */
+      var peek = Math.min(52, max);
+      tween(peek, 300, function () { window.setTimeout(function () { tween(0, 480); }, 260); });
+    }
+    if ('IntersectionObserver' in window) {
+      var hintIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { scrollHint(); hintIO.disconnect(); } });
+      }, { threshold: 0.9 });
+      hintIO.observe(nav);
+    } else { window.addEventListener('load', scrollHint); }
   })();
 
   /* ── Bewertungen: happy-review carousel arrows (scroll by ~card width) ── */

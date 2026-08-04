@@ -1675,7 +1675,13 @@ body.is-scrolled #quickbar {
    reads as horizontally scrollable. JS sets data-scroll (start|middle|end|none);
    the default (start) fades only the right edge. */
 @media (max-width: 47.9375rem) {
+  /* Bleed the strip to the right screen edge so a tab visibly runs off-screen
+     (the "content continues" cue), instead of stopping inside the container
+     padding where it just looks like the nav ends. Inner padding keeps the
+     last tab off the very edge once you've scrolled to the end. */
   .psx-nav__tabs { --nav-fade: 1.75rem;
+    margin-right: calc(-1 * clamp(var(--sp-6), 4vw, 56px));
+    padding-right: clamp(var(--sp-6), 4vw, 56px);
     -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - var(--nav-fade)), transparent 100%);
             mask-image: linear-gradient(90deg, #000 calc(100% - var(--nav-fade)), transparent 100%); }
   .psx-nav__tabs[data-scroll="middle"] {
