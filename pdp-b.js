@@ -1040,6 +1040,21 @@
       entries.forEach(function (e) { if (e.isIntersecting && map[e.target.id]) setActive(map[e.target.id]); });
     }, { rootMargin: '-118px 0px -66% 0px', threshold: 0 });
     secs.forEach(function (s) { io.observe(s); });
+
+    /* Signal horizontal scrollability (mobile edge-fade): fade whichever edge still
+       has tabs off-screen. state = none | start | middle | end. */
+    function updateNavScroll() {
+      var max = scroller.scrollWidth - scroller.clientWidth, s = scroller.scrollLeft, state;
+      if (max <= 2) state = 'none';
+      else if (s <= 1) state = 'start';
+      else if (s >= max - 1) state = 'end';
+      else state = 'middle';
+      scroller.setAttribute('data-scroll', state);
+    }
+    scroller.addEventListener('scroll', updateNavScroll, { passive: true });
+    window.addEventListener('resize', updateNavScroll, { passive: true });
+    window.addEventListener('load', updateNavScroll);
+    updateNavScroll();
   })();
 
   /* ── Bewertungen: happy-review carousel arrows (scroll by ~card width) ── */
