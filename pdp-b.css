@@ -108,6 +108,7 @@
   font-size: 1.5rem; line-height: 1.35; letter-spacing: 0; font-weight: 700;   /* 24px (DS H2) */
   max-width: none; margin: 0; text-wrap: wrap;   /* greedy fill (not "pretty", which shortens lines) */
 }
+@media (min-width: 90rem) { .pdp-b .pdp-title { font-size: 1.6875rem; } }   /* 27px on big screens (≥1440px) */
 .pdp-b .pdp-title .pdp-title__sep { color: var(--ink-60); font-weight: 300; margin: 0 0.3em; }
 
 /* Credential line — one calm row replaces two loud badges */
