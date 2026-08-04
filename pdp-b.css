@@ -1469,7 +1469,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 
 /* Heading — matches the About-us section header (.eyebrow / .section-title / .section-sub) */
 .rv__head { text-align: center; max-width: 44rem; margin: 0 auto clamp(1.75rem, 3vw, 2.5rem); }
-.rv__eyebrow { margin: 0 0 0.75rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; line-height: 1.4; text-transform: uppercase; color: var(--color-teal); }
+.rv__eyebrow { margin: 0 0 0.75rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; line-height: 1.4; text-transform: uppercase; color: var(--color-graphite-600); }
 .rv__title { margin: 0; font-size: clamp(2rem, 4vw, 2.875rem); font-weight: 700; letter-spacing: -0.01em; line-height: 1.15; color: var(--color-digital-black); }
 .rv__sub { margin: 1rem auto 0; max-width: 56ch; font-size: 1rem; line-height: 1.5; color: var(--color-digital-black); }   /* 16px */
 
@@ -1719,7 +1719,7 @@ body.is-scrolled #quickbar {
 .psx-sec--alt { background: var(--color-paper); }
 .rv { scroll-margin-top: 7.75rem; }   /* reviews section = Bewertungen target */
 
-.psx-eyebrow { margin: 0 0 0.6rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; line-height: 1.4; text-transform: uppercase; color: var(--color-teal); }
+.psx-eyebrow { margin: 0 0 0.6rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; line-height: 1.4; text-transform: uppercase; color: var(--color-graphite-600); }
 .psx-title { margin: 0 0 1rem; font-size: clamp(1.6rem, 3vw, 2.25rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; color: var(--color-digital-black); }
 .psx-lead { margin: 0 0 2rem; max-width: 62ch; font-size: 1.125rem; line-height: 1.6; color: var(--color-graphite-700); }
 
