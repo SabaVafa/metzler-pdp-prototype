@@ -212,7 +212,7 @@
 .pdp-b .pdp-specs__item { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
 .pdp-b .pdp-specs__item:nth-child(2) { align-items: center; text-align: center; }   /* middle spec (Breite × Höhe) centered */
 .pdp-b .pdp-specs__item:last-child { align-items: flex-end; text-align: right; }   /* article no. aligns to the right edge */
-.pdp-b .pdp-specs__label { margin: 0; font-size: 0.875rem; font-weight: 400; letter-spacing: normal;
+.pdp-b .pdp-specs__label { margin: 0; font-size: 0.875rem; font-weight: 500; letter-spacing: normal;
   text-transform: none; color: var(--color-graphite-600); }   /* 14px on desktop; mobile stays 0.8125rem (block below) · match the "Bewertungen" grey */
 .pdp-b .pdp-specs__value { margin: 0; font-size: 1rem; font-weight: 600; color: var(--color-digital-black);
   font-variant-numeric: tabular-nums; }
