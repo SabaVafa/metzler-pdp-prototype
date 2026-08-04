@@ -1,73 +1,59 @@
 # Metzler VDM10 — PDP Redesign Prototype
 
-Front-end prototype for the redesigned **Metzler VDM10 2.0 Video-Türsprechanlage (Colson)** product detail page. Two switchable versions explore different solutions to two friction points found on the live site:
+Front-end prototype for the redesigned **Metzler VDM10 2.0 Video-Türsprechanlage (Colson)** product detail page. It reworks two friction points found on the live site:
 
-1. **CTA confusion** — users can't find *In den Warenkorb*; today it morphs through "Bitte Farbe wählen" → "Jetzt anpassen" → "In den Warenkorb".
-2. **Buried configuration / technical info** — the highly customizable product overwhelms the buy box.
+1. **CTA confusion** — on the live site the buy button morphs through "Bitte Farbe wählen" → "Jetzt anpassen" → "In den Warenkorb". Here the primary CTA stays visible and is *locked* until the required steps are answered.
+2. **Buried configuration / technical info** — the buy box uses an inline, progressive-disclosure configurator instead of an overlay wizard.
 
-Static HTML/CSS/JS — **no build step, no dependencies, no backend.** Interactions (configurator, add-to-cart, price) are faked client-side.
+Static **HTML/CSS/JS — no build step, no dependencies, no backend.** All interactions (configurator, colour/variant selection, price, add-to-cart) are faked client-side.
 
 ---
 
 ## Run it
 
-Any static server from the repo root:
+Any static file server from the repo root, e.g.:
 
 ```bash
 python -m http.server 8125
-# → http://localhost:8125/index-b.html   (Version B, current focus)
-# → http://localhost:8125/index.html      (Version A)
+# → http://localhost:8125/index.html
 ```
 
-Or just open `index.html` / `index-b.html` in a browser. A floating **A / B switcher** (bottom-left) toggles between the two.
-
-The repo is **self-contained** — the used design-system chrome and imagery are vendored in (`Home/`, `Poster/`, `Product Image/`, `assets/swatches/`).
-
----
-
-## The two versions
-
-| | **A — `index.html`** | **B — `index-b.html`** *(focus)* |
-|---|---|---|
-| Configurator | Immersive **overlay** wizard (6 steps, tab-stepper, context-aware preview) | Inline **progressive-disclosure** stepper-accordion in the buy box |
-| Colour | in-flow variant | **variant** — sits outside config, changes the Artikelnummer |
-| Configuration | guided, mandatory | **required** (Gravur · Innenstation · Zubehör), each must be answered |
-| Buy CTA | destination-named, sticky | **always visible**, *locked (Ghost & Guide)* until the required steps are answered; sticky bottom bar whenever the in-flow CTA is off-screen |
-
-Both share the live-faithful chrome (header/nav/footer), ~1380px container, design-system tokens, and photo-tile finish swatches.
+(or `npx serve`, or just open `index.html` in a browser). The repo is **self-contained** — the design-system chrome and all imagery are vendored in.
 
 ---
 
 ## Structure
 
 ```
-index.html / index-b.html   Version A / B pages
-chrome.css / chrome.js       shared header · nav · mega-menu · footer
-pdp.css / pdp.js             shared hero + Version A configurator
-pdp-b.css / pdp-b.js         Version B configurator
-Home/                        vendored design-system CSS, icons, logos, payment + trust badges
-Poster/  Product Image/  assets/swatches/   imagery
-Design SYSTEM/               tokens, section catalog, rules (metzler-tokens.css, FOR-CLAUDE.md, SECTIONS.md)
-metzler-content-briefing.md  copy / content rules
-prototype-playbook.md        prioritized idea bank
-competitor-research.md       DoorBird · Keilbach · Apple · Tesla · Porsche notes
-figma-swatches-and-assets.md swatch spec + asset map
-CHROME-COMPONENTS.md         how the chrome was extracted
+index.html                   the PDP page
+chrome.css / chrome.js        shared header · nav · mega-menu · footer
+pdp.css                       shared hero / layout base
+pdp-b.css / pdp-b.js          PDP sections + inline configurator + modals
+Home/                         vendored design-system CSS, icons, logos, payment + trust badges
+Poster/  Product Image/  Description/  Technik/  Reviews/  ICONS/  assets/   imagery
+Design SYSTEM/                tokens, section catalog, rules (metzler-tokens.css, SECTIONS.md)
+vdm10-configurator-data.md    real configurator data (options, prices, article numbers)
+metzler-content-briefing.md   copy / content facts (DE)
+figma-swatches-and-assets.md  swatch spec + asset map
+CHROME-COMPONENTS.md          how the shared chrome was extracted
 ```
+
+CSS/JS are cache-busted via `?v=N` query strings in `index.html` — bump the number when editing so browsers/Pages pick up changes.
 
 ---
 
 ## Conventions
 
 - **German (DE)** copy throughout; **Sie**-form, premium tone.
-- Design-system tokens only — teal `#015253`, hover `#006d75`, Helvetica-Neue stack, rem units.
+- **Design-system tokens only** (Metzler UI Kit): teal `var(--color-teal)` `#015253`, Helvetica-Neue system stack, **rem** units, container **100rem** (1600px), cards `--radius-lg`, modals `--radius-xl`.
 - Content rules: *Designed in Germany* (never "Made in"), Garantie always linked, "Powered by Hikvision".
-- Placeholder prices/dates are clearly marked (`*Ratenwert Platzhalter`, `TT.MM.`).
+- Placeholder prices/dates are clearly marked (`TT.MM.` etc.).
 
 ---
 
-## Status & next steps
+## Notes for the developer
 
-**Done:** chrome, above-the-fold hero, and the Version B configurator (variant colour, required progressive-disclosure config, Ghost & Guide locked CTA, persistent add-to-cart).
-
-**Next:** stacked content sections below the hero (feature bar → 9-feature grid → feature details → door-opening slider → objection Q&As → spec callouts → support → FAQ → CTA band), a sticky in-page section-nav, and a mobile pass.
+- The configurator, cart, and price are **client-side mockups** — wire them to real product/variant/pricing data when integrating (see `vdm10-configurator-data.md` for the data model).
+- Colour is a **variant** (own Artikelnummer); it appears in the product title only once selected.
+- The content sections (Beschreibung, Bewertungen, Downloads, Technische Details, Frage zum Artikel) are bespoke — they reuse DS *tokens/chrome*, not the DS section blueprint. See the audit notes in the commit history for DS-compliance status.
+- Responsive: mobile-first; the question modal is a keyboard-aware bottom sheet on mobile.
