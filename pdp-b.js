@@ -1041,6 +1041,62 @@
     }, { rootMargin: '-118px 0px -66% 0px', threshold: 0 });
     secs.forEach(function (s) { io.observe(s); });
 
+    /* ── Precise tab navigation ─────────────────────────────────────────
+       Native anchor scroll (href="#id") + a static scroll-margin-top landed
+       imprecisely: the sticky obstruction (site header + this nav) is a
+       VARIABLE height and the header animates (transition:all / morphs to
+       fixed on tablet), so the browser's one-shot target was already stale
+       by the time the smooth scroll arrived — the section tucked under the
+       nav or overshot. We drive the scroll ourselves with a rAF tween that
+       re-reads the live header+nav height EVERY frame, so it converges on the
+       exact spot no matter how the header morphs mid-flight, and snaps clean
+       on the last frame. */
+    var root = document.documentElement;
+    var siteHeader = document.querySelector('.header');
+    var reduceMoNav = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var NAV_GAP = 10;                       /* breathing room under the pinned nav */
+    var animId = null, savedSB = '';
+    function pinnedObstruction() {
+      /* height of everything pinned above a section once scrolled: site header + this nav */
+      var hh = siteHeader ? siteHeader.getBoundingClientRect().height : 0;
+      return hh + nav.getBoundingClientRect().height;
+    }
+    function targetFor(sec) {
+      return Math.max(0, Math.round(window.pageYOffset + sec.getBoundingClientRect().top - pinnedObstruction() - NAV_GAP));
+    }
+    function stopAnim() {
+      if (animId) { window.cancelAnimationFrame(animId); animId = null; root.style.scrollBehavior = savedSB; }
+    }
+    function goTo(sec, link) {
+      if (link) setActive(link);           /* highlight immediately — feels responsive */
+      stopAnim();
+      savedSB = root.style.scrollBehavior;
+      root.style.scrollBehavior = 'auto';  /* neutralise CSS smooth — we drive it frame-by-frame */
+      if (reduceMoNav.matches) { window.scrollTo(0, targetFor(sec)); root.style.scrollBehavior = savedSB; return; }
+      var start = window.pageYOffset, t0 = null, DUR = 460;
+      animId = window.requestAnimationFrame(function step(ts) {
+        if (t0 === null) t0 = ts;
+        var t = Math.min(1, (ts - t0) / DUR);
+        var e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;   /* easeInOutQuad */
+        window.scrollTo(0, Math.round(start + (targetFor(sec) - start) * e));   /* re-read target each frame */
+        if (t < 1) { animId = window.requestAnimationFrame(step); }
+        else { window.scrollTo(0, targetFor(sec)); animId = null; root.style.scrollBehavior = savedSB; }
+      });
+    }
+    /* a real user gesture cancels our tween instead of the two fighting each other */
+    window.addEventListener('wheel', stopAnim, { passive: true });
+    window.addEventListener('touchstart', stopAnim, { passive: true });
+    nav.addEventListener('click', function (e) {
+      var link = e.target.closest ? e.target.closest('.psx-nav__link') : null;
+      if (!link || !nav.contains(link)) return;
+      var id = (link.getAttribute('href') || '').slice(1);
+      var sec = id ? document.getElementById(id) : null;
+      if (!sec) return;
+      e.preventDefault();
+      if (window.history && history.replaceState) history.replaceState(null, '', '#' + id);
+      goTo(sec, link);
+    });
+
     /* Signal horizontal scrollability (mobile edge-fade): fade whichever edge still
        has tabs off-screen. state = none | start | middle | end. */
     function updateNavScroll() {
