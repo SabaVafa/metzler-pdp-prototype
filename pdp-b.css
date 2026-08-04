@@ -2117,8 +2117,13 @@ body.is-scrolled #quickbar {
   opacity: 0.4; transition: opacity .4s ease; }
 .psx-story__scene.is-current { opacity: 1; }
 .psx-story__step { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.14em; color: var(--color-teal); }
-.psx-story__scene h3 { margin: 0; font-size: clamp(1.35rem,2.4vw,1.75rem); font-weight: 700; letter-spacing: -0.015em; line-height: 1.2; color: var(--color-digital-black); }
-.psx-story__scene p { margin: 0; font-size: 1rem; line-height: 1.65; color: var(--color-graphite-700); max-width: 42ch; }
+/* desktop + tablet: title 32px, body 18px; mobile (≤767px) stays smaller */
+.psx-story__scene h3 { margin: 0; font-size: 2rem; font-weight: 700; letter-spacing: -0.015em; line-height: 1.2; color: var(--color-digital-black); }
+.psx-story__scene p { margin: 0; font-size: 1.125rem; line-height: 1.65; color: var(--color-graphite-700); max-width: 42ch; }
+@media (max-width: 47.9375rem) {
+  .psx-story__scene h3 { font-size: 1.35rem; }
+  .psx-story__scene p { font-size: 1rem; }
+}
 /* scene fact bullets — teal check marks, matching the page's feature-bullet style */
 .psx-facts { list-style: none; margin: 0.9rem 0 0; padding: 0; display: grid; gap: 0.5rem; max-width: 42ch; }
 .psx-facts li { position: relative; padding-left: 1.6rem; font-size: 0.9375rem; line-height: 1.5; color: var(--color-graphite-700); }
