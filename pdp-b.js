@@ -1697,6 +1697,7 @@
     authorEl.textContent = author;
     dateEl.textContent = date;
     titleEl.textContent = title;
+    if (title) titleEl.title = title; else titleEl.removeAttribute('title');   /* full name on hover when the 2-line clamp truncates */
     titleEl.style.display = title ? '' : 'none';
     textEl.textContent = text;
     starsEl.innerHTML = starsHTML;

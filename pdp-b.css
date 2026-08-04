@@ -2062,7 +2062,10 @@ body.is-scrolled #quickbar {
 /* top row — review title (left) paired with the star rating (right);
    sized so a typical title fits on one line beside the stars */
 .rvw-lb__top { flex: none; display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
-.rvw-lb__title { flex: 1 1 auto; margin: 0; font-size: 1.0625rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.35; color: var(--color-digital-black); }
+.rvw-lb__title { flex: 1 1 auto; margin: 0; font-size: 1.0625rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.35; color: var(--color-digital-black);
+  /* Cap at 2 lines (ellipsis beyond) so a long product name can't grow this row
+     and shove the meta/text/gallery down. Full name stays on hover (title attr). */
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; overflow-wrap: anywhere; }
 .rvw-lb__stars.rvw-lb__stars { flex: none; margin-top: 0.1rem; }
 .rvw-lb__stars svg { width: 1.15rem; height: 1.15rem; }
 /* meta line — "author | date" plus the verified label, muted */
