@@ -831,6 +831,7 @@
         if (idx < 0) idx = 0; else if (idx > swatchEls.length - 1) idx = swatchEls.length - 1;
         var near = swatchEls[idx];
         if (!near) return;
+        swatchEls.forEach(function (s) { s.classList.toggle('is-labeled', s === near); });   /* mild lift on the slid-over swatch */
         setTxt('pdpFinishName', near.getAttribute('data-finish'));
         /* The line tracks the swatch you're sliding over — it updates live on every
            scroll, always, even after a colour has been selected. (Tapping a swatch also

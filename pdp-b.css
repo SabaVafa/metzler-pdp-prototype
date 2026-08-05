@@ -760,6 +760,24 @@
     transition: transform .28s cubic-bezier(.34, 1.28, .64, 1), opacity .18s ease; }   /* glide with a subtle magnetic settle */
   body:not(.swtouch) .bx-swline.is-on { opacity: 1; }   /* shown only for a hovered/selected swatch — hidden at rest when no colour is chosen */
 }
+
+/* ── Mild lift on the swatch whose colour label is currently shown ──
+   Makes the labelled tile easier to pick out: hovered/focused (desktop),
+   selected at rest, or slid-over on touch (.is-labeled, set in pdp-b.js).
+   Subtle — a 2px rise + a soft token shadow, smoothly eased. */
+.pdp-b .pdp-swatch { transition: transform .18s ease; }
+.pdp-b .pdp-swatch img { transition: border-color .15s ease, box-shadow .18s ease; }
+@media (hover: hover) {
+  body:not(.swtouch) .pdp-b .pdp-swatch:hover,
+  body:not(.swtouch) .pdp-b .pdp-swatch:focus-visible,
+  body:not(.swtouch) .pdp-b .bx-swatches:not(:hover) .pdp-swatch[aria-pressed="true"] { transform: translateY(-0.125rem); }
+  body:not(.swtouch) .pdp-b .pdp-swatch:hover img,
+  body:not(.swtouch) .pdp-b .pdp-swatch:focus-visible img,
+  body:not(.swtouch) .pdp-b .bx-swatches:not(:hover) .pdp-swatch[aria-pressed="true"] img { box-shadow: var(--shadow-md); }
+}
+.swtouch .pdp-b .pdp-swatch.is-labeled { transform: translateY(-0.125rem); }
+.swtouch .pdp-b .pdp-swatch.is-labeled img { box-shadow: var(--shadow-md); }
+@media (prefers-reduced-motion: reduce) { .pdp-b .pdp-swatch { transition: none; } }
 @media (hover: hover) and (prefers-reduced-motion: reduce) {
   body:not(.swtouch) .bx-swline { transition: none; }
 }
