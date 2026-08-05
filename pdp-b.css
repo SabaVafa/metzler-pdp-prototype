@@ -2141,6 +2141,30 @@ body.is-scrolled #quickbar {
   .rvw-lb__nav svg { width: 1.2rem; height: 1.2rem; }
 }
 @media (prefers-reduced-motion: reduce) { .rvw-lb { animation: none; } }
+
+/* ── Happy-card modal — the carousel card, enlarged. Reuses the .rvw-happy-card
+   design verbatim inside a centred overlay; only the quote clamp is lifted. ── */
+.rvw-happy-card--clickable { cursor: pointer; transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+.rvw-happy-card--clickable:hover { transform: translateY(-3px); box-shadow: var(--shadow-md, 0 8px 24px rgba(8,10,12,0.1)); border-color: var(--color-graphite-400, var(--color-graphite-300)); }
+.rvw-happy-card--clickable:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 3px; }
+
+.rvw-cardmodal { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center; padding: clamp(1rem, 4vw, 2rem); }
+.rvw-cardmodal.is-open { display: flex; }
+.rvw-cardmodal__backdrop { position: absolute; inset: 0; background: rgba(8,10,12,0.78); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+.rvw-cardmodal__card { position: relative; z-index: 1; flex: 0 0 auto; width: min(30rem, 100%); max-height: 90vh; overflow-y: auto;
+  box-shadow: var(--shadow-modal); animation: rvwLbIn .22s cubic-bezier(.2,.7,.3,1) both; }
+.rvw-cardmodal__card .rvw-happy-card__media { aspect-ratio: 4 / 3; flex: none; min-height: 0; }
+.rvw-cardmodal__quote { -webkit-line-clamp: unset; line-clamp: unset; display: block; overflow: visible; }
+.rvw-cardmodal__close { position: absolute; top: 0.75rem; right: 0.75rem; z-index: 2; width: 2.25rem; height: 2.25rem;
+  display: grid; place-items: center; cursor: pointer; border: 0; border-radius: 999px; background: rgba(255,255,255,0.92); color: var(--color-digital-black);
+  box-shadow: 0 2px 8px rgba(8,10,12,0.18); transition: background .15s ease; }
+.rvw-cardmodal__close:hover { background: var(--color-white); }
+.rvw-cardmodal__close:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
+.rvw-cardmodal__close svg { width: 1.125rem; height: 1.125rem; }
+@media (max-width: 47.9375rem) {
+  .rvw-cardmodal__close { width: 2.75rem; height: 2.75rem; }   /* 44px touch target */
+}
+@media (prefers-reduced-motion: reduce) { .rvw-cardmodal__card { animation: none; } }
 /* Mobile "Info & Hilfecenter" quickbar: entries are placeholders for now — the panel
    still expands/collapses, but the individual links are non-interactive. */
 @media (max-width: 767px) {

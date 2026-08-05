@@ -1816,6 +1816,92 @@
 })();
 
 /* ============================================================
+   Happy-review carousel → card modal. Tapping a carousel card
+   opens it in a modal that mirrors the card's own design (photo,
+   stars, full unclamped quote, author + verified + date). We reuse
+   the .rvw-happy-card classes verbatim so the modal is visually
+   identical to the on-page card — just enlarged and complete.
+   ============================================================ */
+(function () {
+  'use strict';
+  var cards = [].slice.call(document.querySelectorAll('.rvw-happy-card'));
+  if (!cards.length) return;
+
+  var modal = document.createElement('div');
+  modal.className = 'rvw-cardmodal';
+  modal.setAttribute('role', 'dialog');
+  modal.setAttribute('aria-modal', 'true');
+  modal.setAttribute('aria-label', 'Kundenbewertung');
+  modal.innerHTML =
+    '<div class="rvw-cardmodal__backdrop" data-close></div>' +
+    '<div class="rvw-happy-card rvw-cardmodal__card" role="document">' +
+      '<button type="button" class="rvw-cardmodal__close" data-close aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button>' +
+      '<div class="rvw-happy-card__media"><img alt=""></div>' +
+      '<div class="rvw-happy-card__body">' +
+        '<span class="rvw-stars" role="img"></span>' +
+        '<p class="rvw-happy-quote rvw-cardmodal__quote"></p>' +
+        '<div class="rvw-happy-foot">' +
+          '<span class="rvw-author"></span>' +
+          '<span class="rvw-meta"><span class="rvw-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span><time></time></span>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(modal);
+
+  var mImg    = modal.querySelector('.rvw-happy-card__media img');
+  var mStars  = modal.querySelector('.rvw-stars');
+  var mQuote  = modal.querySelector('.rvw-happy-quote');
+  var mAuthor = modal.querySelector('.rvw-author');
+  var mBadge  = modal.querySelector('.rvw-verified');
+  var mDate   = modal.querySelector('.rvw-meta time');
+  var mClose  = modal.querySelector('.rvw-cardmodal__close');
+  var lastFocus = null;
+
+  function open(card) {
+    var srcImg = card.querySelector('.rvw-happy-card__media img');
+    var stars  = card.querySelector('.rvw-stars');
+    var quote  = card.querySelector('.rvw-happy-quote');
+    var author = card.querySelector('.rvw-author');
+    var badge  = card.querySelector('.rvw-verified');
+    var date   = card.querySelector('.rvw-happy-foot time');
+
+    if (srcImg) { mImg.src = srcImg.currentSrc || srcImg.src; mImg.alt = srcImg.alt || ''; }
+    if (stars)  { mStars.innerHTML = stars.innerHTML; mStars.setAttribute('aria-label', stars.getAttribute('aria-label') || ''); }
+    mQuote.textContent = quote ? quote.textContent.trim() : '';
+    mAuthor.textContent = author ? author.textContent.trim() : 'Gast';
+    mDate.textContent = date ? date.textContent.trim() : '';
+    mBadge.style.display = badge ? '' : 'none';
+
+    lastFocus = card;
+    modal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    mClose.focus();
+  }
+  function close() {
+    modal.classList.remove('is-open');
+    mImg.removeAttribute('src');
+    document.body.style.overflow = '';
+    if (lastFocus) lastFocus.focus();
+  }
+
+  cards.forEach(function (card) {
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+    card.classList.add('rvw-happy-card--clickable');
+    card.addEventListener('click', function () { open(card); });
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(card); }
+    });
+  });
+  modal.addEventListener('click', function (e) {
+    if (e.target.closest('[data-close]')) close();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (modal.classList.contains('is-open') && e.key === 'Escape') close();
+  });
+})();
+
+/* ============================================================
    Kameratechnologie showcase — reveal the 146° FOV demo and
    count the headline numbers up when the module scrolls in.
    ============================================================ */
