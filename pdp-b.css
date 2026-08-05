@@ -2044,7 +2044,7 @@ body.is-scrolled #quickbar {
 @keyframes rvwLbIn { from { opacity: 0; transform: translateY(0.75rem) scale(0.985); } to { opacity: 1; transform: none; } }
 
 /* Close — bare icon button; square press/tap feedback (never circular) */
-.rvw-lb__close { flex: none; width: 2.25rem; height: 2.25rem; display: grid; place-items: center; cursor: pointer;
+.rvw-lb__close { flex: none; width: 2.25rem; height: 2.25rem; margin-right: -0.5625rem; display: grid; place-items: center; cursor: pointer;   /* neg margin = (btn − icon)/2 so the icon box lines up with the body content's right edge */
   color: var(--color-graphite-600); background: transparent; border: 0; border-radius: var(--radius); transition: background .15s; }
 .rvw-lb__close:hover { background: var(--color-graphite-100); }
 .rvw-lb__close:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
@@ -2074,7 +2074,7 @@ body.is-scrolled #quickbar {
 
 /* title bar — anchors the review context and holds the close control */
 .rvw-lb__head { min-width: 0; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  padding: 0.9rem clamp(1.25rem, 2.2vw, 1.75rem); border-bottom: 1px solid var(--color-graphite-300); }
+  padding: 0.9rem clamp(1.35rem, 2.4vw, 1.9rem); border-bottom: 1px solid var(--color-graphite-300); }   /* horizontal padding matches the body so the title + close align with the content column */
 .rvw-lb__headtitle { margin: 0; font-size: 1.25rem; font-weight: 700; line-height: 1.35; letter-spacing: -0.01em; color: var(--color-digital-black); }
 /* body is a fixed-height column: title/meta pinned top, text scrolls, gallery pinned bottom */
 .rvw-lb__body { min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden;
@@ -2127,7 +2127,7 @@ body.is-scrolled #quickbar {
      beneath them, so the image remains visible while reading the review */
   .rvw-lb { display: flex; flex-direction: column; width: min(30rem, 100%); max-height: 90vh; overflow: hidden; }
   .rvw-lb__head { order: 1; flex: none; }
-  .rvw-lb__close { width: 2.75rem; height: 2.75rem; }   /* 44px touch target on mobile */
+  .rvw-lb__close { width: 2.75rem; height: 2.75rem; margin-right: -0.8125rem; }   /* 44px touch target; neg margin = (2.75 − 1.125)/2 keeps the icon box aligned to the content edge */
   .rvw-lb__stage { order: 2; flex: none; height: 42vh; }
   .rvw-lb__body { order: 3; flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
     scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.18) transparent; }
@@ -2452,8 +2452,8 @@ body.is-scrolled #quickbar {
 .qf-head { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
   padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--color-graphite-200); }
 .qf-head-t { font-size: 1.25rem; font-weight: 700; line-height: 1.35; letter-spacing: -0.01em; color: var(--color-digital-black); }
-.qf-close { flex: none; width: 2.25rem; height: 2.25rem; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
-  color: var(--color-graphite-600); background: transparent; border: 0; border-radius: var(--radius); transition: background .15s; }
+.qf-close { flex: none; width: 2.25rem; height: 2.25rem; margin-right: -0.5625rem; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+  color: var(--color-graphite-600); background: transparent; border: 0; border-radius: var(--radius); transition: background .15s; }   /* neg margin = (btn − icon)/2 so the icon box lines up with the body's right edge */
 .qf-close:hover { background: var(--color-graphite-100); }
 .qf-close:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
 .qf-close svg { width: 1.125rem; height: 1.125rem; }
@@ -2513,7 +2513,7 @@ body.is-scrolled #quickbar {
   .qf-grip { display: block; flex: none; width: 2.25rem; height: 0.25rem; margin: 0.55rem auto -0.15rem;
     border-radius: 999px; background: var(--color-graphite-300); }
   .qf-head { padding-top: 0.85rem; }
-  .qf-close { width: 2.75rem; height: 2.75rem; margin-right: -0.5rem; }   /* ≥44px touch target */
+  .qf-close { width: 2.75rem; height: 2.75rem; margin-right: -0.8125rem; }   /* ≥44px touch target; neg margin = (2.75 − 1.125)/2 aligns the icon box to the content edge */
   /* clear the iOS home indicator so the submit button is never under it */
   .qf-body { padding-bottom: calc(1.5rem + env(safe-area-inset-bottom)); }
 }
