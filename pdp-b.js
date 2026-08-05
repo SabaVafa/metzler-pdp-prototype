@@ -377,8 +377,30 @@
     if (i > reached) reached = i;
     refresh();
     if (skipScroll) return;
-    var dock = document.querySelector('.cfgb-dock');
-    if (dock) window.setTimeout(function () { dock.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 60);
+    var target = items[i];
+    if (!target) return;
+    var body = target.querySelector('.stepr__body');
+    var mobileAccordion = body && getComputedStyle(body).display === 'grid';   /* desktop shows all steps (display:block) — no accordion */
+    if (!mobileAccordion) {
+      /* Desktop: config is fully visible — only nudge it into view if off-screen. */
+      var deskDock = document.querySelector('.cfgb-dock');
+      if (deskDock) window.setTimeout(function () { deskDock.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 60);
+      return;
+    }
+    /* Mobile: scroll the opened step to just below the pinned header + step-dock.
+       The dock is sticky, so the old dock.scrollIntoView was a no-op once it was
+       stuck to the top (tapping a step went nowhere). scrollIntoView re-reads layout
+       at call time, and we call it again after the .45s accordion settle so it lands
+       correctly despite the other steps collapsing/reflowing. */
+    var scrollToStep = function () {
+      var hdr = document.querySelector('.header');
+      var dock = document.querySelector('.cfgb-dock');
+      var pin = (hdr ? hdr.getBoundingClientRect().height : 0) + (dock ? dock.getBoundingClientRect().height : 0) + 12;
+      target.style.scrollMarginTop = pin + 'px';
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    window.setTimeout(scrollToStep, 60);    /* start moving immediately */
+    window.setTimeout(scrollToStep, 500);   /* re-align after the accordion finishes reflowing */
   }
   function idxByKey(k) { for (var i = 0; i < STEPS.length; i++) if (STEPS[i].key === k) return i; return -1; }
   function autoAdvance(fromKey) {
