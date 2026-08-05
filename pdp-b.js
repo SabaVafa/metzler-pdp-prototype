@@ -2052,6 +2052,14 @@
    ============================================================ */
 (function () {
   'use strict';
+  /* On mobile the rail is a full-width vertical stack, so the detail panel sits
+     BELOW every tab — tapping a lower category leaves its content off-screen.
+     Match the config stepper: after a tap, scroll the revealed panel up under the
+     pinned chrome (header + section nav) so the relevant content is in view.
+     Uses element HEIGHTS (stable) rather than a sticky element's live position.
+     Desktop (side rail) is fully visible, so it's skipped. */
+  var mqStack = window.matchMedia('(max-width: 55.9375rem)');
+
   [].slice.call(document.querySelectorAll('.techms__rail')).forEach(function (rail) {
     var tabs = [].slice.call(rail.querySelectorAll('.techms__tab'));
     if (!tabs.length) return;
@@ -2066,9 +2074,21 @@
         if (panel) panel.hidden = !sel;
       });
     }
+    function scrollToPanel(tab) {
+      if (!mqStack.matches) return;
+      var panel = document.getElementById(tab.getAttribute('aria-controls'));
+      if (!panel) return;
+      window.setTimeout(function () {
+        var hdr = document.querySelector('.header');
+        var nav = document.querySelector('.psx-nav');
+        var pin = (hdr ? hdr.getBoundingClientRect().height : 0) + (nav ? nav.getBoundingClientRect().height : 0) + 12;
+        panel.style.scrollMarginTop = pin + 'px';
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 60);
+    }
     rail.addEventListener('click', function (e) {
       var t = e.target.closest('.techms__tab');
-      if (t) { activate(t); t.focus(); }
+      if (t) { activate(t); t.focus(); scrollToPanel(t); }
     });
     rail.addEventListener('keydown', function (e) {
       var i = tabs.indexOf(document.activeElement);
