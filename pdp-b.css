@@ -555,11 +555,11 @@
 .bx-delivery__row { display: grid; grid-template-columns: minmax(7.5rem, 0.42fr) 1fr; align-items: stretch; }
 .bx-delivery__row + .bx-delivery__row { border-top: 1px solid var(--color-graphite-200); }
 .bx-delivery__key { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 0.9rem;
-  font-size: 0.75rem; font-weight: 700; color: var(--color-digital-black); }
+  font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black); }
 .bx-delivery__key svg { width: 1.2rem; height: 1.2rem; flex: none; color: var(--color-graphite-600); }
 .bx-delivery__val { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;
   padding: 0.75rem 0.95rem; border-left: 1px solid var(--color-graphite-200);
-  font-size: 0.75rem; color: var(--color-graphite-700); min-width: 0; }
+  font-size: 0.875rem; color: var(--color-graphite-700); min-width: 0; }
 .bx-delivery__val b, .bx-delivery__val .ph { font-weight: 700; color: var(--color-digital-black); }
 .bx-delivery__free { color: var(--color-green) !important; }
 .bx-delivery__details { color: var(--color-teal); font-weight: 600; text-decoration: underline;
