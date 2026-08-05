@@ -463,6 +463,11 @@
   var sw = $('pdpSwatches');
   if (sw) sw.addEventListener('click', function (e) {
     var b = e.target.closest('.pdp-swatch'); if (!b) return;
+    /* Anchor the clicked swatch: choosing a colour appends the finish to the H1
+       (which can wrap onto another line) and reveals the configurator — both sit
+       ABOVE the swatch row, so the whole row would jump down on the pick. Capture
+       its viewport position now and restore it after the DOM updates below. */
+    var anchorY = b.getBoundingClientRect().top;
     this.querySelectorAll('.pdp-swatch').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
     b.setAttribute('aria-pressed', 'true');
     /* Touch: the travelling line is driven by SCROLL progress, so a plain tap (no
@@ -486,6 +491,17 @@
       window.dispatchEvent(new Event('resize'));   /* re-run dock geometry now the panel has height */
     }
     refresh();
+    /* Restore the clicked swatch to where it was so the pick doesn't jump the page.
+       Instant (page scroll-behavior is smooth, which would animate the correction
+       into a visible slide). Skipped at the very top when there's no room to scroll
+       up — but the title/config growth is below the fold there, so nothing shifts. */
+    var dy = Math.round(b.getBoundingClientRect().top - anchorY);
+    if (Math.abs(dy) > 1) {
+      var root = document.documentElement, prevSB = root.style.scrollBehavior;
+      root.style.scrollBehavior = 'auto';
+      window.scrollBy(0, dy);
+      root.style.scrollBehavior = prevSB;
+    }
   });
   /* preview any colour's full name in the prominent label on hover/focus (no click needed) */
   if (sw) {
