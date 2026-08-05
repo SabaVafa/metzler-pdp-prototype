@@ -1753,10 +1753,12 @@
     return d;
   }
 
-  /* Read a carousel card (.rvw-happy-card) into panel data (no separate title
-     — the card quote is the review text). */
+  /* Read a carousel card (.rvw-happy-card) into panel data. The card's headline
+     lives in data-title (the compact card doesn't render it); the quote is the
+     review text. */
   function cardData(card) {
     var d = { author: 'Gast', date: '', title: '', text: '', starsHTML: '', starsLabel: '', verified: false };
+    d.title = (card.getAttribute('data-title') || '').trim();
     var a = card.querySelector('.rvw-author'); if (a) d.author = a.textContent.trim();
     var t = card.querySelector('.rvw-happy-foot time'); if (t) d.date = t.textContent.trim();
     var p = card.querySelector('.rvw-happy-quote'); if (p) d.text = p.textContent.trim();
