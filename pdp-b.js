@@ -721,6 +721,14 @@
         window.scrollTo({ top: target, behavior: rm ? 'auto' : 'smooth' });
       }
     }
+    /* desktop: only pull the field back up when the pick left it OUT of view (scrolled
+       above the pinned top bars, or below the fold) — if it's already visible, don't jump */
+    function scrollFieldIntoViewIfNeeded() {
+      var headBottom = stickyTopOffset();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var r = trigger.getBoundingClientRect();
+      if (r.top < headBottom + 4 || r.bottom > vh - 8) scrollFieldIntoView();
+    }
 
     trigger.addEventListener('click', function () {
       if (panel.classList.contains('is-open')) closeGrid();
@@ -804,7 +812,7 @@
       /* mobile: a pick deep in the grid leaves the picker "field" (trigger showing the
          chosen tone) scrolled off the top — bring it back into view so the selection
          is visibly confirmed */
-      if (mqMobile.matches) scrollFieldIntoView();
+      if (mqMobile.matches) scrollFieldIntoView(); else scrollFieldIntoViewIfNeeded();
     });
 
     /* re-paginate when the viewport width changes (column count may change) */
