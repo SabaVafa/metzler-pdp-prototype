@@ -684,8 +684,8 @@
   .pdp-b .pdp-thumbs { gap: 0.5rem; }
   .pdp-b .pdp-thumbs button { width: 3.25rem; height: 3.25rem; }
 
-  /* ── SPEC LABELS → nudged off 10px for comfortable legibility ── */
-  .pdp-b .pdp-specs__label { font-size: 0.75rem; }
+  /* ── SPEC LABELS → 13px for comfortable legibility on mobile ── */
+  .pdp-b .pdp-specs__label { font-size: 13px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
