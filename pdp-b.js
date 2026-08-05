@@ -1671,7 +1671,8 @@
 (function () {
   'use strict';
   var shots = [].slice.call(document.querySelectorAll('.rvw-shot'));
-  if (!shots.length) return;
+  var cards = [].slice.call(document.querySelectorAll('.rvw-happy-card'));
+  if (!shots.length && !cards.length) return;
 
   var lb = document.createElement('div');
   lb.className = 'rvw-lightbox';
@@ -1723,28 +1724,45 @@
 
   var group = [], idx = 0, lastFocus = null;
 
-  /* Pull the review card's context so the panel mirrors the on-page review. */
-  function fillPanel(review) {
-    var author = 'Gast', date = '', title = '', text = '', starsHTML = '', verified = false;
-    if (review) {
-      var a = review.querySelector('.rvw-author'); if (a) author = a.textContent.trim();
-      var t = review.querySelector('.rvw-review__foot time'); if (t) date = t.textContent.trim();
-      var h = review.querySelector('.rvw-review__title'); if (h) title = h.textContent.trim();
-      var p = review.querySelector('.rvw-review__text'); if (p) text = p.textContent.trim();
-      var s = review.querySelector('.rvw-stars'); if (s) starsHTML = s.innerHTML;
-      verified = !!review.querySelector('.rvw-verified');
-      var lbl = s && s.getAttribute('aria-label');   /* "5 von 5 Sternen" */
-      if (lbl && starsEl) starsEl.setAttribute('aria-label', lbl);
-    }
-    authorEl.textContent = author;
-    dateEl.textContent = date;
-    titleEl.textContent = title;
-    if (title) titleEl.title = title; else titleEl.removeAttribute('title');   /* full name on hover when the 2-line clamp truncates */
-    titleEl.style.display = title ? '' : 'none';
-    textEl.textContent = text;
-    starsEl.innerHTML = starsHTML;
-    starsEl.style.display = starsHTML ? '' : 'none';
-    badgeEl.style.display = verified ? '' : 'none';
+  /* Fill the review panel from a normalised data object so both the detailed
+     reviews (.rvw-review) and the carousel cards (.rvw-happy-card) can drive
+     the exact same two-pane viewer. */
+  function fillPanel(data) {
+    authorEl.textContent = data.author || 'Gast';
+    dateEl.textContent = data.date || '';
+    titleEl.textContent = data.title || '';
+    if (data.title) titleEl.title = data.title; else titleEl.removeAttribute('title');   /* full name on hover when the 2-line clamp truncates */
+    titleEl.style.display = data.title ? '' : 'none';
+    textEl.textContent = data.text || '';
+    starsEl.innerHTML = data.starsHTML || '';
+    starsEl.style.display = data.starsHTML ? '' : 'none';
+    if (data.starsLabel) starsEl.setAttribute('aria-label', data.starsLabel);   /* "5 von 5 Sternen" */
+    badgeEl.style.display = data.verified ? '' : 'none';
+  }
+
+  /* Read a detailed review (.rvw-review) into panel data. */
+  function reviewData(review) {
+    var d = { author: 'Gast', date: '', title: '', text: '', starsHTML: '', starsLabel: '', verified: false };
+    if (!review) return d;
+    var a = review.querySelector('.rvw-author'); if (a) d.author = a.textContent.trim();
+    var t = review.querySelector('.rvw-review__foot time'); if (t) d.date = t.textContent.trim();
+    var h = review.querySelector('.rvw-review__title'); if (h) d.title = h.textContent.trim();
+    var p = review.querySelector('.rvw-review__text'); if (p) d.text = p.textContent.trim();
+    var s = review.querySelector('.rvw-stars'); if (s) { d.starsHTML = s.innerHTML; d.starsLabel = s.getAttribute('aria-label') || ''; }
+    d.verified = !!review.querySelector('.rvw-verified');
+    return d;
+  }
+
+  /* Read a carousel card (.rvw-happy-card) into panel data (no separate title
+     — the card quote is the review text). */
+  function cardData(card) {
+    var d = { author: 'Gast', date: '', title: '', text: '', starsHTML: '', starsLabel: '', verified: false };
+    var a = card.querySelector('.rvw-author'); if (a) d.author = a.textContent.trim();
+    var t = card.querySelector('.rvw-happy-foot time'); if (t) d.date = t.textContent.trim();
+    var p = card.querySelector('.rvw-happy-quote'); if (p) d.text = p.textContent.trim();
+    var s = card.querySelector('.rvw-stars'); if (s) { d.starsHTML = s.innerHTML; d.starsLabel = s.getAttribute('aria-label') || ''; }
+    d.verified = !!card.querySelector('.rvw-verified');
+    return d;
   }
 
   function buildThumbs() {
@@ -1753,14 +1771,14 @@
     gallery.style.display = multi ? '' : 'none';
     if (galLabel) galLabel.textContent = 'Alle Fotos (' + group.length + ')';
     if (!multi) return;
-    group.forEach(function (shot, i) {
+    group.forEach(function (photo, i) {
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'rvw-lb__thumb';
       b.setAttribute('role', 'tab');
       b.setAttribute('aria-label', 'Foto ' + (i + 1));
       var g = document.createElement('img');
-      g.src = shot.getAttribute('data-full');
+      g.src = photo.full;
       g.alt = '';
       b.appendChild(g);
       b.addEventListener('click', function () { show(i); });
@@ -1770,9 +1788,9 @@
 
   function show(i) {
     idx = (i + group.length) % group.length;
-    var shot = group[idx];
-    img.src = shot.getAttribute('data-full');
-    img.alt = (shot.querySelector('img') || {}).alt || 'Kundenfoto zur Bewertung';
+    var photo = group[idx];
+    img.src = photo.full;
+    img.alt = photo.alt || 'Kundenfoto zur Bewertung';
     var multi = group.length > 1;
     curEl.textContent = idx + 1;
     lb.querySelector('.rvw-lb__counter').style.display = multi ? '' : 'none';
@@ -1781,14 +1799,15 @@
       b.setAttribute('aria-selected', k === idx ? 'true' : 'false');
     });
   }
-  function open(shot) {
-    var media = shot.closest('.rvw-review__media');
-    group = media ? [].slice.call(media.querySelectorAll('.rvw-shot')) : [shot];
-    lastFocus = shot;
-    fillPanel(shot.closest('.rvw-review'));
+
+  /* photos: [{full, alt}], data: panel object, startIdx: which photo to show. */
+  function open(photos, data, focusEl, startIdx) {
+    group = photos;
+    lastFocus = focusEl;
+    fillPanel(data);
     totalEl.textContent = group.length;
     buildThumbs();
-    show(group.indexOf(shot));
+    show(startIdx || 0);
     lb.classList.add('is-open');
     document.body.style.overflow = 'hidden';
     if (textEl) textEl.scrollTop = 0;
@@ -1801,7 +1820,34 @@
     if (lastFocus) lastFocus.focus();
   }
 
-  shots.forEach(function (s) { s.addEventListener('click', function () { open(s); }); });
+  /* Detailed-review photos → the customer's full photo set. */
+  shots.forEach(function (s) {
+    s.addEventListener('click', function () {
+      var media = s.closest('.rvw-review__media');
+      var setEls = media ? [].slice.call(media.querySelectorAll('.rvw-shot')) : [s];
+      var photos = setEls.map(function (el) {
+        return { full: el.getAttribute('data-full'), alt: (el.querySelector('img') || {}).alt || '' };
+      });
+      open(photos, reviewData(s.closest('.rvw-review')), s, setEls.indexOf(s));
+    });
+  });
+
+  /* Carousel cards → the same viewer with the card's single photo + its review. */
+  cards.forEach(function (card) {
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+    card.classList.add('rvw-happy-card--clickable');
+    function openCard() {
+      var cImg = card.querySelector('.rvw-happy-card__media img');
+      var photos = [{ full: (cImg && (cImg.currentSrc || cImg.src)) || '', alt: (cImg && cImg.alt) || '' }];
+      open(photos, cardData(card), card, 0);
+    }
+    card.addEventListener('click', openCard);
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCard(); }
+    });
+  });
+
   lb.addEventListener('click', function (e) {
     if (e.target.closest('[data-close]')) { close(); return; }
     var nav = e.target.closest('.rvw-lb__nav');
@@ -1812,92 +1858,6 @@
     if (e.key === 'Escape') close();
     else if (e.key === 'ArrowRight') show(idx + 1);
     else if (e.key === 'ArrowLeft') show(idx - 1);
-  });
-})();
-
-/* ============================================================
-   Happy-review carousel → card modal. Tapping a carousel card
-   opens it in a modal that mirrors the card's own design (photo,
-   stars, full unclamped quote, author + verified + date). We reuse
-   the .rvw-happy-card classes verbatim so the modal is visually
-   identical to the on-page card — just enlarged and complete.
-   ============================================================ */
-(function () {
-  'use strict';
-  var cards = [].slice.call(document.querySelectorAll('.rvw-happy-card'));
-  if (!cards.length) return;
-
-  var modal = document.createElement('div');
-  modal.className = 'rvw-cardmodal';
-  modal.setAttribute('role', 'dialog');
-  modal.setAttribute('aria-modal', 'true');
-  modal.setAttribute('aria-label', 'Kundenbewertung');
-  modal.innerHTML =
-    '<div class="rvw-cardmodal__backdrop" data-close></div>' +
-    '<div class="rvw-happy-card rvw-cardmodal__card" role="document">' +
-      '<button type="button" class="rvw-cardmodal__close" data-close aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button>' +
-      '<div class="rvw-happy-card__media"><img alt=""></div>' +
-      '<div class="rvw-happy-card__body">' +
-        '<span class="rvw-stars" role="img"></span>' +
-        '<p class="rvw-happy-quote rvw-cardmodal__quote"></p>' +
-        '<div class="rvw-happy-foot">' +
-          '<span class="rvw-author"></span>' +
-          '<span class="rvw-meta"><span class="rvw-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span><time></time></span>' +
-        '</div>' +
-      '</div>' +
-    '</div>';
-  document.body.appendChild(modal);
-
-  var mImg    = modal.querySelector('.rvw-happy-card__media img');
-  var mStars  = modal.querySelector('.rvw-stars');
-  var mQuote  = modal.querySelector('.rvw-happy-quote');
-  var mAuthor = modal.querySelector('.rvw-author');
-  var mBadge  = modal.querySelector('.rvw-verified');
-  var mDate   = modal.querySelector('.rvw-meta time');
-  var mClose  = modal.querySelector('.rvw-cardmodal__close');
-  var lastFocus = null;
-
-  function open(card) {
-    var srcImg = card.querySelector('.rvw-happy-card__media img');
-    var stars  = card.querySelector('.rvw-stars');
-    var quote  = card.querySelector('.rvw-happy-quote');
-    var author = card.querySelector('.rvw-author');
-    var badge  = card.querySelector('.rvw-verified');
-    var date   = card.querySelector('.rvw-happy-foot time');
-
-    if (srcImg) { mImg.src = srcImg.currentSrc || srcImg.src; mImg.alt = srcImg.alt || ''; }
-    if (stars)  { mStars.innerHTML = stars.innerHTML; mStars.setAttribute('aria-label', stars.getAttribute('aria-label') || ''); }
-    mQuote.textContent = quote ? quote.textContent.trim() : '';
-    mAuthor.textContent = author ? author.textContent.trim() : 'Gast';
-    mDate.textContent = date ? date.textContent.trim() : '';
-    mBadge.style.display = badge ? '' : 'none';
-
-    lastFocus = card;
-    modal.classList.add('is-open');
-    document.body.style.overflow = 'hidden';
-    mClose.focus();
-  }
-  function close() {
-    modal.classList.remove('is-open');
-    mImg.removeAttribute('src');
-    document.body.style.overflow = '';
-    if (lastFocus) lastFocus.focus();
-  }
-
-  cards.forEach(function (card) {
-    card.setAttribute('role', 'button');
-    card.setAttribute('tabindex', '0');
-    card.classList.add('rvw-happy-card--clickable');
-    card.addEventListener('click', function () { open(card); });
-    card.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(card); }
-    });
-  });
-  modal.addEventListener('click', function (e) {
-    if (e.target.closest('[data-close]')) close();
-  });
-  document.addEventListener('keydown', function (e) {
-    if (modal.classList.contains('is-open') && e.key === 'Escape') close();
   });
 })();
 
