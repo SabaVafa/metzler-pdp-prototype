@@ -2165,7 +2165,9 @@
     modal.hidden = true;
     clearViewport();
     unlockScroll();
-    if (lastFocus && lastFocus.focus) lastFocus.focus();
+    /* preventScroll: focus() would otherwise scroll the (far-down) trigger back into
+       view, undoing the scroll-position restore above and jumping the page. */
+    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
   }
 
   document.addEventListener('click', function (e) {
