@@ -2103,21 +2103,40 @@
   var reqFields = [['qfFrage', 'qfFrageWrap'], ['qfVorname', 'qfVornameWrap'], ['qfNachname', 'qfNachnameWrap'], ['qfMail', 'qfMailWrap']]
     .map(function (p) { return { input: document.getElementById(p[0]), wrap: document.getElementById(p[1]) }; })
     .filter(function (f) { return f.input && f.wrap; });
-  var lastFocus = null, scrollLockY = 0;
+  var lastFocus = null, scrollLockY = 0, lockedFixed = false;
   var vv = window.visualViewport;
   var mqSheet = window.matchMedia('(max-width: 47.9375rem)');
 
-  /* Scroll lock — position:fixed (not just overflow:hidden, which iOS ignores) so the
-     page behind the modal can't scroll; the scroll position is restored on close. */
+  /* Scroll lock. Two techniques:
+     - Pointer/desktop: just overflow:hidden on <html>. This does NOT change the scroll
+       position, so closing can't jump the page (the position:fixed + scrollTo-restore
+       approach was fragile — a failed/late restore left the page scrolled elsewhere).
+       Pad for the vanished scrollbar so the layout doesn't shift.
+     - Touch/iOS: overflow:hidden is ignored, so pin the body with position:fixed and
+       restore the scroll on unlock. */
   function lockScroll() {
     scrollLockY = window.pageYOffset;
-    var b = document.body;
-    b.style.position = 'fixed'; b.style.top = -scrollLockY + 'px'; b.style.left = '0'; b.style.right = '0'; b.style.width = '100%'; b.style.overflow = 'hidden';
+    var b = document.body, de = document.documentElement;
+    var isTouch = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    if (isTouch) {
+      b.style.position = 'fixed'; b.style.top = -scrollLockY + 'px'; b.style.left = '0'; b.style.right = '0'; b.style.width = '100%';
+      lockedFixed = true;
+    } else {
+      var sbw = window.innerWidth - de.clientWidth;   /* scrollbar width */
+      if (sbw > 0) b.style.paddingRight = sbw + 'px';
+      lockedFixed = false;
+    }
+    de.style.overflow = 'hidden';
   }
   function unlockScroll() {
-    var b = document.body;
-    b.style.position = ''; b.style.top = ''; b.style.left = ''; b.style.right = ''; b.style.width = ''; b.style.overflow = '';
-    window.scrollTo(0, scrollLockY);
+    var b = document.body, de = document.documentElement;
+    de.style.overflow = '';
+    b.style.paddingRight = '';
+    if (lockedFixed) {
+      b.style.position = ''; b.style.top = ''; b.style.left = ''; b.style.right = ''; b.style.width = '';
+      window.scrollTo(0, scrollLockY);
+      lockedFixed = false;
+    }
   }
 
   /* Keep the open sheet inside the VISUAL viewport so the on-screen keyboard never
@@ -2159,7 +2178,7 @@
     /* Focus the first field on desktop for a quick start; on the mobile sheet, don't —
        auto-popping the keyboard the instant the sheet slides up feels aggressive. */
     var first = reqFields[0];
-    if (first && !mqSheet.matches) window.setTimeout(function () { first.input.focus(); }, 40);
+    if (first && !mqSheet.matches) window.setTimeout(function () { first.input.focus({ preventScroll: true }); }, 40);
   }
   function close() {
     modal.hidden = true;
