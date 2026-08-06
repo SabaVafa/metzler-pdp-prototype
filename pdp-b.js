@@ -10,6 +10,48 @@
      the product and on every added item.
    • "In den Warenkorb" always live; validates (never locks).
    ============================================================ */
+
+/* ============================================================
+   Shared modal scroll-lock. overflow:hidden on <body> does NOT lock
+   the page when <html> is the scroll root, and iOS Safari ignores it
+   outright – so an open modal lets the page scroll behind it. Pin the
+   body with position:fixed on touch (restoring the scroll on unlock),
+   and fall back to overflow:hidden on <html> + scrollbar-pad on pointer.
+   One source of truth for every overlay (contact, lightboxes, form).
+   ============================================================ */
+var MZScroll = (function () {
+  var y = 0, fixed = false, active = false;
+  function lock() {
+    if (active) return;                         /* re-entrant lock keeps the first Y */
+    active = true;
+    y = window.pageYOffset;
+    var b = document.body, de = document.documentElement;
+    var touch = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    if (touch) {
+      b.style.position = 'fixed'; b.style.top = -y + 'px'; b.style.left = '0'; b.style.right = '0'; b.style.width = '100%';
+      fixed = true;
+    } else {
+      var sbw = window.innerWidth - de.clientWidth;   /* pad for the vanished scrollbar */
+      if (sbw > 0) b.style.paddingRight = sbw + 'px';
+      fixed = false;
+    }
+    de.style.overflow = 'hidden';
+  }
+  function unlock() {
+    if (!active) return;
+    active = false;
+    var b = document.body, de = document.documentElement;
+    de.style.overflow = '';
+    b.style.paddingRight = '';
+    if (fixed) {
+      b.style.position = ''; b.style.top = ''; b.style.left = ''; b.style.right = ''; b.style.width = '';
+      window.scrollTo(0, y);
+      fixed = false;
+    }
+  }
+  return { lock: lock, unlock: unlock };
+})();
+
 (function () {
   'use strict';
   var $ = function (id) { return document.getElementById(id); };
@@ -966,14 +1008,14 @@
     function openAt(i) {
       lastFocus = document.activeElement;
       lb.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';   /* lock the page so the modal owns the scroll */
+      MZScroll.lock();   /* lock the page so the modal owns the scroll */
       show(i);
-      if (nextBtn) nextBtn.focus();
+      if (nextBtn) nextBtn.focus({ preventScroll: true });
     }
     function closeLb() {
       lb.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      if (lastFocus && lastFocus.focus) lastFocus.focus();
+      MZScroll.unlock();
+      if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
     }
 
     if (prevBtn) prevBtn.addEventListener('click', function () { show(idx - 1); });
@@ -1500,10 +1542,10 @@
     if (!cm) return;
     var lastFocus = null;
     function openCM(e) { if (e) e.preventDefault(); lastFocus = document.activeElement;
-      cm.classList.add('is-open'); cm.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
-      var f = cm.querySelector('a[href],button:not([disabled])'); if (f) f.focus(); }
-    function closeCM() { cm.classList.remove('is-open'); cm.setAttribute('aria-hidden', 'true'); document.body.style.overflow = '';
-      if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+      cm.classList.add('is-open'); cm.setAttribute('aria-hidden', 'false'); MZScroll.lock();
+      var f = cm.querySelector('a[href],button:not([disabled])'); if (f) f.focus({ preventScroll: true }); }
+    function closeCM() { cm.classList.remove('is-open'); cm.setAttribute('aria-hidden', 'true'); MZScroll.unlock();
+      if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true }); }
     document.querySelectorAll('[data-cm-open]').forEach(function (el) { el.addEventListener('click', openCM); });
     cm.addEventListener('click', function (e) { if (e.target === cm || e.target.closest('[data-cm-close]')) closeCM(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && cm.classList.contains('is-open')) closeCM(); });
@@ -1790,15 +1832,15 @@
     buildThumbs();
     show(startIdx || 0);
     lb.classList.add('is-open');
-    document.body.style.overflow = 'hidden';
+    MZScroll.lock();
     if (textEl) textEl.scrollTop = 0;
-    closeBtn.focus();
+    closeBtn.focus({ preventScroll: true });
   }
   function close() {
     lb.classList.remove('is-open');
     img.removeAttribute('src');
-    document.body.style.overflow = '';
-    if (lastFocus) lastFocus.focus();
+    MZScroll.unlock();
+    if (lastFocus) lastFocus.focus({ preventScroll: true });
   }
 
   /* Detailed-review photos → the customer's full photo set. */
@@ -1945,14 +1987,14 @@
     lastFocus = shot;
     show(group.indexOf(shot));
     lb.classList.add('is-open');
-    document.body.style.overflow = 'hidden';
-    closeBtn.focus();
+    MZScroll.lock();
+    closeBtn.focus({ preventScroll: true });
   }
   function close() {
     lb.classList.remove('is-open');
     img.removeAttribute('src');
-    document.body.style.overflow = '';
-    if (lastFocus) lastFocus.focus();
+    MZScroll.unlock();
+    if (lastFocus) lastFocus.focus({ preventScroll: true });
   }
 
   shots.forEach(function (s) { s.addEventListener('click', function () { open(s); }); });
@@ -2111,41 +2153,9 @@
   var reqFields = [['qfFrage', 'qfFrageWrap'], ['qfVorname', 'qfVornameWrap'], ['qfNachname', 'qfNachnameWrap'], ['qfMail', 'qfMailWrap']]
     .map(function (p) { return { input: document.getElementById(p[0]), wrap: document.getElementById(p[1]) }; })
     .filter(function (f) { return f.input && f.wrap; });
-  var lastFocus = null, scrollLockY = 0, lockedFixed = false;
+  var lastFocus = null;
   var vv = window.visualViewport;
   var mqSheet = window.matchMedia('(max-width: 47.9375rem)');
-
-  /* Scroll lock. Two techniques:
-     - Pointer/desktop: just overflow:hidden on <html>. This does NOT change the scroll
-       position, so closing can't jump the page (the position:fixed + scrollTo-restore
-       approach was fragile – a failed/late restore left the page scrolled elsewhere).
-       Pad for the vanished scrollbar so the layout doesn't shift.
-     - Touch/iOS: overflow:hidden is ignored, so pin the body with position:fixed and
-       restore the scroll on unlock. */
-  function lockScroll() {
-    scrollLockY = window.pageYOffset;
-    var b = document.body, de = document.documentElement;
-    var isTouch = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-    if (isTouch) {
-      b.style.position = 'fixed'; b.style.top = -scrollLockY + 'px'; b.style.left = '0'; b.style.right = '0'; b.style.width = '100%';
-      lockedFixed = true;
-    } else {
-      var sbw = window.innerWidth - de.clientWidth;   /* scrollbar width */
-      if (sbw > 0) b.style.paddingRight = sbw + 'px';
-      lockedFixed = false;
-    }
-    de.style.overflow = 'hidden';
-  }
-  function unlockScroll() {
-    var b = document.body, de = document.documentElement;
-    de.style.overflow = '';
-    b.style.paddingRight = '';
-    if (lockedFixed) {
-      b.style.position = ''; b.style.top = ''; b.style.left = ''; b.style.right = ''; b.style.width = '';
-      window.scrollTo(0, scrollLockY);
-      lockedFixed = false;
-    }
-  }
 
   /* Keep the open sheet inside the VISUAL viewport so the on-screen keyboard never
      covers the submit button (mobile sheet only; no-op on the centred desktop dialog). */
@@ -2180,7 +2190,7 @@
   function open() {
     resetForm();
     lastFocus = document.activeElement;
-    lockScroll();
+    MZScroll.lock();
     modal.hidden = false;
     syncViewport();
     /* Focus the first field on desktop for a quick start; on the mobile sheet, don't –
@@ -2191,7 +2201,7 @@
   function close() {
     modal.hidden = true;
     clearViewport();
-    unlockScroll();
+    MZScroll.unlock();
     /* preventScroll: focus() would otherwise scroll the (far-down) trigger back into
        view, undoing the scroll-position restore above and jumping the page. */
     if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
