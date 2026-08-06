@@ -85,8 +85,9 @@
 .pdp-lightbox__nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
   display: grid; place-items: center; width: 2.75rem; height: 2.75rem; cursor: pointer;
   background: rgba(0,0,0,0.28); border: 1px solid rgba(255,255,255,0.85); border-radius: var(--radius); color: var(--color-white);
-  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); transition: background .15s ease, color .15s ease; }
-.pdp-lightbox__nav:hover { background: var(--color-white); color: var(--color-digital-black); }
+  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); transition: background .15s ease, color .15s ease, transform .12s ease; }
+@media (hover: hover) { .pdp-lightbox__nav:hover { background: var(--color-white); color: var(--color-digital-black); } }
+.pdp-lightbox__nav:active { background: var(--color-white); color: var(--color-digital-black); transform: translateY(-50%) scale(0.94); }
 .pdp-lightbox__nav:focus-visible { outline: 2px solid var(--color-white); outline-offset: 2px; }
 .pdp-lightbox__nav svg { width: 1.4rem; height: 1.4rem; }
 .pdp-lightbox__nav--prev { left: clamp(0.5rem, 1.5vw, 1rem); }
@@ -1976,10 +1977,11 @@ body.is-scrolled #quickbar {
 .rvw-lb__nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
   width: 2.75rem; height: 2.75rem; display: grid; place-items: center; line-height: 1; cursor: pointer;
   color: var(--color-white); background: rgba(0,0,0,0.28); border: 1px solid rgba(255,255,255,0.85); border-radius: var(--radius);
-  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); transition: background .15s ease, color .15s ease; }
+  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); transition: background .15s ease, color .15s ease, transform .12s ease; }
 .rvw-lb__nav[data-dir="prev"] { left: clamp(0.5rem, 1.5vw, 1rem); }
 .rvw-lb__nav[data-dir="next"] { right: clamp(0.5rem, 1.5vw, 1rem); }
-.rvw-lb__nav:hover { background: var(--color-white); color: var(--color-digital-black); }
+@media (hover: hover) { .rvw-lb__nav:hover { background: var(--color-white); color: var(--color-digital-black); } }
+.rvw-lb__nav:active { background: var(--color-white); color: var(--color-digital-black); transform: translateY(-50%) scale(0.94); }
 .rvw-lb__nav:focus-visible { outline: 2px solid var(--color-white); outline-offset: 2px; }
 .rvw-lb__nav svg { width: 1.4rem; height: 1.4rem; }
 
@@ -2323,10 +2325,15 @@ body.is-scrolled #quickbar {
 .tdiag-lightbox__nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
   width: 2.75rem; height: 2.75rem; display: grid; place-items: center; line-height: 1;
   cursor: pointer; color: var(--color-white); background: rgba(0,0,0,0.28); border: 1px solid rgba(255,255,255,0.85); border-radius: var(--radius);
-  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); transition: background .15s ease, color .15s ease; }
+  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); transition: background .15s ease, color .15s ease, transform .12s ease; }
 .tdiag-lightbox__nav[data-dir="prev"] { left: clamp(0.5rem, 1.5vw, 1rem); }
 .tdiag-lightbox__nav[data-dir="next"] { right: clamp(0.5rem, 1.5vw, 1rem); }
-.tdiag-lightbox__nav:hover { background: var(--color-white); color: var(--color-digital-black); }
+@media (hover: hover) { .tdiag-lightbox__nav:hover { background: var(--color-white); color: var(--color-digital-black); } }
+.tdiag-lightbox__nav:active { background: var(--color-white); color: var(--color-digital-black); transform: translateY(-50%) scale(0.94); }
+.tdiag-lightbox__nav:focus-visible { outline: 2px solid var(--color-white); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .pdp-lightbox__nav:active, .rvw-lb__nav:active, .tdiag-lightbox__nav:active { transform: translateY(-50%); }
+}
 .tdiag-lightbox__nav svg { width: 1.4rem; height: 1.4rem; }
 @media (max-width: 48rem) {
   .tdiag-lightbox__nav { width: 2.4rem; height: 2.4rem; }
