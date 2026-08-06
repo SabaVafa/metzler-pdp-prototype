@@ -105,10 +105,12 @@
 /* ── Identity ── */
 .pdp-b .pdp-eyebrow { font-size: 0.75rem; letter-spacing: 0.22em; }
 .pdp-b .pdp-title {
-  font-size: 1.5rem; line-height: 1.35; letter-spacing: 0; font-weight: 700;   /* 24px (DS H2) */
+  /* DS .h1 — responsive 24 → 26 → 30 across the DS breakpoints (≤767 / 768–991 / ≥992). */
+  font-size: 1.5rem; line-height: 1.25; letter-spacing: -0.02em; font-weight: 700;   /* 24px (mobile) */
   max-width: none; margin: 0; text-wrap: wrap;   /* greedy fill (not "pretty", which shortens lines) */
 }
-@media (min-width: 90rem) { .pdp-b .pdp-title { font-size: 1.6875rem; } }   /* 27px on big screens (≥1440px) */
+@media (min-width: 48rem) { .pdp-b .pdp-title { font-size: 1.625rem; } }   /* 26px — tablet */
+@media (min-width: 62rem) { .pdp-b .pdp-title { font-size: 1.875rem; } }   /* 30px — desktop (DS .h1) */
 .pdp-b .pdp-title .pdp-title__sep { color: var(--ink-60); font-weight: 300; margin: 0 0.3em; }
 
 /* Credential line — one calm row replaces two loud badges */
@@ -665,9 +667,8 @@
   .bx-swatches { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.65rem; }
   .pdp-b .pdp-swatch[aria-pressed="true"] img { border-width: 2px; }
 
-  /* ── HERO TITLE → compact on mobile so the long multi-segment name flows across
-     lines instead of stacking one fragment per line ── */
-  .pdp-b .pdp-title { font-size: 1.125rem; line-height: 1.3; letter-spacing: -0.01em; }
+  /* ── HERO TITLE → keep the DS .h1 mobile size (24px); just tighten the
+     separator spacing so the long multi-segment name flows across lines ── */
   .pdp-b .pdp-title .pdp-title__sep { margin: 0 0.2em; }
 
   /* ── VIEW TOGGLE sits ABOVE the photo, not over it. On the narrow stacked
