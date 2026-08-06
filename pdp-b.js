@@ -44,8 +44,14 @@ var MZScroll = (function () {
     de.style.overflow = '';
     b.style.paddingRight = '';
     if (fixed) {
+      /* html{scroll-behavior:smooth} would turn this restore into an animated
+         scroll – on close the page drops to the top and glides back, reading as
+         "the page scrolled". Force an instant jump, then restore the setting. */
+      var prevBehavior = de.style.scrollBehavior;
+      de.style.scrollBehavior = 'auto';
       b.style.position = ''; b.style.top = ''; b.style.left = ''; b.style.right = ''; b.style.width = '';
       window.scrollTo(0, y);
+      de.style.scrollBehavior = prevBehavior;
       fixed = false;
     }
   }
