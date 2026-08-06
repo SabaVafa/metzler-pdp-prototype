@@ -123,6 +123,8 @@
 }
 @media (min-width: 48rem) { .pdp-b .pdp-title { font-size: 1.5rem; } }   /* 24px – tablet */
 @media (min-width: 62rem) { .pdp-b .pdp-title { font-size: 1.6875rem; } }   /* 27px – desktop (per request) */
+/* Mobile: the multi-segment title wraps to ~3 lines — loosen the leading + tracking so it breathes instead of reading as a tight stack. */
+@media (max-width: 47.9375rem) { .pdp-b .pdp-title { line-height: 1.4; letter-spacing: -0.01em; } }
 .pdp-b .pdp-title .pdp-title__sep { color: var(--color-graphite-600); font-weight: 300; margin: 0 0.3em; }
 
 /* Credential line – one calm row replaces two loud badges */
