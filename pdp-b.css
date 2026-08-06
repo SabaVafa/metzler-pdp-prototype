@@ -1753,6 +1753,8 @@ body.is-scrolled #quickbar {
 .psx-eyebrow { margin: 0 0 0.6rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; line-height: 1.4; text-transform: uppercase; color: var(--color-graphite-600); }
 .psx-title { margin: 0 0 1rem; font-size: clamp(1.6rem, 3vw, 2.25rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; color: var(--color-digital-black); }
 .psx-lead { margin: 0 0 2rem; max-width: 62ch; font-size: 1.125rem; line-height: 1.6; color: var(--color-graphite-700); }
+/* Section intro/body copy: 18px on desktop, 16px on mobile */
+@media (max-width: 47.9375rem) { .psx-lead, .rv__sub { font-size: 1rem; } }
 
 /* Center the intro text block (eyebrow · title · lead) in the Bewertungen,
    Downloads and Technische-Details sections only – Beschreibung and FAQ keep
