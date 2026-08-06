@@ -1978,7 +1978,11 @@ body.is-scrolled #quickbar {
 /* Image stage */
 .rvw-lb__stage { position: relative; flex: 1.15 1 0%; min-width: 0; display: flex; align-items: center; justify-content: center;
   overflow: hidden; background: radial-gradient(120% 120% at 50% 0%, #16191d 0%, #0b0d10 100%); }
-.rvw-lb__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Absolute-fill the stage instead of being an in-flow flex child: iOS Safari
+   stretches an <img> that has object-fit + percentage height inside a flexbox
+   (it ignores the fit and fills the box). Absolute positioning gives it a
+   definite containing block so object-fit is always honoured. */
+.rvw-lb__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 /* subtle top scrim keeps the photo counter legible over a full-bleed photo */
 .rvw-lb__stage::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5rem; z-index: 1; pointer-events: none;
   background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0)); }
@@ -2055,6 +2059,9 @@ body.is-scrolled #quickbar {
   .rvw-lb__head { order: 1; flex: none; }
   .rvw-lb__close { width: 2.75rem; height: 2.75rem; margin-right: -0.8125rem; }   /* 44px touch target; neg margin = (2.75 − 1.125)/2 keeps the icon box aligned to the content edge */
   .rvw-lb__stage { order: 2; flex: none; height: 42vh; }
+  /* Customer photos vary in aspect – show the whole photo (letterboxed on the dark
+     stage) rather than cropping/zooming it on the smaller mobile stage. */
+  .rvw-lb__img { object-fit: contain; }
   .rvw-lb__body { order: 3; flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
     scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.18) transparent; }
   .rvw-lb__body::-webkit-scrollbar { width: 5px; }
