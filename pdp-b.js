@@ -257,13 +257,6 @@
   }
 
   /* ── Price-details summary (itemized cart) ── */
-  function qtyCtrl(target, q) {
-    return '<span class="sum-qty">'
-      + '<button type="button" data-qd="-1" data-target="' + target + '" aria-label="weniger">−</button>'
-      + '<span>' + q + '</span>'
-      + '<button type="button" data-qd="1" data-target="' + target + '" aria-label="mehr">+</button>'
-      + '</span>';
-  }
   function roQty(q) { return '<span class="sum-qty-ro">×&nbsp;' + q + '</span>'; }
   function row(name, sub, qtyHtml, price, cls) {
     return '<div class="sum-row ' + (cls || '') + '">'
@@ -401,11 +394,6 @@
     };
     window.setTimeout(scrollToStep, 60);    /* start moving immediately */
     window.setTimeout(scrollToStep, 500);   /* re-align after the accordion finishes reflowing */
-  }
-  function idxByKey(k) { for (var i = 0; i < STEPS.length; i++) if (STEPS[i].key === k) return i; return -1; }
-  function autoAdvance(fromKey) {
-    var i = idxByKey(fromKey);
-    if (i > -1 && i < STEPS.length - 1) window.setTimeout(function () { openStep(i + 1); }, 340);
   }
   function flashStep(i) { var it = items[i]; if (!it) return; var p = it.querySelector('.stepr__pad') || it; p.classList.remove('is-flash'); void p.offsetWidth; p.classList.add('is-flash'); }
   var invalidTimers = {};
@@ -1416,9 +1404,7 @@
     });
   });
 
-  /* ── Toast + validate-on-cart (never lock) ── */
-  var toastEl = $('cfgToast'), toastMsg = $('cfgToastMsg'), toastTimer;
-  function toast(msg) { /* toast messages removed per request — visual cues (swatch/step signals, cart badge) convey state instead */ }
+  /* ── Validate-on-cart (never lock) ── */
   function firstInvalid() { if (!state.anschluss) return 0; if (state.gravurOn && !state.gravurText) return 1; return -1; }
   function addToCart() {
     /* colour is the first gate — surface the requirement at the swatches, not on the CTA */
@@ -1430,7 +1416,6 @@
         swEl.classList.remove('is-invalid'); void swEl.offsetWidth; swEl.classList.add('is-invalid');
         swEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
-      toast('Bitte wählen Sie zuerst eine Farbe');
       return;
     }
     /* Wunschfarbe chosen but no RAL tone yet → open + flash the picker, don't proceed */
@@ -1449,7 +1434,6 @@
       else { flashInvalid($('bGravurText')); }
       return;
     }
-    toast('In den Warenkorb gelegt · ' + euro(total()));
     var badge = document.querySelector('.header .badge'); if (badge) badge.textContent = (parseInt(badge.textContent, 10) || 0) + 1;
   }
   var cart = $('bCart'); if (cart) cart.addEventListener('click', addToCart);
