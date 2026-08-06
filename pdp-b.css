@@ -2359,8 +2359,7 @@ body.is-scrolled #quickbar {
 .techms__tablabel { display: block; font-size: 0.875rem; font-weight: 600; line-height: 1.3; letter-spacing: -0.005em; }
 .techms__tabsub { display: none; }
 .techms__tab.is-active .techms__tablabel { font-weight: 700; }
-.techms__count { flex: none; font-size: 0.75rem; font-weight: 700; padding: 0; background: none; color: var(--color-mint); }
-.techms__tab.is-active .techms__count { color: var(--color-teal); }
+.techms__count { flex: none; font-size: 0.75rem; font-weight: 700; padding: 0; background: none; color: inherit; }   /* match the label colour in every state (white / hover-white / active-teal) */
 
 /* panel */
 .techms__panel { padding: clamp(1.25rem,2.5vw,2rem); }
