@@ -117,11 +117,11 @@
 /* ── Identity ── */
 .pdp-b .pdp-eyebrow { font-size: 0.75rem; letter-spacing: 0.22em; }
 .pdp-b .pdp-title {
-  /* DS .h1 – responsive 24 → 26 → 30 across the DS breakpoints (≤767 / 768–991 / ≥992). */
-  font-size: 1.5rem; line-height: 1.25; letter-spacing: -0.02em; font-weight: 700;   /* 24px (mobile) */
+  /* Responsive product title: 18 (mobile) → 24 (tablet) → 27 (desktop); weight 700, -0.02em. */
+  font-size: 1.125rem; line-height: 1.25; letter-spacing: -0.02em; font-weight: 700;   /* 18px (mobile) */
   max-width: none; margin: 0; text-wrap: wrap;   /* greedy fill (not "pretty", which shortens lines) */
 }
-@media (min-width: 48rem) { .pdp-b .pdp-title { font-size: 1.625rem; } }   /* 26px – tablet */
+@media (min-width: 48rem) { .pdp-b .pdp-title { font-size: 1.5rem; } }   /* 24px – tablet */
 @media (min-width: 62rem) { .pdp-b .pdp-title { font-size: 1.6875rem; } }   /* 27px – desktop (per request) */
 .pdp-b .pdp-title .pdp-title__sep { color: var(--color-graphite-600); font-weight: 300; margin: 0 0.3em; }
 
