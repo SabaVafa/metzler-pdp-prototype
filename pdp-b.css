@@ -111,7 +111,7 @@
 }
 @media (min-width: 48rem) { .pdp-b .pdp-title { font-size: 1.625rem; } }   /* 26px — tablet */
 @media (min-width: 62rem) { .pdp-b .pdp-title { font-size: 1.875rem; } }   /* 30px — desktop (DS .h1) */
-.pdp-b .pdp-title .pdp-title__sep { color: var(--ink-60); font-weight: 300; margin: 0 0.3em; }
+.pdp-b .pdp-title .pdp-title__sep { color: var(--color-graphite-600); font-weight: 300; margin: 0 0.3em; }
 
 /* Credential line — one calm row replaces two loud badges */
 /* tighten the gap between the breadcrumb and the product title (hero top padding) */
@@ -531,7 +531,7 @@
 
 /* "Preis wie konfiguriert" price line */
 .cfgb-price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.15rem 0.7rem; }
-.cfgb-price__label { flex-basis: 100%; font-size: 0.75rem; font-weight: 700; letter-spacing: normal; text-transform: none; color: rgba(0,0,0,0.6); }
+.cfgb-price__label { flex-basis: 100%; font-size: 0.75rem; font-weight: 700; letter-spacing: normal; text-transform: none; color: var(--color-graphite-600); }
 .cfgb-price__meta { font-size: 0.75rem; color: var(--color-graphite-600); }
 .cfgb-price__meta a { color: var(--color-teal); text-decoration: underline; }
 
@@ -818,7 +818,7 @@
 .sheet__foot { display: flex; align-items: center; gap: 0.85rem; padding: 0.5rem 1.25rem 1rem; border-top: 0; margin-top: 0; }
 /* price yields width so the CTA never has to wrap; label wraps instead of the button */
 .sheet__price { display: block; flex: 0 0 auto; }
-.sheet__pricelabel { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(0,0,0,0.6); line-height: 1.25; }
+.sheet__pricelabel { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-graphite-600); line-height: 1.25; }
 /* the explicit display:block above outranks the UA [hidden] rule — restore hiding so the
    "Preis wie konfiguriert" label / "ab" prefix stay mutually exclusive (only one shows) */
 .sheet__pricelabel[hidden], .sheet__pricefrom[hidden] { display: none; }
@@ -1002,11 +1002,11 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .cfgb-dock__title { margin: 0; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 1rem; }
 .cfgb-dock__titletext { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
 .cfgb-dock__title .cfgb-dock__flag { flex: none; }
-.cfgb-dock__n { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.01em; color: var(--ink-60); }
+.cfgb-dock__n { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.01em; color: var(--color-graphite-600); }
 /* numbered step title — number + name share a baseline (aligned) */
 .cfgb-dock__name { display: inline-flex; align-items: baseline; gap: 0.5rem;
   font-size: 1.2rem; font-weight: 800; letter-spacing: -0.015em; color: var(--color-digital-black); line-height: 1.2; }
-.cfgb-dock__name-num { flex: none; color: var(--ink-60); font-weight: 800; font-variant-numeric: tabular-nums; }
+.cfgb-dock__name-num { flex: none; color: var(--color-graphite-600); font-weight: 800; font-variant-numeric: tabular-nums; }
 
 .cfgb-stage { padding: 1.25rem 1.35rem 0.35rem; }
 .pdp-b .cfgb .stepr { border: 0; margin: 0; padding: 0; gap: 0; }
