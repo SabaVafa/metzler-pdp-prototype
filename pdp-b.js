@@ -1269,7 +1269,7 @@
 
     /* reveal: fade + rise each block as it enters the viewport (one-shot) */
     var targets = [].slice.call(document.querySelectorAll(
-      '.psx-sec .psx-eyebrow, .psx-sec .psx-title, .psx-sec .psx-lead, .psx-descrow, .psx-benefits, .psx-dl__item, .psx-spec__group, .faq__support, .faq__list'));
+      '.psx-sec .psx-eyebrow, .psx-sec .psx-title, .psx-sec .psx-lead, .psx-benefits, .psx-dl__item, .psx-spec__group, .faq__support, .faq__list'));
     if (targets.length) {
       targets.forEach(function (t) { t.classList.add('psx-anim'); });
       var rio = new IntersectionObserver(function (entries) {
@@ -1278,27 +1278,6 @@
       targets.forEach(function (t) { rio.observe(t); });
     }
 
-    /* parallax: Beschreibung photos drift a little slower than the page */
-    var imgs = [].slice.call(document.querySelectorAll('.psx-descrow__media img'));
-    if (imgs.length) {
-      imgs.forEach(function (im) { im.classList.add('psx-parallax'); });
-      var ticking = false;
-      function paint() {
-        var vh = window.innerHeight || document.documentElement.clientHeight;
-        imgs.forEach(function (im) {
-          var box = im.parentElement.getBoundingClientRect();
-          if (box.bottom < -100 || box.top > vh + 100) return;   /* skip off-screen */
-          var progress = (box.top + box.height / 2 - vh / 2) / vh;   /* ~ -0.5 … 0.5 */
-          var shift = Math.max(-22, Math.min(22, -progress * 44));
-          im.style.transform = 'translateY(' + shift.toFixed(1) + 'px) scale(1.14)';
-        });
-        ticking = false;
-      }
-      function onScroll() { if (!ticking) { ticking = true; window.requestAnimationFrame(paint); } }
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', onScroll);
-      paint();
-    }
   })();
 
   /* ── Beschreibung scrollytelling: swap the pinned image as each scene hits center ── */
@@ -1863,45 +1842,6 @@
   });
 })();
 
-/* ============================================================
-   Kameratechnologie showcase – reveal the 146° FOV demo and
-   count the headline numbers up when the module scrolls in.
-   ============================================================ */
-(function () {
-  'use strict';
-  var mod = document.getElementById('camtech');
-  if (!mod) return;
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var stats = [].slice.call(mod.querySelectorAll('.camtech__stat'));
-
-  function countUp(el) {
-    var target = parseFloat(el.getAttribute('data-count')) || 0;
-    var suffix = el.getAttribute('data-suffix') || '';
-    if (reduce) { el.textContent = target + suffix; return; }
-    var dur = 1200, start = null;
-    function step(ts) {
-      if (start === null) start = ts;
-      var p = Math.min((ts - start) / dur, 1);
-      var eased = 1 - Math.pow(1 - p, 3);          /* easeOutCubic */
-      el.textContent = Math.round(target * eased) + suffix;
-      if (p < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-
-  function run() {
-    mod.classList.add('is-in');
-    stats.forEach(countUp);
-  }
-
-  if (!('IntersectionObserver' in window)) { run(); return; }
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) { run(); io.disconnect(); }
-    });
-  }, { threshold: 0, rootMargin: '0px 0px -15% 0px' });   /* fires once the top scrolls into view – robust for tall modules */
-  io.observe(mod);
-})();
 
 /* ============================================================
    Sticky-bar handoff – the green quickbar pins under the site

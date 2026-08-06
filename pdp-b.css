@@ -1771,22 +1771,6 @@ body.is-scrolled #quickbar {
   margin-left: auto; margin-right: auto;
 }
 
-/* Beschreibung */
-.psx-descrow { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(1.25rem,3vw,2.5rem); align-items: center; margin-bottom: clamp(1.5rem,3vw,2.5rem); }
-.psx-descrow--rev .psx-descrow__media { order: 2; }
-.psx-descrow__media { margin: 0; border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4/3; background: var(--color-paper); }
-.psx-descrow__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.psx-descrow__copy h3 { margin: 0 0 0.5rem; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.25; color: var(--color-digital-black); }
-.psx-descrow__copy p { margin: 0; font-size: 1rem; line-height: 1.6; color: var(--color-graphite-700); }
-.psx-descrow--last { margin-bottom: 0; }
-/* video media + product-on-white (contain) variant */
-.psx-descrow__media video { width: 100%; height: 100%; object-fit: cover; display: block; }
-.psx-descrow__media--contain { background: var(--color-white); }
-.psx-descrow__media--contain img, .psx-descrow__media--contain video { object-fit: contain; padding: clamp(0.75rem, 2vw, 1.5rem); }
-/* check-mark bullet list inside a feature row */
-.psx-descrow__copy ul:not(.psx-chips):not(.psx-dots) { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: 0.55rem; }
-.psx-descrow__copy ul:not(.psx-chips):not(.psx-dots) li { position: relative; padding-left: 1.6rem; font-size: 0.875rem; line-height: 1.5; color: var(--color-graphite-700); }
-.psx-descrow__copy ul:not(.psx-chips):not(.psx-dots) li::before { content: ""; position: absolute; left: 0.15rem; top: 0.1em; width: 0.4rem; height: 0.72rem; border: solid var(--color-teal); border-width: 0 2px 2px 0; transform: rotate(45deg); }
 /* spec chips (camera / IP ratings / SIP) */
 .psx-chips { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.1rem 0 0; padding: 0; }
 .psx-chips li { padding: 0.35rem 0.75rem; border-radius: var(--radius); background: var(--color-paper); border: 1px solid var(--color-graphite-300); font-size: 0.75rem; font-weight: 700; color: var(--color-digital-black); }
@@ -1842,95 +1826,6 @@ body.is-scrolled #quickbar {
   background: var(--color-mint); border-radius: var(--radius-sm); transition: width .25s ease; }
 .nfeat__card:hover .nfeat__cardtitle::after { width: 3rem; }
 .nfeat__cardtext { margin: 0; font-size: 0.875rem; line-height: 1.55; color: var(--on-dark-muted); }
-
-/* ============================================================
-   Kameratechnologie showcase – premium camera deep-dive.
-   Interactive 146° FOV demo + animated stats + capability grid
-   + foldaway spec sheet. Data scraped from the live VDM10 page.
-   ============================================================ */
-.camtech { margin: clamp(2.5rem,6vw,5rem) 0 clamp(1rem,2vw,1.5rem); }
-.camtech__head { max-width: 46rem; margin: 0 0 clamp(1.75rem,3.5vw,2.75rem); }
-.camtech__eyebrow { margin: 0 0 0.6rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em;
-  text-transform: uppercase; color: var(--color-teal); }
-.camtech__title { margin: 0 0 0.85rem; font-size: clamp(1.5rem,2.6vw,2.05rem); font-weight: 700;
-  letter-spacing: -0.02em; line-height: 1.15; color: var(--color-digital-black); }
-.camtech__lead { margin: 0; font-size: 1.125rem; line-height: 1.6; color: var(--color-graphite-700); }
-.camtech__lead b { color: var(--color-digital-black); font-weight: 700; }
-
-/* ── Hero: FOV demo + headline numbers ── */
-.camtech__hero { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(1.5rem,3.5vw,3rem);
-  align-items: center; margin-bottom: clamp(2rem,4vw,3rem); }
-
-/* dark stage makes the teal cone glow, echoing the product's black camera-dome shots */
-.fov { margin: 0; padding: clamp(1rem,2vw,1.5rem); border-radius: var(--radius-xl);
-  background: radial-gradient(120% 100% at 50% 100%, #14313a 0%, #0b1418 70%); overflow: hidden; }
-.fov__svg { display: block; width: 100%; height: auto; }
-.fov__ground { stroke: rgba(255,255,255,0.14); stroke-width: 1.5; stroke-dasharray: 3 6; }
-.fov__cone { transform-origin: 220px 275px; transition: opacity .5s ease; }
-/* cones scale up from the camera node when the demo scrolls into view */
-.fov__cone { transform: scale(0.15); opacity: 0; }
-.camtech.is-in .fov__cone { transform: scale(1); opacity: 1; transition: transform .9s cubic-bezier(.16,1,.3,1), opacity .6s ease; }
-.fov__cone--ref { fill: rgba(255,255,255,0.12); }
-.camtech.is-in .fov__cone--ref { transition-delay: .05s; }
-.fov__cone--wide { fill: rgba(45,190,155,0.34); }
-.camtech.is-in .fov__cone--wide { transition-delay: .22s; }
-.fov__sweep { stroke: rgba(120,240,205,0.85); stroke-width: 2; stroke-linecap: round; filter: drop-shadow(0 0 4px rgba(80,230,190,0.8)); }
-.fov__cam { fill: var(--color-white); stroke: var(--color-teal); stroke-width: 3; }
-.fov__person circle { fill: var(--color-white); } .fov__person path { fill: var(--color-white); }
-.fov__person--wideonly circle, .fov__person--wideonly path { fill: #7ef0cd; }
-.fov__person { opacity: 0; }
-.camtech.is-in .fov__person { opacity: 1; transition: opacity .5s ease .6s; }
-.fov__legend { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.1rem; margin-top: 0.9rem; }
-.fov__key { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; font-weight: 600; color: var(--on-dark-strong); }
-.fov__key i { width: 0.85rem; height: 0.85rem; border-radius: var(--radius); }
-.fov__key--wide i { background: rgba(45,190,155,0.7); } .fov__key--ref i { background: rgba(255,255,255,0.35); }
-.fov__note { flex-basis: 100%; font-size: 0.75rem; color: var(--on-dark-muted); }
-
-.camtech__stats { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 1.25rem; }
-.camtech__stats li { display: flex; flex-direction: column; gap: 0.2rem; padding-left: 0.9rem; border-left: 3px solid var(--color-teal); }
-.camtech__stat { font-size: clamp(1.75rem,3vw,2.4rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1;
-  color: var(--color-digital-black); font-variant-numeric: tabular-nums; }
-.camtech__statlabel { font-size: 0.75rem; line-height: 1.4; color: var(--color-graphite-700); }
-
-/* ── Capability grid ── */
-.camtech__grid { list-style: none; margin: 0; padding: 0; display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(16rem,100%),1fr)); gap: 1rem; }
-.camfeat { padding: 1.35rem 1.4rem; border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg);
-  background: var(--color-white); transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease; }
-.camfeat:hover { border-color: var(--color-teal); box-shadow: 0 10px 30px rgba(1,82,83,0.08); transform: translateY(-3px); }
-.camfeat__icon { display: inline-grid; place-items: center; width: 2.75rem; height: 2.75rem; margin-bottom: 0.9rem;
-  border-radius: 50%; background: var(--color-teal-50); color: var(--color-teal); }
-.camfeat__icon svg { width: 1.5rem; height: 1.5rem; }
-.camfeat__title { margin: 0 0 0.45rem; font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
-.camfeat__text { margin: 0; font-size: 0.875rem; line-height: 1.55; color: var(--color-graphite-700); }
-
-/* ── Foldaway spec sheet ── */
-.camtech__specs { margin-top: 1.5rem; border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg); overflow: hidden; }
-.camtech__specsbtn { display: flex; align-items: center; justify-content: space-between; gap: 1rem; cursor: pointer;
-  list-style: none; padding: 1rem 1.3rem; font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black);
-  background: var(--color-paper); transition: color .15s ease; user-select: none; }
-.camtech__specsbtn::-webkit-details-marker { display: none; }
-.camtech__specsbtn:hover { color: var(--color-teal); }
-.camtech__specsbtn svg { flex: none; width: 1.2rem; height: 1.2rem; color: var(--color-graphite-600); transition: transform .25s ease; }
-.camtech__specs[open] .camtech__specsbtn { color: var(--color-teal); border-bottom: 1px solid var(--color-graphite-200); }
-.camtech__specs[open] .camtech__specsbtn svg { transform: rotate(180deg); }
-/* explicit collapse – guarantees the sheet hides when closed even where native <details> hiding is unavailable */
-.camtech__specs:not([open]) .camspec { display: none; }
-.camspec { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(15rem,100%),1fr)); gap: 1.25rem 2rem; padding: 1.4rem 1.3rem; }
-.camspec__group h5 { margin: 0 0 0.5rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
-  text-transform: uppercase; color: var(--color-teal); }
-.camspec__group dl { margin: 0; display: grid; grid-template-columns: minmax(0,auto) 1fr; gap: 0.35rem 0.9rem; }
-.camspec__group dt { font-size: 0.75rem; color: var(--color-graphite-600); }
-.camspec__group dd { margin: 0; font-size: 0.75rem; font-weight: 600; color: var(--color-digital-black); text-align: right; }
-
-@media (max-width: 48rem) {
-  .camtech__hero { grid-template-columns: 1fr; }
-  .camtech__stats { gap: 1.1rem; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .fov__cone, .camtech.is-in .fov__cone, .fov__person, .camtech.is-in .fov__person { transition: none; transform: none; opacity: 1; }
-  .fov__sweep { display: none; }
-}
 
 /* Beschreibung – pinned scrollytelling: sticky image (left) swaps as the text
    scenes (right) scroll past. Uses position:sticky, so no scroll-jacking. */
@@ -2555,8 +2450,6 @@ body.is-scrolled #quickbar {
 .faq__a { padding: 0 1.25rem 1.4rem; max-width: 65ch; font-size: 1rem; line-height: 1.7; color: var(--color-graphite-700); }
 
 @media (max-width: 56.25rem) {
-  .psx-descrow { grid-template-columns: 1fr; }
-  .psx-descrow--rev .psx-descrow__media { order: 0; }
   .faq__inner { display: flex; flex-direction: column; }
   .faq__inner > *:first-child { order: 2; }
   .faq__inner > *:last-child { order: 1; }
@@ -2567,13 +2460,11 @@ body.is-scrolled #quickbar {
   .faq__item::before, .faq__q-icon svg { transition: none; }
 }
 
-/* ── Tasteful motion: scroll-reveal on blocks + subtle image parallax on the
-   Beschreibung photos. JS adds .psx-anim / .psx-parallax so no-JS stays static;
-   fully disabled under prefers-reduced-motion. ── */
+/* ── Tasteful motion: scroll-reveal on blocks (JS adds .psx-anim so no-JS
+   stays static); fully disabled under prefers-reduced-motion. ── */
 @media (prefers-reduced-motion: no-preference) {
   .psx-anim { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
   .psx-anim.is-in { opacity: 1; transform: none; }
-  .psx-parallax { will-change: transform; }
 }
 
 /* ==========================================================================
