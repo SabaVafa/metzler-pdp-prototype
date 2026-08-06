@@ -1502,7 +1502,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .rv__head { text-align: center; max-width: 44rem; margin: 0 auto clamp(1.75rem, 3vw, 2.5rem); }
 .rv__eyebrow { margin: 0 0 0.75rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; line-height: 1.4; text-transform: uppercase; color: var(--color-graphite-600); }
 .rv__title { margin: 0; font-size: clamp(2rem, 4vw, 2.875rem); font-weight: 700; letter-spacing: -0.01em; line-height: 1.15; color: var(--color-digital-black); }
-.rv__sub { margin: 1rem auto 0; max-width: 56ch; font-size: 1rem; line-height: 1.5; color: var(--color-digital-black); }   /* 16px */
+.rv__sub { margin: 1rem auto 0; max-width: 56ch; font-size: 1.125rem; line-height: 1.5; color: var(--color-digital-black); }   /* 18px — DS body-lg, consistent with .psx-lead */
 
 /* ── One merged panel: rating summary (left zone) + featured testimonial (right zone),
    divided by a single hairline – one surface, no double cards. ── */
@@ -1766,7 +1766,6 @@ body.is-scrolled #quickbar {
 #sx-bewertungen .psx-lead, #sx-downloads .psx-lead, #sx-technik .psx-lead {
   margin-left: auto; margin-right: auto;
 }
-#sx-bewertungen .psx-lead { font-size: 1rem; }   /* 16px */
 
 /* Beschreibung */
 .psx-descrow { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(1.25rem,3vw,2.5rem); align-items: center; margin-bottom: clamp(1.5rem,3vw,2.5rem); }
