@@ -14,6 +14,18 @@
    col-sm-6) with a ~64px gutter between gallery and info. Cap --container at 1600
    (overrides the design system's 1760/2040 growth) and use a 50/50 hero grid. */
 :root { --container: 100rem; }   /* 1600px */
+
+/* ── Semantic text tokens (mirrors the About-us model: role-named inks layered
+   over the graphite scale). Muted ink = graphite-600 (#6A6A6A), which is AA-safe
+   on white — NOT the DS numeric #7A7A82, which fails AA. On-dark text uses one
+   small set (strong/muted) instead of nine ad-hoc opacities. ── */
+:root {
+  --text-primary:   var(--color-digital-black);   /* #1A171B — titles, key copy */
+  --text-secondary: var(--color-graphite-700);     /* #54545C — readable secondary copy */
+  --text-muted:     var(--color-graphite-600);     /* #6A6A6A — captions / metadata / labels */
+  --on-dark-strong: rgba(255, 255, 255, 0.85);     /* emphasis / labels on dark */
+  --on-dark-muted:  rgba(255, 255, 255, 0.65);     /* secondary text on dark */
+}
 /* match the live mw-container box model exactly: 1600 container − 100px inline
    padding each side = 1400px content */
 @media (min-width: 1440px) { .container { padding-inline: 100px; } }
@@ -60,10 +72,10 @@
 .pdp-lightbox__panel { position: absolute; inset: 0; display: flex; flex-direction: column;
   padding: clamp(0.75rem, 2vw, 1.5rem); gap: clamp(0.75rem, 2vw, 1.25rem); }
 .pdp-lightbox__bar { flex: none; display: flex; align-items: center; justify-content: space-between; color: var(--color-white); }
-.pdp-lightbox__counter { font-size: 0.875rem; font-weight: 700; letter-spacing: 0.03em; color: rgba(255,255,255,0.85); font-variant-numeric: tabular-nums; }
+.pdp-lightbox__counter { font-size: 0.875rem; font-weight: 700; letter-spacing: 0.03em; color: var(--on-dark-strong); font-variant-numeric: tabular-nums; }
 .pdp-lightbox__close { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; cursor: pointer;
   background: none; border: 0; color: var(--color-white); transition: color .15s ease, transform .15s ease; }
-.pdp-lightbox__close:hover { color: rgba(255,255,255,0.7); transform: scale(1.08); }
+.pdp-lightbox__close:hover { color: var(--on-dark-strong); transform: scale(1.08); }
 .pdp-lightbox__close:focus-visible { outline: 2px solid var(--color-white); outline-offset: 2px; }
 .pdp-lightbox__close svg { width: 1.25rem; height: 1.25rem; }
 .pdp-lightbox__stage { position: relative; flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
@@ -131,7 +143,7 @@
   border: 1px solid var(--color-graphite-200); border-radius: var(--radius-pill);
   background: var(--color-white);
 }
-.bx-cred__badge--hik { color: var(--color-graphite-500); }
+.bx-cred__badge--hik { color: var(--text-muted); }
 /* ── Share — plain teal text link (not a button) ── */
 .bx-share {
   margin-left: auto; flex-shrink: 0; display: inline-flex; align-items: center; gap: 0.45rem;
@@ -236,7 +248,7 @@
 .bx-color__label { font-size: 0.875rem; color: var(--color-graphite-700); }
 .bx-color__label b { color: var(--color-digital-black); font-weight: 700; }
 .bx-color__art {
-  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; color: var(--color-graphite-500);
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; color: var(--text-muted);
   background: var(--color-paper); border: 1px solid var(--color-graphite-200);
   padding: 0.2rem 0.5rem; border-radius: var(--radius); font-variant-numeric: tabular-nums;
 }
@@ -254,7 +266,7 @@
 /* selection recolours the existing border to the brand teal — no extra ring */
 .pdp-b .pdp-swatch:hover img { border-color: var(--color-graphite-400); }
 .pdp-b .pdp-swatch[aria-pressed="true"] img { border-width: 2px; border-color: var(--color-teal); }
-.bx-color__note { font-size: 0.75rem; line-height: 1.5; color: var(--color-graphite-500); margin: 0; max-width: 46ch; }
+.bx-color__note { font-size: 0.75rem; line-height: 1.5; color: var(--text-muted); margin: 0; max-width: 46ch; }
 .bx-color__note b { color: var(--color-graphite-700); font-weight: 600; }
 
 /* colour-preview dot in the "Farbe — …" label (shows the exact RAL hex once picked) */
@@ -450,7 +462,7 @@
   transition: background .25s ease, box-shadow .25s ease, color .25s ease; }
 .stepr__node > * { grid-area: 1 / 1; }
 .stepr__node b { display: none; }
-.stepr__num { font-size: 0.75rem; font-weight: 800; color: var(--color-graphite-500); line-height: 1; transition: color .25s ease; }
+.stepr__num { font-size: 0.75rem; font-weight: 800; color: var(--text-muted); line-height: 1; transition: color .25s ease; }
 .stepr__check { width: 0.95rem; height: 0.95rem; display: none; color: var(--color-white); }
 .stepr__item.is-active .stepr__node { background: var(--color-teal-50); box-shadow: 0 0 0 3px rgba(1,82,83,0.12); }
 .stepr__item.is-active .stepr__num { color: var(--color-teal); }
@@ -496,10 +508,10 @@
 /* Required / optional sub-groups inside a step */
 .cfgb-group { display: flex; flex-direction: column; gap: 0.6rem; }
 .cfgb-group__label { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-graphite-500); }
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
 .cfgb-group__req { font-size: 0.5625rem; font-weight: 800; letter-spacing: 0.1em; color: var(--color-teal);
   background: var(--color-teal-50); border-radius: var(--radius-pill); padding: 0.12rem 0.45rem; }
-.cfgb-group__tag { font-size: 0.5625rem; font-weight: 800; letter-spacing: 0.1em; color: var(--color-graphite-500);
+.cfgb-group__tag { font-size: 0.5625rem; font-weight: 800; letter-spacing: 0.1em; color: var(--text-muted);
   background: var(--color-graphite-100); border-radius: var(--radius-pill); padding: 0.12rem 0.45rem; }
 /* optional add-ons separated from the required set by a hairline */
 .cfgb-group--opt { margin-top: 0.5rem; padding-top: 1.05rem; border-top: 1px solid var(--color-graphite-200); }
@@ -509,7 +521,7 @@
   margin-top: -0.4rem; }   /* trim the 2rem buybox gap above so it matches the 1.6rem gap below the accordion */
 .cfgb-checkout__row { display: flex; align-items: center; gap: 1.1rem; }
 .cfgb-total { display: flex; flex-direction: column; flex-shrink: 0; gap: 0.1rem; }
-.cfgb-total__label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-graphite-500); }
+.cfgb-total__label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
 .cfgb-total__amount { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.025em; color: var(--color-digital-black); font-variant-numeric: tabular-nums; }
 .cfgb-total__amount.is-bump,
 .pdp-price__amount.is-bump { animation: cfg-bump .4s ease; }
@@ -889,7 +901,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .cfgb-dock.is-stuck .cfgb-dock__title { display: none; }
 .cfgb-dock.is-stuck .cfgb-bar__track { margin: 0 -1.35rem; }
 .cfgb-dock__meta { display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem; }
-.cfgb-dock__kicker { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-graphite-500); }
+.cfgb-dock__kicker { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); }
 /* required = red (universal "mandatory" signal); optional = green (universal "no action needed" signal) */
 .cfgb-dock__flag { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; font-weight: 800;
   letter-spacing: normal; text-transform: capitalize; line-height: 1; color: var(--color-red);
@@ -1261,7 +1273,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
   padding: 0.6rem 0.5rem; min-height: 3.9rem; font-weight: 400; }
 .pdp-b .cfg-font.is-selected { font-weight: 400; }   /* don't force-bold the sample */
 .pdp-b .cfg-font__s { font-size: 1.2rem; line-height: 1.1; color: var(--color-digital-black); }
-.pdp-b .cfg-font__n { font-size: 0.5625rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-graphite-500); }
+.pdp-b .cfg-font__n { font-size: 0.5625rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
 .pdp-b .cfg-font.is-selected .cfg-font__s,
 .pdp-b .cfg-font.is-selected .cfg-font__n { color: var(--color-teal); }
 .cfgb-mainqty { display: flex; align-items: center; justify-content: space-between; gap: 1rem;
@@ -1524,7 +1536,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .rv__dist-bar { height: 0.5rem; background: var(--color-white); border-radius: var(--radius-pill); overflow: hidden; }
 .rv__dist-bar i { display: block; height: 100%; border-radius: var(--radius-pill);
   background: var(--color-star); }
-.rv__dist-val { font-size: 0.75rem; font-weight: 700; color: var(--color-graphite-500); text-align: right; }
+.rv__dist-val { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-align: right; }
 
 /* aside: CTA */
 .rv__aside { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; text-align: center; }
@@ -1538,7 +1550,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .rv__cta:hover { background: var(--color-teal-50); border-color: var(--color-teal); }
 .rv__cta:hover svg { transform: translateX(3px); }
 .rv__cta:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 3px; }
-.rv__aside-note { font-size: 0.75rem; color: var(--color-graphite-500); max-width: 16rem; line-height: 1.4; }
+.rv__aside-note { font-size: 0.75rem; color: var(--text-muted); max-width: 16rem; line-height: 1.4; }
 
 /* ── Featured testimonial — right zone of the merged panel. Contained customer photo
    beside a pull-quote; navigation consolidated into one control row below. ── */
@@ -1586,7 +1598,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .rv__feature-foot { display: flex; align-items: center; gap: 0.7rem; margin-top: 0.5rem; flex-wrap: wrap; }
 .rv__feature-who { display: flex; flex-direction: column; line-height: 1.25; }
 .rv__feature-who b { font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black); }
-.rv__feature-who time { font-size: 0.75rem; color: var(--color-graphite-500); }
+.rv__feature-who time { font-size: 0.75rem; color: var(--text-muted); }
 
 /* crossfade when switching reviews */
 .rv__feature-media img, .rv__feature-stars, .rv__feature-title, .rv__feature-text, .rv__feature-foot { transition: opacity .2s ease; }
@@ -1727,7 +1739,7 @@ body.is-scrolled #quickbar {
   transition: color .15s, border-color .15s; }
 .psx-nav__link:hover { color: var(--color-digital-black); }
 .psx-nav__link.is-active { color: var(--color-teal); border-bottom-color: var(--color-teal); }
-.psx-nav__count { font-size: 0.8em; font-weight: 700; color: var(--color-graphite-500); }
+.psx-nav__count { font-size: 0.8em; font-weight: 700; color: var(--text-muted); }
 .psx-nav__link.is-active .psx-nav__count { color: var(--color-teal); }
 
 /* One rhythm token for every full-width info section, so the vertical padding
@@ -1806,7 +1818,7 @@ body.is-scrolled #quickbar {
   background: rgba(92,219,211,0.12); border: 1px solid rgba(92,219,211,0.24);
   font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-mint); }
 .nfeat__title { margin: 0 0 0.6rem; font-size: clamp(1.5rem,2.6vw,2.05rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; color: var(--color-white); }
-.nfeat__lead { margin: 0; font-size: 1rem; line-height: 1.6; color: rgba(255,255,255,0.78); }
+.nfeat__lead { margin: 0; font-size: 1rem; line-height: 1.6; color: var(--on-dark-muted); }
 
 .nfeat__grid { list-style: none; margin: 0; padding: 0; display: grid;
   grid-template-columns: 1fr; gap: clamp(0.85rem,1.5vw,1.15rem); }
@@ -1826,7 +1838,7 @@ body.is-scrolled #quickbar {
 .nfeat__cardtitle::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 1.5rem;
   background: var(--color-mint); border-radius: var(--radius-sm); transition: width .25s ease; }
 .nfeat__card:hover .nfeat__cardtitle::after { width: 3rem; }
-.nfeat__cardtext { margin: 0; font-size: 0.875rem; line-height: 1.55; color: rgba(255,255,255,0.75); }
+.nfeat__cardtext { margin: 0; font-size: 0.875rem; line-height: 1.55; color: var(--on-dark-muted); }
 
 /* ============================================================
    Kameratechnologie showcase — premium camera deep-dive.
@@ -1866,10 +1878,10 @@ body.is-scrolled #quickbar {
 .fov__person { opacity: 0; }
 .camtech.is-in .fov__person { opacity: 1; transition: opacity .5s ease .6s; }
 .fov__legend { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.1rem; margin-top: 0.9rem; }
-.fov__key { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.9); }
+.fov__key { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; font-weight: 600; color: var(--on-dark-strong); }
 .fov__key i { width: 0.85rem; height: 0.85rem; border-radius: var(--radius); }
 .fov__key--wide i { background: rgba(45,190,155,0.7); } .fov__key--ref i { background: rgba(255,255,255,0.35); }
-.fov__note { flex-basis: 100%; font-size: 0.75rem; color: rgba(255,255,255,0.6); }
+.fov__note { flex-basis: 100%; font-size: 0.75rem; color: var(--on-dark-muted); }
 
 .camtech__stats { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 1.25rem; }
 .camtech__stats li { display: flex; flex-direction: column; gap: 0.2rem; padding-left: 0.9rem; border-left: 3px solid var(--color-teal); }
@@ -2060,7 +2072,7 @@ body.is-scrolled #quickbar {
   background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0)); }
 .rvw-lb__counter { position: absolute; top: clamp(0.75rem, 2vw, 1.1rem); left: clamp(0.75rem, 2vw, 1.1rem); z-index: 3;
   padding: 0.28rem 0.65rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.03em;
-  color: rgba(255,255,255,0.92); background: rgba(0,0,0,0.5); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  color: var(--on-dark-strong); background: rgba(0,0,0,0.5); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
   font-variant-numeric: tabular-nums; }
 /* nav arrows — design-system slider arrow: square var(--radius), white outline, inverts on hover (never circular) */
 .rvw-lb__nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
@@ -2332,14 +2344,14 @@ body.is-scrolled #quickbar {
 /* rail item on teal — light text/icon; active = a white pill with teal text/icon */
 .techms__tab { flex: none; display: flex; align-items: center; gap: 0.7rem;
   padding: 0.65rem 0.75rem; border: 0; border-radius: var(--radius); background: transparent;
-  text-align: left; cursor: pointer; white-space: nowrap; color: rgba(255,255,255,0.82);
+  text-align: left; cursor: pointer; white-space: nowrap; color: var(--on-dark-strong);
   transition: background .18s ease, color .18s ease; }
 @media (min-width: 56rem) { .techms__tab { white-space: normal; } }
 .techms__tab:hover { color: var(--color-white); background: rgba(255,255,255,0.10); box-shadow: inset 0 0 0 1px var(--color-mint); }
 .techms__tab.is-active { color: var(--color-teal); background: var(--color-white); }
 .techms__tab:focus-visible { outline: 2px solid var(--color-white); outline-offset: 2px; }
 .techms__ico { flex: none; display: grid; place-items: center; width: 1.4rem; height: 1.4rem;
-  color: rgba(255,255,255,0.72); transition: color .18s ease; }
+  color: var(--on-dark-muted); transition: color .18s ease; }
 .techms__ico svg { width: 1.3rem; height: 1.3rem; }
 .techms__tab:hover .techms__ico { color: var(--color-white); }
 .techms__tab.is-active .techms__ico { color: var(--color-teal); }
@@ -2356,7 +2368,7 @@ body.is-scrolled #quickbar {
 .techms__phead { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 0.4rem 1rem; margin: 0 0 1.35rem; }
 .techms__ptitle { margin: 0 0 0.25rem; font-size: clamp(1.1rem,1.7vw,1.3rem); font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .techms__pdesc { margin: 0; font-size: 0.875rem; line-height: 1.5; color: var(--color-graphite-600); }
-.techms__phint { display: inline-flex; align-items: center; gap: 0.35rem; flex: none; margin-top: 0.15rem; font-size: 0.75rem; font-weight: 600; color: var(--color-graphite-500); }
+.techms__phint { display: inline-flex; align-items: center; gap: 0.35rem; flex: none; margin-top: 0.15rem; font-size: 0.75rem; font-weight: 600; color: var(--text-muted); }
 .techms__phint svg { width: 1rem; height: 1rem; color: var(--color-teal); }
 /* datasheet card (Datenblatt panel) */
 .techms__doc { display: flex; align-items: center; gap: 1.1rem; padding: 1.25rem 1.35rem; text-decoration: none;
@@ -2376,7 +2388,7 @@ body.is-scrolled #quickbar {
 .techdia__grouphead { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
   margin: 0 0 1.1rem; padding-bottom: 0.7rem; border-bottom: 1px solid var(--color-graphite-200); }
 .techdia__grouptitle { margin: 0; font-size: clamp(1.05rem,1.6vw,1.2rem); font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
-.techdia__groupmeta { margin: 0; font-size: 0.75rem; color: var(--color-graphite-500); }
+.techdia__groupmeta { margin: 0; font-size: 0.75rem; color: var(--text-muted); }
 
 .techdia__grid { list-style: none; margin: 0; padding: 0; display: grid;
   grid-template-columns: 1fr; gap: clamp(1rem,2vw,1.35rem); }
@@ -2404,11 +2416,11 @@ body.is-scrolled #quickbar {
 .tdiag-lightbox.is-open { display: flex; }
 .tdiag-lightbox figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 0.9rem; max-width: min(92vw, 1100px); }
 .tdiag-lightbox img { max-width: 100%; max-height: 80vh; background: var(--color-white); border-radius: var(--radius); box-shadow: 0 18px 50px rgba(0,0,0,0.45); }
-.tdiag-lightbox figcaption { color: rgba(255,255,255,0.9); font-size: 0.875rem; text-align: center; }
+.tdiag-lightbox figcaption { color: var(--on-dark-strong); font-size: 0.875rem; text-align: center; }
 .tdiag-lightbox__close { position: absolute; top: clamp(0.75rem,2vw,1.4rem); right: clamp(0.75rem,2vw,1.4rem);
   width: 2.75rem; height: 2.75rem; display: grid; place-items: center; font-size: 1.6rem; line-height: 1; cursor: pointer;
   color: var(--color-white); background: none; border: 0; transition: color .15s ease, transform .15s ease; }
-.tdiag-lightbox__close:hover { color: rgba(255,255,255,0.7); transform: scale(1.08); }
+.tdiag-lightbox__close:hover { color: var(--on-dark-strong); transform: scale(1.08); }
 .tdiag-lightbox__close svg { width: 1.25rem; height: 1.25rem; }
 /* nav arrows — design-system slider arrow: square var(--radius), white outline, inverts on hover (never circular) */
 .tdiag-lightbox__nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
