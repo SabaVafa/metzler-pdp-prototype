@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Metzler PDP — Version B (Inline-Konfiguration)</title>
-<!-- Pflicht: Metzler-Favicon (rotes M-Quadrat) — self-contained data-URI aus dem Design System -->
+<title>Metzler PDP – Version B (Inline-Konfiguration)</title>
+<!-- Pflicht: Metzler-Favicon (rotes M-Quadrat) – self-contained data-URI aus dem Design System -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 184.3 184.3'%3E%3Crect width='184.3' height='184.3' rx='5.75' fill='%23cc322b'/%3E%3Cpath fill='%23fff' d='M70.19,34.81l19.04,32.98-9.58,16.57-28.59-49.55h19.13ZM70.28,108.58h0l-23.45-40.64v85.89h-16.57V34.81h16.57l33.02,57.21L123.92,15.65h19.13l-63.22,109.52-9.58-16.57.02-.02ZM153.14,153.83h-16.57v-85.87l-33,57.14h-19.13l52.11-90.28h16.57v119.02l.02-.02Z'/%3E%3C/svg%3E" />
-<meta name="description" content="Neue Produktdetailseite (PDP) — geteilte Kopf-/Navigations-/Fußzeilen-Komponenten aus dem Metzler Design System." />
+<meta name="description" content="Neue Produktdetailseite (PDP) – geteilte Kopf-/Navigations-/Fußzeilen-Komponenten aus dem Metzler Design System." />
 <!-- Engraving font styles (Gravur) -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Cinzel:wght@600&family=Cormorant+Garamond:wght@600&family=Dancing+Script:wght@700&family=Great+Vibes&family=Montserrat:wght@600&family=Oswald:wght@500&family=Playfair+Display:wght@600&family=Roboto+Mono:wght@500&family=UnifrakturMaguntia&display=swap" />
-<!-- Design system (topbar · header · nav strip · mobile-nav · footer) — reused as-is -->
+<!-- Design system (topbar · header · nav strip · mobile-nav · footer) – reused as-is -->
 <link rel="stylesheet" href="Home/styles-v2.css?v=19" />
 <!-- Mega-menu dropdown, grabbed from the PLP -->
 <link rel="stylesheet" href="chrome.css?v=5" />
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=35" />
-<!-- Version B — inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=573" />
+<!-- Version B – inline build panel -->
+<link rel="stylesheet" href="pdp-b.css?v=574" />
 </head>
 <body class="plp">
 <a class="skip-link" href="#pdpMain">Zum Inhalt springen</a>
@@ -79,7 +79,7 @@
       </button>
       <div class="header__search">
         <svg><use href="#i-search"/></svg>
-        <input type="search" aria-label="Produkte suchen" placeholder="Suchen — Türklingel, Briefkasten, Sprechanlage…" />
+        <input type="search" aria-label="Produkte suchen" placeholder="Suchen – Türklingel, Briefkasten, Sprechanlage…" />
       </div>
       <div class="header__icons">
         <a class="icon-btn" href="#" aria-label="Mein Konto"><img src="Home/ICONS/profile.svg" alt="" /></a>
@@ -260,7 +260,7 @@
   </aside>
 </div>
 
-<!-- ===== QUICKBAR (contact / quick actions) — grabbed from the PLP ===== -->
+<!-- ===== QUICKBAR (contact / quick actions) – grabbed from the PLP ===== -->
 <div class="quickbar" id="quickbar">
   <div class="container quickbar-inner">
     <button class="qa-mobile-toggle" type="button" aria-expanded="false" aria-controls="qaPanel">
@@ -308,7 +308,7 @@
   </div>
 </div>
 
-<!-- ===== BREADCRUMB — grabbed from the PLP ===== -->
+<!-- ===== BREADCRUMB – grabbed from the PLP ===== -->
 <nav class="crumb" aria-label="Breadcrumb">
   <div class="container">
     <ol>
@@ -327,7 +327,7 @@
   <section class="pdp-hero" id="ueberblick" aria-label="Produktübersicht">
     <div class="container pdp-hero__grid">
 
-      <!-- Product header — title · rating · share (precedes the image on mobile) -->
+      <!-- Product header – title · rating · share (precedes the image on mobile) -->
       <header class="pdp-hero__head">
         <p class="pdp-eyebrow">Video-Türsprechanlage · nach Maß</p>
         <h1 class="pdp-title">Metzler VDM10&nbsp;2.0 Video&#8209;Türsprechanlage&nbsp;<span class="pdp-title__sep">|</span> 1&nbsp;Klingeltaster<span class="pdp-title__color" id="pdpTitleColor"></span>&nbsp;<span class="pdp-title__sep">|</span> Colson</h1>
@@ -420,10 +420,10 @@
         <dl class="pdp-specs" aria-label="Produktdaten">
           <div class="pdp-specs__item"><dt class="pdp-specs__label">Hersteller</dt><dd class="pdp-specs__value">Metzler</dd></div>
           <div class="pdp-specs__item"><dt class="pdp-specs__label">Breite × Höhe</dt><dd class="pdp-specs__value">13,30 × 27,40&nbsp;cm</dd></div>
-          <div class="pdp-specs__item"><dt class="pdp-specs__label">Artikelnummer</dt><dd class="pdp-specs__value" id="bArticleInline">—</dd></div>
+          <div class="pdp-specs__item"><dt class="pdp-specs__label">Artikelnummer</dt><dd class="pdp-specs__value" id="bArticleInline">–</dd></div>
         </dl>
 
-        <!-- Fixed plain price block (no card) above the swatches — the total, shown both
+        <!-- Fixed plain price block (no card) above the swatches – the total, shown both
              before and after colour selection -->
         <div class="pdp-price pdp-price--lead">
           <span class="cfgb-price__label" hidden>Preis wie konfiguriert</span>
@@ -437,12 +437,12 @@
           </div>
         </div>
 
-        <!-- ===== AUSFÜHRUNG · FARBE — eigene Variante (außerhalb der Konfiguration; steuert die Optionen) ===== -->
+        <!-- ===== AUSFÜHRUNG · FARBE – eigene Variante (außerhalb der Konfiguration; steuert die Optionen) ===== -->
         <div class="bx-color" id="bFarbe">
           <div class="bx-color__head">
             <span class="bx-color__label">Farbe: <span class="bx-color__dot" id="pdpFinishDot" hidden></span><b id="pdpFinishName">Bitte Farbe wählen</b></span>
           </div>
-          <div class="pdp-swatches bx-swatches" id="pdpSwatches" role="group" aria-label="Farbe wählen — jede Farbe ist eine eigene Variante mit eigener Artikelnummer">
+          <div class="pdp-swatches bx-swatches" id="pdpSwatches" role="group" aria-label="Farbe wählen – jede Farbe ist eine eigene Variante mit eigener Artikelnummer">
             <span class="bx-swline" aria-hidden="true"></span>
             <button type="button" class="pdp-swatch" aria-pressed="false" data-finish="Anthrazit RAL 7016" data-delta="0" data-article="31101"><img src="assets/swatches/anthrazit-ral7016.jpg" alt="Anthrazit RAL 7016"></button>
             <button type="button" class="pdp-swatch" aria-pressed="false" data-finish="Verkehrsweiß RAL 9016" data-delta="0" data-article="31102"><img src="assets/swatches/verkehrsweiss-ral9016.jpg" alt="Verkehrsweiß RAL 9016"></button>
@@ -456,19 +456,19 @@
 
           <!-- ===== WUNSCHFARBE · premium RAL picker (revealed when "Wunschfarbe nach RAL" is chosen) ===== -->
           <div class="ralpick" id="ralPick">
-            <!-- collapsed trigger — a combobox that previews the chosen tone -->
+            <!-- collapsed trigger – a combobox that previews the chosen tone -->
             <button type="button" class="ralpick__trigger" id="ralTrigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="ralPanel">
               <span class="ralpick__trighead">
                 <span class="ralpick__swatch ralpick__swatch--empty" id="ralTrigSwatch" aria-hidden="true"></span>
                 <span class="ralpick__trigtext">
                   <span class="ralpick__triglabel" id="ralTrigLabel">Wunschfarbe wählen</span>
-                  <span class="ralpick__trigsub" id="ralTrigSub">RAL Classic — Farbton suchen &amp; auswählen</span>
+                  <span class="ralpick__trigsub" id="ralTrigSub">RAL Classic – Farbton suchen &amp; auswählen</span>
                 </span>
               </span>
               <svg class="ralpick__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
             </button>
 
-            <!-- expanded panel — collapses/expands via grid-template-rows on .ralpick__panel -->
+            <!-- expanded panel – collapses/expands via grid-template-rows on .ralpick__panel -->
             <div class="ralpick__panel" id="ralPanel" role="dialog" aria-label="RAL-Farbe wählen">
               <div class="ralpick__panelinner">
                 <div class="ralpick__panelpad">
@@ -482,7 +482,7 @@
                 <div class="ralpick__viewport" id="ralViewport">
                   <div class="ralpick__track" id="ralGrid" role="listbox" aria-label="RAL-Farben"></div>
                 </div>
-                <p class="ralpick__empty" id="ralEmpty" hidden>Keine Farbe gefunden — bitte Suche anpassen.</p>
+                <p class="ralpick__empty" id="ralEmpty" hidden>Keine Farbe gefunden – bitte Suche anpassen.</p>
                 <div class="ralpick__pager" id="ralPager" hidden>
                   <button type="button" class="ralpick__pagebtn" id="ralPrev" aria-label="Vorherige Farben"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
                   <span class="ralpick__pageinfo" id="ralPageInfo">1 / 1</span>
@@ -493,13 +493,13 @@
             </div>
           </div>
 
-          <p class="bx-color__note">Jede Farbe ist eine <b>eigene Variante</b> mit eigener Artikelnummer — Ihre Wahl bestimmt die verfügbaren Konfigurationsoptionen.</p>
+          <p class="bx-color__note">Jede Farbe ist eine <b>eigene Variante</b> mit eigener Artikelnummer – Ihre Wahl bestimmt die verfügbaren Konfigurationsoptionen.</p>
         </div>
 
-        <!-- ===== KONFIGURATION (erforderlich) — geführt, mit Fortschritts-Spine ===== -->
+        <!-- ===== KONFIGURATION (erforderlich) – geführt, mit Fortschritts-Spine ===== -->
         <div class="cfgb is-locked" id="cfgbPanel">
           <span class="cfgb-sentinel" aria-hidden="true"></span>
-          <!-- Unified Step-Dock — the single source of step title/progress (zero redundancy) -->
+          <!-- Unified Step-Dock – the single source of step title/progress (zero redundancy) -->
           <div class="cfgb-dock">
             <div class="cfgb-bar__track" id="bSeg" role="tablist" aria-label="Konfigurationsschritte">
               <button class="cfgb-bar__step" type="button" data-goto="0" aria-label="Schritt 1: Anschluss"><span class="cfgb-bar__num">1</span><span class="cfgb-bar__label">Anschluss</span></button>
@@ -527,7 +527,7 @@
           <div class="cfgb-stage" id="bStage">
           <ol class="stepr" id="cfgbSteps">
 
-            <!-- 1 · Anschluss (required — compatibility gate; drives steps 3 & 4) -->
+            <!-- 1 · Anschluss (required – compatibility gate; drives steps 3 & 4) -->
             <li class="stepr__item is-active" data-step="0" data-key="anschluss">
               <button class="stepr__head" type="button" aria-expanded="true">
                 <span class="stepr__node"><span class="stepr__num">1</span><svg class="stepr__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
@@ -537,8 +537,8 @@
               </button>
               <div class="stepr__body"><div class="stepr__inner"><div class="stepr__pad">
                 <div class="cfg-opts" id="bAnschluss" role="radiogroup" aria-label="Anschlussart">
-                  <button class="cfg-opt" data-anschluss="LAN / PoE" data-conn="lan" data-delta="0" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Anschluss/lan-poe.webp" alt=""></span><span class="cfg-opt__rec">Empfohlen</span><span class="cfg-opt__body"><span class="cfg-opt__name">LAN / PoE</span><span class="cfg-opt__desc">Netzwerk-Verkabelung mit PoE — empfohlen für Neubau</span></span><span class="cfg-opt__price is-incl">inklusive</span></button>
-                  <button class="cfg-opt" data-anschluss="2-Draht IP" data-conn="2draht" data-delta="0" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Anschluss/2-draht-ip.webp" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">2-Draht IP</span><span class="cfg-opt__desc">Nutzt die vorhandene 2-Draht-Leitung — ideal für Nachrüstung</span></span><span class="cfg-opt__price is-incl">inklusive</span></button>
+                  <button class="cfg-opt" data-anschluss="LAN / PoE" data-conn="lan" data-delta="0" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Anschluss/lan-poe.webp" alt=""></span><span class="cfg-opt__rec">Empfohlen</span><span class="cfg-opt__body"><span class="cfg-opt__name">LAN / PoE</span><span class="cfg-opt__desc">Netzwerk-Verkabelung mit PoE – empfohlen für Neubau</span></span><span class="cfg-opt__price is-incl">inklusive</span></button>
+                  <button class="cfg-opt" data-anschluss="2-Draht IP" data-conn="2draht" data-delta="0" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Anschluss/2-draht-ip.webp" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">2-Draht IP</span><span class="cfg-opt__desc">Nutzt die vorhandene 2-Draht-Leitung – ideal für Nachrüstung</span></span><span class="cfg-opt__price is-incl">inklusive</span></button>
                 </div>
                 <p class="cfgb-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg><span>Bitte beachten Sie die Anschlussvorgaben und Installationshinweise. Diese Wahl bestimmt die passenden Innenstationen und die Stromversorgung.</span></p>
                 <button type="button" class="cfgb-next" data-next>Weiter</button>
@@ -555,7 +555,7 @@
               </button>
               <div class="stepr__body"><div class="stepr__inner"><div class="stepr__pad">
                 <div class="cfg-opts cfg-opts--rows" id="bGravurSeg" role="group" aria-label="Namensgravur hinzufügen">
-                  <button class="cfg-opt cfg-opt--check" data-gravur="on" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Mit Namensgravur</span><span class="cfg-opt__desc">Ihr Name per Lasergravur — UV- &amp; witterungsbeständig</span></span><span class="cfg-opt__price is-incl">inklusive</span></button>
+                  <button class="cfg-opt cfg-opt--check" data-gravur="on" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__body"><span class="cfg-opt__name">Mit Namensgravur</span><span class="cfg-opt__desc">Ihr Name per Lasergravur – UV- &amp; witterungsbeständig</span></span><span class="cfg-opt__price is-incl">inklusive</span></button>
                 </div>
                 <div class="cfgb-field" id="bGravurField">
                   <input class="cfg-input" id="bGravurText" type="text" maxlength="20" placeholder="Ihr Name (z. B. Vossberg)" aria-label="Gravurtext">
@@ -585,8 +585,8 @@
                 <svg class="stepr__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
               </button>
               <div class="stepr__body"><div class="stepr__inner"><div class="stepr__pad">
-                <p class="cfg-innen-note"><b>Ohne Innenstation?</b> Wählen Sie einfach keine aus — die Anlage ist dann über SIP / Fritz!Box &amp; Fritz!Fon nutzbar. Die Metzler Smartphone-App ist nur mit einer Innenstation verfügbar.</p>
-                <div class="cfg-opts" id="bInnen" role="group" aria-label="Innenstationen wählen — Mehrfachauswahl möglich, je Modell eigene Menge">
+                <p class="cfg-innen-note"><b>Ohne Innenstation?</b> Wählen Sie einfach keine aus – die Anlage ist dann über SIP / Fritz!Box &amp; Fritz!Fon nutzbar. Die Metzler Smartphone-App ist nur mit einer Innenstation verfügbar.</p>
+                <div class="cfg-opts" id="bInnen" role="group" aria-label="Innenstationen wählen – Mehrfachauswahl möglich, je Modell eigene Menge">
                   <div class="cfg-choice">
                     <button class="cfg-opt cfg-opt--check" data-innen="Innenstation Home" data-conn="both" data-delta="199" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Sprechanlage/innenstation.png" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Innenstation Home</span><span class="cfg-opt__desc">7″ Touchscreen · weiß oder schwarz</span></span><span class="cfg-opt__price">+199,00 €</span></button>
                     <div class="cfg-choice__qty"><span class="cfg-choice__qtyl">Menge</span><span class="cfg-opt__qty"><button type="button" data-qd="-1" data-target="innen:Innenstation Home" aria-label="weniger">−</button><span data-innenqtyfor="Innenstation Home">1</span><button type="button" data-qd="1" data-target="innen:Innenstation Home" aria-label="mehr">+</button></span></div>
@@ -613,8 +613,8 @@
                 <svg class="stepr__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
               </button>
               <div class="stepr__body"><div class="stepr__inner"><div class="stepr__pad">
-                <p class="cfg-innen-note"><b>Standard</b> — kein zusätzliches Netzteil erforderlich. Wählen Sie unten nur, wenn Sie eine PoE-Speisung oder einen 2-Draht-Verteiler benötigen.</p>
-                <div class="cfg-opts" id="bStrom" role="group" aria-label="Zusätzliche Stromversorgung wählen — optional">
+                <p class="cfg-innen-note"><b>Standard</b> – kein zusätzliches Netzteil erforderlich. Wählen Sie unten nur, wenn Sie eine PoE-Speisung oder einen 2-Draht-Verteiler benötigen.</p>
+                <div class="cfg-opts" id="bStrom" role="group" aria-label="Zusätzliche Stromversorgung wählen – optional">
                   <div class="cfg-choice">
                     <button class="cfg-opt" data-strom="Netzwerkswitch 4× PoE+" data-conn="lan" data-delta="49.99" type="button"><span class="cfg-opt__mark"></span><span class="cfg-opt__thumb" aria-hidden="true"><img src="Product Image/Verteiler/metzler-2-draht-video-audio-verteiler-transformator-4-anschluesse-fuer-die-xdm10-serie.webp" alt=""></span><span class="cfg-opt__body"><span class="cfg-opt__name">Netzwerkswitch 10/100 · 4× PoE+</span><span class="cfg-opt__desc">Speist Tür- und Innenstationen per PoE</span></span><span class="cfg-opt__price">+49,99 €</span></button>
                     <div class="cfg-choice__qty"><span class="cfg-choice__qtyl">Menge</span><span class="cfg-opt__qty"><button type="button" data-qd="-1" data-target="strom" aria-label="weniger">−</button><span data-stromqty>1</span><button type="button" data-qd="1" data-target="strom" aria-label="mehr">+</button></span></div>
@@ -679,7 +679,7 @@
 
         </div>
 
-        <!-- ===== BUY BLOCK — "Preis wie konfiguriert" · always-live cart (validate on click, never lock) ===== -->
+        <!-- ===== BUY BLOCK – "Preis wie konfiguriert" · always-live cart (validate on click, never lock) ===== -->
         <div class="cfgb-checkout" id="bCheckout">
           <!-- Price details (follows the config): opening reveals the itemised breakdown + total -->
           <div class="cfgb-acc" id="bAcc">
@@ -693,7 +693,7 @@
             <span class="cfg-opt__qty cfgb-buyrow__qty" aria-label="Menge VDM10 Türstation"><button type="button" data-qd="-1" data-target="main" aria-label="Menge verringern">−</button><span id="bMainQtyVal">1</span><button type="button" data-qd="1" data-target="main" aria-label="Menge erhöhen">+</button></span>
             <button type="button" class="pdp-cta cfgb-cta" id="bCart">In den Warenkorb</button>
           </div>
-          <!-- delivery table (after the CTA) — two-column spec layout: label │ value -->
+          <!-- delivery table (after the CTA) – two-column spec layout: label │ value -->
           <div class="bx-delivery" aria-label="Versand und Lieferung">
             <div class="bx-delivery__row">
               <span class="bx-delivery__key"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>Versanddatum</span>
@@ -706,7 +706,7 @@
           </div>
         </div>
 
-        <!-- ===== FEATURE HIGHLIGHTS — numbered editorial list (below the CTA) ===== -->
+        <!-- ===== FEATURE HIGHLIGHTS – numbered editorial list (below the CTA) ===== -->
         <section class="feat" aria-label="Produkt-Highlights">
           <ol class="feat__list">
             <li class="feat__item"><span class="feat__name">Fortschrittliche Gesichtserkennung</span><span class="feat__desc">Öffnen Sie Ihre Tür sicher und schnell mit biometrischer Gesichtserkennung in nur 200 Millisekunden.</span></li>
@@ -715,7 +715,7 @@
             <li class="feat__item"><span class="feat__name">Intuitives Touch-Display</span><span class="feat__desc">Bedienen Sie die Anlage mühelos über das benutzerfreundliche IPS-Touch-Display.</span></li>
             <li class="feat__item"><span class="feat__name">Vielseitige Türöffnungsoptionen</span><span class="feat__desc">Nutzen Sie Gesichtserkennung, RFID-Karten, PIN-Codes oder die Smartphone-App für den Zutritt.</span></li>
           </ol>
-          <!-- Trust badges — inside the feature card -->
+          <!-- Trust badges – inside the feature card -->
           <div class="hl__badges hl__badges--infeat">
             <span class="hl__badge">
               <img class="hl__badge-seal" src="ICONS/Garantie-hq.svg" alt="" aria-hidden="true" width="42" height="42">
@@ -743,7 +743,7 @@
           </span>
         </div>
 
-        <!-- Service & Beratung — support / partner network / consultation -->
+        <!-- Service & Beratung – support / partner network / consultation -->
         <nav class="svc" aria-label="Service und Beratung">
           <a class="svc__item" href="#">
             <span class="svc__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 4M12 17h.01"/></svg></span>
@@ -779,7 +779,7 @@
     </div>
   </section>
 
-  <!-- ===== Customer reviews — standalone preview, immediately after the product hero ===== -->
+  <!-- ===== Customer reviews – standalone preview, immediately after the product hero ===== -->
   <section id="bewertungen" class="rv" aria-labelledby="rvHeading">
     <div class="container rv__inner">
 
@@ -821,7 +821,7 @@
         </div>
       </div>
 
-      <!-- Testimonial preview — featured happy review with the customer's own photo,
+      <!-- Testimonial preview – featured happy review with the customer's own photo,
            navigated by a row of real customer-photo thumbnails (built by JS from the
            hidden data source below). -->
       <div class="rv__carousel">
@@ -911,7 +911,7 @@
     </div>
   </section>
 
-  <!-- ===== PRODUCT INFO — sticky scroll-spy nav over the info sections ===== -->
+  <!-- ===== PRODUCT INFO – sticky scroll-spy nav over the info sections ===== -->
   <nav class="psx-nav" id="psxNav" aria-label="Produktinformationen">
     <div class="container psx-nav__inner">
       <div class="psx-nav__tabs">
@@ -928,7 +928,7 @@
     </div>
   </nav>
 
-  <!-- 1 · Beschreibung — pinned scrollytelling: a sticky image/clip that swaps
+  <!-- 1 · Beschreibung – pinned scrollytelling: a sticky image/clip that swaps
        as the text scenes scroll past (position:sticky, no scroll-jacking) -->
   <section id="sx-beschreibung" class="psx-sec psx-story" aria-label="Produktbeschreibung">
     <div class="container psx-sec__inner">
@@ -1045,12 +1045,12 @@
         </div>
       </div>
 
-      <!-- ===== Neue Features — premium branded panel with icon cards ===== -->
+      <!-- ===== Neue Features – premium branded panel with icon cards ===== -->
       <section class="nfeat" aria-labelledby="nfeatTitle">
         <div class="nfeat__head">
           <span class="nfeat__eyebrow">Version 2.0</span>
           <h3 class="nfeat__title" id="nfeatTitle">Neue Features</h3>
-          <p class="nfeat__lead">Was die VDM10&nbsp;2.0 gegenüber der Vorgängergeneration besser macht — von der Einrichtung bis zur Integration.</p>
+          <p class="nfeat__lead">Was die VDM10&nbsp;2.0 gegenüber der Vorgängergeneration besser macht – von der Einrichtung bis zur Integration.</p>
         </div>
         <ul class="nfeat__grid">
           <li class="nfeat__card">
@@ -1092,7 +1092,7 @@
         </ul>
       </section>
 
-      <!-- Produktdaten — compact, scannable spec summary that closes the description -->
+      <!-- Produktdaten – compact, scannable spec summary that closes the description -->
       <div class="dspec">
         <h3 class="dspec__title">Merkmale &amp; Technische Daten</h3>
         <dl class="dspec__list">
@@ -1155,7 +1155,7 @@
     </div>
   </section>
 
-  <!-- 2 · Bewertungen — happy carousel (top) + detailed reviews with rating sidebar -->
+  <!-- 2 · Bewertungen – happy carousel (top) + detailed reviews with rating sidebar -->
   <section id="sx-bewertungen" class="psx-sec" aria-labelledby="sxRevTitle">
     <!-- shared half-star gradient for the summary score -->
     <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="rvwHalf" x1="0" x2="1" y1="0" y2="0"><stop offset="50%" stop-color="#FFC041"/><stop offset="50%" stop-color="#d8dbe0"/></linearGradient></defs></svg>
@@ -1179,7 +1179,7 @@
             <div class="rvw-happy-card__media"><img src="Reviews/review-1.webp" alt="Kundenfoto: Metzler VDM10 in Anthrazit mit Gravur „CAN" an einer Putzfassade" loading="lazy"></div>
             <div class="rvw-happy-card__body">
               <span class="rvw-stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
-              <p class="rvw-happy-quote">„Formschön und im schlichten Design, einfach zu handhaben — und mit der Kopplung aufs Handy eine super Lösung, wenn man mal nicht zu Hause ist."</p>
+              <p class="rvw-happy-quote">„Formschön und im schlichten Design, einfach zu handhaben – und mit der Kopplung aufs Handy eine super Lösung, wenn man mal nicht zu Hause ist."</p>
               <div class="rvw-happy-foot">
                 <span class="rvw-author">Simone L.</span>
                 <span class="rvw-meta"><span class="rvw-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span><time>03.12.2025</time></span>
@@ -1190,7 +1190,7 @@
             <div class="rvw-happy-card__media"><img src="Reviews/review-2.webp" alt="Kundenfoto: Metzler VDM10 aus gebürstetem Edelstahl mit Gravur „Weyrauch"" loading="lazy"></div>
             <div class="rvw-happy-card__body">
               <span class="rvw-stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
-              <p class="rvw-happy-quote">„Die Verarbeitung wirkt hochwertig und stabil. Die Sprachqualität ist klar und deutlich — ohne Rauschen oder Verzerrungen."</p>
+              <p class="rvw-happy-quote">„Die Verarbeitung wirkt hochwertig und stabil. Die Sprachqualität ist klar und deutlich – ohne Rauschen oder Verzerrungen."</p>
               <div class="rvw-happy-foot">
                 <span class="rvw-author">Gast</span>
                 <span class="rvw-meta"><span class="rvw-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span><time>16.02.2026</time></span>
@@ -1223,7 +1223,7 @@
             <div class="rvw-happy-card__media"><img src="Reviews/review-5.webp" alt="Kundenfoto: Metzler VDM10 an einer Holzfassade neben der Haustür" loading="lazy"></div>
             <div class="rvw-happy-card__body">
               <span class="rvw-stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
-              <p class="rvw-happy-quote">„Die Installation war einfacher als gedacht, und die Bildqualität ist wirklich hervorragend — sogar bei Nacht."</p>
+              <p class="rvw-happy-quote">„Die Installation war einfacher als gedacht, und die Bildqualität ist wirklich hervorragend – sogar bei Nacht."</p>
               <div class="rvw-happy-foot">
                 <span class="rvw-author">Gast</span>
                 <span class="rvw-meta"><span class="rvw-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span><time>20.12.2024</time></span>
@@ -1266,7 +1266,7 @@
           <article class="rvw-review">
             <div class="rvw-review__head"><span class="rvw-stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span class="rvw-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span></div>
             <h4 class="rvw-review__title">Videosprechanlage Colson</h4>
-            <p class="rvw-review__text">Kombiniert modernes Design mit hochwertiger Technik und lässt sich individuell personalisieren. Die Kamera liefert ein tolles Bild, selbst bei schlechten Lichtverhältnissen — Besucher sind auch bei Dunkelheit erkennbar. Der großzügige Betrachtungswinkel deckt den gesamten Eingangsbereich ab. Verarbeitung hochwertig, Materialien robust und wetterfest. Die Montage war dank der ausführlichen Anleitung problemlos und in unter einer Stunde erledigt — auch als handwerklicher Laie hatte ich keine Schwierigkeiten. Besonders überzeugt hat mich die Sprachqualität: klar, laut genug und ohne störendes Rauschen, selbst bei Wind. Die Kopplung mit der App funktioniert zuverlässig, sodass wir auch von unterwegs sehen können, wer vor der Tür steht, und bequem öffnen können. Nach mehreren Monaten im Dauerbetrieb bei Regen, Frost und praller Sonne zeigt das Gehäuse keinerlei Verschleiß. Die Gravur ist sauber ausgeführt und verleiht der Anlage eine edle, persönliche Note. Der Kundenservice war bei einer Rückfrage schnell und kompetent erreichbar. Insgesamt eine rundum gelungene Anschaffung, die ich jederzeit weiterempfehlen würde — Preis und Leistung stimmen hier absolut.</p>
+            <p class="rvw-review__text">Kombiniert modernes Design mit hochwertiger Technik und lässt sich individuell personalisieren. Die Kamera liefert ein tolles Bild, selbst bei schlechten Lichtverhältnissen – Besucher sind auch bei Dunkelheit erkennbar. Der großzügige Betrachtungswinkel deckt den gesamten Eingangsbereich ab. Verarbeitung hochwertig, Materialien robust und wetterfest. Die Montage war dank der ausführlichen Anleitung problemlos und in unter einer Stunde erledigt – auch als handwerklicher Laie hatte ich keine Schwierigkeiten. Besonders überzeugt hat mich die Sprachqualität: klar, laut genug und ohne störendes Rauschen, selbst bei Wind. Die Kopplung mit der App funktioniert zuverlässig, sodass wir auch von unterwegs sehen können, wer vor der Tür steht, und bequem öffnen können. Nach mehreren Monaten im Dauerbetrieb bei Regen, Frost und praller Sonne zeigt das Gehäuse keinerlei Verschleiß. Die Gravur ist sauber ausgeführt und verleiht der Anlage eine edle, persönliche Note. Der Kundenservice war bei einer Rückfrage schnell und kompetent erreichbar. Insgesamt eine rundum gelungene Anschaffung, die ich jederzeit weiterempfehlen würde – Preis und Leistung stimmen hier absolut.</p>
             <div class="rvw-review__media" aria-label="Fotos von diesem Kunden">
               <button type="button" class="rvw-shot" data-full="Reviews/review-1.webp"><img src="Reviews/review-1.webp" alt="Kundenfoto: montierte Anlage an einer Putzfassade" loading="lazy"></button>
               <button type="button" class="rvw-shot" data-full="Reviews/review-2.webp"><img src="Reviews/review-2.webp" alt="Kundenfoto: Anlage aus gebürstetem Edelstahl" loading="lazy"></button>
@@ -1276,8 +1276,8 @@
           </article>
           <article class="rvw-review">
             <div class="rvw-review__head"><span class="rvw-stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span class="rvw-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span></div>
-            <h4 class="rvw-review__title">Klare Kaufempfehlung — sehr zufrieden!</h4>
-            <p class="rvw-review__text">Die Installation war unkompliziert und auch für mich als Nicht-Profi gut machbar. Die Verarbeitung wirkt hochwertig und stabil. Die Sprachqualität ist klar und deutlich — ohne Rauschen oder Verzerrungen. Insgesamt ein sehr gutes Preis-Leistungs-Verhältnis. Ich würde sie jederzeit wieder kaufen.</p>
+            <h4 class="rvw-review__title">Klare Kaufempfehlung – sehr zufrieden!</h4>
+            <p class="rvw-review__text">Die Installation war unkompliziert und auch für mich als Nicht-Profi gut machbar. Die Verarbeitung wirkt hochwertig und stabil. Die Sprachqualität ist klar und deutlich – ohne Rauschen oder Verzerrungen. Insgesamt ein sehr gutes Preis-Leistungs-Verhältnis. Ich würde sie jederzeit wieder kaufen.</p>
             <div class="rvw-review__foot"><span class="rvw-author">Gast</span><time>16.02.2026</time></div>
           </article>
           <article class="rvw-review">
@@ -1289,7 +1289,7 @@
           <article class="rvw-review">
             <div class="rvw-review__head"><span class="rvw-stars" role="img" aria-label="4 von 5 Sternen"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="#d8dbe0"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span class="rvw-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span></div>
             <h4 class="rvw-review__title">Metzler Türsprechanlage</h4>
-            <p class="rvw-review__text">Die Softwareinstallation ist top — schnell, unkompliziert und läuft fehlerfrei. Weniger begeistert war ich vom Einbau: Da kein Unterputz-Halter verfügbar ist, war die Montage im Stahlpfosten mühsam. Technisch super, beim Einbau im Metallpfosten muss man aber etwas improvisieren.</p>
+            <p class="rvw-review__text">Die Softwareinstallation ist top – schnell, unkompliziert und läuft fehlerfrei. Weniger begeistert war ich vom Einbau: Da kein Unterputz-Halter verfügbar ist, war die Montage im Stahlpfosten mühsam. Technisch super, beim Einbau im Metallpfosten muss man aber etwas improvisieren.</p>
             <div class="rvw-review__media" aria-label="Fotos von diesem Kunden">
               <button type="button" class="rvw-shot" data-full="Reviews/review-4.webp"><img src="Reviews/review-4.webp" alt="Kundenfoto: Anlage und Briefkasten an einer Toranlage" loading="lazy"></button>
               <button type="button" class="rvw-shot" data-full="Reviews/review-5.webp"><img src="Reviews/review-5.webp" alt="Kundenfoto: Anlage an einer Holzfassade neben der Haustür" loading="lazy"></button>
@@ -1305,7 +1305,7 @@
           <article class="rvw-review">
             <div class="rvw-review__head"><span class="rvw-stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span class="rvw-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Verifizierter Kauf</span></div>
             <h4 class="rvw-review__title">Metzler Türsprechanlage</h4>
-            <p class="rvw-review__text">Die Bild- und Tonqualität ist gut, das Design modern und die Bedienung über Panel und App sehr praktisch. Besonders angenehm ist die zuverlässige Nutzung im Alltag. Vielen Dank für ein gelungenes und hochwertiges Produkt — klare Weiterempfehlung.</p>
+            <p class="rvw-review__text">Die Bild- und Tonqualität ist gut, das Design modern und die Bedienung über Panel und App sehr praktisch. Besonders angenehm ist die zuverlässige Nutzung im Alltag. Vielen Dank für ein gelungenes und hochwertiges Produkt – klare Weiterempfehlung.</p>
             <div class="rvw-review__media" aria-label="Fotos von diesem Kunden">
               <button type="button" class="rvw-shot" data-full="Reviews/review-3.webp"><img src="Reviews/review-3.webp" alt="Kundenfoto: montierte Anlage im Alltag" loading="lazy"></button>
             </div>
@@ -1322,7 +1322,7 @@
     <div class="container psx-sec__inner">
       <p class="psx-eyebrow">Downloads</p>
       <h2 class="psx-title" id="sxDlTitle">Anleitungen &amp; Dokumente</h2>
-      <p class="psx-lead">Alle Unterlagen zu Ihrer VDM10&nbsp;2.0 — jederzeit als PDF zum Herunterladen.</p>
+      <p class="psx-lead">Alle Unterlagen zu Ihrer VDM10&nbsp;2.0 – jederzeit als PDF zum Herunterladen.</p>
       <ul class="psx-dl">
         <li><a class="psx-dl__item" href="#" download><span class="psx-dl__badge">PDF</span><span class="psx-dl__text"><b>Bedienungsanleitung</b><span>Deutsch · 4,2 MB</span></span><svg class="psx-dl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></a></li>
         <li><a class="psx-dl__item" href="#" download><span class="psx-dl__badge">PDF</span><span class="psx-dl__text"><b>Montageanleitung</b><span>Deutsch · 6,8 MB</span></span><svg class="psx-dl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></a></li>
@@ -1341,7 +1341,7 @@
       <p class="psx-eyebrow">Technische Details</p>
       <h2 class="psx-title" id="sxTechTitle">Technische Daten im Überblick</h2>
 
-      <!-- Technische Übersichten — master–detail on one unified surface (rail + panel) -->
+      <!-- Technische Übersichten – master–detail on one unified surface (rail + panel) -->
       <div class="techms">
         <div class="techms__rail" role="tablist" aria-orientation="vertical" aria-label="Technische Übersichten">
           <button class="techms__tab is-active" role="tab" id="tmt-abm" aria-selected="true" aria-controls="tmp-abm" type="button">
@@ -1475,7 +1475,7 @@
             <a class="psx-dl__item" href="#" download>
               <span class="psx-dl__badge">PDF</span>
               <span class="psx-dl__text">
-                <b>Technisches Datenblatt — Außeneinheit / Türstation</b>
+                <b>Technisches Datenblatt – Außeneinheit / Türstation</b>
                 <span>Maße, Anschlusswerte und Kennzahlen der VDM10&nbsp;2.0 Türstation auf einen Blick · Deutsch · 1,1&nbsp;MB</span>
               </span>
               <svg class="psx-dl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
@@ -1487,13 +1487,13 @@
     </div>
   </section>
 
-  <!-- 5 · Frage zum Artikel — FAQ (consistent with the produktionsprozess page) -->
+  <!-- 5 · Frage zum Artikel – FAQ (consistent with the produktionsprozess page) -->
   <section id="sx-frage" class="psx-sec psx-sec--alt faq" aria-labelledby="sxFrageTitle">
     <div class="container">
       <div class="faq__inner">
         <aside class="faq__support">
           <h3>Beratung gewünscht?</h3>
-          <p>Unser Fachteam beantwortet Ihre Frage zum Artikel persönlich — zu Anschluss, Montage und Konfiguration. Kostenlos und unverbindlich.</p>
+          <p>Unser Fachteam beantwortet Ihre Frage zum Artikel persönlich – zu Anschluss, Montage und Konfiguration. Kostenlos und unverbindlich.</p>
           <a class="faq__cta" href="#" data-qf-open>Zum Kundensupport</a>
           <div class="faq__phone">
             Sprechanlagen-Hotline
@@ -1507,19 +1507,19 @@
           <div class="faq__list">
             <details class="faq__item" open>
               <summary class="faq__q">Passt die VDM10&nbsp;2.0 an meine bestehende 2-Draht-Verkabelung?<span class="faq__q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></summary>
-              <div class="faq__a">Ja. Die Anlage lässt sich wahlweise per 2-Draht-Verteiler oder über LAN/PoE anschließen — die passende Stromversorgung wählen Sie direkt im Konfigurator.</div>
+              <div class="faq__a">Ja. Die Anlage lässt sich wahlweise per 2-Draht-Verteiler oder über LAN/PoE anschließen – die passende Stromversorgung wählen Sie direkt im Konfigurator.</div>
             </details>
             <details class="faq__item">
               <summary class="faq__q">Funktioniert die Gesichtserkennung auch bei Dunkelheit?<span class="faq__q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></summary>
-              <div class="faq__a">Ja. Dank IR-unterstützter Nachtsicht erkennt die Kamera Gesichter zuverlässig — auch nachts und bei Gegenlicht am Nachmittag.</div>
+              <div class="faq__a">Ja. Dank IR-unterstützter Nachtsicht erkennt die Kamera Gesichter zuverlässig – auch nachts und bei Gegenlicht am Nachmittag.</div>
             </details>
             <details class="faq__item">
               <summary class="faq__q">Wie lange dauert die Lieferung meiner Maßanfertigung?<span class="faq__q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></summary>
-              <div class="faq__a">Das voraussichtliche Versanddatum wird Ihnen direkt im Warenkorb angezeigt, sobald Ihre Konfiguration abgeschlossen ist — inklusive Gratis-Versand mit DHL GoGreen.</div>
+              <div class="faq__a">Das voraussichtliche Versanddatum wird Ihnen direkt im Warenkorb angezeigt, sobald Ihre Konfiguration abgeschlossen ist – inklusive Gratis-Versand mit DHL GoGreen.</div>
             </details>
             <details class="faq__item">
               <summary class="faq__q">Kann ich die Anlage später um weitere Innenstationen erweitern?<span class="faq__q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></summary>
-              <div class="faq__a">Ja, das System ist erweiterbar — für mehrere Räume oder Etagen lassen sich jederzeit zusätzliche Innenstationen ergänzen.</div>
+              <div class="faq__a">Ja, das System ist erweiterbar – für mehrere Räume oder Etagen lassen sich jederzeit zusätzliche Innenstationen ergänzen.</div>
             </details>
           </div>
         </div>
@@ -1529,7 +1529,7 @@
 
 </main>
 
-<!-- ===== LIGHTBOX — full-screen gallery of all product images ===== -->
+<!-- ===== LIGHTBOX – full-screen gallery of all product images ===== -->
 <div class="pdp-lightbox" id="pdpLightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Alle Produktbilder">
   <div class="pdp-lightbox__backdrop" data-lb-close></div>
   <div class="pdp-lightbox__panel">
@@ -1566,7 +1566,7 @@
   </div>
 </div>
 
-<!-- ===== PREISDETAILS — bottom-up window (page-wide access) ===== -->
+<!-- ===== PREISDETAILS – bottom-up window (page-wide access) ===== -->
 <div class="sheet" id="bSheet" aria-hidden="true">
   <div class="sheet__backdrop" data-sheet-close></div>
   <div class="sheet__panel" role="dialog" aria-modal="true" aria-label="Preisdetails und Menge">
@@ -1592,7 +1592,7 @@
     <aside class="cm-brand">
       <div class="cm-brand-head">
         <h2 class="cm-brand-title">Sprechen Sie<br>mit einem <em>Experten</em></h2>
-        <p class="cm-lede">Persönliche Beratung, technischer Support und Metzler Partnerbetriebe — wir sind für Sie da.</p>
+        <p class="cm-lede">Persönliche Beratung, technischer Support und Metzler Partnerbetriebe – wir sind für Sie da.</p>
       </div>
       <div class="cm-brand-foot">
         <span class="cm-label">Hotline</span>
@@ -1743,7 +1743,7 @@
   </div>
 </footer>
 
-<!-- Eine Frage zum Produkt stellen — form modal opened by the "Zum Kundensupport" CTA (spec ported from the VDM10 working page) -->
+<!-- Eine Frage zum Produkt stellen – form modal opened by the "Zum Kundensupport" CTA (spec ported from the VDM10 working page) -->
 <div class="qf-overlay" id="questionModal" hidden>
   <div class="qf-dialog" role="dialog" aria-modal="true" aria-labelledby="qfHeadTitle">
     <div class="qf-grip" aria-hidden="true"></div>
@@ -1800,6 +1800,6 @@
 </div>
 
 <script src="chrome.js?v=2"></script>
-<script src="pdp-b.js?v=198"></script>
+<script src="pdp-b.js?v=199"></script>
 </body>
 </html>

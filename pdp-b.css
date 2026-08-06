@@ -1,10 +1,10 @@
 /* ============================================================
-   pdp-b.css — VERSION B · premium above-the-fold
+   pdp-b.css – VERSION B · premium above-the-fold
    Scoped to .pdp-b so Version A (index.html) + shared pdp.css
    stay untouched. Design language: restraint, hierarchy, air.
-   • Farbe = VARIANTE (eigene Art.-Nr.) — außerhalb der Konfig,
+   • Farbe = VARIANTE (eigene Art.-Nr.) – außerhalb der Konfig,
      steuert die Optionen.
-   • Konfiguration = ERFORDERLICH — geführt über einen ruhigen
+   • Konfiguration = ERFORDERLICH – geführt über einen ruhigen
      Fortschritts-Spine, KEIN gesperrter Button, KEINE Warnung.
    • CTA = immer aktiv & morphend: „Weiter …" → „In den Warenkorb".
    ============================================================ */
@@ -17,12 +17,12 @@
 
 /* ── Semantic text tokens (mirrors the About-us model: role-named inks layered
    over the graphite scale). Muted ink = graphite-600 (#6A6A6A), which is AA-safe
-   on white — NOT the DS numeric #7A7A82, which fails AA. On-dark text uses one
+   on white – NOT the DS numeric #7A7A82, which fails AA. On-dark text uses one
    small set (strong/muted) instead of nine ad-hoc opacities. ── */
 :root {
-  --text-primary:   var(--color-digital-black);   /* #1A171B — titles, key copy */
-  --text-secondary: var(--color-graphite-700);     /* #54545C — readable secondary copy */
-  --text-muted:     var(--color-graphite-600);     /* #6A6A6A — captions / metadata / labels */
+  --text-primary:   var(--color-digital-black);   /* #1A171B – titles, key copy */
+  --text-secondary: var(--color-graphite-700);     /* #54545C – readable secondary copy */
+  --text-muted:     var(--color-graphite-600);     /* #6A6A6A – captions / metadata / labels */
   --on-dark-strong: rgba(255, 255, 255, 0.85);     /* emphasis / labels on dark */
   --on-dark-muted:  rgba(255, 255, 255, 0.65);     /* secondary text on dark */
 }
@@ -31,7 +31,7 @@
 @media (min-width: 1440px) { .container { padding-inline: 100px; } }
 .pdp-b .pdp-hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 4rem; }
 
-/* ── Wide screens: thumbnails as a fixed 2-row grid — fewer per row, larger tiles,
+/* ── Wide screens: thumbnails as a fixed 2-row grid – fewer per row, larger tiles,
    NO inner scroll (a nested scroll area fights the page scroll). Extra images live
    behind an "Alle Bilder" lightbox opened from the button below the grid.
    The media column stays sticky (base pdp.css), so the image block pins on scroll.
@@ -61,7 +61,7 @@
 .pdp-b .pdp-thumbs__all:hover { border-color: var(--color-teal); background: var(--color-teal-50); }
 .pdp-b .pdp-thumbs__all svg { width: 1.05rem; height: 1.05rem; }
 
-/* ── Lightbox — full-screen gallery of every product image. The page is locked
+/* ── Lightbox – full-screen gallery of every product image. The page is locked
    behind it, so the modal's own scroll never conflicts with the page. ── */
 /* Full-screen viewer: one large image centred on a dim backdrop, prev/next arrows, a
    position counter, and a sliding thumbnail strip along the bottom to jump anywhere. */
@@ -81,7 +81,7 @@
 .pdp-lightbox__stage { position: relative; flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .pdp-lightbox__img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: var(--radius-lg);
   background: var(--color-white); box-shadow: 0 24px 60px -20px rgba(0,0,0,0.65); }
-/* nav arrows — design-system slider arrow: square var(--radius), translucent dark fill + white outline, inverts on hover (never circular) */
+/* nav arrows – design-system slider arrow: square var(--radius), translucent dark fill + white outline, inverts on hover (never circular) */
 .pdp-lightbox__nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
   display: grid; place-items: center; width: 2.75rem; height: 2.75rem; cursor: pointer;
   background: rgba(0,0,0,0.28); border: 1px solid rgba(255,255,255,0.85); border-radius: var(--radius); color: var(--color-white);
@@ -109,23 +109,23 @@
   .pdp-lightbox__strip { justify-content: flex-start; }   /* many thumbs → left-anchored scroll on mobile */
 }
 
-/* ── Fold rhythm: fewer, larger beats — more air between the stacked blocks ── */
-.pdp-b .pdp-buybox { gap: 2rem; }   /* roomier section rhythm — was cramped at 1.6rem */
+/* ── Fold rhythm: fewer, larger beats – more air between the stacked blocks ── */
+.pdp-b .pdp-buybox { gap: 2rem; }   /* roomier section rhythm – was cramped at 1.6rem */
 /* extra separation before the configurator, so product info reads apart from it */
 .pdp-b .cfgb { margin-top: 0.15rem; }   /* match the title→rating gap so both block edges breathe equally */
 
 /* ── Identity ── */
 .pdp-b .pdp-eyebrow { font-size: 0.75rem; letter-spacing: 0.22em; }
 .pdp-b .pdp-title {
-  /* DS .h1 — responsive 24 → 26 → 30 across the DS breakpoints (≤767 / 768–991 / ≥992). */
+  /* DS .h1 – responsive 24 → 26 → 30 across the DS breakpoints (≤767 / 768–991 / ≥992). */
   font-size: 1.5rem; line-height: 1.25; letter-spacing: -0.02em; font-weight: 700;   /* 24px (mobile) */
   max-width: none; margin: 0; text-wrap: wrap;   /* greedy fill (not "pretty", which shortens lines) */
 }
-@media (min-width: 48rem) { .pdp-b .pdp-title { font-size: 1.625rem; } }   /* 26px — tablet */
-@media (min-width: 62rem) { .pdp-b .pdp-title { font-size: 1.875rem; } }   /* 30px — desktop (DS .h1) */
+@media (min-width: 48rem) { .pdp-b .pdp-title { font-size: 1.625rem; } }   /* 26px – tablet */
+@media (min-width: 62rem) { .pdp-b .pdp-title { font-size: 1.875rem; } }   /* 30px – desktop (DS .h1) */
 .pdp-b .pdp-title .pdp-title__sep { color: var(--color-graphite-600); font-weight: 300; margin: 0 0.3em; }
 
-/* Credential line — one calm row replaces two loud badges */
+/* Credential line – one calm row replaces two loud badges */
 /* tighten the gap between the breadcrumb and the product title (hero top padding) */
 .pdp-b .pdp-hero { padding-top: 1rem; padding-bottom: var(--sx-rhythm); }   /* bottom padding on the section rhythm so the hero→first-section gap matches the rest */
 /* rating/share sits right under the title (the header's 2rem gap left it floating) */
@@ -144,7 +144,7 @@
   background: var(--color-white);
 }
 .bx-cred__badge--hik { color: var(--text-muted); }
-/* ── Share — plain teal text link (not a button) ── */
+/* ── Share – plain teal text link (not a button) ── */
 .bx-share {
   margin-left: auto; flex-shrink: 0; display: inline-flex; align-items: center; gap: 0.45rem;
   padding: 0.25rem 0; border: 0; background: none; cursor: pointer; color: var(--color-teal);
@@ -155,7 +155,7 @@
 .bx-share:hover, .bx-share[aria-expanded="true"] { color: var(--color-teal-600); }
 .bx-share:hover .bx-share__t { text-decoration: underline; text-underline-offset: 3px; }
 
-/* ── Share popover — floating menu below the link ── */
+/* ── Share popover – floating menu below the link ── */
 .bx-share-wrap { position: relative; display: inline-flex; margin-left: auto; flex-shrink: 0; }
 /* .bx-cred carries an entrance transform → its own stacking context, which traps
    the menu behind later siblings. Lift it above them while the menu is open. */
@@ -165,7 +165,7 @@
   background: var(--color-white); border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg);
   box-shadow: 0 0.9rem 1.6rem rgba(26,23,27,0.15), 0 0.2rem 0.5rem rgba(26,23,27,0.08);
   transform-origin: top right; animation: shareIn .16s cubic-bezier(.2,.8,.2,1); }
-/* caret ties the window to its trigger — points up into the "Produkt teilen" link,
+/* caret ties the window to its trigger – points up into the "Produkt teilen" link,
    sitting under the label so the popover reads as one unit with the link it belongs to */
 .bx-share-menu::before { content: ""; position: absolute; top: -0.36rem; right: 1.15rem;
   width: 0.72rem; height: 0.72rem; background: var(--color-white);
@@ -180,7 +180,7 @@
 .bx-share-menu__item:hover, .bx-share-menu__item:focus-visible { background: var(--color-teal-50); color: var(--color-teal); outline: none; }
 .bx-share-menu__item svg { width: 1.1rem; height: 1.1rem; color: var(--color-graphite-500); flex: none; transition: color .14s ease; }
 .bx-share-menu__item:hover svg, .bx-share-menu__item:focus-visible svg { color: var(--color-teal); }
-/* trailing chevron — same colour as the leading icon (graphite-500 → teal on hover) */
+/* trailing chevron – same colour as the leading icon (graphite-500 → teal on hover) */
 .bx-share-menu__chev { margin-left: auto; width: 0.85rem !important; height: 0.85rem !important; }
 .bx-share-menu__item.is-copied, .bx-share-menu__item.is-copied svg { color: var(--color-green); background: none; }
 @media (prefers-reduced-motion: reduce) { .bx-share-menu { animation: none; } }
@@ -188,15 +188,15 @@
 .bx-cred .pdp-stars svg { width: 1.4rem; height: 1.4rem; }
 .bx-cred__rate .pdp-rate__count { font-size: 0.875rem; }
 
-/* ── Media stage: no background, no frame — product floats on the page ── */
+/* ── Media stage: no background, no frame – product floats on the page ── */
 .pdp-b .pdp-media__stage {
   border-radius: 0;
   background: none;
   box-shadow: none;
   overflow: visible;   /* keep the product's soft shadow from being clipped */
 }
-.pdp-b .pdp-media__img { filter: none; }   /* image is an opaque white square — a shadow would outline it like a frame */
-/* Media view toggle icons — optical sizing. The "Fotos" glyph is a dense outline
+.pdp-b .pdp-media__img { filter: none; }   /* image is an opaque white square – a shadow would outline it like a frame */
+/* Media view toggle icons – optical sizing. The "Fotos" glyph is a dense outline
    (frame + sun + mountains) that fills its box corner-to-corner; the "3D" cube is
    a sparse hexagonal outline with empty corners, so it reads lighter and looks
    smaller at the same box size. Nudge the cube up ~12% so the two glyphs carry
@@ -206,7 +206,7 @@
    breadcrumb / page content above (base pdp.css insets it 0.75rem) */
 .pdp-b .pdp-media__toggle { left: 0; }
 .pdp-b .pdp-thumbs button { width: 4.5rem; height: 4.5rem; border-radius: var(--radius); box-sizing: border-box; }
-/* selection recolours & thickens the existing border to a clean 2px teal — same
+/* selection recolours & thickens the existing border to a clean 2px teal – same
    treatment as the colour swatches; border-box keeps the footprint identical */
 .pdp-b .pdp-thumbs button[aria-current="true"] { border-width: 2px; border-color: var(--color-teal); box-shadow: none; }
 
@@ -220,7 +220,7 @@
 }
 .pdp-b .pdp-media__engrave:empty { display: none; }
 
-/* ── Key facts: brand · dimensions · article no. — minimal, iconless, no box
+/* ── Key facts: brand · dimensions · article no. – minimal, iconless, no box
    (.pdp-b scope beats the base .pdp-specs dt/dd rules in pdp.css) ── */
 .pdp-b .pdp-specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: 0.8rem 1.5rem;
   align-items: start; margin: 0.15rem 0; padding: 0; border: 0; background: none; }
@@ -232,7 +232,7 @@
 .pdp-b .pdp-specs__value { margin: 0; font-size: 1rem; font-weight: 600; color: var(--color-digital-black);
   font-variant-numeric: tabular-nums; }
 /* minimal hairline dividers between the three key facts (desktop; mobile keeps its
-   horizontal row dividers) — border centered in the gutter via even side padding */
+   horizontal row dividers) – border centered in the gutter via even side padding */
 @media (min-width: 561px) {
   .pdp-b .pdp-specs { column-gap: 0; }
   .pdp-b .pdp-specs__item { padding-inline: 1.5rem; }
@@ -253,26 +253,26 @@
   padding: 0.2rem 0.5rem; border-radius: var(--radius); font-variant-numeric: tabular-nums;
 }
 .bx-color__art b { color: var(--color-digital-black); }
-/* Colour variants as a labelled grid — every name is visible at once (mobile has
+/* Colour variants as a labelled grid – every name is visible at once (mobile has
    no hover). One single row of 8, so the swatches scale down to fit. */
 .bx-swatches { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 0.45rem; overflow: visible; }
 .pdp-b .pdp-swatch { width: auto; height: auto; padding: 0; border: 0; background: none; border-radius: 0;
   overflow: visible; box-shadow: none; display: flex; flex-direction: column; align-items: center; gap: 0.3rem; transition: none; }
-/* square, no grey fill, no frame border — image covers edge-to-edge */
+/* square, no grey fill, no frame border – image covers edge-to-edge */
 .pdp-b .pdp-swatch img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; padding: 0;
   background: var(--color-white); border: 1px solid var(--color-graphite-300); border-radius: var(--radius); box-sizing: border-box; }
-/* selection shown by a clean OUTER teal ring — doesn't cut into the image, keeps
+/* selection shown by a clean OUTER teal ring – doesn't cut into the image, keeps
    every frame identical in size (outline adds no layout box) */
-/* selection recolours the existing border to the brand teal — no extra ring */
+/* selection recolours the existing border to the brand teal – no extra ring */
 .pdp-b .pdp-swatch:hover img { border-color: var(--color-graphite-400); }
 .pdp-b .pdp-swatch[aria-pressed="true"] img { border-width: 2px; border-color: var(--color-teal); }
 .bx-color__note { font-size: 0.75rem; line-height: 1.5; color: var(--text-muted); margin: 0; max-width: 46ch; }
 .bx-color__note b { color: var(--color-graphite-700); font-weight: 600; }
 
-/* colour-preview dot in the "Farbe — …" label (shows the exact RAL hex once picked) */
+/* colour-preview dot in the "Farbe – …" label (shows the exact RAL hex once picked) */
 .bx-color__dot { display: inline-block; width: 0.85rem; height: 0.85rem; border-radius: 50%;
   border: 1px solid rgba(0,0,0,0.18); vertical-align: baseline; margin-right: 0.1rem; }
-/* the explicit display above outranks the UA [hidden] rule — restore hiding so the dot
+/* the explicit display above outranks the UA [hidden] rule – restore hiding so the dot
    only appears once a Wunschfarbe RAL tone is picked (not for standard finishes) */
 .bx-color__dot[hidden] { display: none; }
 
@@ -283,14 +283,14 @@
 .ralpick.is-shown { display: block; }
 @keyframes ralpick-shake { 0%,100%{transform:none} 20%{transform:translateX(-5px)} 40%{transform:translateX(5px)} 60%{transform:translateX(-3px)} 80%{transform:translateX(3px)} }
 
-/* collapsed trigger — combobox */
+/* collapsed trigger – combobox */
 .ralpick__trigger { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
   padding: 0.5rem 0.75rem; background: var(--color-white); cursor: pointer; text-align: left; font: inherit;
   border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg);
   transition: border-color .26s ease, box-shadow .26s ease, border-radius .26s ease; }
 .ralpick__trigger:hover { border-color: var(--color-graphite-400); }
 .ralpick__trigger:focus-visible { outline: none; border-color: var(--color-teal); box-shadow: 0 0 0 3px rgba(1,82,83,0.12); }
-/* open: the trigger becomes the header of one connected unit — teal border, squared
+/* open: the trigger becomes the header of one connected unit – teal border, squared
    bottom, no separate glow, so it fuses seamlessly with the panel below */
 .ralpick.is-open .ralpick__trigger { border-color: var(--color-teal); box-shadow: none;
   border-bottom-color: transparent; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
@@ -310,7 +310,7 @@
 .ralpick.is-open .ralpick__chev { transform: rotate(180deg); color: var(--color-teal); }
 .ralpick.is-invalid .ralpick__trigger { animation: ralpick-shake .4s ease; border-color: var(--color-red); box-shadow: 0 0 0 3px rgba(212,41,36,0.14); }
 
-/* expanded panel — smooth height expand/collapse via grid-template-rows (0fr ↔ 1fr):
+/* expanded panel – smooth height expand/collapse via grid-template-rows (0fr ↔ 1fr):
    animates the real content height with no JS measuring, joined seamlessly under the
    trigger as one elevated unit. */
 .ralpick__panel { display: grid; grid-template-rows: 0fr; opacity: 0; margin-top: 0;
@@ -333,7 +333,7 @@
 .ralpick__search:focus-within { border-color: var(--color-teal); background: var(--color-white); box-shadow: 0 0 0 3px rgba(1,82,83,0.10); }
 .ralpick__searchicon { flex: none; width: 1.05rem; height: 1.05rem; color: var(--color-graphite-500); }
 .ralpick__input { flex: 1 1 auto; min-width: 0; height: 100%; border: 0; background: none; outline: none;
-  font: inherit; font-size: 1rem; color: var(--color-digital-black); padding: 0; }   /* 16px — anything smaller makes iOS auto-zoom (and shift the layout) on focus */
+  font: inherit; font-size: 1rem; color: var(--color-digital-black); padding: 0; }   /* 16px – anything smaller makes iOS auto-zoom (and shift the layout) on focus */
 .ralpick__input::-webkit-search-cancel-button { display: none; }
 .ralpick__count { flex: none; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.01em; color: var(--color-graphite-600);
   padding: 0.15rem 0.5rem; background: var(--color-white); border: 1px solid var(--color-graphite-200);
@@ -342,15 +342,15 @@
   border: 0; background: none; color: var(--color-graphite-500); cursor: pointer; border-radius: var(--radius); }
 .ralpick__clear:hover { color: var(--color-graphite-800); background: var(--color-graphite-100); }
 .ralpick__clear svg { width: 1rem; height: 1rem; }
-/* the class display above outranks the UA [hidden] rule — restore hiding so the clear
+/* the class display above outranks the UA [hidden] rule – restore hiding so the clear
    (×) only shows once text is entered, matching the page's general search bar */
 .ralpick__clear[hidden] { display: none; }
 
-/* colour-family filter — minimal borderless chips; quiet grey hover, soft teal-tint active */
+/* colour-family filter – minimal borderless chips; quiet grey hover, soft teal-tint active */
 .ralpick__fams { display: flex; gap: 0.15rem; margin: 0.75rem 0 0.65rem; padding-bottom: 0.15rem; overflow-x: auto;
   overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .ralpick__fams::-webkit-scrollbar { display: none; }
-/* desktop: draggable strip — grab cursor + no text selection while dragging */
+/* desktop: draggable strip – grab cursor + no text selection while dragging */
 @media (hover: hover) {
   .ralpick__fams { cursor: grab; }
   .ralpick__fams.is-dragging { cursor: grabbing; user-select: none; }
@@ -364,7 +364,7 @@
 .ralpick__fam.is-active { color: var(--color-teal); font-weight: 700; background: var(--color-graphite-100); }
 .ralpick__famdot { flex: none; width: 0.5rem; height: 0.5rem; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.14); }
 
-/* paged slider — replaces the internal scroll so there is no nested scrollbar to
+/* paged slider – replaces the internal scroll so there is no nested scrollbar to
    conflict with the page. Swatches page horizontally (Prev/Next, swipe); vertical
    gestures fall through to the page (touch-action: pan-y). */
 .ralpick__viewport { overflow: hidden; height: 20rem; touch-action: pan-y; }
@@ -372,10 +372,10 @@
   transition: transform .34s cubic-bezier(.4,0,.2,1); }
 .ralpick__page { flex: 0 0 100%; min-width: 0; display: grid; gap: 0.5rem; align-content: start;
   padding: 0.25rem; box-sizing: border-box; }
-/* pager — design-system square arrows + page counter */
+/* pager – design-system square arrows + page counter */
 .ralpick__pager { display: flex; align-items: center; justify-content: center; gap: 0.9rem; margin-top: 0.7rem; }
 .ralpick__pager[hidden] { display: none; }
-/* pager arrows — same design-system slider arrow as the image lightbox (square var(--radius),
+/* pager arrows – same design-system slider arrow as the image lightbox (square var(--radius),
    1px outline, inverts on hover), sized to match; the outline/fill use teal here since the
    picker sits on a light panel (the lightbox uses white on its dark backdrop) */
 .ralpick__pagebtn { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; cursor: pointer;
@@ -412,12 +412,12 @@
 .cfgb { display: flex; flex-direction: column; gap: 0.9rem; padding: 1.35rem; border-radius: var(--radius-lg);
   background: var(--color-paper); border: 1px solid var(--color-graphite-200); }
 
-/* ── Config lock — until a colour (= article) is chosen the configurator is hidden
+/* ── Config lock – until a colour (= article) is chosen the configurator is hidden
    entirely (colour determines the options; nothing valid to configure yet). This
    also keeps the price + CTA visible on entry instead of below a tall open panel. ── */
 .cfgb.is-locked { display: none; }
 
-/* Colour requirement — a single crisp red ring that expands once and fades. Visible
+/* Colour requirement – a single crisp red ring that expands once and fades. Visible
    but calm: no shake, no per-swatch motion. The persistent "Bitte Farbe wählen" label
    carries the message. Re-triggered on every attempt by JS (remove→reflow→add). */
 .bx-swatches { border-radius: var(--radius-lg); }
@@ -430,7 +430,7 @@
   .bx-swatches.is-invalid { animation: none !important; box-shadow: 0 0 0 2px var(--color-red); }
 }
 
-/* ── Progress spine — premium "configuration meter", pinned to the top through the flow ── */
+/* ── Progress spine – premium "configuration meter", pinned to the top through the flow ── */
 .cfgb-bar { display: flex; flex-direction: column; gap: 0.85rem;
   position: sticky; top: 6.5rem; z-index: 6;
   margin: -1.35rem -1.35rem 0; padding: 1.15rem 1.35rem 0.9rem;
@@ -445,7 +445,7 @@
 .cfgb-bar.is-ready .cfgb-bar__count { color: var(--color-green); }
 
 /* (The old icon-and-line stepper styles lived here. That component is retired
-   — .cfgb-bar is display:none — and its rules leaked label/node colors into
+   – .cfgb-bar is display:none – and its rules leaked label/node colors into
    the dock ribbon, which reuses the same class names. Deleted, not overridden.) */
 
 /* ── Step cards (progressive disclosure, refined) ── */
@@ -534,11 +534,11 @@
 .pdp-b .pdp-price__row { line-height: 1.05; display: flex; align-items: baseline; gap: 0.4rem; }
 .pdp-b .pdp-price__amount { line-height: 1.05; }
 
-/* "ab" (starting-at) prefix — shown next to the price before a colour is chosen */
+/* "ab" (starting-at) prefix – shown next to the price before a colour is chosen */
 .pdp-price__from { font-size: 1rem; font-weight: 600; color: var(--color-graphite-600); }
 .sheet__pricefrom { font-size: 0.75rem; font-weight: 600; color: var(--color-graphite-600); }
 /* tight line box on the label too, so the gap below the accordion isn't inflated
-   by leading — keeps the block's three outer gaps visually identical */
+   by leading – keeps the block's three outer gaps visually identical */
 .pdp-b .pdp-price .cfgb-price__label { line-height: 1; }
 
 /* "Preis wie konfiguriert" price line */
@@ -557,11 +557,11 @@
 .pdp-price--lead .pdp-avail__status { font-size: 0.875rem; }
 
 /* Preisdetails & Menge accordion lives in the checkout now (after the config); hide it
-   until a colour is chosen — nothing to detail yet */
+   until a colour is chosen – nothing to detail yet */
 #bAcc { display: none; }                              /* hidden until a paid item is added */
 .cfgb-checkout.is-priced #bAcc { display: block; }    /* revealed on the first surcharge */
 
-/* Delivery — two-column spec table: [icon + label] │ [value].
+/* Delivery – two-column spec table: [icon + label] │ [value].
    Rows divided by hairlines, columns split by a vertical rule (label ~40%). */
 .bx-delivery { display: flex; flex-direction: column;
   border: 1px solid var(--color-graphite-200); border-radius: var(--radius-lg);
@@ -580,7 +580,7 @@
   text-underline-offset: 2px; white-space: nowrap; }
 .bx-delivery__details:hover { color: var(--color-teal-600); }
 
-/* Primary action — always live (validate on click, never lock) */
+/* Primary action – always live (validate on click, never lock) */
 .cfgb-cta { width: 100%; gap: 0.55rem; background: var(--color-teal); box-shadow: 0 0.375rem 0.9rem rgba(1,82,83,0.15); }
 .cfgb-cta:hover { background: var(--color-teal-hover); }
 
@@ -620,7 +620,7 @@
   color: var(--color-teal); background: var(--color-teal-50); border-radius: var(--radius-pill); padding: 0.14rem 0.45rem; vertical-align: middle; }
 .stepr__opt { font-size: 0.75rem; font-weight: 800; letter-spacing: normal; text-transform: capitalize;
   color: var(--color-green-600); background: var(--color-green-50); border-radius: var(--radius-pill); padding: 0.14rem 0.45rem; vertical-align: middle; }
-/* "beliebt" status tag — same calm pill interface as the category-page feature
+/* "beliebt" status tag – same calm pill interface as the category-page feature
    pills (light fill, thin border, sentence case, medium weight, no shadow),
    carrying a restrained teal tint instead of a loud uppercase chip. */
 .cfg-opt__tag { display: inline-block; margin-left: 0.4rem; vertical-align: middle;
@@ -663,7 +663,7 @@
   .cfgb .cfg-opts .cfg-opt__body { flex: 1 1 auto; min-width: 0; padding-right: 0; }
   .cfgb .cfg-opts .cfg-opt__desc { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .cfgb .cfg-opts .cfg-opt__price { margin: 0 0 0 auto; align-self: center; padding-top: 0; text-align: right; white-space: nowrap; }
-  .cfgb .cfg-opts .cfg-opt__mark { display: none; }   /* selection shown by the card's teal ring — saves width on the narrow row */
+  .cfgb .cfg-opts .cfg-opt__mark { display: none; }   /* selection shown by the card's teal ring – saves width on the narrow row */
   /* status tag: keep it clear of the small thumb in row layout */
   .cfgb .cfg-opts .cfg-opt.is-unavailable .cfg-opt__badge { top: 0.5rem; left: auto; right: 0.6rem; }
 
@@ -717,33 +717,33 @@
 .cfgb-hint { display: none !important; }
 .pdp-stickybar__cta svg { display: none; }          /* remove arrow from sticky CTA */
 
-/* A/B prototype switcher — hidden on B so it never covers the fixed purchase bar */
+/* A/B prototype switcher – hidden on B so it never covers the fixed purchase bar */
 .vswitch { display: none !important; }
 
-/* Swatch names are NOT printed under every swatch (that crowded the page) —
-   the selected name shows in the "Ausführung — …" header, and each swatch's
+/* Swatch names are NOT printed under every swatch (that crowded the page) –
+   the selected name shows in the "Ausführung – …" header, and each swatch's
    name stays available via its img alt / hover preview. */
 .bx-swatches .pdp-swatch::before,
 .bx-swatches .pdp-swatch::after { display: none; }
 
 /* ── Touch swatch treatment (only on no-hover devices, or ?touch=1 preview) ──
-   Snap-scroller with a live caption: the "Ausführung — …" header follows the centred
+   Snap-scroller with a live caption: the "Ausführung – …" header follows the centred
    swatch via JS (hover isn't available on touch to reveal names). Swipe to browse
    the colour names, tap to select. */
 .swtouch .bx-swatches { position: relative; display: flex; grid-template-columns: none; flex-wrap: nowrap; align-items: center;
   overflow-x: auto; -webkit-overflow-scrolling: touch;
   gap: 0.7rem; padding: 0.75rem 0; }   /* free scroll (no snap): the strip slides all the way to the last swatch.
-     Snapping trapped it — snap-align:start put the last swatches' snap points past the
+     Snapping trapped it – snap-align:start put the last swatches' snap points past the
      max scroll, so it kept springing back and never reached the 6th–8th. */
 .swtouch .bx-swatches::-webkit-scrollbar { display: none; }
 /* Tiny trailing pad so the last swatch isn't jammed against the right edge. The active
-   swatch is picked by SCROLL PROGRESS (see pdp-b.js) — first at rest, last at max
-   scroll — so the strip no longer needs a viewport-wide gap to drag the final swatch to
+   swatch is picked by SCROLL PROGRESS (see pdp-b.js) – first at rest, last at max
+   scroll – so the strip no longer needs a viewport-wide gap to drag the final swatch to
    the left edge. That gap is what left the big blank space at the end. */
 .swtouch .bx-swatches::after { content: ""; flex: 0 0 0.25rem; }
 .swtouch .bx-swatches .pdp-swatch { flex: 0 0 5rem; justify-content: center; }
 /* Symmetric slots above and below each swatch keep the image vertically centred in
-   the row (content aligned above and below). Transparent — the active cue is the
+   the row (content aligned above and below). Transparent – the active cue is the
    single travelling line below, not a per-swatch mark. */
 .swtouch .bx-swatches .pdp-swatch::before,
 .swtouch .bx-swatches .pdp-swatch::after {
@@ -757,11 +757,11 @@
   height: 2px; width: 2rem; border-radius: var(--radius-sm); background: var(--color-teal);
   pointer-events: none; will-change: transform; }
 
-/* Desktop (hover-capable, non-touch): the SAME line as mobile — identical width and
-   left-aligned placement above the active swatch, always visible — the only difference
+/* Desktop (hover-capable, non-touch): the SAME line as mobile – identical width and
+   left-aligned placement above the active swatch, always visible – the only difference
    is that hover (not scroll) drives which swatch it sits on. Positioned by JS via
    translate to the swatch's offset (left edge). Unlike mobile (whose continuous scroll
-   makes the motion smooth on its own), desktop hover is DISCRETE — so the line would
+   makes the motion smooth on its own), desktop hover is DISCRETE – so the line would
    teleport between swatches and read as jumpy. A short eased transition makes it GLIDE
    between swatches instead (the "magic line" pattern), so sweeping the swatches feels
    fluid and the label change rides along with a settled motion. */
@@ -771,13 +771,13 @@
     height: 2px; width: 2rem; border-radius: var(--radius-sm); background: var(--color-teal);
     opacity: 0; pointer-events: none; will-change: transform;
     transition: transform .28s cubic-bezier(.34, 1.28, .64, 1), opacity .18s ease; }   /* glide with a subtle magnetic settle */
-  body:not(.swtouch) .bx-swline.is-on { opacity: 1; }   /* shown only for a hovered/selected swatch — hidden at rest when no colour is chosen */
+  body:not(.swtouch) .bx-swline.is-on { opacity: 1; }   /* shown only for a hovered/selected swatch – hidden at rest when no colour is chosen */
 }
 
 /* ── Mild lift on the swatch whose colour label is currently shown ──
    Makes the labelled tile easier to pick out: hovered/focused (desktop),
    selected at rest, or slid-over on touch (.is-labeled, set in pdp-b.js).
-   Subtle — a 2px rise + a soft token shadow, smoothly eased. */
+   Subtle – a 2px rise + a soft token shadow, smoothly eased. */
 .pdp-b .pdp-swatch { transition: transform .18s ease; }
 .pdp-b .pdp-swatch img { transition: border-color .15s ease, box-shadow .18s ease; }
 @media (hover: hover) {
@@ -831,14 +831,14 @@
 /* price yields width so the CTA never has to wrap; label wraps instead of the button */
 .sheet__price { display: block; flex: 0 0 auto; }
 .sheet__pricelabel { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-graphite-600); line-height: 1.25; }
-/* the explicit display:block above outranks the UA [hidden] rule — restore hiding so the
+/* the explicit display:block above outranks the UA [hidden] rule – restore hiding so the
    "Preis wie konfiguriert" label / "ab" prefix stay mutually exclusive (only one shows) */
 .sheet__pricelabel[hidden], .sheet__pricefrom[hidden] { display: none; }
 .sheet__pricemeta { margin-left: 0.5rem; font-size: 0.75rem; line-height: 1.3; color: var(--color-graphite-700); white-space: nowrap; }
 /* CTA stays on a single line and sizes to its content */
 .sheet__foot .pdp-cta { flex: 1 1 auto; width: auto; white-space: nowrap; background: var(--color-teal); box-shadow: 0 0.375rem 0.9rem rgba(1,82,83,0.15); }
 .sheet__foot .pdp-cta:hover { background: var(--color-teal-hover); }
-/* full-width bottom drawer — inner content comfortably centered on wide screens */
+/* full-width bottom drawer – inner content comfortably centered on wide screens */
 .sheet__head, .sheet .cfgb-summary, .sheet__foot { width: 100%; max-width: 64rem; margin-left: auto; margin-right: auto; }
 /* hide the sticky purchase bar while the drawer is open (no duplicate price + CTA) */
 body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
@@ -846,7 +846,7 @@ body.cfg-sheet-open .pdp-stickybar { transform: translateY(110%) !important; }
    iOS shrinks the VISUAL viewport (not the layout viewport) when the on-screen keyboard
    shows, which detaches all position:sticky/fixed bars so they float over the content
    (e.g. review thumbnails ended up above the site header). Keeping them truly pinned is
-   not possible while the keyboard is up — a WebKit limitation — so instead:
+   not possible while the keyboard is up – a WebKit limitation – so instead:
    • sticky chrome (header, quickbar, section nav) drops to normal flow → it scrolls
      cleanly with the page instead of glitch-floating;
    • the fixed bars (purchase bar, config ribbon) are hidden.
@@ -864,8 +864,8 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .cfgb-bar.is-stuck::before { opacity: 1; }
 .cfgb-bar.is-stuck { box-shadow: 0 10px 18px -12px rgba(10,20,20,0.28); }
 
-/* ============ Unified Step-Dock — single active step, zero redundancy ============ */
-/* overflow:clip (not hidden) — still clips the rounded corners but doesn't
+/* ============ Unified Step-Dock – single active step, zero redundancy ============ */
+/* overflow:clip (not hidden) – still clips the rounded corners but doesn't
    create a scroll container, so the sticky dock below keeps working */
 .pdp-b .cfgb { padding: 0; gap: 0; overflow: clip; }
 /* No entrance transform on the config panel: a lingering transform would make .cfgb
@@ -890,7 +890,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .cfgb-dock.is-fixed-dt::before { display: none; }
 /* No jump at the sticky→fixed handoff: the fixed dock carries a 0.7rem top gap
    (white space above the ribbon over the quickbar), so the IN-FLOW desktop dock must
-   carry the same top offset — otherwise the ribbon drops 0.7rem the instant it pins.
+   carry the same top offset – otherwise the ribbon drops 0.7rem the instant it pins.
    Scoped to desktop (min-width 641px), where the fixed-dt behaviour applies. */
 @media (min-width: 40.0625rem) { .cfgb-dock { padding-top: 0.7rem; } }
 /* cap the strip above the pinned dock so scrolling options never peek through
@@ -911,18 +911,18 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .cfgb-dock__flag.is-opt { color: var(--color-green-600); background: var(--color-green-50); border-color: rgba(0,153,81,0.28); }
 .cfgb-dock__seg { display: flex; gap: 0.3rem; margin: 0.7rem 0 0.9rem; }
 
-/* ===== Chevron step-ribbon — grey (ahead) → dark teal (done) → light green (current) ===== */
+/* ===== Chevron step-ribbon – grey (ahead) → dark teal (done) → light green (current) ===== */
 /* full-bleed band at the top of the card: no radius, no top/side padding
    (order:-1 lifts it above meta/title; negative side margins cancel dock padding) */
 .cfgb-dock .cfgb-bar__track { display: flex; gap: 0; order: -1; margin: 0 -1.35rem 0.9rem; padding: 0;
   border-radius: 0; overflow: visible; }
 .cfgb-dock .cfgb-bar__ico,
 .cfgb-dock .cfgb-bar__check { display: none; }           /* no icons */
-/* overlap each chevron into its neighbour's notch — the white seam shrinks to a 2px arrow line */
+/* overlap each chevron into its neighbour's notch – the white seam shrinks to a 2px arrow line */
 .cfgb-dock .cfgb-bar__step + .cfgb-bar__step { margin-left: -0.5rem; }
 
 .cfgb-dock .cfgb-bar__step {
-  /* flex-basis:auto — longer labels get proportionally wider chevrons.
+  /* flex-basis:auto – longer labels get proportionally wider chevrons.
      Number sits inline (left) of the label. */
   flex: 1 1 auto; min-width: 0; min-height: 2.9rem;
   display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 0.3rem;
@@ -945,38 +945,38 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 10px 50%);
 }
 
-/* number — quiet, secondary to the label */
+/* number – quiet, secondary to the label */
 .cfgb-dock .cfgb-bar__num {
   flex: none; font-size: 0.75rem; font-weight: 800; line-height: 1;
   font-variant-numeric: tabular-nums; opacity: 0.66;
 }
 
-/* label — the primary information: always visible, wraps instead of clipping */
+/* label – the primary information: always visible, wraps instead of clipping */
 .cfgb-dock .cfgb-bar__label {
   min-width: 0; max-width: 100%; text-align: center; color: inherit;
   font-size: 0.75rem; font-weight: 700; letter-spacing: 0; line-height: 1.15;
   white-space: normal; overflow-wrap: break-word; hyphens: auto;
 }
-/* standard middot divider between number and label — same "·" used across the UI
+/* standard middot divider between number and label – same "·" used across the UI
    (rating, price, availability); inherits each state's text colour */
 .cfgb-dock .cfgb-bar__label::before { content: none; }   /* separator dropped to give the larger label more room in the ribbon */
 
-/* ahead (not yet reached) — quiet neutral */
+/* ahead (not yet reached) – quiet neutral */
 .cfgb-dock .cfgb-bar__step:hover { background: var(--color-graphite-300); color: var(--color-graphite-800); }
 .cfgb-dock .cfgb-bar__step:focus-visible { outline: 2px solid var(--color-teal); outline-offset: -3px; }
 
-/* done — solid dark teal, white text (answered steps read as locked-in brand colour) */
+/* done – solid dark teal, white text (answered steps read as locked-in brand colour) */
 .cfgb-dock .cfgb-bar__step.is-filled { background: var(--color-teal); color: var(--color-white); }
 .cfgb-dock .cfgb-bar__step.is-filled:hover { background: var(--color-teal-600); color: var(--color-white); }
 .cfgb-dock .cfgb-bar__step.is-filled .cfgb-bar__num { opacity: 1; }   /* crisp white on the dark fill */
 
-/* current — light green, dark-teal text (the "you are here" segment stays airy) */
+/* current – light green, dark-teal text (the "you are here" segment stays airy) */
 .cfgb-dock .cfgb-bar__step.is-current,
 .cfgb-dock .cfgb-bar__step.is-current:hover { background: #CDE7E2; color: #01393A; }
 .cfgb-dock .cfgb-bar__step.is-current .cfgb-bar__num { opacity: 1; }
 .cfgb-dock .cfgb-bar__step.is-current .cfgb-bar__label { font-weight: 800; }
 
-/* small screens — number-only chevrons; just the current step keeps its label
+/* small screens – number-only chevrons; just the current step keeps its label
    (buttons carry full aria-labels, so nothing is lost for screen readers) */
 @media (max-width: 640px) {
   .cfgb-dock .cfgb-bar__step { min-height: 2.55rem; padding: 0.3rem 0.5rem 0.35rem 0.9rem; }
@@ -985,7 +985,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 
   /* Once the configurator scrolls under the site header, JS adds .is-fixed and the
      step ribbon detaches as a FULL-WIDTH bar pinned to the top, persisting across
-     the whole page (sticky can't — it's bounded by .cfgb). The .cfgb-sentinel is
+     the whole page (sticky can't – it's bounded by .cfgb). The .cfgb-sentinel is
      grown to the dock's height so the content below doesn't jump. `top` is set by
      JS to the live header height so the bar sits flush beneath it. */
   .cfgb-dock.is-fixed {
@@ -1015,7 +1015,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .cfgb-dock__titletext { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
 .cfgb-dock__title .cfgb-dock__flag { flex: none; }
 .cfgb-dock__n { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.01em; color: var(--color-graphite-600); }
-/* numbered step title — number + name share a baseline (aligned) */
+/* numbered step title – number + name share a baseline (aligned) */
 .cfgb-dock__name { display: inline-flex; align-items: baseline; gap: 0.5rem;
   font-size: 1.2rem; font-weight: 800; letter-spacing: -0.015em; color: var(--color-digital-black); line-height: 1.2; }
 .cfgb-dock__name-num { flex: none; color: var(--color-graphite-600); font-weight: 800; font-variant-numeric: tabular-nums; }
@@ -1037,14 +1037,14 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 /* ── Option A (mobile ≤48rem): vertical labeled accordion instead of the single-step
    wizard. Re-shows the fully-styled .stepr accordion (all steps visible, expand in
    place, one open at a time) and hides the wizard chrome (horizontal progress dock +
-   Weiter/Zurück). Desktop keeps the wizard — untouched. ── */
+   Weiter/Zurück). Desktop keeps the wizard – untouched. ── */
 @media (max-width: 48rem) {
   /* Full-bleed grey config surface: break out of the .container side gutter so the
-     frame spans the viewport edge-to-edge — no rounded corners or side hairline.
+     frame spans the viewport edge-to-edge – no rounded corners or side hairline.
      `calc(50% - 50vw)` resolves to exactly the container inset on each side. */
   .pdp-b .cfgb { margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);
     border-radius: 0; border-left: 0; border-right: 0; }
-  /* configuration progress bar — a compact step ribbon (numbered steps, completed =
+  /* configuration progress bar – a compact step ribbon (numbered steps, completed =
      filled, current = highlighted). In-flow at the top of the config; via JS
      (bounded to the config section) it fixes full-width to the top, replacing the
      pinned quickbar while you scroll THROUGH the config. */
@@ -1073,13 +1073,13 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
   .pdp-b .cfgb .stepr__item.is-active { border-color: var(--color-graphite-200); box-shadow: 0 0.5rem 1.5rem rgba(1,82,83,0.08); }   /* no green ring around the expanded section */
   .pdp-b .cfgb .stepr__head { display: flex !important; }
   /* the section-header "Erforderlich" (green) duplicates the required flag already
-     shown in the progress dock above — drop it as redundant */
+     shown in the progress dock above – drop it as redundant */
   .pdp-b .cfgb .stepr__req { display: none; }
   .pdp-b .cfgb .stepr__body { display: grid !important; grid-template-rows: 0fr !important; }
   .pdp-b .cfgb .stepr__item.is-active .stepr__body { grid-template-rows: 1fr !important; }
   .pdp-b .cfgb .stepr__inner { overflow: hidden; }
   .pdp-b .cfgb .stepr__pad { padding: 0.1rem 1rem 1.2rem; }
-  /* options are horizontal rows on mobile — let the "Empfohlen" badge flow above the
+  /* options are horizontal rows on mobile – let the "Empfohlen" badge flow above the
      name instead of the absolute (desktop-card) position that overlapped the title */
   .pdp-b .cfgb .cfg-opt__rec { position: static; align-self: flex-start; margin: 0 0 0.3rem; }
 }
@@ -1095,11 +1095,11 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .cfgb-nav__fwd:hover { background: var(--color-black); }
 .cfgb-nav__back[hidden], .cfgb-nav__fwd[hidden] { display: none; }
 
-/* ── Color code — quiet label, restrained finish name ── */
+/* ── Color code – quiet label, restrained finish name ── */
 .bx-color__label { font-size: 1rem; color: var(--color-graphite-600); }
 .bx-color__label b { font-size: 1rem; color: var(--color-graphite-800); font-weight: 600; }
 
-/* ── Payment methods — larger logos; wrap onto extra rows when they don't fit ── */
+/* ── Payment methods – larger logos; wrap onto extra rows when they don't fit ── */
 /* logos keep their natural size (no shrink-to-fit) and wrap centred, so on narrow
    screens they flow to a second row instead of squishing tiny */
 .pdp-b .pdp-pay { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.4rem; max-width: 21rem; margin: 0 auto; }
@@ -1114,12 +1114,12 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
   .pdp-b .pdp-pay img { flex: 0 1 auto; min-width: 0; height: 2rem; padding: 0.18rem 0.25rem; }
 }
 
-/* ── Service & Beratung — cards mirror the Metzler contact-modal ".row":
+/* ── Service & Beratung – cards mirror the Metzler contact-modal ".row":
    teal-tinted gradient icon box · bold title + grey sub · teal chevron, in a
    white card with a hairline teal-tinted border and a teal hover (left accent
    bar, gradient wash, lift). ── */
 .svc { display: flex; flex-direction: column; gap: 0.625rem; }
-  /* no extra margin/padding-top — the 2rem .pdp-buybox gap is the sole section rhythm,
+  /* no extra margin/padding-top – the 2rem .pdp-buybox gap is the sole section rhythm,
      so the trust-card→service gap matches the service→payments gap */
 .svc__item { position: relative; display: grid; grid-template-columns: 2rem 1fr auto; align-items: center; gap: 0.875rem;
   padding: 0.9rem 1rem; border: 1px solid rgba(1,82,83,0.1); border-radius: var(--radius-lg);
@@ -1149,7 +1149,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .svc__item:hover .svc__chev { transform: translateX(3px); }
 .svc__item:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
 
-/* ── Feature highlights — numbered editorial list. Strong title/description
+/* ── Feature highlights – numbered editorial list. Strong title/description
    hierarchy, teal serial numbers, hairline dividers, roomy rhythm. No dot
    bullets, no icons, no grey box. ── */
 .feat { position: relative; overflow: hidden; padding: 1.25rem;   /* uniform gutter on all four sides */
@@ -1164,11 +1164,11 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .feat__name { font-size: 0.875rem; font-weight: 700; line-height: 1.25; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .feat__desc { font-size: 0.75rem; line-height: 1.4; color: var(--color-graphite-700); }   /* match the config additional-info text */
 
-/* ── Trust badges — frame-free: prominent seal/flag + clean type, split by a
+/* ── Trust badges – frame-free: prominent seal/flag + clean type, split by a
    single hairline divider ── */
 .hl__badges { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: center; }
 
-/* Assurance footer — two white chips on the card's grey surface. The chips lift the
+/* Assurance footer – two white chips on the card's grey surface. The chips lift the
    pair off the card as tangible trust marks; a full-bleed top hairline separates the
    footer from the feature list. */
 .hl__badges--infeat { display: flex; align-items: stretch; gap: 0.75rem;
@@ -1179,15 +1179,15 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
   background: var(--color-white);
   border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg);
   box-shadow: 0 1px 2px rgba(26,23,27,0.04); }
-/* these are separate bordered chips — restore the left border the frame-free base rule removes */
+/* these are separate bordered chips – restore the left border the frame-free base rule removes */
 .hl__badges--infeat .hl__badge + .hl__badge { border-left: 1px solid var(--color-graphite-300); }
-/* chips separate themselves via the gap — no centre rule */
+/* chips separate themselves via the gap – no centre rule */
 
 .hl__badge { display: flex; align-items: center; justify-content: center; gap: calc(0.7rem + 3px); padding: 0.35rem 0.9rem;
   border: 0; background: none; text-decoration: none; color: inherit; min-width: 0; }
 .hl__badge + .hl__badge { border-left: 0; }
 /* Match the two marks by VISIBLE size, not box size: the gold rosette only fills
-   ~0.68 of its artwork box, the flag fills its coin edge-to-edge — so the seal box is
+   ~0.68 of its artwork box, the flag fills its coin edge-to-edge – so the seal box is
    sized ~1.47x larger to make the two read as equal-diameter marks. Both are round,
    both carry the same weight; the flag gets a single hairline ring, the self-framed
    seal needs none. */
@@ -1195,46 +1195,46 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .hl__badge-seal--flag { width: 2rem; height: 2rem; border-radius: 50%;
   object-fit: cover; background: var(--color-white);
   box-shadow: inset 0 0 0 1px var(--color-graphite-200); }
-  /* NOTE: no extra margin-right — both marks fill their boxes, so the flex `gap` alone
+  /* NOTE: no extra margin-right – both marks fill their boxes, so the flex `gap` alone
      keeps the icon→label distance identical on both badges (the old margin was for a
      previous seal graphic that didn't fill its box, and made the flag gap too wide). */
 .hl__badge-txt { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; text-align: left; }
 .hl__badge-pre { font-size: 0.75rem; font-weight: 600; color: var(--color-graphite-600); letter-spacing: 0.005em; }
 .hl__badge-txt b { font-size: 0.875rem; font-weight: 800; letter-spacing: -0.012em; color: var(--color-digital-black); }
 
-/* validation shake — gentle single nudge, not a jitter */
+/* validation shake – gentle single nudge, not a jitter */
 @keyframes cfgb-shake { 0%,100% { transform: translateX(0); } 30% { transform: translateX(-3px); } 65% { transform: translateX(3px); } }
 .cfgb .stepr__pad.is-flash { animation: cfgb-shake .3s ease; }
 
-/* invalid highlight — the red border draws the eye; one soft glow, no jump */
+/* invalid highlight – the red border draws the eye; one soft glow, no jump */
 @keyframes cfgb-invalid-pulse {
   0%   { box-shadow: 0 0 0 0 rgba(212,41,36,0.4); }
   100% { box-shadow: 0 0 0 6px rgba(212,41,36,0); }
 }
 /* fixed line-height so the engraving preview font (some scripts have tall metrics)
    doesn't change the input's height and jump the layout when switching styles.
-   NOTE: this height must NOT leak onto .cfg-opts.is-invalid .cfg-opt — a stray
+   NOTE: this height must NOT leak onto .cfg-opts.is-invalid .cfg-opt – a stray
    comma once did that and collapsed the option cards to 52px during the flash. */
 .pdp-b .cfg-input { line-height: 1.5; height: 3.25rem; box-sizing: border-box; }
 .cfgb .cfg-input.is-invalid {
   border-color: var(--color-red) !important;
   animation: cfgb-invalid-pulse .7s ease-out 1;
 }
-/* NOTE: do NOT put `animation` on .cfg-opts itself — it's a .stepr__pad child that
+/* NOTE: do NOT put `animation` on .cfg-opts itself – it's a .stepr__pad child that
    starts at opacity:0 and is revealed by the cfgb-rise entrance animation; overriding
    that would drop the option grid back to opacity:0 and the cards vanish on the flash.
    The invalid highlight goes on the .cfg-opt CARDS instead (grandchildren, unaffected):
-   red border + one soft glow pulse — the original feedback. */
+   red border + one soft glow pulse – the original feedback. */
 .cfgb .cfg-opts.is-invalid { border-radius: var(--radius-lg); }
 /* minimal required signal: just a quiet red border (the .cfg-opt border-color .15s
-   transition fades it in) — no glow ring, no pulse */
+   transition fades it in) – no glow ring, no pulse */
 .cfgb .cfg-opts.is-invalid .cfg-opt { border-color: var(--color-red); }
 /* badge: steady colour emphasis, no scale/jump */
 /* same red-ring pulse as the colour-requirement cue (bx-swatch-alert) so every
-   "required" signal reads consistently — same animation, same red */
+   "required" signal reads consistently – same animation, same red */
 .cfgb-dock__flag.is-pulse { animation: bx-swatch-alert .7s ease-out; }
 
-/* ── Preisdetails — inline accordion in the buy block ── */
+/* ── Preisdetails – inline accordion in the buy block ── */
 .cfgb-acc { border: 1px solid var(--color-graphite-200); border-radius: var(--radius); overflow: hidden; background: var(--color-white); }
 .cfgb-acc .cfgb-detailsbtn { border: 0; border-radius: 0; background: var(--color-paper); }
 .cfgb-acc .cfgb-detailsbtn:hover { background: var(--color-white); }
@@ -1267,7 +1267,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .cfgb .cfg-choice__qty .cfg-opt__qty > span { min-width: 2.25rem; display: grid; place-items: center; padding: 0 0.35rem;
   border-left: 1px solid var(--color-graphite-200); border-right: 1px solid var(--color-graphite-200); }
 
-/* ── Gravur font picker — grid of samples ("Muster") with a style name ── */
+/* ── Gravur font picker – grid of samples ("Muster") with a style name ── */
 .pdp-b .cfg-fonts { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.25rem, 1fr)); gap: 0.5rem; }
 .pdp-b .cfg-font { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.15rem;
   padding: 0.6rem 0.5rem; min-height: 3.9rem; font-weight: 400; }
@@ -1284,12 +1284,12 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 
 /* ── Product option cards → vertical tiles (image on top, text + price below) ── */
 .cfgb .cfg-opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr)); gap: 0.6rem; }
-/* height:auto (not 100%) — grid align-items:stretch equalises card heights per row */
+/* height:auto (not 100%) – grid align-items:stretch equalises card heights per row */
 .cfgb .cfg-opt { position: relative; flex-direction: column; align-items: stretch; gap: 0.5rem; padding: 0.85rem; text-align: left; }
 .cfgb .cfg-opt__mark { position: absolute; top: 0.65rem; right: 0.65rem; margin: 0; z-index: 2; background: var(--color-white); }
 /* keep the selection fill dead-centered in the mark box (robust vs grid/box-sizing drift) */
 .cfgb .cfg-opt.is-selected .cfg-opt__mark::after { position: absolute; inset: 0; margin: auto; }
-/* "Empfohlen" pill — same format as the availability badges, in primary teal */
+/* "Empfohlen" pill – same format as the availability badges, in primary teal */
 .cfg-opt__rec {
   position: absolute; top: 0.6rem; left: 0.6rem; z-index: 3;
   display: inline-flex; align-items: center; max-width: calc(100% - 1.2rem);
@@ -1297,16 +1297,16 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
   font-size: 0.75rem; font-weight: 600; letter-spacing: normal; text-transform: none;
   border: 1px solid var(--color-teal); background: rgba(1,82,83,0.08); color: var(--color-teal);
 }
-/* square frame, no grey fill, no border — the image covers it edge-to-edge */
+/* square frame, no grey fill, no border – the image covers it edge-to-edge */
 .cfgb .cfg-opt__thumb { width: 100%; aspect-ratio: 1; height: auto; display: grid; place-items: center; padding: 0; overflow: hidden;
   background: var(--color-white); border: 0; border-radius: var(--radius); }
 .cfgb .cfg-opt__thumb img { grid-area: 1 / 1; width: 100%; height: 100%; object-fit: cover; padding: 0; }
 .cfgb .cfg-opt__body { flex: 0 0 auto; min-width: 0; padding-right: 1.5rem; }
-.cfgb .cfg-opt__desc { color: var(--color-graphite-700); }   /* rgb(84,84,92) — darker than base; weight unchanged */
+.cfgb .cfg-opt__desc { color: var(--color-graphite-700); }   /* rgb(84,84,92) – darker than base; weight unchanged */
 .cfgb .cfg-opt__price { align-self: flex-start; margin-top: auto; padding-top: 0.15rem; text-align: left; }
-/* inner option drops its own card chrome — the choice wrapper carries it now */
+/* inner option drops its own card chrome – the choice wrapper carries it now */
 .cfgb .cfg-choice .cfg-opt { flex: 1 1 auto; border: 0; border-radius: 0; background: none; box-shadow: none; }
-/* selected card: teal border/ring only — no grey fill */
+/* selected card: teal border/ring only – no grey fill */
 .cfgb .cfg-opt.is-selected { background: var(--color-white); }
 /* Uniform selection border: one crisp 2px teal border on every config card
    (Gravur/Anschluss carry it on the .cfg-opt, Innenstation/Zubehör on the
@@ -1317,11 +1317,11 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .cfgb .cfg-choice.is-open { border-width: 2px; border-color: var(--color-teal); box-shadow: none; }
 .cfgb .cfg-opt__thumb--icon { background: var(--color-white); }
 .cfgb .cfg-opt__thumb svg { width: 2.4rem; height: 2.4rem; color: var(--color-graphite-400); grid-area: 1 / 1; }
-/* "Ohne Innenstation" as a slim full-width row (no tile/icon) — the free baseline
+/* "Ohne Innenstation" as a slim full-width row (no tile/icon) – the free baseline
    spanning above the upgrade cards, with a one-line note on what going without
    limits (SIP/Fritz only, no app). Still a real, selectable radio option, so the
    default / safe-fallback / selection logic all keep working unchanged. */
-/* "Ohne Innenstation" explainer — a quiet note above the multi-select cards
+/* "Ohne Innenstation" explainer – a quiet note above the multi-select cards
    (choosing no station is simply leaving them all unselected) */
 .cfg-innen-note { margin: 0 0 0.9rem; font-size: 0.75rem; line-height: 1.5; color: var(--color-graphite-700); }
 .cfg-innen-note b { color: var(--color-digital-black); font-weight: 700; }
@@ -1332,24 +1332,24 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .cfgb .cfg-opt--plain .cfg-opt__mark { position: relative; top: auto; right: auto; margin: 0; flex: none; }
 .cfgb .cfg-opt--plain .cfg-opt__body { flex: 1 1 auto; padding-right: 0; }
 .cfgb .cfg-opt--plain .cfg-opt__price { margin: 0 0 0 auto; align-self: center; padding-top: 0; white-space: nowrap; }
-/* Opt-out / "without" tile — a MEANINGFUL duotone medallion of the alternative,
+/* Opt-out / "without" tile – a MEANINGFUL duotone medallion of the alternative,
    not a ⊘ ban mark (which read as "forbidden" for what is a valid, free choice):
    a phone for "Ohne Innenstation" (you answer on your phone), a plug for
    "Standard" power. Each is a graphite device with a teal accent inside a soft
-   teal disc — one consistent, on-brand system across every opt-out. */
+   teal disc – one consistent, on-brand system across every opt-out. */
 .cfgb .cfg-opt__thumb--none { background: radial-gradient(120% 100% at 50% 32%, var(--color-white) 0%, var(--color-teal-50) 100%); }
 .cfgb .cfg-opt__thumb--none svg { width: 78%; height: 78%; grid-area: 1 / 1; }
 
-/* ── Universal UNAVAILABLE state — one treatment for out-of-stock OR options
+/* ── Universal UNAVAILABLE state – one treatment for out-of-stock OR options
    incompatible with an earlier choice. The tile stays visible (so the reason is
    learnable) but is clearly inert: dimmed, non-selectable, no radio, and a single
-   flat status chip in the corner — no rotated watermark stamp. ── */
+   flat status chip in the corner – no rotated watermark stamp. ── */
 .cfgb .cfg-opt.is-unavailable { cursor: not-allowed; }
 .cfgb .cfg-opt.is-unavailable .cfg-opt__thumb { filter: grayscale(0.9); opacity: 0.5; }
 .cfgb .cfg-opt.is-unavailable .cfg-opt__body,
 .cfgb .cfg-opt.is-unavailable .cfg-opt__price { opacity: 0.5; }
 .cfgb .cfg-opt.is-unavailable .cfg-opt__mark { visibility: hidden; }
-/* status tag — same calm pill interface as the category-page feature pills:
+/* status tag – same calm pill interface as the category-page feature pills:
    light OPAQUE fill (legible over the dimmed thumbnail), thin border, sentence
    case, medium weight, no drop shadow. Semantic tint kept restrained so an
    unavailable option still reads at a glance (red = sold out, neutral = needs
@@ -1365,7 +1365,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .cfg-opt__badge.is-oos { background: var(--color-orange-50); border-color: var(--color-orange); color: var(--color-orange-600); }  /* out of stock → orange */
 .cfg-opt__badge.is-incompat { background: var(--color-blue-50); border-color: var(--color-blue); color: var(--color-blue-600); }  /* needs another connection → blue */
 
-/* ── Compact radio rows: for thumbnail-less binary choices (e.g. Gravur) —
+/* ── Compact radio rows: for thumbnail-less binary choices (e.g. Gravur) –
    the full image-tile treatment is too heavy for a plain option ── */
 .cfgb .cfg-opts--rows { grid-template-columns: 1fr; gap: 0.5rem; }
 .cfgb .cfg-opts--rows .cfg-opt { flex-direction: row; align-items: center; gap: 0.75rem; padding: 0.7rem 0.85rem; }
@@ -1383,7 +1383,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .sum-row + .sum-row { border-top: 1px solid var(--color-graphite-100); }
 .sum-row__name { font-size: 0.75rem; color: var(--color-digital-black); min-width: 0; }
 .sum-row__name b { font-weight: 700; }
-.sum-row__name .sum-sub { display: none; }   /* finish is shown in Ausführung + specs — not repeated per price line */
+.sum-row__name .sum-sub { display: none; }   /* finish is shown in Ausführung + specs – not repeated per price line */
 .sum-row__price { font-size: 0.75rem; font-weight: 700; color: var(--color-digital-black); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
 .sum-row__price.is-incl { color: var(--color-green); font-weight: 600; }
 .sum-qty { display: inline-flex; align-items: center; gap: 0.3rem; }
@@ -1396,12 +1396,12 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .sum-row--total .sum-row__name { font-weight: 700; }
 .sum-row--total .sum-row__price { font-size: 0.875rem; }
 
-/* ── Sticky bottom bar — proper inset so content isn't edge-to-edge ── */
+/* ── Sticky bottom bar – proper inset so content isn't edge-to-edge ── */
 #pdpStickyBar .pdp-stickybar__inner { padding: 0.8rem 1.75rem; gap: 1.1rem; }
 #pdpStickyBar .pdp-stickybar__cta { padding: 0 1.6rem; margin-left: 0.6rem; }
 @media (max-width: 900px) {
   #pdpStickyBar .pdp-stickybar__inner { padding: 0.7rem 1rem; }
-  /* collapse the hero to a single stacked column — the base rule (pdp.css:289) does this,
+  /* collapse the hero to a single stacked column – the base rule (pdp.css:289) does this,
      but .pdp-b .pdp-hero__grid (pdp-b.css:20) outranks it, so re-state the override here
      or the buybox stays trapped in a half-width grid track.
      minmax(0,1fr) (not 1fr) + min-width:0 let the column shrink to the viewport instead
@@ -1411,7 +1411,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 }
 
 /* ============================================================
-   KONTAKT & SERVICE MODAL — ported from the Metzler contact-bar
+   KONTAKT & SERVICE MODAL – ported from the Metzler contact-bar
    handoff (namespaced .cm-* so it never collides with page styles)
    ============================================================ */
 @keyframes cm-fade { from { opacity: 0; } to { opacity: 1; } }
@@ -1474,7 +1474,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .cm-close { position: absolute; top: 1.25rem; right: 1.25rem; z-index: 2; width: 2.25rem; height: 2.25rem; border-radius: var(--radius);
   background: transparent; border: 0; color: var(--color-graphite-600); cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
   transition: background .15s ease, color .15s ease; }
-.cm-close svg { width: 1.125rem; height: 1.125rem; }   /* centered lightbox X — matches the other popups' close icon */
+.cm-close svg { width: 1.125rem; height: 1.125rem; }   /* centered lightbox X – matches the other popups' close icon */
 .cm-close:hover { color: var(--color-digital-black); background: var(--color-graphite-100); }
 
 @media (max-width: 767px) {
@@ -1493,25 +1493,25 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 }
 
 /* ============================================================
-   CUSTOMER REVIEWS — overall score, distribution, testimonial carousel.
+   CUSTOMER REVIEWS – overall score, distribution, testimonial carousel.
    Built on the Metzler design tokens; scoped to .rv. ============================ */
 .rv { background: var(--color-paper); padding: var(--sx-rhythm) 0; scroll-margin-top: 5.5rem; }
 .rv__inner { display: flex; flex-direction: column; }
 
-/* Heading — matches the About-us section header (.eyebrow / .section-title / .section-sub) */
+/* Heading – matches the About-us section header (.eyebrow / .section-title / .section-sub) */
 .rv__head { text-align: center; max-width: 44rem; margin: 0 auto clamp(1.75rem, 3vw, 2.5rem); }
 .rv__eyebrow { margin: 0 0 0.75rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; line-height: 1.4; text-transform: uppercase; color: var(--color-graphite-600); }
 .rv__title { margin: 0; font-size: clamp(2rem, 4vw, 2.875rem); font-weight: 700; letter-spacing: -0.01em; line-height: 1.15; color: var(--color-digital-black); }
 .rv__sub { margin: 1rem auto 0; max-width: 56ch; font-size: 1rem; line-height: 1.5; color: var(--color-digital-black); }   /* 16px */
 
 /* ── One merged panel: rating summary (left zone) + featured testimonial (right zone),
-   divided by a single hairline — one surface, no double cards. ── */
+   divided by a single hairline – one surface, no double cards. ── */
 .rv__layout { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
   gap: 0; align-items: stretch;
   background: var(--color-white); border: 1px solid var(--color-graphite-200);
   border-radius: var(--radius-lg); box-shadow: var(--shadow-soft); overflow: hidden; }
 
-/* ── Summary — left zone of the panel, set apart by a soft tonal tint (a stats
+/* ── Summary – left zone of the panel, set apart by a soft tonal tint (a stats
    panel), not a divider line ── */
 .rv__summary { display: flex; flex-direction: column; justify-content: center; gap: 1.35rem;
   padding: clamp(1.5rem, 3vw, 2.25rem); background: var(--color-teal-50); }   /* soft mint-green tint, matching the info-icon backgrounds */
@@ -1540,7 +1540,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 
 /* aside: CTA */
 .rv__aside { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; text-align: center; }
-/* CTA — mirrors the gallery's "Alle N Bilder ansehen" button (.pdp-thumbs__all):
+/* CTA – mirrors the gallery's "Alle N Bilder ansehen" button (.pdp-thumbs__all):
    white, 1px grey border, teal text, radius-lg; hover = teal border + teal-50 */
 .rv__cta { display: flex; width: 100%; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.4rem;
   font-size: 0.875rem; font-weight: 700; letter-spacing: -0.01em; text-decoration: none;
@@ -1552,14 +1552,14 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .rv__cta:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 3px; }
 .rv__aside-note { font-size: 0.75rem; color: var(--text-muted); max-width: 16rem; line-height: 1.4; }
 
-/* ── Featured testimonial — right zone of the merged panel. Contained customer photo
+/* ── Featured testimonial – right zone of the merged panel. Contained customer photo
    beside a pull-quote; navigation consolidated into one control row below. ── */
 .rv__carousel { position: relative; display: flex; flex-direction: column; gap: clamp(1rem, 2vw, 1.5rem);
   padding: clamp(1.25rem, 2.5vw, 1.75rem); }
 .rv__track[hidden] { display: none; }   /* data source only */
 
 /* equal-height 2-column: photo | (text + thumbnails). align-items:stretch makes the photo
-   column match the text column's height exactly — image edge-to-edge, no top/bottom padding. */
+   column match the text column's height exactly – image edge-to-edge, no top/bottom padding. */
 .rv__feature-card { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: clamp(1rem, 2vw, 1.5rem); align-items: stretch; }
 
@@ -1569,7 +1569,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 
 /* right column: review text (centered, grows) on top, thumbnail nav pinned below.
    A constant min-height keeps the card the same size across reviews so the thumbnails
-   don't shift with review length — but the reservation is on the BLOCK, not the text,
+   don't shift with review length – but the reservation is on the BLOCK, not the text,
    so short reviews get no awkward internal gap. */
 .rv__feature-body { min-width: 0; display: flex; flex-direction: column; justify-content: center;
   gap: clamp(1rem, 1.5vw, 1.25rem); min-height: 25rem; }
@@ -1582,12 +1582,12 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 
 /* The stars→title→text→name group is TOP-packed, so the author name always hugs the
    review text (never pushed down). A min-height reserves the tallest case (a full
-   3-line review), making this block a CONSTANT height on every slide — so the thumbnail
+   3-line review), making this block a CONSTANT height on every slide – so the thumbnail
    nav below it sits at a FIXED position regardless of how long each review is. The
    leftover space on shorter reviews falls below the name, not between text and name. */
 .rv__feature-content { flex: 0 0 auto; justify-content: flex-start; min-height: 15.75rem;
   position: relative; display: flex; flex-direction: column; gap: 0.7rem; padding: 0; }
-/* stars and the decorative quote share one row — quote right-aligned, both centred on the line */
+/* stars and the decorative quote share one row – quote right-aligned, both centred on the line */
 .rv__feature-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .rv__feature-quote { flex: none; width: 3rem; height: 3rem; color: var(--color-teal-50); pointer-events: none; }
 .rv__feature-stars { position: relative; }
@@ -1624,7 +1624,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .rv__feature-arrow:hover { background: var(--color-teal); color: var(--color-white); border-color: var(--color-teal); }
 .rv__feature-arrow:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(1,82,83,0.10); }
 
-/* customer-photo thumbnail nav — fills the row between the arrows */
+/* customer-photo thumbnail nav – fills the row between the arrows */
 .rv__thumbsnav { flex: 1; min-width: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 0.6rem; }
 .rv__thumbnav-btn { width: 3.5rem; height: 3.5rem; padding: 0; cursor: pointer; overflow: hidden; flex: none;
   background: var(--color-white); border: 1px solid var(--color-graphite-200); border-radius: var(--radius);
@@ -1664,11 +1664,11 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 }
 
 /* ============================================================
-   PRODUCT INFO — sticky scroll-spy nav + 5 stacked sections
+   PRODUCT INFO – sticky scroll-spy nav + 5 stacked sections
    (Beschreibung · Bewertungen · Downloads · Technische Details · Frage)
    ============================================================ */
 html { scroll-behavior: smooth; }
-/* Stop the page rubber-banding past its content — the overscroll bounce beyond the
+/* Stop the page rubber-banding past its content – the overscroll bounce beyond the
    dark footer otherwise exposes the white body background as a blank strip on iOS.
    `none` pins the root scroller to its bounds so the scroll stops at the footer. */
 html, body { overscroll-behavior-y: none; }
@@ -1684,7 +1684,7 @@ html, body { overscroll-behavior-y: none; }
    The green quickbar pins directly under the header while scrolling. As the
    product-section nav (.psx-nav) rises into its slot, pdp-b.js fades the quickbar
    from opaque to transparent so the section nav slides up UNDER it and takes its
-   place — a clean baton-pass, not two stacked bars. */
+   place – a clean baton-pass, not two stacked bars. */
 body.is-scrolled #quickbar {
   position: sticky; top: var(--pdp-header-h); z-index: 45;
   box-shadow: 0 8px 18px -14px rgba(1,40,40,0.55);
@@ -1692,7 +1692,7 @@ body.is-scrolled #quickbar {
 }
 /* Mobile: pin the contact bar ABOVE the section nav (which is z-index:50) so the nav
    visibly slides UNDER it while it fades. Kept below the header (z-index:90). Mobile
-   only — desktop keeps the config-dock stacking untouched. */
+   only – desktop keeps the config-dock stacking untouched. */
 @media (max-width: 47.9375rem) {
   body.is-scrolled #quickbar { z-index: 55; }
 }
@@ -1724,7 +1724,7 @@ body.is-scrolled #quickbar {
             mask-image: linear-gradient(90deg, transparent 0, #000 var(--nav-fade)); }
   .psx-nav__tabs[data-scroll="none"] { -webkit-mask-image: none; mask-image: none; }
 }
-/* "Termin vereinbaren" action pinned to the right of the section nav — opens the same
+/* "Termin vereinbaren" action pinned to the right of the section nav – opens the same
    Kontakt & Service modal as the green contact bar (via data-cm-open). */
 .psx-nav__termin { align-self: center; flex: none; display: inline-flex; align-items: center; gap: 0.45rem;
   padding: 0.55rem 1.2rem; border: 0; border-radius: var(--radius);
@@ -1745,7 +1745,7 @@ body.is-scrolled #quickbar {
 /* One rhythm token for every full-width info section, so the vertical padding
    (and therefore the gap between any two sections) is identical at all widths. */
 :root { --sx-rhythm: clamp(2.75rem, 5vw, 4.5rem);   /* between top-level sections */
-  --sx-blockgap: clamp(2rem, 4vw, 3rem); }           /* between major blocks WITHIN a section (intro/features/spec) — one value so the rhythm is consistent */
+  --sx-blockgap: clamp(2rem, 4vw, 3rem); }           /* between major blocks WITHIN a section (intro/features/spec) – one value so the rhythm is consistent */
 .psx-sec { scroll-margin-top: 7.75rem; padding: var(--sx-rhythm) 0; }
 .psx-sec--alt { background: var(--color-paper); }
 .rv { scroll-margin-top: 7.75rem; }   /* reviews section = Bewertungen target */
@@ -1755,7 +1755,7 @@ body.is-scrolled #quickbar {
 .psx-lead { margin: 0 0 2rem; max-width: 62ch; font-size: 1.125rem; line-height: 1.6; color: var(--color-graphite-700); }
 
 /* Center the intro text block (eyebrow · title · lead) in the Bewertungen,
-   Downloads and Technische-Details sections only — Beschreibung and FAQ keep
+   Downloads and Technische-Details sections only – Beschreibung and FAQ keep
    their left-aligned headers. The lead's max-width box is re-centered via auto
    side margins so the copy sits centered under the title. */
 #sx-bewertungen .psx-eyebrow, #sx-bewertungen .psx-title, #sx-bewertungen .psx-lead,
@@ -1789,7 +1789,7 @@ body.is-scrolled #quickbar {
 .psx-chips li { padding: 0.35rem 0.75rem; border-radius: var(--radius); background: var(--color-paper); border: 1px solid var(--color-graphite-300); font-size: 0.75rem; font-weight: 700; color: var(--color-digital-black); }
 /* selectable LED colour dots */
 .psx-dots { list-style: none; display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1.1rem 0 0; padding: 0; }
-/* flat, refined swatches — clean e-commerce colour dots (hairline ring so light
+/* flat, refined swatches – clean e-commerce colour dots (hairline ring so light
    colours read on white; gentle hover lift) */
 .psx-dots { gap: 0.7rem; }
 .psx-dots li { width: 1.6rem; height: 1.6rem; border-radius: var(--radius); cursor: pointer;
@@ -1800,7 +1800,7 @@ body.is-scrolled #quickbar {
 .psx-badges li { padding: 0.4rem 0.85rem; border: 1px solid var(--color-graphite-300); border-radius: var(--radius-pill); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-teal); background: var(--color-white); }
 /* extra breathing room above the alternating rows */
 .psx-rows { margin-top: clamp(2rem, 4vw, 3.25rem); }
-/* ===== Neue Features — premium branded panel ===========================
+/* ===== Neue Features – premium branded panel ===========================
    A deep-teal rounded panel holding white icon-cards. Each card lifts on
    hover, its icon chip fills teal, and a short accent underline grows out
    from the title. Responsive 3 → 2 → 1 columns. ==================== */
@@ -1808,7 +1808,7 @@ body.is-scrolled #quickbar {
   border-radius: var(--radius-xl);
   /* Aspect-independent depth: a fixed-size soft spotlight centred on the top edge reads
      the same on a short/wide desktop panel and a tall/narrow mobile one, over a gentle
-     in-hue teal→teal-700 vertical deepening — no dark pooling in a corner */
+     in-hue teal→teal-700 vertical deepening – no dark pooling in a corner */
   background:
     radial-gradient(1100px 500px at 50% -80px, rgba(92,219,211,0.16) 0%, transparent 60%),
     linear-gradient(180deg, var(--color-teal) 0%, var(--color-teal-700) 100%);
@@ -1841,7 +1841,7 @@ body.is-scrolled #quickbar {
 .nfeat__cardtext { margin: 0; font-size: 0.875rem; line-height: 1.55; color: var(--on-dark-muted); }
 
 /* ============================================================
-   Kameratechnologie showcase — premium camera deep-dive.
+   Kameratechnologie showcase – premium camera deep-dive.
    Interactive 146° FOV demo + animated stats + capability grid
    + foldaway spec sheet. Data scraped from the live VDM10 page.
    ============================================================ */
@@ -1911,7 +1911,7 @@ body.is-scrolled #quickbar {
 .camtech__specsbtn svg { flex: none; width: 1.2rem; height: 1.2rem; color: var(--color-graphite-600); transition: transform .25s ease; }
 .camtech__specs[open] .camtech__specsbtn { color: var(--color-teal); border-bottom: 1px solid var(--color-graphite-200); }
 .camtech__specs[open] .camtech__specsbtn svg { transform: rotate(180deg); }
-/* explicit collapse — guarantees the sheet hides when closed even where native <details> hiding is unavailable */
+/* explicit collapse – guarantees the sheet hides when closed even where native <details> hiding is unavailable */
 .camtech__specs:not([open]) .camspec { display: none; }
 .camspec { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(15rem,100%),1fr)); gap: 1.25rem 2rem; padding: 1.4rem 1.3rem; }
 .camspec__group h5 { margin: 0 0 0.5rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
@@ -1929,7 +1929,7 @@ body.is-scrolled #quickbar {
   .fov__sweep { display: none; }
 }
 
-/* Beschreibung — pinned scrollytelling: sticky image (left) swaps as the text
+/* Beschreibung – pinned scrollytelling: sticky image (left) swaps as the text
    scenes (right) scroll past. Uses position:sticky, so no scroll-jacking. */
 .psx-story__grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(2rem,5vw,4.5rem); align-items: start; margin: clamp(1rem,2vw,1.75rem) 0 var(--sx-blockgap); }
 /* Centre the image on the TRUE viewport middle (50vh): the pin spans the full viewport and
@@ -1944,7 +1944,7 @@ body.is-scrolled #quickbar {
 .psx-story__img.is-active { opacity: 1; transform: scale(1); }
 .psx-story__img--contain { object-fit: contain; background: var(--color-white); padding: clamp(1rem, 3vw, 2.25rem); }
 
-/* ── Bewertungen (Reviews) — happy carousel + detailed list with rating sidebar ── */
+/* ── Bewertungen (Reviews) – happy carousel + detailed list with rating sidebar ── */
 /* shared stars */
 .rvw-stars { display: inline-flex; gap: 2px; color: var(--color-star); line-height: 0; }
 .rvw-stars svg { width: 1rem; height: 1rem; display: block; }
@@ -1973,7 +1973,7 @@ body.is-scrolled #quickbar {
 /* Mobile: show 2.5 cards per row (the half-card peek signals more to scroll).
    Cards + internals scale down to stay premium/legible at the smaller size. */
 @media (max-width: 47.9375rem) {
-  /* 1.5 cards per row — one full card plus a half-card peek to signal more to scroll */
+  /* 1.5 cards per row – one full card plus a half-card peek to signal more to scroll */
   .rvw-carousel { gap: 0.75rem; }
   .rvw-carousel .rvw-happy-card { flex: 0 0 calc((100% - 0.75rem) / 1.5); }
 }
@@ -2004,12 +2004,12 @@ body.is-scrolled #quickbar {
 .rvw-dist-val { text-align: right; font-variant-numeric: tabular-nums; }
 .rvw-cta { display: inline-flex; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; gap: 0.5rem; padding: 0.7rem 1.25rem; border: 2px solid var(--color-teal); border-radius: var(--radius); background: var(--color-white); color: var(--color-teal); font-size: 0.875rem; font-weight: 700; text-decoration: none; cursor: pointer; transition: background .15s ease, color .15s ease; }
 .rvw-cta:hover { background: var(--color-teal); color: var(--color-white); }
-/* "Wie funktionieren Bewertungen?" disclosure — quiet explanatory note under the
+/* "Wie funktionieren Bewertungen?" disclosure – quiet explanatory note under the
    CTA, divided by a hairline so it reads as secondary to the score + write-review
    action. Collapsed by default: the summary row is the tap target, the body reveals
    on open and the chevron rotates to signal state. */
 .rvw-howto { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--color-graphite-300); }
-/* Legally required info — always visible (no longer a collapsible disclosure) */
+/* Legally required info – always visible (no longer a collapsible disclosure) */
 .rvw-howto__title { margin: 0; font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black); }
 .rvw-howto__text { margin: 0.55rem 0 0; font-size: 0.75rem; line-height: 1.55; color: var(--color-graphite-700); }
 .rvw-howto__link { display: inline-block; margin-top: 0.6rem; font-size: 0.75rem; font-weight: 600;
@@ -2030,7 +2030,7 @@ body.is-scrolled #quickbar {
   font: inherit; font-size: 0.75rem; font-weight: 700; color: var(--color-teal); }
 .rvw-review__more:hover { color: var(--color-teal-600); }
 .rvw-review__more:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; border-radius: var(--radius-sm); }
-/* Customer-uploaded photos — a compact thumbnail strip between the review text and
+/* Customer-uploaded photos – a compact thumbnail strip between the review text and
    its byline. Square tiles, capped at three per review; each opens a lightbox. */
 .rvw-review__media { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.9rem 0 0; }
 .rvw-shot { flex: none; width: 4.5rem; height: 4.5rem; padding: 0; overflow: hidden; cursor: pointer;
@@ -2040,7 +2040,7 @@ body.is-scrolled #quickbar {
 .rvw-shot:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
 .rvw-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
 /* Lightbox overlay (injected once by JS) */
-/* ── Premium review-photo viewer — dark image stage + white context panel ── */
+/* ── Premium review-photo viewer – dark image stage + white context panel ── */
 .rvw-lightbox { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center;
   padding: clamp(0.75rem, 3vw, 2.5rem); }
 .rvw-lightbox.is-open { display: flex; }
@@ -2056,7 +2056,7 @@ body.is-scrolled #quickbar {
 .rvw-lb__body { grid-column: 2; grid-row: 2; }
 @keyframes rvwLbIn { from { opacity: 0; transform: translateY(0.75rem) scale(0.985); } to { opacity: 1; transform: none; } }
 
-/* Close — bare icon button; square press/tap feedback (never circular) */
+/* Close – bare icon button; square press/tap feedback (never circular) */
 .rvw-lb__close { flex: none; width: 2.25rem; height: 2.25rem; margin-right: -0.5625rem; display: grid; place-items: center; cursor: pointer;   /* neg margin = (btn − icon)/2 so the icon box lines up with the body content's right edge */
   color: var(--color-graphite-600); background: transparent; border: 0; border-radius: var(--radius); transition: background .15s; }
 .rvw-lb__close:hover { background: var(--color-graphite-100); }
@@ -2074,7 +2074,7 @@ body.is-scrolled #quickbar {
   padding: 0.28rem 0.65rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.03em;
   color: var(--on-dark-strong); background: rgba(0,0,0,0.5); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
   font-variant-numeric: tabular-nums; }
-/* nav arrows — design-system slider arrow: square var(--radius), white outline, inverts on hover (never circular) */
+/* nav arrows – design-system slider arrow: square var(--radius), white outline, inverts on hover (never circular) */
 .rvw-lb__nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
   width: 2.75rem; height: 2.75rem; display: grid; place-items: center; line-height: 1; cursor: pointer;
   color: var(--color-white); background: rgba(0,0,0,0.28); border: 1px solid rgba(255,255,255,0.85); border-radius: var(--radius);
@@ -2085,14 +2085,14 @@ body.is-scrolled #quickbar {
 .rvw-lb__nav:focus-visible { outline: 2px solid var(--color-white); outline-offset: 2px; }
 .rvw-lb__nav svg { width: 1.4rem; height: 1.4rem; }
 
-/* title bar — anchors the review context and holds the close control */
+/* title bar – anchors the review context and holds the close control */
 .rvw-lb__head { min-width: 0; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
   padding: 0.9rem clamp(1.35rem, 2.4vw, 1.9rem); border-bottom: 1px solid var(--color-graphite-300); }   /* horizontal padding matches the body so the title + close align with the content column */
 .rvw-lb__headtitle { margin: 0; font-size: 1.25rem; font-weight: 700; line-height: 1.35; letter-spacing: -0.01em; color: var(--color-digital-black); }
 /* body is a fixed-height column: title/meta pinned top, text scrolls, gallery pinned bottom */
 .rvw-lb__body { min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden;
   padding: clamp(1.35rem, 2.4vw, 1.9rem); }
-/* top row — review title (left) paired with the star rating (right);
+/* top row – review title (left) paired with the star rating (right);
    sized so a typical title fits on one line beside the stars */
 .rvw-lb__top { flex: none; display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
 .rvw-lb__title { flex: 1 1 auto; margin: 0; font-size: 1.0625rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.35; color: var(--color-digital-black);
@@ -2101,11 +2101,11 @@ body.is-scrolled #quickbar {
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; overflow-wrap: anywhere; }
 .rvw-lb__stars.rvw-lb__stars { flex: none; margin-top: 0.1rem; }
 .rvw-lb__stars svg { width: 1.15rem; height: 1.15rem; }
-/* meta line — "author | date" plus the verified label, muted */
+/* meta line – "author | date" plus the verified label, muted */
 .rvw-lb__meta { flex: none; margin: 0.5rem 0 0; display: flex; align-items: center; flex-wrap: wrap; gap: 0 0.5rem;
   font-size: 0.75rem; color: var(--color-graphite-600); }
 .rvw-lb__date::before { content: "|"; margin-right: 0.5rem; color: var(--color-graphite-300); }
-/* verified label — identical to the review-list .rvw-verified (no pill) */
+/* verified label – identical to the review-list .rvw-verified (no pill) */
 .rvw-lb__badge { margin-left: auto; display: inline-flex; align-items: center; gap: 0.3rem; flex: none;
   font-size: 0.75rem; font-weight: 700; white-space: nowrap; color: var(--color-teal); }
 .rvw-lb__badge svg { width: 0.85rem; height: 0.85rem; }
@@ -2114,13 +2114,13 @@ body.is-scrolled #quickbar {
 .rvw-lb__text { flex: 1 1 auto; min-height: 0; overflow-y: auto; margin: 1.15rem 0 0; padding-right: 0.5rem;
   font-size: 0.875rem; line-height: 1.7; color: var(--color-graphite-700);
   scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.18) transparent; }
-/* minimal scrollbar — thin pill thumb, no track, no stepper buttons */
+/* minimal scrollbar – thin pill thumb, no track, no stepper buttons */
 .rvw-lb__text::-webkit-scrollbar { width: 5px; }
 .rvw-lb__text::-webkit-scrollbar-track { background: transparent; }
 .rvw-lb__text::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.18); border-radius: 999px; }
 .rvw-lb__text::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.32); }
 .rvw-lb__text::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
-/* photo gallery — flows directly beneath the review as a connected section
+/* photo gallery – flows directly beneath the review as a connected section
    (a hairline divider ties it to the text); styled identically to the
    review-preview thumbnail nav (.rv__thumbnav-btn) for a consistent system */
 .rvw-lb__gallery { flex: none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--color-graphite-200); }
@@ -2160,7 +2160,7 @@ body.is-scrolled #quickbar {
 .rvw-happy-card--clickable { cursor: pointer; transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
 .rvw-happy-card--clickable:hover { transform: translateY(-3px); box-shadow: var(--shadow-md, 0 8px 24px rgba(8,10,12,0.1)); border-color: var(--color-graphite-400, var(--color-graphite-300)); }
 .rvw-happy-card--clickable:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 3px; }
-/* Mobile "Info & Hilfecenter" quickbar: entries are placeholders for now — the panel
+/* Mobile "Info & Hilfecenter" quickbar: entries are placeholders for now – the panel
    still expands/collapses, but the individual links are non-interactive. */
 @media (max-width: 767px) {
   .quickbar .qa, .quickbar .qa-cta { pointer-events: none; cursor: default; }
@@ -2188,14 +2188,14 @@ body.is-scrolled #quickbar {
   .psx-story__scene h3 { font-size: 1.35rem; }
   .psx-story__scene p { font-size: 1rem; }
 }
-/* scene fact bullets — teal check marks, matching the page's feature-bullet style */
+/* scene fact bullets – teal check marks, matching the page's feature-bullet style */
 .psx-facts { list-style: none; margin: 0.9rem 0 0; padding: 0; display: grid; gap: 0.5rem; max-width: 42ch; }
 .psx-facts li { position: relative; padding-left: 1.6rem; font-size: 0.875rem; line-height: 1.5; color: var(--color-graphite-700); }
 .psx-facts li::before { content: ""; position: absolute; left: 0.15rem; top: 0.15em; width: 0.4rem; height: 0.72rem; border: solid var(--color-teal); border-width: 0 2px 2px 0; transform: rotate(45deg); }
 .psx-facts a { color: var(--color-teal); text-decoration: underline; text-underline-offset: 2px; }
 
 /* Mobile shows each scene's own image inline (above its text) instead of the desktop
-   sticky cross-fade — so every image is seen, not just the first. Hidden on desktop. */
+   sticky cross-fade – so every image is seen, not just the first. Hidden on desktop. */
 .psx-story__sceneimg { display: none; }
 @media (max-width: 56.25rem) {
   .psx-story__grid { grid-template-columns: 1fr; gap: 1rem; }
@@ -2214,7 +2214,7 @@ body.is-scrolled #quickbar {
 }
 
 /* Downloads */
-/* ===== Downloads — premium document cards ==============================
+/* ===== Downloads – premium document cards ==============================
    Modernised on the existing markup (no HTML change, so both index versions
    inherit it): airier cards with a soft rest-shadow and a teal lift on hover,
    a folded-corner "PDF" sheet badge, and a circular download button whose
@@ -2252,7 +2252,7 @@ body.is-scrolled #quickbar {
 .psx-dl__text b { font-size: 0.875rem; font-weight: 700; line-height: 1.3; color: var(--color-digital-black); }
 .psx-dl__text span { font-size: 0.75rem; color: var(--color-graphite-700); }
 
-/* circular download button — arrow nudges down on hover */
+/* circular download button – arrow nudges down on hover */
 .psx-dl__icon { flex: none; box-sizing: content-box; width: 1.1rem; height: 1.1rem; padding: 0.55rem;
   border-radius: 50%; background: var(--color-teal-50); color: var(--color-teal);
   transition: background .2s ease, color .2s ease; }
@@ -2270,13 +2270,13 @@ body.is-scrolled #quickbar {
 .psx-spec__list dt { margin: 0; font-size: 0.875rem; color: var(--color-graphite-600); }
 .psx-spec__list dd { margin: 0; font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black); text-align: right; }
 
-/* ===== Anschlussübersichten — diagram galleries (replaces the live dropdowns) =====
+/* ===== Anschlussübersichten – diagram galleries (replaces the live dropdowns) =====
    Open, labeled groups instead of accordions: a titled block + a responsive grid
    of diagram cards. Each schematic sits on a clean white surface with its caption;
    clicking opens a zoom lightbox (techdia JS) since the diagrams must be read close. */
-/* ===== Merkmale & Technische Daten — flexible attribute list (end of description) =
+/* ===== Merkmale & Technische Daten – flexible attribute list (end of description) =
    Content-agnostic: each row is a label + a wrapping set of clickable chips (or a
-   plain value for measurements), so it adapts to any product — one value or a
+   plain value for measurements), so it adapts to any product – one value or a
    dozen, few attributes or many. Closes with a quiet manufacturer/safety footer. */
 .dspec { margin-top: var(--sx-blockgap); }
 .dspec__title { margin: 0 0 clamp(1.1rem,2vw,1.4rem); font-size: clamp(1.15rem,1.9vw,1.4rem); font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
@@ -2320,7 +2320,7 @@ body.is-scrolled #quickbar {
 .dspec__safety:hover { border-color: var(--color-red-600); background: var(--color-red-50); color: var(--color-red-600) !important; }
 .dspec__safety svg { width: 1rem; height: 1rem; color: var(--color-red-600); }
 
-/* ===== Technische Übersichten — master–detail on one unified surface =====
+/* ===== Technische Übersichten – master–detail on one unified surface =====
    A single bordered card split into a tinted category rail and a detail panel.
    One category at a time → no long scroll; the vertical rail is visually distinct
    from the horizontal mid-nav → no tabs-in-tabs. Collapses to a chip row on
@@ -2329,7 +2329,7 @@ body.is-scrolled #quickbar {
   border: 1px solid var(--color-teal); border-radius: var(--radius-xl); overflow: hidden; background: var(--color-white); }
 @media (min-width: 56rem) { .techms { grid-template-columns: 17rem 1fr; } }
 
-/* rail — design-system dark band, consistent with .nfeat: a fixed-size soft top
+/* rail – design-system dark band, consistent with .nfeat: a fixed-size soft top
    spotlight over a gentle in-hue teal→teal-700 vertical deepening (aspect-independent,
    so it reads the same on the tall desktop column and the short mobile row) */
 .techms__rail { display: flex; flex-direction: row; gap: 0.2rem; padding: 0.6rem; overflow-x: auto; scrollbar-width: none;
@@ -2341,7 +2341,7 @@ body.is-scrolled #quickbar {
   .techms__rail { flex-direction: column; gap: 0.2rem; padding: 0.85rem 0.7rem; overflow: visible; }
 }
 
-/* rail item on teal — light text/icon; active = a white pill with teal text/icon */
+/* rail item on teal – light text/icon; active = a white pill with teal text/icon */
 .techms__tab { flex: none; display: flex; align-items: center; gap: 0.7rem;
   padding: 0.65rem 0.75rem; border: 0; border-radius: var(--radius); background: transparent;
   text-align: left; cursor: pointer; white-space: nowrap; color: var(--on-dark-strong);
@@ -2402,7 +2402,7 @@ body.is-scrolled #quickbar {
 .techdia__shot:hover { border-color: var(--color-teal); transform: translateY(-2px);
   box-shadow: 0 8px 18px -14px rgba(1,82,83,0.28); }
 .techdia__shot:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 3px; }
-/* zoom affordance — a circular magnifier badge that appears on hover/focus */
+/* zoom affordance – a circular magnifier badge that appears on hover/focus */
 .techdia__zoom { position: absolute; top: 0.7rem; right: 0.7rem; width: 2.1rem; height: 2.1rem; display: grid; place-items: center;
   border-radius: 50%; background: rgba(1,82,83,0.92); color: var(--color-white); opacity: 0; transform: scale(0.85);
   transition: opacity .2s ease, transform .2s ease; }
@@ -2410,7 +2410,7 @@ body.is-scrolled #quickbar {
 .techdia__shot:hover .techdia__zoom, .techdia__shot:focus-visible .techdia__zoom { opacity: 1; transform: scale(1); }
 .techdia__caption { font-size: 0.875rem; font-weight: 600; line-height: 1.4; color: var(--color-graphite-700); }
 
-/* Diagram lightbox (injected by pdp-b.js) — reuses the review-lightbox look */
+/* Diagram lightbox (injected by pdp-b.js) – reuses the review-lightbox look */
 .tdiag-lightbox { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center;
   gap: 0.5rem; padding: clamp(1rem,4vw,3rem); background: rgba(10,12,14,0.86); }
 .tdiag-lightbox.is-open { display: flex; }
@@ -2422,7 +2422,7 @@ body.is-scrolled #quickbar {
   color: var(--color-white); background: none; border: 0; transition: color .15s ease, transform .15s ease; }
 .tdiag-lightbox__close:hover { color: var(--on-dark-strong); transform: scale(1.08); }
 .tdiag-lightbox__close svg { width: 1.25rem; height: 1.25rem; }
-/* nav arrows — design-system slider arrow: square var(--radius), white outline, inverts on hover (never circular) */
+/* nav arrows – design-system slider arrow: square var(--radius), white outline, inverts on hover (never circular) */
 .tdiag-lightbox__nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
   width: 2.75rem; height: 2.75rem; display: grid; place-items: center; line-height: 1;
   cursor: pointer; color: var(--color-white); background: rgba(0,0,0,0.28); border: 1px solid rgba(255,255,255,0.85); border-radius: var(--radius);
@@ -2436,7 +2436,7 @@ body.is-scrolled #quickbar {
   .tdiag-lightbox__nav svg { width: 1.2rem; height: 1.2rem; }
 }
 
-/* Frage / FAQ — ported from the produktionsprozess page (.faq), mapped to PDP tokens */
+/* Frage / FAQ – ported from the produktionsprozess page (.faq), mapped to PDP tokens */
 .faq__inner { display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
 .faq__support { background: var(--color-paper); border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg);
   padding: clamp(1.5rem, 3vw, 2rem); align-self: start; position: sticky; top: 7.5rem; }
@@ -2471,7 +2471,7 @@ body.is-scrolled #quickbar {
 .qf-close:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
 .qf-close svg { width: 1.125rem; height: 1.125rem; }
 .qf-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 1.5rem; }
-/* Grab handle — only shown on the mobile bottom sheet; signals the swipe-to-dismiss gesture. */
+/* Grab handle – only shown on the mobile bottom sheet; signals the swipe-to-dismiss gesture. */
 .qf-grip { display: none; }
 .qf-dialog.qf-dragging { animation: none; transition: none; }
 .qf-dialog.qf-settling { transition: transform .25s cubic-bezier(.4,0,.2,1); }
@@ -2519,7 +2519,7 @@ body.is-scrolled #quickbar {
 @media (max-width: 47.9375rem) {
   .qf-overlay { align-items: flex-end; padding: 0; }
   /* max-height is a % of the overlay, which JS sizes to the visual viewport while
-     open — so when the keyboard opens the sheet shrinks to sit above it, keeping
+     open – so when the keyboard opens the sheet shrinks to sit above it, keeping
      the submit button reachable instead of hidden behind the keyboard. */
   .qf-dialog { max-width: none; width: 100%; max-height: 92%;
     border-radius: var(--radius-xl) var(--radius-xl) 0 0; animation: qfSheet .3s cubic-bezier(.4,0,.2,1); }
@@ -2544,7 +2544,7 @@ body.is-scrolled #quickbar {
   padding: 1.4rem 1.25rem; font-size: 1.125rem; font-weight: 700; color: var(--color-digital-black); cursor: pointer; list-style: none; transition: color .18s ease; }
 .faq__q::-webkit-details-marker { display: none; }
 .faq__item[open] .faq__q { color: var(--color-teal); }
-/* plain chevron, no circle — reset the ring the Home design-system rule adds, to
+/* plain chevron, no circle – reset the ring the Home design-system rule adds, to
    match the produktionsprozess FAQ (background:none · border:0 · flips on open) */
 .faq__q-icon { flex: none; width: 1.5rem; height: 1.5rem; display: grid; place-items: center; background: none; border: 0; border-radius: 0; color: var(--color-graphite-600); transition: color .2s ease; }
 .faq__q-icon svg { width: 1.5rem; height: 1.5rem; transition: transform .2s ease; }
@@ -2575,7 +2575,7 @@ body.is-scrolled #quickbar {
 }
 
 /* ==========================================================================
-   LARGE-PHONE PASS (≤ 767px) — the base mobile breakpoint (560px) is too low
+   LARGE-PHONE PASS (≤ 767px) – the base mobile breakpoint (560px) is too low
    for wide phones (~561–767px), where several components fall into a cramped
    in-between layout. Realign them to the mobile treatment. Desktop / tablet
    ≥ 768px is untouched.
@@ -2589,22 +2589,22 @@ body.is-scrolled #quickbar {
   .cfgb .cfg-opts .cfg-opt__body { flex: 1 1 auto; min-width: 0; padding-right: 0; }
   .cfgb .cfg-opts .cfg-opt__desc { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .cfgb .cfg-opts .cfg-opt__price { margin: 0 0 0 auto; align-self: center; padding-top: 0; text-align: right; white-space: nowrap; }
-  /* show the selection control (checkbox / radio) on mobile too — parity with desktop */
+  /* show the selection control (checkbox / radio) on mobile too – parity with desktop */
   .cfgb .cfg-opts .cfg-opt__mark { display: grid; position: relative; top: auto; right: auto; flex: none; margin: 0; }
   .cfgb .cfg-opts .cfg-opt__rec { position: static; margin: 0 0 0 auto; align-self: center; }
 
-  /* Product cards (Anschluss, Innenstationen — not the plain Gravur rows): the status
+  /* Product cards (Anschluss, Innenstationen – not the plain Gravur rows): the status
      label pill (Empfohlen / Ausverkauft) sits on a right-aligned top row; the content
      (thumb, name, description) and the price share the row below. Frees the title area
      so cards don't feel cramped. */
   .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt {
     display: grid; grid-template-columns: auto 3.25rem minmax(0, 1fr) auto;
     column-gap: 0.8rem; row-gap: 0.35rem; align-items: center; padding: 0.7rem 0.85rem; }
-  /* row 1 — the label pill, top-right */
+  /* row 1 – the label pill, top-right */
   .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt__rec,
   .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt.is-unavailable .cfg-opt__badge {
     position: static; grid-column: 1 / -1; grid-row: 1; justify-self: end; align-self: center; margin: 0; top: auto; right: auto; left: auto; }
-  /* row 2 — content + price */
+  /* row 2 – content + price */
   .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt__mark  { grid-column: 1; grid-row: 2; }
   .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt__thumb { grid-column: 2; grid-row: 2; }
   .cfgb .cfg-opts:not(.cfg-opts--rows) .cfg-opt__body  { grid-column: 3; grid-row: 2; padding-right: 0; }
@@ -2617,13 +2617,13 @@ body.is-scrolled #quickbar {
   .pdp-b .hl__badges .hl__badge,
   .pdp-b .hl__badges--infeat .hl__badge { flex: 1 1 0; min-width: 0; justify-content: center; gap: calc(0.5rem + 1px); padding: 0.55rem 0.4rem; }
   .pdp-b .hl__badges .hl__badge + .hl__badge,
-  /* separate framed chips in a row — restore ALL borders (the ≤560px stack rule zeroes
+  /* separate framed chips in a row – restore ALL borders (the ≤560px stack rule zeroes
      border-top/left for a vertical stack, but here they sit side by side with a gap) */
   .pdp-b .hl__badges--infeat .hl__badge + .hl__badge { border-left: 1px solid var(--color-graphite-300); border-top: 1px solid var(--color-graphite-300); }
   .pdp-b .hl__badge-pre { white-space: nowrap; font-size: 0.75rem; }
   .pdp-b .hl__badge-txt b { font-size: 0.875rem; }
   /* The gold seal is a starburst (points + negative space), so at an equal box it reads
-     smaller than the solid flag disc — give it a larger box so the two marks look the
+     smaller than the solid flag disc – give it a larger box so the two marks look the
      same size, mirroring the desktop ratio. */
   .pdp-b .hl__badge-seal { width: 1.75rem; height: 1.75rem; }
   .pdp-b .hl__badge-seal--flag { width: 1.625rem; height: 1.625rem; }   /* square so border-radius:50% is a round flag coin, not a squashed oval */
@@ -2633,7 +2633,7 @@ body.is-scrolled #quickbar {
   .dspec__row { display: block; }
   /* Each section = a tinted title band (key, #F5F6FA) above a white value band (val).
      Keep BOTH bands' vertical padding symmetric (base 0.8rem) so the title is centred in
-     its tinted band and the pill is centred in its white band — the pill was top-aligned
+     its tinted band and the pill is centred in its white band – the pill was top-aligned
      (padding-top:0) and looked like it hugged the title with empty space below. */
   .dspec__key { border-right: 0; }
   .dspec__val { margin-left: 0; }   /* margin:0 (base) keeps the pill box flush-left under the title; padding stays the symmetric 0.8rem base */
@@ -2682,7 +2682,7 @@ body.is-scrolled #quickbar {
 }
 
 /* Technik rail on mobile: collapse the sidebar into a clean full-width vertical
-   list (same pattern as the desktop sidebar) — every option on its own aligned
+   list (same pattern as the desktop sidebar) – every option on its own aligned
    row, nothing clipped or fragmented. Desktop sidebar (≥ 56rem) is unaffected. */
 @media (max-width: 55.9375rem) {
   .techms__rail { flex-direction: column; overflow-x: visible; gap: 0.15rem; }
@@ -2692,7 +2692,7 @@ body.is-scrolled #quickbar {
 /* ============================================================
    Accessibility
    ============================================================ */
-/* Skip-to-content link — hidden until focused (keyboard entry point) */
+/* Skip-to-content link – hidden until focused (keyboard entry point) */
 .skip-link { position: fixed; top: 0.5rem; left: 0.5rem; z-index: 2000;
   padding: 0.6rem 1rem; background: var(--color-teal); color: var(--color-white);
   border-radius: var(--radius); font-size: 0.875rem; font-weight: 700; text-decoration: none;

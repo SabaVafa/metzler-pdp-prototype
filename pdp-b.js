@@ -1,5 +1,5 @@
 /* ============================================================
-   pdp-b.js — VERSION B · inline 5-step configurator
+   pdp-b.js – VERSION B · inline 5-step configurator
    • Farbe = VARIANTE (eigene Art.-Nr.), outside the flow.
    • Steps: 1 Anschluss (required · drives 3+4) · 2 Gravurdaten ·
             3 Innenstationen · 4 Stromversorgung · 5 Zubehör
@@ -36,7 +36,7 @@
   var LIGHT_FINISHES = { 'Verkehrsweiß RAL 9016': 1, 'Edelstahl gebürstet': 1 };
   var CONN = { 'LAN / PoE': 'lan', '2-Draht IP': '2draht' };
 
-  /* ── RAL Classic palette (Wunschfarbe picker) — code | German name | hex ── */
+  /* ── RAL Classic palette (Wunschfarbe picker) – code | German name | hex ── */
   var WUNSCHFARBE = 'Wunschfarbe nach RAL';
   var RAL_FAMS = [['all', 'Alle'], ['7', 'Grau'], ['9', 'Weiß/Schwarz'], ['1', 'Gelb'], ['2', 'Orange'], ['3', 'Rot'], ['4', 'Violett'], ['5', 'Blau'], ['6', 'Grün'], ['8', 'Braun']];
   var RAL = ('1000|Grünbeige|CDBA88 1001|Beige|D0B084 1002|Sandgelb|D2AA6D 1003|Signalgelb|F9A800 1004|Goldgelb|E49E00 ' +
@@ -88,13 +88,13 @@
        families; stable sort keeps ascending code order within each family */
     .sort(function (a, b) { var o = '791234568'; return o.indexOf(a.fam) - o.indexOf(b.fam); });
 
-  var ralUI = null;   /* set by setupRalPicker() — { open, close, flash, sync } */
+  var ralUI = null;   /* set by setupRalPicker() – { open, close, flash, sync } */
   var state = {
-    finish: '', finishDelta: 0, article: '', mainQty: 1,   /* no colour pre-selected — user must choose (each colour is its own article) */
+    finish: '', finishDelta: 0, article: '', mainQty: 1,   /* no colour pre-selected – user must choose (each colour is its own article) */
     ral: null,   /* Wunschfarbe: { code, name, hex } once a RAL is picked */
     anschluss: null, conn: null,
     gravurOn: false, gravurText: '', font: 'Klassisch',
-    innenSel: {},   /* name -> { price, qty, label } — multi-select, own qty each */
+    innenSel: {},   /* name -> { price, qty, label } – multi-select, own qty each */
     strom: 'Standard', stromDelta: 0, stromQty: 1,
     extras: {}   /* name -> { price, qty, label } */
   };
@@ -134,7 +134,7 @@
   function needsRal() { return state.finish === WUNSCHFARBE && !state.ral; }
   /* legible ink (dark/light) for a swatch background, by perceived luminance */
   function ralInk(hex) {
-    /* Pick black or white by actual WCAG contrast ratio against the swatch — not a simple
+    /* Pick black or white by actual WCAG contrast ratio against the swatch – not a simple
        brightness threshold, which underrates saturated yellows/oranges/golds (they'd get
        unreadable white text). WCAG relative luminance (sRGB → linear), then compare the
        contrast of black vs white and keep whichever reads better. */
@@ -155,7 +155,7 @@
 
     setTxt('pdpFinishName', finishText() || 'Bitte Farbe wählen');
     /* Product title carries the colour only once a complete colour is chosen
-       (Wunschfarbe still needs a RAL tone) — not before, and not on hover. */
+       (Wunschfarbe still needs a RAL tone) – not before, and not on hover. */
     var titleColor = $('pdpTitleColor');
     if (titleColor) {
       if (state.finish && !needsRal()) {
@@ -165,10 +165,10 @@
         titleColor.textContent = '';
       }
     }
-    setTxt('bArticleInline', state.article || '—');
+    setTxt('bArticleInline', state.article || '–');
     var sf = $('pdpStickyFinish'); if (sf) sf.textContent = finishText() || 'Farbe wählen';
 
-    /* colour-preview dot in the label — shows the exact RAL hex once picked */
+    /* colour-preview dot in the label – shows the exact RAL hex once picked */
     var dot = $('pdpFinishDot');
     if (dot) { if (state.ral) { dot.hidden = false; dot.style.background = state.ral.hex; } else { dot.hidden = true; } }
     if (ralUI) ralUI.sync();
@@ -239,7 +239,7 @@
     var cur = curIndex(); if (cur < 0) cur = 0;
     var track = $('bSeg'); if (track) track.style.setProperty('--prog', ((cur + 0.5) / STEPS.length * 100).toFixed(1) + '%');
     /* last (optional) step: once an option is chosen there, show it as done
-       (dark teal) instead of current — the config reads as fully complete */
+       (dark teal) instead of current – the config reads as fully complete */
     var lastDone = cur === STEPS.length - 1 && extrasCount() > 0;
     document.querySelectorAll('#bSeg .cfgb-bar__step').forEach(function (s, i) {
       s.classList.toggle('is-filled', i <= reached);
@@ -293,7 +293,7 @@
     applyQty(b.getAttribute('data-target'), parseInt(b.getAttribute('data-qd'), 10));
   });
 
-  /* ── Availability (universal) — one treatment for options that are OUT OF STOCK
+  /* ── Availability (universal) – one treatment for options that are OUT OF STOCK
      or INCOMPATIBLE with an earlier choice. Instead of hiding them (or slapping on
      a rotated watermark), the tile stays visible but goes inert: dimmed + a single
      flat status chip that names the reason, so the user learns why. ── */
@@ -318,9 +318,9 @@
   function isOOS(o) { return o.getAttribute('data-stock') === 'out'; }
 
   function applyConn() {
-    /* Innenstationen — multi-select: mark each option available/inert, and if a
+    /* Innenstationen – multi-select: mark each option available/inert, and if a
        CHECKED one becomes incompatible or out of stock, uncheck it and drop it
-       from the selection (no forced fallback — "none selected" is a valid state). */
+       from the selection (no forced fallback – "none selected" is a valid state). */
     var innenBox = $('bInnen');
     if (innenBox) {
       [].slice.call(innenBox.querySelectorAll('.cfg-opt')).forEach(function (o) {
@@ -335,7 +335,7 @@
         }
       });
     }
-    /* Stromversorgung — single-select: on block, fall back to the first available. */
+    /* Stromversorgung – single-select: on block, fall back to the first available. */
     var stromBox = $('bStrom');
     if (stromBox) {
       var opts = [].slice.call(stromBox.querySelectorAll('.cfg-opt'));
@@ -373,9 +373,9 @@
     var target = items[i];
     if (!target) return;
     var body = target.querySelector('.stepr__body');
-    var mobileAccordion = body && getComputedStyle(body).display === 'grid';   /* desktop shows all steps (display:block) — no accordion */
+    var mobileAccordion = body && getComputedStyle(body).display === 'grid';   /* desktop shows all steps (display:block) – no accordion */
     if (!mobileAccordion) {
-      /* Desktop: config is fully visible — only nudge it into view if off-screen. */
+      /* Desktop: config is fully visible – only nudge it into view if off-screen. */
       var deskDock = document.querySelector('.cfgb-dock');
       if (deskDock) window.setTimeout(function () { deskDock.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 60);
       return;
@@ -404,7 +404,7 @@
     if (invalidTimers[id]) window.clearTimeout(invalidTimers[id]);
     invalidTimers[id] = window.setTimeout(function () { el.classList.remove('is-invalid'); }, 1600);
   }
-  /* Scroll so the step-dock sits just below the site header — un-stuck, so the
+  /* Scroll so the step-dock sits just below the site header – un-stuck, so the
      progress bar AND the requirement label are both visible (the label hides
      while the dock is stuck to the header). Target the NON-sticky panel, not the
      dock: a stuck dock reports top === header height, which would scroll nowhere. */
@@ -430,7 +430,7 @@
   document.querySelectorAll('#bSeg .cfgb-bar__step').forEach(function (b) {
     b.addEventListener('click', function () { openStep(parseInt(b.getAttribute('data-goto'), 10)); });
   });
-  /* Option A accordion (mobile): a step header toggles its step in place — tap an
+  /* Option A accordion (mobile): a step header toggles its step in place – tap an
      open section's chevron to collapse it, tap a closed one to open it (and collapse
      the rest). Headers are display:none on desktop, so this is a no-op there. */
   document.querySelectorAll('#cfgbSteps .stepr__head').forEach(function (h) {
@@ -452,14 +452,14 @@
   if (sw) sw.addEventListener('click', function (e) {
     var b = e.target.closest('.pdp-swatch'); if (!b) return;
     /* Anchor the clicked swatch: choosing a colour appends the finish to the H1
-       (which can wrap onto another line) and reveals the configurator — both sit
+       (which can wrap onto another line) and reveals the configurator – both sit
        ABOVE the swatch row, so the whole row would jump down on the pick. Capture
        its viewport position now and restore it after the DOM updates below. */
     var anchorY = b.getBoundingClientRect().top;
     this.querySelectorAll('.pdp-swatch').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
     b.setAttribute('aria-pressed', 'true');
     /* Touch: the travelling line is driven by SCROLL progress, so a plain tap (no
-       scroll) never moves it — it stays parked at the far left, under the "Farbe — …"
+       scroll) never moves it – it stays parked at the far left, under the "Farbe – …"
        label. Slide it under the tapped swatch here (same offsetLeft model as the
        scroll handler). */
     if (document.body.classList.contains('swtouch')) {
@@ -482,7 +482,7 @@
     /* Restore the clicked swatch to where it was so the pick doesn't jump the page.
        Instant (page scroll-behavior is smooth, which would animate the correction
        into a visible slide). Skipped at the very top when there's no room to scroll
-       up — but the title/config growth is below the fold there, so nothing shifts. */
+       up – but the title/config growth is below the fold there, so nothing shifts. */
     var dy = Math.round(b.getBoundingClientRect().top - anchorY);
     if (Math.abs(dy) > 1) {
       var root = document.documentElement, prevSB = root.style.scrollBehavior;
@@ -494,7 +494,7 @@
   /* preview any colour's full name in the prominent label on hover/focus (no click needed) */
   if (sw) {
     /* Desktop: a short teal line sits on top of the swatch whose name is currently
-       shown — i.e. the hovered/focused one, falling back to the selected swatch at
+       shown – i.e. the hovered/focused one, falling back to the selected swatch at
        rest (hidden when nothing is chosen yet). Mirrors the mobile travelling line,
        but driven by hover. (The touch build drives .bx-swline via scroll instead.) */
     var swlineD = sw.querySelector('.bx-swline');
@@ -520,7 +520,7 @@
     restSwlineToSelected();   /* initial position (selected swatch, or hidden if none) */
   }
 
-  /* ── Wunschfarbe: inline RAL picker — search field + palette, shown when
+  /* ── Wunschfarbe: inline RAL picker – search field + palette, shown when
      Wunschfarbe is chosen (search by code or name); live preview ── */
   function setupRalPicker() {
     var panel = $('ralPick'), trigger = $('ralTrigger'), track = $('ralGrid'),
@@ -599,7 +599,7 @@
     if (prevBtn) prevBtn.addEventListener('click', function () { goTo(page - 1); });
     if (nextBtn) nextBtn.addEventListener('click', function () { goTo(page + 1); });
 
-    /* swipe — page on horizontal release past a threshold (vertical stays with the page) */
+    /* swipe – page on horizontal release past a threshold (vertical stays with the page) */
     if (viewport) {
       var x0 = null, dx = 0, dragging = false;
       viewport.addEventListener('pointerdown', function (e) { if (e.pointerType === 'mouse' && e.button !== 0) return; x0 = e.clientX; dx = 0; dragging = true; });
@@ -607,7 +607,7 @@
       window.addEventListener('pointerup', function () { if (!dragging) return; dragging = false; if (Math.abs(dx) > 40) goTo(page + (dx < 0 ? 1 : -1)); x0 = null; dx = 0; });
     }
 
-    /* keep the pressed pill fully in view — nudge the filter strip (not the page) if it's
+    /* keep the pressed pill fully in view – nudge the filter strip (not the page) if it's
        clipped. Scroll to an ABSOLUTE target (from the pill's content offset), never a
        relative scrollBy: fast successive selections issued additive smooth scrollBy
        deltas that stacked and overshot ("extra movements"). scrollTo retargets to the
@@ -639,7 +639,7 @@
     if (fams) fams.addEventListener('click', function (e) { var b = e.target.closest('.ralpick__fam'); if (b) setFam(b.getAttribute('data-fam')); });
 
     /* Desktop: click-and-drag to scroll the family strip (touch/trackpad already scroll
-       it natively, so this is mouse-only — native touch scrolling stays untouched). A
+       it natively, so this is mouse-only – native touch scrolling stays untouched). A
        small movement threshold keeps a plain click from being swallowed. */
     if (fams) {
       var fDrag = false, fMoved = false, fX0 = 0, fSL0 = 0;
@@ -672,7 +672,7 @@
         trigSwatch.classList.add('ralpick__swatch--empty');
         trigSwatch.style.background = ''; trigSwatch.innerHTML = '';
         trigLabel.textContent = 'Wunschfarbe wählen';
-        trigSub.textContent = 'RAL Classic — Farbton suchen & auswählen';
+        trigSub.textContent = 'RAL Classic – Farbton suchen & auswählen';
       }
     }
 
@@ -688,11 +688,11 @@
     function closeGrid() { panel.classList.remove('is-open'); trigger.setAttribute('aria-expanded', 'false'); }
 
     /* after the panel expands, if it's clipped (below the fold or under the sticky
-       header) scroll it into a good position — mainly a mobile need where the open
+       header) scroll it into a good position – mainly a mobile need where the open
        picker runs past the viewport */
     var mqMobile = window.matchMedia('(max-width: 767px)');
     /* height occluded at the top = the sticky header PLUS the "Info & Hilfecenter"
-       quickbar that pins beneath it on mobile — otherwise a scrolled-up element
+       quickbar that pins beneath it on mobile – otherwise a scrolled-up element
        lands under the quickbar. Use whichever bar reaches furthest down right now. */
     function stickyTopOffset() {
       var header = document.querySelector('.header');
@@ -712,12 +712,12 @@
       }, 360);   /* wait out the expand animation so the final height is measured */
     }
     /* bring the picker trigger (the "field" that shows the chosen tone) up under the
-       sticky header + quickbar — used after a pick on mobile so the selection is confirmed on screen */
+       sticky header + quickbar – used after a pick on mobile so the selection is confirmed on screen */
     function scrollFieldIntoView() {
       var headBottom = stickyTopOffset();
       var r = trigger.getBoundingClientRect();
       /* always bring the field (showing the just-picked RAL code) to just under the
-         pinned top bars, whether it's scrolled above the top or below the fold — so
+         pinned top bars, whether it's scrolled above the top or below the fold – so
          the auto-filled code is fully confirmed on screen after every pick */
       var target = Math.max(0, window.scrollY + r.top - headBottom - 12);
       if (Math.abs(target - window.scrollY) > 4) {
@@ -726,7 +726,7 @@
       }
     }
     /* desktop: only pull the field back up when the pick left it OUT of view (scrolled
-       above the pinned top bars, or below the fold) — if it's already visible, don't jump */
+       above the pinned top bars, or below the fold) – if it's already visible, don't jump */
     function scrollFieldIntoViewIfNeeded() {
       var headBottom = stickyTopOffset();
       var vh = window.innerHeight || document.documentElement.clientHeight;
@@ -738,7 +738,7 @@
       if (panel.classList.contains('is-open')) closeGrid();
       else {
         openGrid();
-        /* Don't auto-focus the search on any breakpoint — the picker opens in its
+        /* Don't auto-focus the search on any breakpoint – the picker opens in its
            default (unfocused) state; the user taps the field when they want to search. */
         goTo(pageOfSelected());
         /* only nudge the page on mobile (where the open picker runs past the viewport);
@@ -758,7 +758,7 @@
 
     /* Auto-collapse once the open picker has scrolled off the top of the viewport.
        The "is it off-screen?" state is owned by an IntersectionObserver (a reliable boolean),
-       NOT a fresh getBoundingClientRect() read at fire time — on mobile that rect is sometimes
+       NOT a fresh getBoundingClientRect() read at fire time – on mobile that rect is sometimes
        momentarily stale right after a scroll, which made the collapse bail out intermittently
        ("sometimes works, sometimes not"). The collapse itself removes the off-screen height and
        re-anchors the scroll by that amount, done at scroll-idle so it never fights momentum
@@ -777,7 +777,7 @@
       void panel.offsetHeight;                               /* force sync reflow */
       var afterH = panel.getBoundingClientRect().height;
       /* re-anchor the scroll INSTANTLY. The page sets html{scroll-behavior:smooth}, which would
-         otherwise ANIMATE this compensation — the content visibly glides (the "jump"). Force an
+         otherwise ANIMATE this compensation – the content visibly glides (the "jump"). Force an
          instant jump-cut by neutralising scroll-behavior for just this one scrollTo. */
       var de = document.documentElement, prevSB = de.style.scrollBehavior;
       de.style.scrollBehavior = 'auto';
@@ -785,7 +785,7 @@
       de.style.scrollBehavior = prevSB;
       if (ralPanelEl) window.requestAnimationFrame(function () { ralPanelEl.style.transition = ''; });
     }
-    /* Collapse the MOMENT the picker leaves the top of the viewport — no idle wait. The user
+    /* Collapse the MOMENT the picker leaves the top of the viewport – no idle wait. The user
        wants it gone as soon as they've scrolled past it, not when they stop at the page bottom.
        Fire on the IntersectionObserver's exit and on every scroll (doCollapse no-ops until the
        picker is actually off the top); touchend/scrollend are extra catch-alls. */
@@ -814,7 +814,7 @@
          it closes via the chevron, an outside click, or Esc */
       refresh();     /* refresh() → ralUI.sync() updates trigger + chip highlight */
       /* mobile: a pick deep in the grid leaves the picker "field" (trigger showing the
-         chosen tone) scrolled off the top — bring it back into view so the selection
+         chosen tone) scrolled off the top – bring it back into view so the selection
          is visibly confirmed */
       if (mqMobile.matches) scrollFieldIntoView(); else scrollFieldIntoViewIfNeeded();
     });
@@ -839,7 +839,7 @@
 
   /* ── Swatch labelling on touch (hover is a capability, not a screen size) ──
      Pointer devices keep the compact hover-preview grid. Touch devices (no hover) get
-     a snap-scroller whose caption (the "Ausführung — …" header) follows the centred
+     a snap-scroller whose caption (the "Ausführung – …" header) follows the centred
      swatch, since there is no hover to reveal the colour names.
      ?touch=1 forces the touch treatment on a pointer device so it can be previewed. */
   (function () {
@@ -848,7 +848,7 @@
     document.body.classList.toggle('swtouch', !!isTouch);
     if (isTouch && sw) {
       var swline = sw.querySelector('.bx-swline');
-      var swatchEls = [].slice.call(sw.querySelectorAll('.pdp-swatch'));   /* cached — the set never changes */
+      var swatchEls = [].slice.call(sw.querySelectorAll('.pdp-swatch'));   /* cached – the set never changes */
       var ticking = false;
       /* Active swatch = mapped from SCROLL PROGRESS across the whole strip: the first
          swatch is active at rest and the last at max scroll, with the rest spread evenly
@@ -867,14 +867,14 @@
         if (!near) return;
         swatchEls.forEach(function (s) { s.classList.toggle('is-labeled', s === near); });   /* mild lift on the slid-over swatch */
         setTxt('pdpFinishName', near.getAttribute('data-finish'));
-        /* The line tracks the swatch you're sliding over — it updates live on every
+        /* The line tracks the swatch you're sliding over – it updates live on every
            scroll, always, even after a colour has been selected. (Tapping a swatch also
            snaps the line to it via the click handler.) Absolute inside the scroller, so
            translateX by offsetLeft rides with the strip. */
         if (swline) swline.style.transform = 'translateX(' + Math.round(near.offsetLeft) + 'px)';
       };
       var onScroll = function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
-      /* On resize keep the line on the SELECTED swatch — NOT the scroll-progress one.
+      /* On resize keep the line on the SELECTED swatch – NOT the scroll-progress one.
          The first colour tap unlocks the config and dispatches a resize; routing that
          through the scroll-progress update() reset the line to the first swatch, so the
          very first interaction never appeared to move it. Fall back to scroll-progress
@@ -1034,12 +1034,12 @@
       if (fAvatar) fAvatar.textContent = initials(d.author);
     }
     /* Slide the thumbnail strip so the active thumb is fully in view (mobile scroller).
-       Centre it, then clamp to [0, maxScroll] so the arrows can always reach — and fully
-       reveal — the first and last thumbs instead of leaving them clipped by the arrows. */
+       Centre it, then clamp to [0, maxScroll] so the arrows can always reach – and fully
+       reveal – the first and last thumbs instead of leaving them clipped by the arrows. */
     function scrollThumbIntoView(i, instant) {
       var b = thumbBtns[i]; if (!b) return;
       var max = nav.scrollWidth - nav.clientWidth;
-      if (max <= 1) return;   /* desktop / not scrollable — no-op */
+      if (max <= 1) return;   /* desktop / not scrollable – no-op */
       var target = Math.max(0, Math.min(max, b.offsetLeft - (nav.clientWidth - b.offsetWidth) / 2));
       nav.scrollTo({ left: target, behavior: instant ? 'auto' : 'smooth' });
     }
@@ -1072,7 +1072,7 @@
     function setActive(l) {
       links.forEach(function (x) { x.classList.toggle('is-active', x === l); });
       /* auto-slide the horizontal nav so the current section's tab is in view
-         (only when the nav overflows — i.e. mobile; desktop fits, no-op). Center
+         (only when the nav overflows – i.e. mobile; desktop fits, no-op). Center
          the tab, then CLAMP to [0, maxScroll] so it never over-scrolls past the
          last tab into blank space. */
       var max = scroller.scrollWidth - scroller.clientWidth;
@@ -1101,12 +1101,12 @@
        highlighted whichever intersecting section landed LAST in the entries
        array, so scrolling up lit the lower ("next") tab. Instead we measure how
        much of each section is actually on screen (below the pinned nav) and
-       light the one showing the most — recomputed from live positions every
+       light the one showing the most – recomputed from live positions every
        scroll frame, so up and down agree and it always reflects what you see. */
     secs.sort(function (a, b) { return a.getBoundingClientRect().top - b.getBoundingClientRect().top; });
     var navigating = false, lastActiveLink = null, pinnedLink = null, pinAt = 0;
     /* Visible height of a section within the content area (the viewport BELOW the
-       pinned nav — content hidden behind the nav doesn't count as visible). */
+       pinned nav – content hidden behind the nav doesn't count as visible). */
     function visibleHeight(el) {
       var r = el.getBoundingClientRect();
       return Math.min(r.bottom, window.innerHeight) - Math.max(r.top, pinnedObstruction());
@@ -1124,7 +1124,7 @@
       if (navigating || !secs.length) return;
       var l;
       /* Right after a tab tap we PIN that tab lit until the user actually scrolls
-         away — otherwise a short section could hand "most visible" straight to a
+         away – otherwise a short section could hand "most visible" straight to a
          taller neighbour below it and the tapped tab would flip immediately. */
       if (pinnedLink && Math.abs(window.pageYOffset - pinAt) <= 2) { l = pinnedLink; }
       else { pinnedLink = null; l = map[activeSection().id]; }
@@ -1159,9 +1159,9 @@
     function goTo(sec, link) {
       stopAnim();
       navigating = true;
-      if (link) { lastActiveLink = link; setActive(link); }   /* highlight immediately — feels responsive */
+      if (link) { lastActiveLink = link; setActive(link); }   /* highlight immediately – feels responsive */
       savedSB = root.style.scrollBehavior;
-      root.style.scrollBehavior = 'auto';  /* neutralise CSS smooth — we drive it frame-by-frame */
+      root.style.scrollBehavior = 'auto';  /* neutralise CSS smooth – we drive it frame-by-frame */
       if (reduceMoNav.matches) { land(sec, link); return; }
       var start = window.pageYOffset, t0 = null, DUR = 460;
       animId = window.requestAnimationFrame(function step(ts) {
@@ -1204,7 +1204,7 @@
 
     /* First-glance affordance: the moment the nav comes into view on a touch
        device, nudge the strip (0 → peek → 0) so the motion + revealed next tab
-       make it obvious it's swipeable — before the user touches anything. Runs
+       make it obvious it's swipeable – before the user touches anything. Runs
        once; skipped on desktop, when it fits, or under reduced motion. */
     var mqTouch = window.matchMedia('(max-width: 767px)');
     var reduceMo = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -1344,7 +1344,7 @@
     b.classList.add('is-selected');
     this.classList.remove('is-invalid');   /* clear any lingering validation highlight */
     state.anschluss = b.getAttribute('data-anschluss'); state.conn = CONN[state.anschluss] || null;
-    applyConn(); refresh();   /* no auto-advance — user continues via "Weiter" */
+    applyConn(); refresh();   /* no auto-advance – user continues via "Weiter" */
   });
 
   /* ── 2 · Gravur ── */
@@ -1386,11 +1386,11 @@
     this.querySelectorAll('.cfg-opt').forEach(function (x) { x.classList.remove('is-selected'); });
     if (wasSel) { state.strom = 'Standard'; state.stromDelta = 0; }   /* deselect → back to Standard (inklusive) */
     else { b.classList.add('is-selected'); syncGroupState('bStrom', b); }
-    state.stromQty = 1;   /* every card click (select / switch / deselect) starts a fresh quantity — never carry the previous item's qty over to another option */
+    state.stromQty = 1;   /* every card click (select / switch / deselect) starts a fresh quantity – never carry the previous item's qty over to another option */
     refresh();
   });
 
-  /* ── 2 & 5 · optional add-ons (checkboxes, own qty) — Innenstationen share the
+  /* ── 2 & 5 · optional add-ons (checkboxes, own qty) – Innenstationen share the
      .cfg-opt--check styling but have their own handler above, so skip them here ── */
   document.querySelectorAll('#cfgbSteps .cfg-opt--check').forEach(function (b) {
     if (!b.hasAttribute('data-extra')) return;   /* Innen / Gravur reuse the checkbox look but have their own handlers */
@@ -1407,7 +1407,7 @@
   /* ── Validate-on-cart (never lock) ── */
   function firstInvalid() { if (!state.anschluss) return 0; if (state.gravurOn && !state.gravurText) return 1; return -1; }
   function addToCart() {
-    /* colour is the first gate — surface the requirement at the swatches, not on the CTA */
+    /* colour is the first gate – surface the requirement at the swatches, not on the CTA */
     if (!state.finish) {
       var swEl = $('pdpSwatches');
       if (swEl) {
@@ -1468,7 +1468,7 @@
     menu.querySelectorAll('a[data-share]').forEach(function (a) { a.addEventListener('click', function () { close(); }); });
   })();
 
-  /* ── Sticky bar visibility — show whenever the main CTA is off-screen.
+  /* ── Sticky bar visibility – show whenever the main CTA is off-screen.
      Geometry check (not IntersectionObserver): the CTA's position shifts on load,
      on colour-unlock relayout, and on image load without a scroll, and IO's initial
      callback can latch a stale "visible" before layout settles. This stays correct. ── */
@@ -1488,7 +1488,7 @@
   }
 
   /* Mobile: while a config text field is focused the on-screen keyboard makes iOS
-     reposition the fixed sticky purchase bar over the content — hide it until blur. */
+     reposition the fixed sticky purchase bar over the content – hide it until blur. */
   (function () {
     var cfgPanel = document.getElementById('cfgbPanel');
     if (!cfgPanel || !document.body.classList.contains('swtouch')) return;
@@ -1531,7 +1531,7 @@
   })();
 
   /* ── Sticky step-dock: pin it flush against the site header's real bottom
-     (header height varies by viewport, so measure it — a hardcoded offset
+     (header height varies by viewport, so measure it – a hardcoded offset
      leaves a gap the scrolling config shows through), and flag "stuck" so it
      compacts. Geometry check on scroll (IntersectionObserver is unreliable
      when its sentinel can be display:none). ── */
@@ -1549,7 +1549,7 @@
       if (mqMobile.matches) {
         /* Mobile: once the configurator scrolls under the header, the progress
            ribbon fixes full-width to the top and STAYS pinned (taking over the
-           quickbar's slot — never hands back to the green contact bar) UNTIL the
+           quickbar's slot – never hands back to the green contact bar) UNTIL the
            product-section nav rises to the top and takes over the slot itself. At
            that point the dock releases fully so no gray sliver peeks below the nav
            and it doesn't reappear past the nav section. It re-pins only when you
@@ -1562,7 +1562,7 @@
         var pinned = !!r && r.top <= pin + 1 && navTop > pin + 1;
         dockEl.classList.toggle('is-fixed', pinned);
         dockEl.classList.toggle('is-stuck', pinned);
-        /* Hold the dock's IN-FLOW height in the sentinel — captured while unfixed, so
+        /* Hold the dock's IN-FLOW height in the sentinel – captured while unfixed, so
            it's the full (non-compact) height. Reserving only the compact height while
            fixed shifted the page ~59px at the pin, which moved the nav and fed back
            into navTop → a flicker/oscillation at the config→nav handoff. Measured
@@ -1571,7 +1571,7 @@
         if (sentinelEl) sentinelEl.style.height = pinned ? dockFlowH + 'px' : '';
       } else {
         /* Desktop: keep the step-dock fixed to the top for as long as the config
-           section is in the viewport — from when its top scrolls under the header
+           section is in the viewport – from when its top scrolls under the header
            until its bottom rises back above the header line. position:fixed (not
            sticky) so the ribbon never rides up early with the section's bottom. It
            is constrained to the config column: left/width are measured from the
@@ -1580,10 +1580,10 @@
         dockEl.classList.remove('is-fixed');   /* mobile-only full-bleed variant */
         var cfgD = document.getElementById('cfgbPanel') || (dockEl.closest && dockEl.closest('.cfgb'));
         var rD = cfgD ? cfgD.getBoundingClientRect() : null;
-        /* Reserve the dock's IN-FLOW (full, non-compact) height in the sentinel — cache
+        /* Reserve the dock's IN-FLOW (full, non-compact) height in the sentinel – cache
            it while the dock is NOT fixed. Re-measuring offsetHeight while fixed returns
            the COMPACT (.is-stuck) height, so the sentinel shrank on every scroll tick
-           after the pin — jumping the page and, via rD.bottom, oscillating pin/unpin at
+           after the pin – jumping the page and, via rD.bottom, oscillating pin/unpin at
            the config bottom (exactly where the user reaches the CTA). Mirrors the mobile
            branch's dockFlowH cache. */
         if (!dockEl.classList.contains('is-fixed-dt') && dockEl.offsetHeight) dockFlowH = dockEl.offsetHeight;
@@ -1600,7 +1600,7 @@
            offsetHeight is layout-only (unaffected by the slide transform or scroll). */
         var topPx = pin + (qbEl ? qbEl.offsetHeight : 0);
         /* Trigger the pin off the SENTINEL's top (the dock's in-flow anchor), not the
-           config panel's top — the dock sits a couple px below cfg.top (border), so
+           config panel's top – the dock sits a couple px below cfg.top (border), so
            triggering on cfg.top snapped the dock ~2px when it pinned. The sentinel
            marks exactly where the dock is in flow, so the fixed position (topPx)
            matches the flow position at the flip → no jump. */
@@ -1662,10 +1662,10 @@
 })();
 
 /* ============================================================
-   Review photo lightbox — a premium two-pane viewer. The clicked
+   Review photo lightbox – a premium two-pane viewer. The clicked
    photo opens on a dark image stage (left) beside the full review
    context (right): customer identity, star rating, verified badge,
-   title, text and date — all pulled live from the review card.
+   title, text and date – all pulled live from the review card.
    Prev/next + a thumbnail rail page through that customer's photos.
    ============================================================ */
 (function () {
@@ -1864,7 +1864,7 @@
 })();
 
 /* ============================================================
-   Kameratechnologie showcase — reveal the 146° FOV demo and
+   Kameratechnologie showcase – reveal the 146° FOV demo and
    count the headline numbers up when the module scrolls in.
    ============================================================ */
 (function () {
@@ -1899,12 +1899,12 @@
     entries.forEach(function (e) {
       if (e.isIntersecting) { run(); io.disconnect(); }
     });
-  }, { threshold: 0, rootMargin: '0px 0px -15% 0px' });   /* fires once the top scrolls into view — robust for tall modules */
+  }, { threshold: 0, rootMargin: '0px 0px -15% 0px' });   /* fires once the top scrolls into view – robust for tall modules */
   io.observe(mod);
 })();
 
 /* ============================================================
-   Sticky-bar handoff — the green quickbar pins under the site
+   Sticky-bar handoff – the green quickbar pins under the site
    header while scrolling, then the product-section nav (.psx-nav)
    rises and takes its place. We keep --pdp-header-h synced to the
    live (compacting) header height, and slide the quickbar up behind
@@ -1935,7 +1935,7 @@
       var navTop = nav.getBoundingClientRect().top;
       var delta = Math.min(qbH, Math.max(0, (h + qbH) - navTop));
       var p = qbH ? delta / qbH : 0;   /* 0 → 1 handoff progress */
-      /* Baton-pass: the contact bar stays PINNED under the header (it does not move) —
+      /* Baton-pass: the contact bar stays PINNED under the header (it does not move) –
          the section nav gradually slides UP UNDER it as you scroll, and the bar fades
          from opaque to transparent in step (linear, so it stays visible through the
          slide and is fully clear right as the nav lands). The nav is thus revealed 100%
@@ -1959,7 +1959,7 @@
 })();
 
 /* ============================================================
-   Anschluss-diagram lightbox — the technical connection schematics
+   Anschluss-diagram lightbox – the technical connection schematics
    (.techdia__shot) open full-size with a caption and prev/next within
    their gallery group. Keyboard + backdrop close. No dependencies.
    ============================================================ */
@@ -2030,14 +2030,14 @@
 })();
 
 /* ============================================================
-   Technische Übersichten — left-rail master–detail (ARIA tabs).
+   Technische Übersichten – left-rail master–detail (ARIA tabs).
    Clicking / arrow-keying a category in the rail reveals its panel
    and hides the others. Vertical tablist, full keyboard support.
    ============================================================ */
 (function () {
   'use strict';
   /* On mobile the rail is a full-width vertical stack, so the detail panel sits
-     BELOW every tab — tapping a lower category leaves its content off-screen.
+     BELOW every tab – tapping a lower category leaves its content off-screen.
      Match the config stepper: after a tap, scroll the revealed panel up under the
      pinned chrome (header + section nav) so the relevant content is in view.
      Uses element HEIGHTS (stable) rather than a sticky element's live position.
@@ -2091,7 +2091,7 @@
 })();
 
 /* ============================================================
-   A11y: mobile quickbar links are placeholders — keep them out of the
+   A11y: mobile quickbar links are placeholders – keep them out of the
    tab order and non-activatable (matches the pointer-events:none CSS).
    ============================================================ */
 (function () {
@@ -2154,7 +2154,7 @@
 })();
 
 /* ============================================================
-   "Eine Frage zum Produkt stellen" — form modal opened by the
+   "Eine Frage zum Produkt stellen" – form modal opened by the
    "Zum Kundensupport" CTA in the FAQ block. Required-field
    validation + success state; behaviour ported from the VDM10
    working page, namespaced to this module.
@@ -2178,7 +2178,7 @@
   /* Scroll lock. Two techniques:
      - Pointer/desktop: just overflow:hidden on <html>. This does NOT change the scroll
        position, so closing can't jump the page (the position:fixed + scrollTo-restore
-       approach was fragile — a failed/late restore left the page scrolled elsewhere).
+       approach was fragile – a failed/late restore left the page scrolled elsewhere).
        Pad for the vanished scrollbar so the layout doesn't shift.
      - Touch/iOS: overflow:hidden is ignored, so pin the body with position:fixed and
        restore the scroll on unlock. */
@@ -2243,7 +2243,7 @@
     lockScroll();
     modal.hidden = false;
     syncViewport();
-    /* Focus the first field on desktop for a quick start; on the mobile sheet, don't —
+    /* Focus the first field on desktop for a quick start; on the mobile sheet, don't –
        auto-popping the keyboard the instant the sheet slides up feels aggressive. */
     var first = reqFields[0];
     if (first && !mqSheet.matches) window.setTimeout(function () { first.input.focus({ preventScroll: true }); }, 40);
