@@ -52,6 +52,35 @@ var MZScroll = (function () {
   return { lock: lock, unlock: unlock };
 })();
 
+/* ============================================================
+   Shared horizontal-swipe helper for the image popups. Threshold-based
+   on touchend, fully passive (never blocks pinch-zoom or vertical
+   scroll). Single-touch only; ignores swipes that start on a control so
+   taps on the arrows / close still work. Swipe left → next, right → prev.
+   ============================================================ */
+var MZSwipe = (function () {
+  function attach(el, onPrev, onNext) {
+    if (!el) return;
+    var x0 = 0, y0 = 0, tracking = false;
+    el.addEventListener('touchstart', function (e) {
+      if (e.touches.length !== 1) { tracking = false; return; }
+      var t = e.target;
+      if (t && t.closest && t.closest('button, a, [role="button"], input, textarea')) { tracking = false; return; }
+      x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; tracking = true;
+    }, { passive: true });
+    el.addEventListener('touchend', function (e) {
+      if (!tracking) return;
+      tracking = false;
+      var ct = e.changedTouches && e.changedTouches[0];
+      if (!ct) return;
+      var dx = ct.clientX - x0, dy = ct.clientY - y0;
+      if (Math.abs(dx) < 40 || Math.abs(dx) <= Math.abs(dy)) return;   /* need a dominant horizontal swipe */
+      (dx < 0 ? onNext : onPrev)();
+    }, { passive: true });
+  }
+  return { attach: attach };
+})();
+
 (function () {
   'use strict';
   var $ = function (id) { return document.getElementById(id); };
@@ -1029,6 +1058,8 @@ var MZScroll = (function () {
       else if (e.key === 'ArrowLeft') { e.preventDefault(); show(idx - 1); }
       else if (e.key === 'ArrowRight') { e.preventDefault(); show(idx + 1); }
     });
+    /* swipe left/right to page through the gallery on touch */
+    MZSwipe.attach(lb, function () { show(idx - 1); }, function () { show(idx + 1); });
   })();
 
   /* ── Reviews: featured happy testimonial + customer-photo thumbnail nav.
@@ -1882,6 +1913,7 @@ var MZScroll = (function () {
     else if (e.key === 'ArrowRight') show(idx + 1);
     else if (e.key === 'ArrowLeft') show(idx - 1);
   });
+  MZSwipe.attach(lb, function () { show(idx - 1); }, function () { show(idx + 1); });
 })();
 
 
@@ -2009,6 +2041,7 @@ var MZScroll = (function () {
     else if (e.key === 'ArrowRight') show(idx + 1);
     else if (e.key === 'ArrowLeft') show(idx - 1);
   });
+  MZSwipe.attach(lb, function () { show(idx - 1); }, function () { show(idx + 1); });
 })();
 
 /* ============================================================
