@@ -927,6 +927,13 @@ var MZSwipe = (function () {
       var swline = sw.querySelector('.bx-swline');
       var swatchEls = [].slice.call(sw.querySelectorAll('.pdp-swatch'));   /* cached – the set never changes */
       var ticking = false;
+      /* Make the palette size explicit at rest so the visible few aren't mistaken for all. */
+      setTxt('pdpFinishCount', '· ' + swatchEls.length + ' Farben');
+      /* Edge-fade state (see CSS): fade whichever side still has swatches off-screen. */
+      var setEdge = function () {
+        var m = sw.scrollWidth - sw.clientWidth, sl = sw.scrollLeft;
+        sw.setAttribute('data-scroll', m <= 2 ? 'none' : (sl <= 1 ? 'start' : (sl >= m - 1 ? 'end' : 'middle')));
+      };
       /* Active swatch = mapped from SCROLL PROGRESS across the whole strip: the first
          swatch is active at rest and the last at max scroll, with the rest spread evenly
          between. This replaces the old "nearest the left edge" model, which needed a
@@ -936,6 +943,7 @@ var MZSwipe = (function () {
          per frame so sliding stays smooth. */
       var update = function () {
         ticking = false;
+        setEdge();
         var maxScroll = sw.scrollWidth - sw.clientWidth;
         var frac = maxScroll > 0 ? sw.scrollLeft / maxScroll : 0;
         var idx = Math.round(frac * (swatchEls.length - 1));
@@ -957,6 +965,7 @@ var MZSwipe = (function () {
          very first interaction never appeared to move it. Fall back to scroll-progress
          only while nothing is selected yet. */
       var onResize = function () {
+        setEdge();
         var sel = sw.querySelector('.pdp-swatch[aria-pressed="true"]');
         if (sel) { if (swline) swline.style.transform = 'translateX(' + Math.round(sel.offsetLeft) + 'px)'; }
         else onScroll();
