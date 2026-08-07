@@ -911,7 +911,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
    top (just below the green quickbar), left and width (config column) inline; z-index
    sits above the sticky quickbar (45) so the ribbon reads as its own bar. */
 .cfgb-dock.is-fixed-dt { position: fixed; z-index: 46; border-radius: 0 0 var(--radius) var(--radius);
-  padding-top: 0.7rem; background: var(--color-white); }   /* white breathing gap above the ribbon so it isn't glued to the green bar */
+  padding-top: 0.7rem; background: var(--color-white); transform: translateZ(0); }   /* own compositing layer so iOS keeps the pinned ribbon above scrolling content; white breathing gap above so it isn't glued to the green bar */
 /* the ::before paper backdrop (which caps the header↔dock seam in the sticky case)
    paints in the dock's z-46 context, so below the quickbar it would cover the green
    bar as a blank strip. The quickbar itself seals the seam here, so drop it. */
@@ -1020,6 +1020,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
     position: fixed; left: 0; right: 0; width: 100%; z-index: 80;
     padding: 0; border-bottom: 1px solid var(--color-graphite-200);
     box-shadow: 0 8px 16px -10px rgba(10,20,20,0.32);
+    transform: translateZ(0);   /* own compositing layer: iOS keeps the pinned ribbon above scrolling content */
   }
   .cfgb-dock.is-fixed::before { display: none; }        /* no upward paper bleed over the header */
   .cfgb-dock.is-fixed .cfgb-bar__track { margin: 0; }   /* ribbon spans edge-to-edge, no compact gutters/gap */
