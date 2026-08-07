@@ -846,7 +846,7 @@
 .sheet__close svg { width: 1.1rem; height: 1.1rem; }
 .sheet__close:hover { color: var(--color-digital-black); }
 .sheet .cfgb-summary { border: 0; background: none; padding: 0 1.25rem; margin: 0; overflow-y: auto; }
-.sheet__foot { display: flex; align-items: center; gap: 0.85rem; padding: 0.5rem 1.25rem 1rem; border-top: 0; margin-top: 0; }
+.sheet__foot { display: flex; align-items: center; gap: 0.85rem; padding: 0.9rem 1.25rem 1rem; border-top: 1px solid var(--color-graphite-200); margin-top: 0; }
 /* price yields width so the CTA never has to wrap; label wraps instead of the button */
 .sheet__price { display: block; flex: 0 0 auto; }
 .sheet__pricelabel { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-graphite-600); line-height: 1.25; }
