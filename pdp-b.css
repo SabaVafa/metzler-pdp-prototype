@@ -748,7 +748,12 @@
    clipped, on every screen width – the peek can no longer vanish when tiles happen
    to divide the viewport evenly. Clamped so tiles stay sensible on tiny phones /
    tablets (the edge-fade below is the width-independent backstop). */
-.swtouch .bx-swatches .pdp-swatch { flex: 0 0 clamp(4rem, calc((100% - 2.8rem) / 4.5), 5.5rem); justify-content: center; }
+/* Pure-percentage basis: each tile is 1/4.5 of the row (minus the 4 visible gaps),
+   so the size tracks the DEVICE (container width), never the colour count, and the
+   non-integer 4.5 guarantees the next swatch is always half-clipped when the palette
+   overflows -> the carousel cue holds on every width. (Fits without a peek only when
+   there are <=4 colours, i.e. nothing is hidden.) */
+.swtouch .bx-swatches .pdp-swatch { flex: 0 0 calc((100% - 2.8rem) / 4.5); justify-content: center; }
 /* Second, viewport-independent scrollability cue: fade whichever edge still has
    swatches off-screen (same pattern as .psx-nav). data-scroll is set in pdp-b.js. */
 .swtouch .bx-swatches { --sw-fade: 2rem; }
