@@ -1960,7 +1960,7 @@ body.is-scrolled #quickbar {
 /* card is a grid: image spans the left column full-height; header (top) and body
    (scroll) stack in the right column */
 .rvw-lb { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr 0.85fr; grid-template-rows: auto minmax(0, 1fr);
-  width: min(64rem, 100%); max-height: min(88vh, 42rem);
+  width: min(64rem, 100%); height: min(85vh, 37rem);   /* definite height → the image column is ~square (matches the square review photos) instead of a text-driven sliver */
   background: var(--color-white); border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-modal);
   animation: rvwLbIn .22s cubic-bezier(.2,.7,.3,1) both; }
 .rvw-lb__stage { grid-column: 1; grid-row: 1 / 3; }
@@ -1982,7 +1982,7 @@ body.is-scrolled #quickbar {
    stretches an <img> that has object-fit + percentage height inside a flexbox
    (it ignores the fit and fills the box). Absolute positioning gives it a
    definite containing block so object-fit is always honoured. */
-.rvw-lb__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.rvw-lb__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
 /* subtle top scrim keeps the photo counter legible over a full-bleed photo */
 .rvw-lb__stage::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5rem; z-index: 1; pointer-events: none;
   background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0)); }
@@ -2055,13 +2055,10 @@ body.is-scrolled #quickbar {
 @media (max-width: 52rem) {
   /* mobile: header + image stay FIXED at the top; only the review body scrolls
      beneath them, so the image remains visible while reading the review */
-  .rvw-lb { display: flex; flex-direction: column; width: min(30rem, 100%); max-height: 90vh; overflow: hidden; }
+  .rvw-lb { display: flex; flex-direction: column; width: min(30rem, 100%); height: auto; max-height: 90vh; overflow: hidden; }
   .rvw-lb__head { order: 1; flex: none; }
   .rvw-lb__close { width: 2.75rem; height: 2.75rem; margin-right: -0.8125rem; }   /* 44px touch target; neg margin = (2.75 − 1.125)/2 keeps the icon box aligned to the content edge */
   .rvw-lb__stage { order: 2; flex: none; height: 42vh; }
-  /* Customer photos vary in aspect – show the whole photo (letterboxed on the dark
-     stage) rather than cropping/zooming it on the smaller mobile stage. */
-  .rvw-lb__img { object-fit: contain; }
   .rvw-lb__body { order: 3; flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
     scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.18) transparent; }
   .rvw-lb__body::-webkit-scrollbar { width: 5px; }
