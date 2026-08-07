@@ -259,6 +259,7 @@ var MZSwipe = (function () {
     var ctaTxt = !state.finish ? 'Bitte Farbe wählen' : (needsRal() ? 'Bitte RAL-Farbe wählen' : 'In den Warenkorb');
     var cartBtn = $('bCart'); if (cartBtn) cartBtn.textContent = ctaTxt;
     var sLabel = $('pdpStickyLabel'); if (sLabel) sLabel.textContent = ctaTxt;
+    var sheetCartBtn = $('bSheetCart'); if (sheetCartBtn) sheetCartBtn.textContent = ctaTxt;   /* keep the bottom-sheet CTA label in sync with the configurator CTA */
     var checkout = $('bCheckout'); if (checkout) checkout.classList.toggle('is-precolor', !state.finish);
 
     /* Preisdetails stays hidden until the config carries a surcharge; the first paid

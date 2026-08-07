@@ -589,11 +589,11 @@
 
 /* quantity box sits beside the CTA, matched to its height */
 .cfgb-buyrow { display: flex; align-items: stretch; gap: 0.6rem; }
-.cfgb-buyrow .cfgb-cta { flex: 1 1 auto; width: auto; }
+.cfgb-buyrow .cfgb-cta { flex: 1 1 auto; width: auto; height: 3rem; }
 /* before a colour is chosen: hide the quantity stepper (CTA spans full width) */
 .cfgb-checkout.is-precolor .cfgb-buyrow__qty { display: none; }
 /* premium stepper: teal glyphs, hairline-divided segments, tactile states */
-.cfgb-buyrow__qty { flex: none; display: inline-flex; align-items: stretch; gap: 0; height: 3.5rem;
+.cfgb-buyrow__qty { flex: none; display: inline-flex; align-items: stretch; gap: 0; height: 3rem;
   border: 1px solid var(--color-graphite-300); border-radius: var(--radius); overflow: hidden;
   background: var(--color-white); box-shadow: 0 1px 2px rgba(26,23,27,0.06); }
 .cfgb-buyrow__qty button { width: 2.75rem; height: 100%; border: 0; background: none; cursor: pointer;
