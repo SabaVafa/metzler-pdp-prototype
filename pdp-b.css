@@ -1415,8 +1415,10 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .sum-row--total .sum-row__name { font-weight: 700; }
 .sum-row--total .sum-row__price { font-size: 0.875rem; }
 
-/* ── Sticky bottom bar – proper inset so content isn't edge-to-edge ── */
-#pdpStickyBar .pdp-stickybar__inner { padding: 0.8rem 1.75rem; gap: 1.1rem; }
+/* ── Sticky bottom bar – set only vertical padding; the horizontal inset comes
+   from .container's padding-inline so the bar's content lines up with the page
+   content above (was overriding it with a shorthand → edge-to-edge misalignment). ── */
+#pdpStickyBar .pdp-stickybar__inner { padding-block: 0.8rem; gap: 1.1rem; }
 #pdpStickyBar .pdp-stickybar__cta { padding: 0 1.6rem; margin-left: 0.6rem; }
 @media (max-width: 900px) {
   #pdpStickyBar .pdp-stickybar__inner { padding: 0.7rem 1rem; }
