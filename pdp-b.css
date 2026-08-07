@@ -845,8 +845,11 @@
 .sheet__close { width: 2.2rem; height: 2.2rem; display: grid; place-items: center end; padding: 0; border: 0; background: none; border-radius: 0; cursor: pointer; color: var(--color-graphite-600); }
 .sheet__close svg { width: 1.1rem; height: 1.1rem; }
 .sheet__close:hover { color: var(--color-digital-black); }
-.sheet .cfgb-summary { border: 0; background: none; padding: 0 1.25rem 0.9rem; margin: 0; overflow-y: auto; }
-.sheet__foot { display: flex; align-items: center; gap: 0.85rem; padding: 1.4rem 1.25rem 1.1rem; border-top: 1px solid var(--color-graphite-200); margin-top: 0; }
+.sheet .cfgb-summary { border: 0; background: none; padding: 0 1.25rem 1.25rem; margin: 0; overflow-y: auto; }
+/* one spacing unit (1.25rem = the container gutter) on every side of the footer:
+   top gap under the divider, bottom to the edge, right to the edge, and the gap
+   before the CTA all equal → uniform breathing room around the button. */
+.sheet__foot { display: flex; align-items: center; gap: 1.25rem; padding: 1.25rem; border-top: 1px solid var(--color-graphite-200); margin-top: 0; }
 /* price yields width so the CTA never has to wrap; label wraps instead of the button */
 .sheet__price { display: block; flex: 0 0 auto; }
 /* product thumbnail beside the total (matches the sticky-bar thumb); the lead group
