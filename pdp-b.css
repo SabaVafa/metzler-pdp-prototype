@@ -1308,7 +1308,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
   padding: 0.6rem 0.9rem; border: 1px solid var(--color-graphite-200); border-radius: var(--radius); }
 .cfgb-mainqty__l { font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black); }
 /* read-only qty in the price detail */
-.sum-qty-ro { font-size: 0.75rem; font-weight: 700; color: var(--color-graphite-600); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.sum-qty-ro { font-size: 0.8125rem; font-weight: 700; color: var(--color-graphite-600); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
 
 /* ── Product option cards → vertical tiles (image on top, text + price below) ── */
 .cfgb .cfg-opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr)); gap: 0.6rem; }
@@ -1409,17 +1409,17 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .sum-row { display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; align-items: center; padding: 0.55rem 0; }
 .sum-row__price, .sum-qty, .sum-qty-ro { justify-self: end; }   /* right-align qty + price within their shared columns */
 .sum-row + .sum-row { border-top: 1px solid var(--color-graphite-100); }
-.sum-row__name { font-size: 0.75rem; color: var(--color-digital-black); min-width: 0; }
+.sum-row__name { font-size: 0.8125rem; color: var(--color-digital-black); min-width: 0; }
 .sum-row__name b { font-weight: 700; }
 .sum-row__name .sum-sub { display: none; }   /* finish is shown in Ausführung + specs – not repeated per price line */
-.sum-row__price { font-size: 0.75rem; font-weight: 700; color: var(--color-digital-black); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.sum-row__price { font-size: 0.8125rem; font-weight: 700; color: var(--color-digital-black); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
 .sum-row__price.is-incl { color: var(--color-green); font-weight: 600; }
 .sum-qty { display: inline-flex; align-items: center; gap: 0.3rem; }
 .sum-qty button { width: 1.55rem; height: 1.55rem; border: 1px solid var(--color-graphite-300); background: var(--color-white);
   border-radius: var(--radius); cursor: pointer; font-size: 1rem; line-height: 1; color: var(--color-digital-black);
   display: grid; place-items: center; transition: border-color .15s, color .15s; }
 .sum-qty button:hover { border-color: var(--color-teal); color: var(--color-teal); }
-.sum-qty span { min-width: 1.1rem; text-align: center; font-weight: 700; font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+.sum-qty span { min-width: 1.1rem; text-align: center; font-weight: 700; font-size: 0.8125rem; font-variant-numeric: tabular-nums; }
 .sum-row--total { border-top: 2px solid var(--color-graphite-200); margin-top: 0.1rem; padding-top: 0.7rem; }
 .sum-row--total .sum-row__name { font-weight: 700; }
 .sum-row--total .sum-row__price { font-size: 0.875rem; }
