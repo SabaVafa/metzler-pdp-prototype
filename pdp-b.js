@@ -927,8 +927,6 @@ var MZSwipe = (function () {
       var swline = sw.querySelector('.bx-swline');
       var swatchEls = [].slice.call(sw.querySelectorAll('.pdp-swatch'));   /* cached – the set never changes */
       var ticking = false;
-      /* Make the palette size explicit at rest so the visible few aren't mistaken for all. */
-      setTxt('pdpFinishCount', '· ' + swatchEls.length + ' Farben');
       /* Edge-fade state (see CSS): fade whichever side still has swatches off-screen. */
       var setEdge = function () {
         var m = sw.scrollWidth - sw.clientWidth, sl = sw.scrollLeft;

@@ -756,8 +756,6 @@
 .swtouch .bx-swatches[data-scroll="middle"] { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--sw-fade), #000 calc(100% - var(--sw-fade)), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 var(--sw-fade), #000 calc(100% - var(--sw-fade)), transparent 100%); }
 .swtouch .bx-swatches[data-scroll="end"] { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--sw-fade)); mask-image: linear-gradient(90deg, transparent 0, #000 var(--sw-fade)); }
 .swtouch .bx-swatches[data-scroll="none"] { -webkit-mask-image: none; mask-image: none; }
-/* Explicit palette size in the label so the visible few can't be mistaken for the whole set. */
-.bx-color__count { color: var(--color-graphite-600); font-weight: 400; font-size: 0.9em; margin-left: 0.4rem; }
 /* Symmetric slots above and below each swatch keep the image vertically centred in
    the row (content aligned above and below). Transparent – the active cue is the
    single travelling line below, not a per-swatch mark. */
