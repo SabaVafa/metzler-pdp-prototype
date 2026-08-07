@@ -864,7 +864,7 @@
 /* CTA stays on a single line and sizes to its content */
 /* CTA sized to a prominent-but-not-dominant width and anchored right (price sits left);
    was flex:1 1 auto so it filled the whole footer and overpowered the layout. */
-.sheet__foot .pdp-cta { flex: 0 0 auto; width: auto; min-width: 20rem; white-space: nowrap; background: var(--color-teal); box-shadow: none; }
+.sheet__foot .pdp-cta { flex: 0 0 auto; width: auto; min-width: 26rem; white-space: nowrap; background: var(--color-teal); box-shadow: none; }
 .sheet__foot .pdp-cta:hover { background: var(--color-teal-hover); }
 /* full-width bottom drawer – inner content comfortably centered on wide screens */
 .sheet__head, .sheet .cfgb-summary, .sheet__foot { width: 100%; max-width: 64rem; margin-left: auto; margin-right: auto; }
