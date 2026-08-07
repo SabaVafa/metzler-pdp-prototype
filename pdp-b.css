@@ -1761,7 +1761,12 @@ body.is-scrolled #quickbar {
 .psx-nav__termin { align-self: center; flex: none; display: inline-flex; align-items: center; gap: 0.45rem;
   padding: 0.55rem 1.2rem; border: 0; border-radius: var(--radius);
   background: var(--color-teal); color: var(--color-white); font-family: inherit; font-size: 0.875rem; font-weight: 700; line-height: 1;
-  white-space: nowrap; cursor: pointer; transition: background .15s ease; }
+  white-space: nowrap; cursor: pointer; transition: background .15s ease, opacity .2s ease, transform .2s ease;
+  /* Hidden until the green contact bar leaves the viewport and the section nav takes
+     over the sticky slot (pdp-b.js adds .psx-nav--cta-on on handoff). The slot stays
+     reserved so the reveal doesn't reflow the tab strip. */
+  opacity: 0; visibility: hidden; transform: translateY(-2px); pointer-events: none; }
+.psx-nav--cta-on .psx-nav__termin { opacity: 1; visibility: visible; transform: none; pointer-events: auto; }
 .psx-nav__termin svg { width: 1.05rem; height: 1.05rem; }
 @media (max-width: 47.9375rem) { .psx-nav__termin { display: none; } }   /* mobile: hide the CTA so the section tabs get the full width */
 .psx-nav__termin:hover { background: var(--color-teal-hover); }

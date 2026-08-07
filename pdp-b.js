@@ -1963,21 +1963,32 @@ var MZSwipe = (function () {
     root.style.setProperty('--pdp-header-h', h + 'px');
 
     if (!qb) return;
-    if (nav && !reduce.matches) {
+    if (nav) {
       /* how far the section nav has pushed into the quickbar's pinned slot */
       var qbH = qb.offsetHeight;
       var navTop = nav.getBoundingClientRect().top;
       var delta = Math.min(qbH, Math.max(0, (h + qbH) - navTop));
       var p = qbH ? delta / qbH : 0;   /* 0 → 1 handoff progress */
-      /* Baton-pass: the contact bar stays PINNED under the header (it does not move) –
-         the section nav gradually slides UP UNDER it as you scroll, and the bar fades
-         from opaque to transparent in step (linear, so it stays visible through the
-         slide and is fully clear right as the nav lands). The nav is thus revealed 100%
-         clear and takes over as the sticky bar. */
-      qb.style.transform = '';
-      qb.style.opacity = p ? String(Math.max(0, 1 - p)) : '';
-      /* once it starts fading it must not intercept taps meant for the section nav */
-      qb.style.pointerEvents = p > 0.01 ? 'none' : '';
+      if (!reduce.matches) {
+        /* Baton-pass: the contact bar stays PINNED under the header (it does not move) –
+           the section nav gradually slides UP UNDER it as you scroll, and the bar fades
+           from opaque to transparent in step (linear, so it stays visible through the
+           slide and is fully clear right as the nav lands). The nav is thus revealed 100%
+           clear and takes over as the sticky bar. */
+        qb.style.transform = '';
+        qb.style.opacity = p ? String(Math.max(0, 1 - p)) : '';
+        /* once it starts fading it must not intercept taps meant for the section nav */
+        qb.style.pointerEvents = p > 0.01 ? 'none' : '';
+      } else {
+        qb.style.transform = '';
+        qb.style.opacity = '';
+        qb.style.pointerEvents = '';
+      }
+      /* Reveal the section-nav "Termin vereinbaren" CTA only once the handoff is
+         complete (p === 1) – i.e. the green contact bar has faded out of the viewport
+         and the nav owns the sticky slot – so the action is not duplicated while the
+         bar (which carries the same CTA) is still on screen. */
+      nav.classList.toggle('psx-nav--cta-on', p >= 1);
     } else {
       qb.style.transform = '';
       qb.style.opacity = '';
