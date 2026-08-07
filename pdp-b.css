@@ -1591,7 +1591,8 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 /* equal-height 2-column: photo | (text + thumbnails). align-items:stretch makes the photo
    column match the text column's height exactly – image edge-to-edge, no top/bottom padding. */
 .rv__feature-card { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: clamp(1rem, 2vw, 1.5rem); align-items: stretch; }
+  gap: clamp(1rem, 2vw, 1.5rem); align-items: stretch;
+  scroll-margin-top: 8rem; }   /* clear the sticky header when a thumbnail tap scrolls the featured photo into view */
 
 .rv__feature-media { margin: 0; position: relative; border-radius: var(--radius);
   overflow: hidden; background: var(--color-paper);

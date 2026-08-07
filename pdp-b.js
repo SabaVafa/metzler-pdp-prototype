@@ -1109,7 +1109,7 @@ var MZSwipe = (function () {
       b.setAttribute('aria-label', 'Bewertung von ' + d.author);
       var im = document.createElement('img'); im.src = d.img; im.alt = d.alt; im.loading = 'lazy';
       b.appendChild(im);
-      b.addEventListener('click', function () { show(i); });
+      b.addEventListener('click', function () { show(i); scrollFeaturedIntoView(); });
       nav.appendChild(b); return b;
     });
     function apply(d) {
@@ -1139,8 +1139,14 @@ var MZSwipe = (function () {
       card.classList.add('is-swapping');
       window.setTimeout(function () { apply(d); card.classList.remove('is-swapping'); }, 200);
     }
-    if (prev) prev.addEventListener('click', function () { show((idx - 1 + data.length) % data.length); });
-    if (next) next.addEventListener('click', function () { show((idx + 1) % data.length); });
+    /* On the stacked (mobile) layout the featured photo sits above the thumbnail rail,
+       so tapping a thumbnail changes an image that's scrolled off-screen. Bring it into
+       view. 'nearest' is a no-op when it's already visible (desktop side-by-side). */
+    function scrollFeaturedIntoView() {
+      if (card && card.scrollIntoView) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    if (prev) prev.addEventListener('click', function () { show((idx - 1 + data.length) % data.length); scrollFeaturedIntoView(); });
+    if (next) next.addEventListener('click', function () { show((idx + 1) % data.length); scrollFeaturedIntoView(); });
     show(0);
   })();
 
