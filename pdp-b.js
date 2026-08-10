@@ -2414,13 +2414,20 @@ var MZSwipe = (function () {
     if (lastFocus) lastFocus.focus({ preventScroll: true });
   }
 
-  /* When the swatch row scrolls horizontally (mobile), bring the picked swatch into view so
-     the selection is visible after the window closes. No-op on desktop (grid doesn't overflow). */
+  /* When the swatch row scrolls horizontally (mobile), bring the picked swatch into view.
+     On touch the travelling indicator line is SCROLL-DRIVEN (idx = round(scrollProgress·(n-1)),
+     see the swtouch setup), so we scroll to that swatch's scroll-progress position rather than
+     centring it – otherwise the line lands on a different index. This makes the row show the
+     selected swatch AND the indicator/label settle on it. No-op on desktop (grid doesn't overflow). */
   function revealSwatch(sw) {
-    if (!sw || grid.scrollWidth <= grid.clientWidth + 1) return;
-    var target = sw.offsetLeft - (grid.clientWidth - sw.offsetWidth) / 2;
+    var maxScroll = grid.scrollWidth - grid.clientWidth;
+    if (!sw || maxScroll <= 1) return;
+    var all = [].slice.call(grid.querySelectorAll('.pdp-swatch'));
+    var i = all.indexOf(sw);
+    if (i < 0) return;
+    var frac = all.length > 1 ? i / (all.length - 1) : 0;
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    grid.scrollTo({ left: Math.max(0, target), behavior: reduce ? 'auto' : 'smooth' });
+    grid.scrollTo({ left: Math.round(frac * maxScroll), behavior: reduce ? 'auto' : 'smooth' });
   }
 
   rows.forEach(function (r) {
