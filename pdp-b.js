@@ -2414,11 +2414,20 @@ var MZSwipe = (function () {
     if (lastFocus) lastFocus.focus({ preventScroll: true });
   }
 
+  /* When the swatch row scrolls horizontally (mobile), bring the picked swatch into view so
+     the selection is visible after the window closes. No-op on desktop (grid doesn't overflow). */
+  function revealSwatch(sw) {
+    if (!sw || grid.scrollWidth <= grid.clientWidth + 1) return;
+    var target = sw.offsetLeft - (grid.clientWidth - sw.offsetWidth) / 2;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    grid.scrollTo({ left: Math.max(0, target), behavior: reduce ? 'auto' : 'smooth' });
+  }
+
   rows.forEach(function (r) {
     r.addEventListener('click', function () {
       var sw = swatchFor(r);
-      if (sw) { sw.click(); markRows(); }   /* proxy → runs all of v1's selection logic */
-      close();                              /* Wunschfarbe then reveals the inline RAL picker */
+      if (sw) { sw.click(); markRows(); revealSwatch(sw); }   /* proxy → runs all of v1's selection logic */
+      close();                                                /* Wunschfarbe then reveals the inline RAL picker */
     });
   });
   link.addEventListener('click', function () { win.classList.contains('is-open') ? close() : open(); });
