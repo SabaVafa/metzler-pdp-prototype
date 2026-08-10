@@ -855,7 +855,11 @@
 /* product thumbnail beside the total (matches the sticky-bar thumb); the lead group
    keeps thumb + price together to the left of the CTA (row) and above it (mobile column). */
 .sheet__foot-lead { display: flex; align-items: center; gap: 0.85rem; min-width: 0; }
-.sheet__thumb { width: 3rem; height: 3rem; flex-shrink: 0; border-radius: var(--radius); background: var(--color-paper); border: 1px solid var(--color-graphite-200); object-fit: contain; padding: 0.25rem; }
+/* Thumbnail height tracks the price/text block beside it (align-self:stretch) so the two
+   always read as the same height – whether the block is one line ("ab 699 €") or carries the
+   "Preis wie konfiguriert" label above the price. Width matches the price line-height (2.625rem)
+   so the base state stays a clean square; it grows only in height when the label adds a line. */
+.sheet__thumb { width: 2.625rem; height: auto; align-self: stretch; flex-shrink: 0; border-radius: var(--radius); background: var(--color-paper); border: 1px solid var(--color-graphite-200); object-fit: contain; padding: 0.25rem; }
 .sheet__pricelabel { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-graphite-600); line-height: 1.25; }
 /* the explicit display:block above outranks the UA [hidden] rule – restore hiding so the
    "Preis wie konfiguriert" label / "ab" prefix stay mutually exclusive (only one shows) */
@@ -2076,10 +2080,16 @@ body.is-scrolled #quickbar {
 @media (max-width: 52rem) {
   /* mobile: header + image stay FIXED at the top; only the review body scrolls
      beneath them, so the image remains visible while reading the review */
-  .rvw-lb { display: flex; flex-direction: column; width: min(30rem, 100%); height: auto; max-height: 90vh; overflow: hidden; }
+  /* One fixed sheet size for EVERY review – short quote or long text, one photo or
+     several. Height is content-independent (dvh, toolbar-aware; vh fallback) so the
+     modal never resizes to fit; long text scrolls inside the body instead. */
+  .rvw-lb { display: flex; flex-direction: column; width: min(30rem, 100%);
+    height: 90vh; height: 90dvh; max-height: 90dvh; overflow: hidden; }
   .rvw-lb__head { order: 1; flex: none; }
   .rvw-lb__close { width: 2.75rem; height: 2.75rem; margin-right: -0.8125rem; }   /* 44px touch target; neg margin = (2.75 − 1.125)/2 keeps the icon box aligned to the content edge */
-  .rvw-lb__stage { order: 2; flex: none; height: 42vh; }
+  /* Image is a fixed SHARE of the sheet (not vh) so the photo/text split stays constant
+     across reviews and always agrees with the sheet's own height unit. */
+  .rvw-lb__stage { order: 2; flex: none; height: 45%; }
   .rvw-lb__body { order: 3; flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
     scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.18) transparent; }
   .rvw-lb__body::-webkit-scrollbar { width: 5px; }
