@@ -543,6 +543,20 @@ var MZSwipe = (function () {
     if (document.body.classList.contains('swtouch')) {
       var swln = this.querySelector('.bx-swline');
       if (swln) swln.style.transform = 'translateX(' + Math.round(b.offsetLeft) + 'px)';
+      /* v2: tapping a partially-visible ("half") swatch at a scroll edge should bring the whole
+         swatch into view. Scroll to its scroll-progress position (idx/(n-1)·maxScroll) so the
+         scroll-driven indicator settles on it too. Skipped when the swatch is already fully shown. */
+      if (document.documentElement.classList.contains('flow-b')) {
+        var swMax = this.scrollWidth - this.clientWidth;
+        var swFull = b.offsetLeft >= this.scrollLeft - 1 && (b.offsetLeft + b.offsetWidth) <= this.scrollLeft + this.clientWidth + 1;
+        if (swMax > 1 && !swFull) {
+          var swAll = [].slice.call(this.querySelectorAll('.pdp-swatch'));
+          var swI = swAll.indexOf(b);
+          var swFrac = swAll.length > 1 ? swI / (swAll.length - 1) : 0;
+          var swReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          this.scrollTo({ left: Math.round(swFrac * swMax), behavior: swReduce ? 'auto' : 'smooth' });
+        }
+      }
     }
     state.finish = b.getAttribute('data-finish'); state.finishDelta = parseFloat(b.getAttribute('data-delta')) || 0;
     state.article = b.getAttribute('data-article') || state.article;
