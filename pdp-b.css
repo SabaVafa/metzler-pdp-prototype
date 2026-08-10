@@ -2360,14 +2360,6 @@ body.is-scrolled #quickbar {
 .techdia__zoom svg { width: 1.1rem; height: 1.1rem; }
 .techdia__shot:hover .techdia__zoom, .techdia__shot:focus-visible .techdia__zoom { opacity: 1; transform: scale(1); }
 .techdia__caption { font-size: 0.875rem; font-weight: 600; line-height: 1.4; color: var(--color-graphite-700); }
-/* The two-station "Kaskadierung" schemas pack twice the hardware into the same square
-   file, so at the standard 2-up size their door-stations/labels render much smaller than
-   the single-station diagrams. Give them the full row (capped + centred) on large screens
-   so the depicted hardware reads at a scale close to the single-station schemas. */
-@media (min-width: 40rem) {
-  .techdia__item--wide { grid-column: 1 / -1; }
-  .techdia__item--wide .techdia__shot { max-width: 52rem; margin-inline: auto; }
-}
 
 /* Diagram lightbox (injected by pdp-b.js) – reuses the review-lightbox look */
 .tdiag-lightbox { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center;
