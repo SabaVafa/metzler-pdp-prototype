@@ -2359,3 +2359,75 @@ var MZSwipe = (function () {
     document.addEventListener('touchcancel', end);
   })();
 })();
+
+/* ============================================================
+   V2 (flow-b) – color selection. Wires the static markup in
+   index.html (the "Alle Farben …" link #colorListLink and the
+   labelled side window #colorwin). Its rows proxy-click the
+   matching #pdpSwatches button (by data-article), so v1's whole
+   selection engine (article, price delta, image swap, RAL picker,
+   config unlock, refresh) is reused unchanged. The v1 grid stays
+   visible for one-click selection. Inert unless ?flow=b.
+   ============================================================ */
+(function () {
+  'use strict';
+  if (!document.documentElement.classList.contains('flow-b')) return;
+  var grid = document.getElementById('pdpSwatches');
+  var link = document.getElementById('colorListLink');
+  var win  = document.getElementById('colorwin');
+  if (!grid || !link || !win) return;
+  var swatches = [].slice.call(grid.querySelectorAll('.pdp-swatch'));
+  var rows = [].slice.call(win.querySelectorAll('.colorwin__row'));
+  if (!swatches.length || !rows.length) return;
+
+  var lock = (window.MZScroll && MZScroll.lock) ? MZScroll.lock : function () {};
+  var unlock = (window.MZScroll && MZScroll.unlock) ? MZScroll.unlock : function () {};
+
+  /* row → the matching v1 swatch (paired by article number) */
+  function swatchFor(row) {
+    var art = row.getAttribute('data-article');
+    for (var i = 0; i < swatches.length; i++) { if (swatches[i].getAttribute('data-article') === art) return swatches[i]; }
+    return null;
+  }
+  /* reflect the currently selected swatch onto the list rows */
+  function markRows() {
+    rows.forEach(function (r) {
+      var sw = swatchFor(r);
+      var on = !!(sw && sw.getAttribute('aria-pressed') === 'true');
+      r.classList.toggle('is-selected', on);
+      r.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+  }
+
+  var lastFocus = null;
+  function open() {
+    win.classList.add('is-open'); win.setAttribute('aria-hidden', 'false');
+    link.setAttribute('aria-expanded', 'true');
+    lock(); lastFocus = link; markRows();
+    var target = win.querySelector('.colorwin__row.is-selected') || rows[0];
+    if (target) target.focus({ preventScroll: true });
+  }
+  function close() {
+    win.classList.remove('is-open'); win.setAttribute('aria-hidden', 'true');
+    link.setAttribute('aria-expanded', 'false');
+    unlock();
+    if (lastFocus) lastFocus.focus({ preventScroll: true });
+  }
+
+  rows.forEach(function (r) {
+    r.addEventListener('click', function () {
+      var sw = swatchFor(r);
+      if (sw) { sw.click(); markRows(); }   /* proxy → runs all of v1's selection logic */
+      close();                              /* Wunschfarbe then reveals the inline RAL picker */
+    });
+  });
+  link.addEventListener('click', function () { win.classList.contains('is-open') ? close() : open(); });
+  win.addEventListener('click', function (e) { if (e.target.closest('[data-cw-close]')) close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && win.classList.contains('is-open')) close(); });
+
+  /* keep the list's selected marker in step when a swatch is picked directly */
+  if (window.MutationObserver) {
+    new MutationObserver(markRows).observe(grid, { subtree: true, attributes: true, attributeFilter: ['aria-pressed'] });
+  }
+  markRows();
+})();
