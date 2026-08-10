@@ -2345,7 +2345,11 @@ body.is-scrolled #quickbar {
 .techdia__shot { position: relative; display: block; width: 100%; padding: clamp(0.75rem,2vw,1.25rem); cursor: zoom-in;
   background: var(--color-white); border: 1px solid var(--color-graphite-200); border-radius: var(--radius-lg); overflow: hidden;
   transition: border-color .2s ease, box-shadow .25s ease, transform .2s ease; }
-.techdia__shot img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: contain; }
+/* The technical diagrams are all square (1:1) source files – frame them square so the
+   drawing fills the box instead of floating pillar-boxed inside a too-wide 4/3 frame
+   (which read as "stretched" on wide desktops). object-fit:contain stays as a safety
+   net for any non-square image added later; aspect-ratio reserves space (no CLS). */
+.techdia__shot img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: contain; }
 .techdia__shot:hover { border-color: var(--color-teal); transform: translateY(-2px);
   box-shadow: 0 8px 18px -14px rgba(1,82,83,0.28); }
 .techdia__shot:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 3px; }
