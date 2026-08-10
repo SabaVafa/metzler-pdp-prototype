@@ -227,12 +227,15 @@
    (.pdp-b scope beats the base .pdp-specs dt/dd rules in pdp.css) ── */
 .pdp-b .pdp-specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: 0.8rem 1.5rem;
   align-items: start; margin: 0.15rem 0; padding: 0; border: 0; background: none; }
-.pdp-b .pdp-specs__item { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
-.pdp-b .pdp-specs__item:nth-child(2) { align-items: center; text-align: center; }   /* middle spec (Breite × Höhe) centered */
-.pdp-b .pdp-specs__item:last-child { align-items: flex-end; text-align: right; }   /* article no. aligns to the right edge */
-.pdp-b .pdp-specs__label { margin: 0; font-size: 0.875rem; font-weight: 600; letter-spacing: normal;
-  text-transform: none; color: var(--color-graphite-600); }   /* 14px on desktop; mobile stays 0.8125rem (block below) · match the "Bewertungen" grey */
-.pdp-b .pdp-specs__value { margin: 0; font-size: 1rem; font-weight: 600; color: var(--color-digital-black);
+/* All three facts share ONE left scan-edge – the eye drops straight down the
+   labels instead of hopping left→center→right (was a zig-zag of alignments). */
+.pdp-b .pdp-specs__item { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; align-items: flex-start; text-align: left; }
+/* Engraved caption / confident value – labels borrow the brand eyebrow DNA
+   (uppercase, tracked, tiny) so the facts read like a precision data-plate, not
+   loose text. The caption recedes; the value carries the weight. */
+.pdp-b .pdp-specs__label { margin: 0; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--color-graphite-600); }   /* 11px engraved caption across breakpoints */
+.pdp-b .pdp-specs__value { margin: 0; font-size: 1rem; font-weight: 700; color: var(--color-digital-black);
   font-variant-numeric: tabular-nums; }
 /* minimal hairline dividers between the three key facts (desktop; mobile keeps its
    horizontal row dividers) – border centered in the gutter via even side padding */
@@ -243,7 +246,7 @@
   .pdp-b .pdp-specs__item:last-child { padding-right: 0; }
   .pdp-b .pdp-specs__item + .pdp-specs__item { border-left: 1px solid var(--color-graphite-200); }
 }
-/* labels held at a consistent 11px across breakpoints (values stay a fixed 16px) */
+/* labels held at a consistent 12px muted signpost across breakpoints (values stay a fixed 16px, weight 700) */
 
 /* ── AUSFÜHRUNG · Farbe (Variante) ── */
 .bx-color { display: flex; flex-direction: column; gap: 0.7rem; }
@@ -558,6 +561,46 @@
 .pdp-price--lead .cfgb-price__label { font-size: 0.8125rem; letter-spacing: normal; }
 .pdp-price--lead .pdp-price__meta { font-size: 0.875rem; }
 .pdp-price--lead .pdp-avail__status { font-size: 0.875rem; }
+/* In-stock status carries a small dot – a pre-attentive cue the eye reads as
+   "available" before it reads the words. Uses currentColor so dot = text green. */
+.pdp-b .pdp-avail__status { display: inline-flex; align-items: center; gap: 0.45rem; }
+.pdp-b .pdp-avail__status::before { content: ""; width: 0.5rem; height: 0.5rem; flex: none;
+  border-radius: 50%; background: currentColor; }
+
+/* ── Offer panel ──────────────────────────────────────────────────────────
+   The commercial decision (price · tax · shipping · availability) is the fold's
+   single focal point. It borrows Metzler's own signature panel language – the
+   teal left-accent bar + white→paper gradient used on the brand's FAQ/config
+   surfaces – so it reads as premium and unmistakably on-brand, not a grey box. */
+.pdp-b .pdp-price--lead {
+  position: relative; overflow: hidden;
+  gap: 0.45rem; margin-top: 0;
+  padding: 1.1rem 1.25rem 1.15rem 1.5rem;
+  background: var(--color-paper);
+  border: 1px solid var(--color-graphite-200);
+  border-radius: var(--radius-lg);
+}
+/* signature teal accent bar – the brand's "this is the important thing" marker */
+.pdp-b .pdp-price--lead::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 0.1875rem;
+  background: var(--color-teal);
+}
+/* Price caption in the brand eyebrow voice (teal · uppercase · tracked) – labels
+   the panel so the number reads as a deliberate, configured price. Gated on
+   :not([hidden]) so the JS reveal (hidden = !finish) still governs it: the "ab"
+   starting price shows label-less, "Preis wie konfiguriert" appears once a colour
+   is chosen. */
+.pdp-b .pdp-price--lead .cfgb-price__label:not([hidden]) {
+  display: block; margin: 0 0 0.05rem; line-height: 1.3;
+  font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--color-teal);
+}
+/* internal hairline separates "what it costs" (price · tax · shipping) from
+   "when you get it" (availability) – structure inside the panel, not a new box */
+.pdp-b .pdp-price--lead .pdp-avail {
+  width: 100%; margin-top: 0.15rem; padding-top: 0.7rem;
+  border-top: 1px solid var(--color-graphite-200);
+}
 
 /* Preisdetails & Menge accordion lives in the checkout now (after the config); hide it
    until a colour is chosen – nothing to detail yet */
