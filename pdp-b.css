@@ -1197,7 +1197,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .feat__list > .feat__item:first-child { padding-top: 0; }
 .feat__list > .feat__item:last-child { padding-bottom: 0; }
 .feat__name { font-size: 0.875rem; font-weight: 700; line-height: 1.25; letter-spacing: -0.01em; color: var(--color-digital-black); }
-.feat__desc { font-size: 0.75rem; line-height: 1.4; color: var(--color-graphite-700); }   /* match the config additional-info text */
+.feat__desc { font-size: 0.8125rem; line-height: 1.4; color: var(--color-graphite-700); }   /* 13px body */
 
 /* ── Trust badges – frame-free: prominent seal/flag + clean type, split by a
    single hairline divider ── */
