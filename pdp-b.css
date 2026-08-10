@@ -227,9 +227,11 @@
    (.pdp-b scope beats the base .pdp-specs dt/dd rules in pdp.css) ── */
 .pdp-b .pdp-specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: 0.8rem 1.5rem;
   align-items: start; margin: 0.15rem 0; padding: 0; border: 0; background: none; }
-/* All three facts share ONE left scan-edge – the eye drops straight down the
-   labels instead of hopping left→center→right (was a zig-zag of alignments). */
+/* Three facts distributed across the row: brand hugs the left edge, dimensions
+   centered, article-no. hugs the right edge (mobile re-flows to rows below). */
 .pdp-b .pdp-specs__item { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; align-items: flex-start; text-align: left; }
+.pdp-b .pdp-specs__item:nth-child(2) { align-items: center; text-align: center; }   /* Breite × Höhe – centered */
+.pdp-b .pdp-specs__item:last-child { align-items: flex-end; text-align: right; }   /* Artikelnummer – right-aligned */
 /* Engraved caption / confident value – labels borrow the brand eyebrow DNA
    (uppercase, tracked, tiny) so the facts read like a precision data-plate, not
    loose text. The caption recedes; the value carries the weight. */
