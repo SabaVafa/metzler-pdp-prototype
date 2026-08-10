@@ -791,7 +791,7 @@
   body:not(.swtouch) .bx-swline { display: block; position: absolute; top: -0.55rem; left: 0; z-index: 2;
     height: 2px; width: 2rem; border-radius: var(--radius-sm); background: var(--color-teal);
     opacity: 0; pointer-events: none; will-change: transform;
-    transition: transform .4s cubic-bezier(.22, .61, .36, 1), opacity .22s ease; }   /* easeOutCubic glide, settled – no bounce */
+    transition: transform .48s cubic-bezier(.4, 0, .2, 1), opacity .22s ease; }   /* gentle both-ends ease (low initial velocity → no harsh jolt); longer so fast sweeps trail smoothly */
   body:not(.swtouch) .bx-swline.is-on { opacity: 1; }   /* shown only for a hovered/selected swatch – hidden at rest when no colour is chosen */
 }
 
