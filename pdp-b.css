@@ -2706,6 +2706,11 @@ body.is-scrolled #quickbar {
 /* Roomier, uniform spacing between the colour block's rows (label · swatches · link · RAL
    picker) so they don't read as cramped – scoped to v2 so v1 spacing is untouched. */
 .flow-b .bx-color { gap: 1.25rem; }
+/* Mobile: the swatch row has top/bottom padding and the indicator line floats in the TOP
+   padding, so the space above the indicator (label→indicator) is much smaller than the space
+   below the swatches (row bottom padding + gap) down to the link. Pull the link up so the gap
+   below the swatches ≈ the gap above the indicator (measured from the indicator, not the row). */
+.flow-b .swtouch .bx-color__listlink { margin-top: -1rem; }
 /* The link is the last item in the colour block; the buy-box's 2rem section gap made the
    space BELOW it much larger than the ~1.25rem above. Pull the config panel up in v2 so the
    link sits with roughly equal breathing room above and below (desktop + mobile alike). */
