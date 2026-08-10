@@ -855,11 +855,11 @@
 /* product thumbnail beside the total (matches the sticky-bar thumb); the lead group
    keeps thumb + price together to the left of the CTA (row) and above it (mobile column). */
 .sheet__foot-lead { display: flex; align-items: center; gap: 0.85rem; min-width: 0; }
-/* Thumbnail height tracks the price/text block beside it (align-self:stretch) so the two
-   always read as the same height – whether the block is one line ("ab 699 €") or carries the
-   "Preis wie konfiguriert" label above the price. Width matches the price line-height (2.625rem)
-   so the base state stays a clean square; it grows only in height when the label adds a line. */
-.sheet__thumb { width: 2.625rem; height: auto; align-self: stretch; flex-shrink: 0; border-radius: var(--radius); background: var(--color-paper); border: 1px solid var(--color-graphite-200); object-fit: contain; padding: 0.25rem; }
+/* Fixed square thumbnail sized to the price line-height and vertically centred (via the
+   foot-lead's align-items:center). It matches the price number in the base state yet never
+   stretches into a tall portrait when the price block grows to two lines (the
+   "Preis wie konfiguriert" label sitting above the total). */
+.sheet__thumb { width: 2.625rem; height: 2.625rem; flex-shrink: 0; border-radius: var(--radius); background: var(--color-paper); border: 1px solid var(--color-graphite-200); object-fit: contain; padding: 0.25rem; }
 .sheet__pricelabel { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-graphite-600); line-height: 1.25; }
 /* the explicit display:block above outranks the UA [hidden] rule – restore hiding so the
    "Preis wie konfiguriert" label / "ab" prefix stay mutually exclusive (only one shows) */
@@ -2619,8 +2619,10 @@ body.is-scrolled #quickbar {
   /* 5 · Preisdetails sheet foot → stack price above a full-width CTA. Keep the ending
      separator on mobile (it's dropped at the base for the wide desktop drawer) so the
      price/CTA block reads as a distinct footer under the item list. */
-  .sheet__foot { flex-direction: column; align-items: stretch; gap: 0.75rem;
-    border-top: 1px solid var(--color-graphite-200); margin-top: 0.5rem; padding-top: 1.4rem; }
+  /* Symmetric spacing around the price row: the gap above it (padding-top) equals the gap
+     below it (flex gap to the CTA) and the padding below the CTA – a consistent 1.25rem. */
+  .sheet__foot { flex-direction: column; align-items: stretch; gap: 1.25rem;
+    border-top: 1px solid var(--color-graphite-200); margin-top: 0.5rem; padding-top: 1.25rem; }
   .sheet__foot .pdp-cta { min-width: 0; width: auto; }   /* full-width stacked CTA on mobile; drop the desktop fixed width */
   .sheet__price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.15rem 0.5rem; }
   .sheet__pricelabel:not([hidden]) { flex: 1 0 100%; }   /* label on its own line, above the price */
