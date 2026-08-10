@@ -2430,11 +2430,22 @@ var MZSwipe = (function () {
     grid.scrollTo({ left: Math.round(frac * maxScroll), behavior: reduce ? 'auto' : 'smooth' });
   }
 
+  /* Desktop: the magic-line is HOVER-driven, so a window pick (no hover) leaves it stale on
+     the previous position. Place it on the selected swatch explicitly (mirrors v1's moveSwlineTo:
+     translate offsetLeft/offsetTop + is-on). Touch is handled by the click handler + revealSwatch. */
+  function placeSwlineDesktop(sw) {
+    if (document.body.classList.contains('swtouch')) return;
+    var line = grid.querySelector('.bx-swline');
+    if (!line) return;
+    line.style.transform = 'translate(' + Math.round(sw.offsetLeft) + 'px,' + Math.round(sw.offsetTop) + 'px)';
+    line.classList.add('is-on');
+  }
+
   rows.forEach(function (r) {
     r.addEventListener('click', function () {
       var sw = swatchFor(r);
-      if (sw) { sw.click(); markRows(); revealSwatch(sw); }   /* proxy → runs all of v1's selection logic */
-      close();                                                /* Wunschfarbe then reveals the inline RAL picker */
+      if (sw) { sw.click(); markRows(); revealSwatch(sw); placeSwlineDesktop(sw); }   /* proxy → runs all of v1's selection logic */
+      close();                                                                        /* Wunschfarbe then reveals the inline RAL picker */
     });
   });
   link.addEventListener('click', function () { win.classList.contains('is-open') ? close() : open(); });
