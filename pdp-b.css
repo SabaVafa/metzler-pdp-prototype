@@ -2506,7 +2506,15 @@ body.is-scrolled #quickbar {
 .faq__q-icon svg { width: 1.5rem; height: 1.5rem; transition: transform .2s ease; }
 .faq__item:hover .faq__q-icon, .faq__item[open] .faq__q-icon { color: var(--color-teal); background: none; border-color: transparent; }
 .faq__item[open] .faq__q-icon svg { transform: scaleY(-1); }
-.faq__a { padding: 0 1.25rem 1.4rem; max-width: 65ch; font-size: 1rem; line-height: 1.7; color: var(--color-graphite-700); }
+.faq__a { padding: 0 1.25rem 1.5rem; max-width: none; font-size: 1rem; line-height: 1.9; color: var(--color-graphite-700); }
+/* Inline link inside an answer – give it a clear, on-brand affordance (teal, semibold,
+   underlined) with a trailing arrow that nudges on hover so it reads unmistakably as a link. */
+.faq__link { color: var(--color-teal); font-weight: 700; border-radius: 2px;
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.22em; transition: color .15s ease; }
+.faq__link svg { display: inline-block; width: 1rem; height: 1rem; margin-left: 0.35rem; vertical-align: -0.15em; transition: transform .18s ease; }
+.faq__link:hover { color: var(--color-teal-hover); }
+.faq__link:hover svg { transform: translateX(3px); }
+.faq__link:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
 
 @media (max-width: 56.25rem) {
   .faq__inner { display: flex; flex-direction: column; }
