@@ -2423,6 +2423,7 @@ var MZSwipe = (function () {
   function syncCard() {
     if (!card) return;
     var sel = grid.querySelector('.pdp-swatch[aria-pressed="true"]');
+    card.classList.toggle('is-picked', !!sel);   /* v3: swap the list icon for the finish thumb once chosen */
     if (sel) {
       if (cardName) cardName.textContent = sel.getAttribute('data-finish') || '';
       if (cardThumb) {
