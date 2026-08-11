@@ -18,7 +18,7 @@
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=35" />
 <!-- Version B – inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=634" />
+<link rel="stylesheet" href="pdp-b.css?v=637" />
 <!-- Prototype variant switch – append ?flow=b (v2) or ?flow=c (v3) to load an alternative
      color-selection flow. Default (no param) renders v1 exactly as-is. Runs in <head> so the
      class is set before paint. v2 = "Alle Farben" text link → side window; v3 = a selected-
@@ -453,12 +453,12 @@
                grid. JS syncs the label's thumb + name to the chosen finish. Hidden in v1/v2. -->
           <button type="button" class="bx-listfield" id="colorCardLink" aria-haspopup="dialog" aria-expanded="false" aria-controls="colorwin">
             <svg class="bx-listfield__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/></svg>
-            <span class="bx-listfield__thumb" id="colorCardThumb" aria-hidden="true"></span>
             <span class="bx-listfield__text">Alle Farben mit Bezeichnung ansehen</span>
+            <span class="bx-listfield__thumb" id="colorCardThumb" aria-hidden="true"></span>
             <svg class="bx-listfield__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
           </button>
 
-          <!-- selected-finish label (text only), directly above the swatches -->
+          <!-- selected-finish label (FARBE / name), directly above the swatches -->
           <div class="bx-colorsel">
             <span class="bx-colorsel__cap">Farbe</span>
             <span class="bx-colorsel__name" id="colorCardName">Bitte Farbe wählen</span>

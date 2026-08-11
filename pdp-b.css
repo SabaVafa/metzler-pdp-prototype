@@ -2801,19 +2801,20 @@ body.is-scrolled #quickbar {
 .flow-c .bx-listfield:hover { border-color: var(--color-teal); box-shadow: 0 1px 2px rgba(26,23,27,0.06); }
 .flow-c .bx-listfield:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
 .bx-listfield__icon { flex: none; width: 1.15rem; height: 1.15rem; color: var(--color-teal); }
-/* selected-finish preview shown in the field next to the text once a colour is chosen;
-   it takes the leading slot from the generic list icon (.is-picked, set in pdp-b.js) */
+.bx-listfield__text { flex: 0 1 auto; min-width: 0; font-size: 0.9375rem; font-weight: 700; color: var(--color-digital-black);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* selected-finish preview – sits directly after the "Alle Farben …" label with the
+   same 0.7rem field gap; hidden until a colour is chosen. The chevron is pushed to
+   the far right (margin-left:auto) so the thumb hugs the label, not the chevron. */
 .bx-listfield__thumb { flex: none; width: 1.85rem; height: 1.85rem; box-sizing: border-box;
   border-radius: var(--radius); overflow: hidden; background: var(--color-paper); border: 1px solid var(--color-graphite-200); }
 .bx-listfield__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.bx-listfield__thumb:empty { display: none; }         /* no square before a colour is chosen */
-.flow-c .bx-listfield.is-picked .bx-listfield__icon { display: none; }
-.bx-listfield__text { flex: 1 1 auto; min-width: 0; font-size: 0.9375rem; font-weight: 700; color: var(--color-digital-black); }
-.bx-listfield__chev { flex: none; width: 1.15rem; height: 1.15rem; color: var(--color-graphite-500);
+.bx-listfield__thumb:empty { display: none; }
+.bx-listfield__chev { flex: none; margin-left: auto; width: 1.15rem; height: 1.15rem; color: var(--color-graphite-500);
   transition: transform .18s cubic-bezier(.22,1,.36,1), color .18s ease; }
 .flow-c .bx-listfield:hover .bx-listfield__chev { color: var(--color-teal); transform: translateX(0.125rem); }
 
-/* selected-finish label (text only), directly above the swatches */
+/* selected-finish label (FARBE / <name>), directly above the swatches */
 .flow-c .bx-colorsel { display: flex; flex-direction: column; gap: 0.05rem; min-width: 0; }
 .bx-colorsel__cap { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-graphite-600); }
 .bx-colorsel__name { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black);
