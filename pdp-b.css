@@ -2857,10 +2857,13 @@ body.is-scrolled #quickbar {
    drawer has height to spare, leaving dead space under the last colour. Here the
    list becomes a flex column so the rows SHARE that leftover height (grow, never
    shrink → shorter content still scrolls), and each swatch image steps up a size.
-   The group caption keeps its natural height. Self-adjusting to any tall height. */
+   The group caption keeps its natural height. Self-adjusting to any tall height.
+   max-height caps the growth so rows fill normal big screens (≈960–1200px) yet
+   never stretch airy on very large monitors – a clean row + a small bottom gap
+   there instead of over-tall rows. */
 @media (min-height: 60rem) {
   .colorwin__list { display: flex; flex-direction: column; }
-  .colorwin__row { flex: 1 0 auto; }
+  .colorwin__row { flex: 1 0 auto; max-height: 8.5rem; }
   .colorwin__group { flex: 0 0 auto; }
   .colorwin__sw { width: 4.75rem; height: 4.75rem; }
   .colorwin__name { font-size: 1.0625rem; }
