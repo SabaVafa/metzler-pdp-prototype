@@ -18,10 +18,12 @@
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=35" />
 <!-- Version B – inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=630" />
-<!-- Prototype variant switch – append ?flow=b to load the alternative color-selection flow (v2).
-     Default (no param) renders v1 exactly as-is. Runs in <head> so the class is set before paint. -->
-<script>if(new URLSearchParams(location.search).get('flow')==='b'){document.documentElement.classList.add('flow-b');}</script>
+<link rel="stylesheet" href="pdp-b.css?v=631" />
+<!-- Prototype variant switch – append ?flow=b (v2) or ?flow=c (v3) to load an alternative
+     color-selection flow. Default (no param) renders v1 exactly as-is. Runs in <head> so the
+     class is set before paint. v2 = "Alle Farben" text link → side window; v3 = a selected-
+     finish summary card (Sephora pattern) above the grid → same side window. -->
+<script>(function(){var f=new URLSearchParams(location.search).get('flow');if(f==='b'){document.documentElement.classList.add('flow-b');}else if(f==='c'){document.documentElement.classList.add('flow-c');}})();</script>
 </head>
 <body class="plp">
 <a class="skip-link" href="#pdpMain">Zum Inhalt springen</a>
@@ -445,6 +447,19 @@
           <div class="bx-color__head">
             <span class="bx-color__label">Farbe: <span class="bx-color__dot" id="pdpFinishDot" hidden></span><b id="pdpFinishName">Bitte Farbe wählen</b></span>
           </div>
+
+          <!-- v3 (flow-c) only: a selected-finish summary card (Sephora pattern) that opens the
+               labelled side window. Sits above the swatch grid; JS syncs its thumb + name to the
+               chosen finish. Hidden in v1/v2. -->
+          <button type="button" class="bx-cardpick" id="colorCardLink" aria-haspopup="dialog" aria-expanded="false" aria-controls="colorwin">
+            <span class="bx-cardpick__thumb" id="colorCardThumb" aria-hidden="true"></span>
+            <span class="bx-cardpick__text">
+              <span class="bx-cardpick__cap">Farbe</span>
+              <span class="bx-cardpick__name" id="colorCardName">Bitte Farbe wählen</span>
+            </span>
+            <svg class="bx-cardpick__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+
           <div class="pdp-swatches bx-swatches" id="pdpSwatches" role="group" aria-label="Farbe wählen – jede Farbe ist eine eigene Variante mit eigener Artikelnummer">
             <span class="bx-swline" aria-hidden="true"></span>
             <button type="button" class="pdp-swatch" aria-pressed="false" data-finish="Anthrazit RAL 7016" data-delta="0" data-article="31101"><img src="assets/swatches/anthrazit-ral7016.jpg" alt="Anthrazit RAL 7016"></button>
@@ -1872,6 +1887,6 @@
 </div>
 
 <script src="chrome.js?v=2"></script>
-<script src="pdp-b.js?v=213"></script>
+<script src="pdp-b.js?v=214"></script>
 </body>
 </html>

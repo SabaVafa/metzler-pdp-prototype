@@ -2385,14 +2385,20 @@ var MZSwipe = (function () {
    ============================================================ */
 (function () {
   'use strict';
-  if (!document.documentElement.classList.contains('flow-b')) return;
+  var htmlCls = document.documentElement.classList;
+  if (!htmlCls.contains('flow-b') && !htmlCls.contains('flow-c')) return;   /* v2 + v3 share this module */
   var grid = document.getElementById('pdpSwatches');
-  var link = document.getElementById('colorListLink');
+  var link = document.getElementById('colorListLink');   /* v2 opener – "Alle Farben" text link */
+  var card = document.getElementById('colorCardLink');   /* v3 opener – selected-finish summary card */
   var win  = document.getElementById('colorwin');
-  if (!grid || !link || !win) return;
+  if (!grid || !win) return;
   var swatches = [].slice.call(grid.querySelectorAll('.pdp-swatch'));
   var rows = [].slice.call(win.querySelectorAll('.colorwin__row'));
   if (!swatches.length || !rows.length) return;
+  var cardName = document.getElementById('colorCardName');
+  var cardThumb = document.getElementById('colorCardThumb');
+  var triggers = [link, card].filter(Boolean);
+  function setExpanded(v) { triggers.forEach(function (t) { t.setAttribute('aria-expanded', v); }); }
 
   var lock = (window.MZScroll && MZScroll.lock) ? MZScroll.lock : function () {};
   var unlock = (window.MZScroll && MZScroll.unlock) ? MZScroll.unlock : function () {};
@@ -2411,19 +2417,36 @@ var MZSwipe = (function () {
       r.classList.toggle('is-selected', on);
       r.setAttribute('aria-selected', on ? 'true' : 'false');
     });
+    syncCard();
+  }
+  /* v3: mirror the chosen finish onto the summary card (thumbnail + name). No-op in v2 (no card). */
+  function syncCard() {
+    if (!card) return;
+    var sel = grid.querySelector('.pdp-swatch[aria-pressed="true"]');
+    if (sel) {
+      if (cardName) cardName.textContent = sel.getAttribute('data-finish') || '';
+      if (cardThumb) {
+        cardThumb.textContent = '';
+        var img = sel.querySelector('img');
+        if (img) { var t = document.createElement('img'); t.src = img.getAttribute('src'); t.alt = ''; cardThumb.appendChild(t); }
+      }
+    } else {
+      if (cardName) cardName.textContent = 'Bitte Farbe wählen';
+      if (cardThumb) cardThumb.textContent = '';
+    }
   }
 
   var lastFocus = null;
-  function open() {
+  function open(opener) {
     win.classList.add('is-open'); win.setAttribute('aria-hidden', 'false');
-    link.setAttribute('aria-expanded', 'true');
-    lock(); lastFocus = link; markRows();
+    setExpanded('true');
+    lock(); lastFocus = opener || triggers[0]; markRows();
     var target = win.querySelector('.colorwin__row.is-selected') || rows[0];
     if (target) target.focus({ preventScroll: true });
   }
   function close() {
     win.classList.remove('is-open'); win.setAttribute('aria-hidden', 'true');
-    link.setAttribute('aria-expanded', 'false');
+    setExpanded('false');
     unlock();
     if (lastFocus) lastFocus.focus({ preventScroll: true });
   }
@@ -2462,7 +2485,8 @@ var MZSwipe = (function () {
       close();                                                                        /* Wunschfarbe then reveals the inline RAL picker */
     });
   });
-  link.addEventListener('click', function () { win.classList.contains('is-open') ? close() : open(); });
+  if (link) link.addEventListener('click', function () { win.classList.contains('is-open') ? close() : open(link); });
+  if (card) card.addEventListener('click', function () { win.classList.contains('is-open') ? close() : open(card); });
   win.addEventListener('click', function (e) { if (e.target.closest('[data-cw-close]')) close(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && win.classList.contains('is-open')) close(); });
 
