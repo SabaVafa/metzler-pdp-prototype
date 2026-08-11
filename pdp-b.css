@@ -563,6 +563,29 @@
 .pdp-price--lead .cfgb-price__label { font-size: 0.8125rem; letter-spacing: normal; }
 .pdp-price--lead .pdp-price__meta { font-size: 0.875rem; }
 .pdp-price--lead .pdp-avail__status { font-size: 0.875rem; }
+
+/* ── Angebot (offer) indicator ─────────────────────────────────────────────
+   A minimal, premium sale cue for the price panel. Metzler Rot is the brand's
+   designated sale/discount colour, used sparingly: a tinted pill + a solid-red
+   −% chip (the number is the pre-attentive hook), the struck-through original
+   price inline, and a quiet validity line. No starburst, no shouting. */
+/* Angebot – ONE reusable offer label: a single compact pill carrying the discount
+   AND the duration (clock cue). Self-contained → drop it into any page/surface
+   (price panel, product card, set summary). Only the price-panel context tucks it
+   into the top-right corner on desktop; on mobile it flows at the top of the block. */
+.pdp-offer { display: inline-flex; align-items: center; gap: 0.35rem; align-self: flex-start; margin-bottom: 0.15rem;
+  padding: 0.24rem 0.6rem; background: var(--color-red); color: var(--color-white);
+  border-radius: var(--radius-pill); font-size: 0.75rem; line-height: 1.1; letter-spacing: 0.01em; white-space: nowrap; }
+.pdp-offer__clock { width: 0.85rem; height: 0.85rem; flex: none; }
+.pdp-offer__pct { font-weight: 800; font-variant-numeric: tabular-nums; }
+.pdp-offer__dur { font-weight: 500; opacity: 0.92; }
+@media (min-width: 561px) {
+  .pdp-price--lead .pdp-offer { position: absolute; top: 1rem; right: 1.15rem; z-index: 1; align-self: auto; margin: 0; }
+}
+/* current price + struck original share the row */
+.pdp-price--lead .pdp-price__row { flex-wrap: wrap; }
+.pdp-price__was { font-size: 1.125rem; font-weight: 600; color: var(--color-graphite-500);
+  text-decoration: line-through; text-decoration-thickness: 1px; font-variant-numeric: tabular-nums; }
 /* In-stock status carries a small dot – a pre-attentive cue the eye reads as
    "available" before it reads the words. Uses currentColor so dot = text green. */
 .pdp-b .pdp-avail__status { display: inline-flex; align-items: center; gap: 0.45rem; }

@@ -18,7 +18,7 @@
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=35" />
 <!-- Version B – inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=637" />
+<link rel="stylesheet" href="pdp-b.css?v=641" />
 <!-- Prototype variant switch – append ?flow=b (v2) or ?flow=c (v3) to load an alternative
      color-selection flow. Default (no param) renders v1 exactly as-is. Runs in <head> so the
      class is set before paint. v2 = "Alle Farben" text link → side window; v3 = a selected-
@@ -431,10 +431,15 @@
         <!-- Fixed plain price block (no card) above the swatches – the total, shown both
              before and after colour selection -->
         <div class="pdp-price pdp-price--lead">
+          <!-- Angebot – ONE reusable offer label (discount + duration). Drop-in on any page. -->
+          <span class="pdp-offer">
+            <b class="pdp-offer__pct">−15&nbsp;%</b><span class="pdp-offer__dur">bis&nbsp;31.08.2026</span>
+          </span>
           <span class="cfgb-price__label" hidden>Preis wie konfiguriert</span>
           <div class="pdp-price__row">
             <span class="pdp-price__from" id="bTotalFrom">ab</span>
             <b class="pdp-price__amount" id="bTotal" aria-live="polite">699,00 €</b>
+            <s class="pdp-price__was" aria-label="Regulärer Preis">822,00&nbsp;€</s>
           </div>
           <p class="pdp-price__meta">inkl. 19% USt. · <a href="#">Versandkostenfreie Lieferung</a></p>
           <div class="pdp-avail">
