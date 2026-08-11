@@ -2851,3 +2851,17 @@ body.is-scrolled #quickbar {
   transition: opacity .18s ease, transform .24s cubic-bezier(.22,1,.36,1); }
 .colorwin__check svg { width: 0.9rem; height: 0.9rem; }
 .colorwin__row.is-selected .colorwin__check { opacity: 1; transform: scale(1); }
+
+/* ── Tall screens: fill the drawer, enlarge the swatch ──────────────────────
+   On short viewports the list scrolls (~770px of rows). On a tall monitor the
+   drawer has height to spare, leaving dead space under the last colour. Here the
+   list becomes a flex column so the rows SHARE that leftover height (grow, never
+   shrink → shorter content still scrolls), and each swatch image steps up a size.
+   The group caption keeps its natural height. Self-adjusting to any tall height. */
+@media (min-height: 60rem) {
+  .colorwin__list { display: flex; flex-direction: column; }
+  .colorwin__row { flex: 1 0 auto; }
+  .colorwin__group { flex: 0 0 auto; }
+  .colorwin__sw { width: 4.75rem; height: 4.75rem; }
+  .colorwin__name { font-size: 1.0625rem; }
+}
