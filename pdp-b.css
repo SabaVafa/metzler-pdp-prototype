@@ -840,23 +840,36 @@
   body:not(.swtouch) .bx-swline.is-on { opacity: 1; }   /* shown only for a hovered/selected swatch – hidden at rest when no colour is chosen */
 }
 
-/* ── Mild lift on the swatch whose colour label is currently shown ──
-   Makes the labelled tile easier to pick out: hovered/focused (desktop),
-   selected at rest, or slid-over on touch (.is-labeled, set in pdp-b.js).
-   Subtle – a 2px rise + a soft token shadow, smoothly eased. */
-.pdp-b .pdp-swatch { transition: transform .18s ease; }
-.pdp-b .pdp-swatch img { transition: border-color .15s ease, box-shadow .18s ease; }
+/* ── Swatch interaction — premium motion ──────────────────────────────────
+   The labelled tile lifts to stand out: hovered/focused (desktop), selected at
+   rest, or slid-over on touch (.is-labeled, set in pdp-b.js). Everything runs on
+   the brand ease-out curve (calm deceleration, no overshoot); the pick is
+   confirmed by a tactile press + a single scale-pop; keyboard focus gets a real
+   ring. Transform / shadow / outline only — the footprint never shifts. */
+.pdp-b .pdp-swatch { transition: transform .24s cubic-bezier(.22,1,.36,1); }
+.pdp-b .pdp-swatch img { transition: border-color .2s cubic-bezier(.22,1,.36,1), box-shadow .24s cubic-bezier(.22,1,.36,1); }
 @media (hover: hover) {
   body:not(.swtouch) .pdp-b .pdp-swatch:hover,
   body:not(.swtouch) .pdp-b .pdp-swatch:focus-visible,
-  body:not(.swtouch) .pdp-b .bx-swatches:not(:hover) .pdp-swatch[aria-pressed="true"] { transform: translateY(-0.125rem); }
+  body:not(.swtouch) .pdp-b .bx-swatches:not(:hover) .pdp-swatch[aria-pressed="true"] { transform: translateY(-0.1875rem); }
   body:not(.swtouch) .pdp-b .pdp-swatch:hover img,
   body:not(.swtouch) .pdp-b .pdp-swatch:focus-visible img,
   body:not(.swtouch) .pdp-b .bx-swatches:not(:hover) .pdp-swatch[aria-pressed="true"] img { box-shadow: var(--shadow-md); }
+  /* tactile press – the tile dips into the surface on pointer-down (fast, snappy) */
+  body:not(.swtouch) .pdp-b .pdp-swatch:active { transform: translateY(-0.0625rem) scale(.95); transition-duration: .09s; }
+  /* real keyboard focus ring – offset so it never clips the product image */
+  body:not(.swtouch) .pdp-b .pdp-swatch:focus-visible img { outline: 2px solid var(--color-teal); outline-offset: 3px; }
 }
 .swtouch .pdp-b .pdp-swatch.is-labeled { transform: translateY(-0.125rem); }
 .swtouch .pdp-b .pdp-swatch.is-labeled img { box-shadow: var(--shadow-md); }
-@media (prefers-reduced-motion: reduce) { .pdp-b .pdp-swatch { transition: none; } }
+/* selection confirmation – one subtle scale-pop the moment a tile becomes chosen
+   (attribute-triggered: replays only on a real pick, not on hover or resize) */
+.pdp-b .pdp-swatch[aria-pressed="true"] img { animation: swatch-pick .34s cubic-bezier(.22,1,.36,1); }
+@keyframes swatch-pick { 0% { transform: scale(1); } 45% { transform: scale(1.08); } 100% { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .pdp-b .pdp-swatch, .pdp-b .pdp-swatch img { transition: none; animation: none; }
+  body:not(.swtouch) .pdp-b .pdp-swatch:active { transform: none; }
+}
 @media (hover: hover) and (prefers-reduced-motion: reduce) {
   body:not(.swtouch) .bx-swline { transition: none; }
 }
