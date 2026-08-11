@@ -2823,17 +2823,22 @@ body.is-scrolled #quickbar {
 
 /* Row – larger swatch, two-tone "Name · code", teal accent + filled check badge */
 .colorwin__row { position: relative; width: 100%; display: flex; align-items: center; gap: 0.85rem; padding: 0.85rem 1.25rem;
-  background: transparent; border: 0; cursor: pointer; text-align: left; font: inherit; transition: background .14s ease; }
+  background: transparent; border: 0; cursor: pointer; text-align: left; font: inherit; transition: background .16s cubic-bezier(.22,1,.36,1); }
 .colorwin__row::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--color-teal);
-  transform: scaleY(0); transition: transform .18s ease; }
+  transform: scaleY(0); transition: transform .24s cubic-bezier(.22,1,.36,1); }
 .colorwin__row:hover { background: var(--color-teal-50); }
 .colorwin__row:focus-visible { outline: 2px solid var(--color-teal); outline-offset: -2px; }
 .colorwin__row.is-selected { background: var(--color-teal-50); }
 .colorwin__row.is-selected::before { transform: scaleY(1); }
+/* The side-window chip shares the inline swatch's language exactly – same white
+   ground, graphite-300 frame, flat-at-rest → lift-on-hover, teal frame when
+   chosen – so a colour looks identical whether picked in the grid or the list. */
 .colorwin__sw { flex: none; width: 3.75rem; height: 3.75rem; border-radius: var(--radius); overflow: hidden;
-  background: var(--color-paper); border: 1px solid var(--color-graphite-200); box-shadow: var(--shadow-sm); transition: transform .18s ease; }
+  background: var(--color-white); border: 1px solid var(--color-graphite-300); box-sizing: border-box;
+  transition: transform .24s cubic-bezier(.22,1,.36,1), border-color .2s cubic-bezier(.22,1,.36,1), box-shadow .24s cubic-bezier(.22,1,.36,1); }
 .colorwin__sw img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.colorwin__row:hover .colorwin__sw { transform: translateY(-1px); }
+.colorwin__row:hover .colorwin__sw { transform: translateY(-0.125rem); box-shadow: var(--shadow-md); }
+.colorwin__row.is-selected .colorwin__sw { border-color: var(--color-teal); border-width: 2px; }
 .colorwin__text { flex: 1 1 auto; min-width: 0; }
 .colorwin__name { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .colorwin__code { font-size: 0.9rem; font-weight: 500; color: var(--color-graphite-600); }
@@ -2843,6 +2848,6 @@ body.is-scrolled #quickbar {
 .colorwin__price { flex: none; font-size: 1.0625rem; font-weight: 700; color: var(--color-digital-black); white-space: nowrap; }
 .colorwin__check { flex: none; width: 1.5rem; height: 1.5rem; display: grid; place-items: center; border-radius: 50%;
   background: var(--color-teal); color: var(--color-white); opacity: 0; transform: scale(0.5);
-  transition: opacity .18s ease, transform .18s ease; }
+  transition: opacity .18s ease, transform .24s cubic-bezier(.22,1,.36,1); }
 .colorwin__check svg { width: 0.9rem; height: 0.9rem; }
 .colorwin__row.is-selected .colorwin__check { opacity: 1; transform: scale(1); }
