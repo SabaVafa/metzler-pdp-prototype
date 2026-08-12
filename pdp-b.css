@@ -274,6 +274,30 @@
 /* selection recolours the existing border to the brand teal – no extra ring */
 .pdp-b .pdp-swatch:hover img { border-color: var(--color-graphite-400); }
 .pdp-b .pdp-swatch[aria-pressed="true"] img { border-width: 2px; border-color: var(--color-teal); }
+
+/* ============================================================
+   V4 (flow-d) – material-texture swatches. Every finish renders its actual colour +
+   surface texture (a square, pre-cropped WebP) instead of the small product photo.
+   All 8 finishes are covered. Pure visual skin – selection, magic-line and touch
+   behaviour are unchanged. Hidden unless ?flow=d.
+   ============================================================ */
+.flow-d .pdp-swatch {
+  aspect-ratio: 1; width: 100%; box-sizing: border-box; overflow: hidden;
+  border: 1px solid var(--color-graphite-300); border-radius: var(--radius);
+  background-repeat: no-repeat; background-size: cover; background-position: center;
+}
+.flow-d .pdp-swatch img { display: none; }
+.flow-d .pdp-swatch:hover { border-color: var(--color-graphite-400); }
+.flow-d .pdp-swatch[aria-pressed="true"] { border-width: 2px; border-color: var(--color-teal); }
+/* square material swatches – each webp is pre-cropped to the plate surface, so cover+center is enough */
+.flow-d .pdp-swatch[data-article="31101"] { background-image: url("assets/materials/anthrazit.webp"); }      /* Anthrazit */
+.flow-d .pdp-swatch[data-article="31102"] { background-image: url("assets/materials/verkehrsweiss.webp"); }   /* Verkehrsweiß */
+.flow-d .pdp-swatch[data-article="31103"] { background-image: url("assets/materials/graualuminium.webp"); }   /* Graualuminium */
+.flow-d .pdp-swatch[data-article="31104"] { background-image: url("assets/materials/eisenglimmer.webp"); }    /* Eisenglimmer */
+.flow-d .pdp-swatch[data-article="31105"] { background-image: url("assets/materials/tiefschwarz.webp"); }     /* Tiefschwarz */
+.flow-d .pdp-swatch[data-article="31106"] { background-image: url("assets/materials/edelstahl.webp"); }       /* Edelstahl */
+.flow-d .pdp-swatch[data-article="31107"] { background-image: url("assets/materials/linen-tex-black.webp"); } /* Linen Tex Black */
+.flow-d .pdp-swatch[data-article="31108"] { background-image: url("assets/materials/wunschfarbe.webp"); }     /* Wunschfarbe – RAL fan */
 .bx-color__note { font-size: 0.75rem; line-height: 1.5; color: var(--text-muted); margin: 0; max-width: 46ch; }
 .bx-color__note b { color: var(--color-graphite-700); font-weight: 600; }
 
