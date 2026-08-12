@@ -2456,6 +2456,7 @@ var MZSwipe = (function () {
     var sel = grid.querySelector('.pdp-swatch[aria-pressed="true"]');
     card.classList.toggle('is-picked', !!sel);   /* v3: swap the list icon for the finish thumb once chosen */
     if (sel) {
+      card.setAttribute('data-article', sel.getAttribute('data-article') || '');   /* flow-d paints the material thumb by article (CSS) */
       if (cardName) cardName.textContent = sel.getAttribute('data-finish') || '';
       if (cardThumb) {
         cardThumb.textContent = '';
@@ -2463,6 +2464,7 @@ var MZSwipe = (function () {
         if (img) { var t = document.createElement('img'); t.src = img.getAttribute('src'); t.alt = ''; cardThumb.appendChild(t); }
       }
     } else {
+      card.removeAttribute('data-article');
       if (cardName) cardName.textContent = 'Bitte Farbe wählen';
       if (cardThumb) cardThumb.textContent = '';
     }

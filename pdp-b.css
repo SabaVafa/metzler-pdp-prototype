@@ -3022,6 +3022,20 @@ body.is-scrolled #quickbar {
 .flow-d .colorwin__row[data-article="31106"] .colorwin__sw { background-image: url("assets/materials/edelstahl.webp"); }       /* Edelstahl */
 .flow-d .colorwin__row[data-article="31107"] .colorwin__sw { background-image: url("assets/materials/linen-tex-black.webp"); } /* Linen Tex Black */
 .flow-d .colorwin__row[data-article="31108"] .colorwin__sw { background-image: url("assets/materials/wunschfarbe.webp"); }     /* Wunschfarbe – RAL fan */
+
+/* v4 (flow-d) ONLY: the list-field's selected-finish thumb also shows the material
+   texture, not the product photo. syncCard() (pdp-b.js) stamps the chosen article on
+   #colorCardLink; the img it appends is hidden and the material painted underneath. */
+.flow-d .bx-listfield__thumb { background-repeat: no-repeat; background-size: cover; background-position: center; }
+.flow-d .bx-listfield__thumb img { display: none; }
+.flow-d .bx-listfield[data-article="31101"] .bx-listfield__thumb { background-image: url("assets/materials/anthrazit.webp"); }
+.flow-d .bx-listfield[data-article="31102"] .bx-listfield__thumb { background-image: url("assets/materials/verkehrsweiss.webp"); }
+.flow-d .bx-listfield[data-article="31103"] .bx-listfield__thumb { background-image: url("assets/materials/graualuminium.webp"); }
+.flow-d .bx-listfield[data-article="31104"] .bx-listfield__thumb { background-image: url("assets/materials/eisenglimmer.webp"); }
+.flow-d .bx-listfield[data-article="31105"] .bx-listfield__thumb { background-image: url("assets/materials/tiefschwarz.webp"); }
+.flow-d .bx-listfield[data-article="31106"] .bx-listfield__thumb { background-image: url("assets/materials/edelstahl.webp"); }
+.flow-d .bx-listfield[data-article="31107"] .bx-listfield__thumb { background-image: url("assets/materials/linen-tex-black.webp"); }
+.flow-d .bx-listfield[data-article="31108"] .bx-listfield__thumb { background-image: url("assets/materials/wunschfarbe.webp"); }
 .colorwin__text { flex: 1 1 auto; min-width: 0; }
 .colorwin__name { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .colorwin__code { font-size: 0.9rem; font-weight: 500; color: var(--color-graphite-600); }
