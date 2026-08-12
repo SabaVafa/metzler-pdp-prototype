@@ -332,6 +332,36 @@ var MZSwipe = (function () {
     var back = $('bBack'), fwd = $('bFwd');
     if (back) back.hidden = cur === 0;
     if (fwd) fwd.hidden = cur === STEPS.length - 1;
+    syncStepErrors();
+  }
+
+  /* ── Required-step error cue on the progress bar ──────────────────────────
+     Third validation clue (alongside the card's red border + the red "erforderlich"
+     pill): when the user tries to proceed with a required step unanswered, its chevron
+     in the progress bar turns red, pointing to WHERE in the flow the gap is. It PERSISTS
+     until the requirement is met (cleared in updateDock via syncStepErrors) and re-pulses
+     on every fresh failed attempt. Only steps that can be required can enter this state. */
+  var erroredSteps = {};
+  function stepValid(i) {
+    if (i === 0) return !!state.anschluss;                       /* Anschluss (required) */
+    if (i === 1) return !(state.gravurOn && !state.gravurText);  /* Gravur text, only if engraving is on */
+    return true;                                                 /* remaining steps are optional */
+  }
+  function stepTab(i) { return document.querySelector('#bSeg .cfgb-bar__step[data-goto="' + i + '"]'); }
+  function flagStepError(i) {
+    erroredSteps[i] = true;
+    var tab = stepTab(i); if (!tab) return;
+    tab.classList.add('is-error');
+    tab.classList.remove('is-error-pulse'); void tab.offsetWidth; tab.classList.add('is-error-pulse');  /* restart the pulse */
+    tab.setAttribute('aria-invalid', 'true');
+  }
+  function syncStepErrors() {
+    Object.keys(erroredSteps).forEach(function (k) {
+      if (!stepValid(parseInt(k, 10))) return;   /* still unmet – keep the red chevron */
+      delete erroredSteps[k];
+      var tab = stepTab(parseInt(k, 10));
+      if (tab) { tab.classList.remove('is-error', 'is-error-pulse'); tab.removeAttribute('aria-invalid'); }
+    });
   }
 
   /* ── Price-details summary (itemized cart) ── */
@@ -496,8 +526,8 @@ var MZSwipe = (function () {
   function flashRequired() { var f = $('bStepFlag'); if (!f || f.classList.contains('is-opt')) return; f.classList.remove('is-pulse'); void f.offsetWidth; f.classList.add('is-pulse'); window.setTimeout(function () { f.classList.remove('is-pulse'); }, 1200); }
   function fwdStep() {
     var cur = curIndex();
-    if (cur === 0 && !state.anschluss) { scrollToProgress(); flashStep(0); flashInvalid($('bAnschluss')); flashRequired(); return; }
-    if (cur === 1 && state.gravurOn && !state.gravurText) { scrollToProgress(); flashStep(1); flashInvalid($('bGravurText')); return; }
+    if (cur === 0 && !state.anschluss) { scrollToProgress(); flashStep(0); flashInvalid($('bAnschluss')); flashRequired(); flagStepError(0); return; }
+    if (cur === 1 && state.gravurOn && !state.gravurText) { scrollToProgress(); flashStep(1); flashInvalid($('bGravurText')); flagStepError(1); return; }
     if (cur < STEPS.length - 1) openStep(cur + 1);
   }
   function backStep() { var cur = curIndex(); if (cur > 0) openStep(cur - 1); }
@@ -1518,6 +1548,7 @@ var MZSwipe = (function () {
       flashStep(iv);
       if (iv === 0) { flashInvalid($('bAnschluss')); flashRequired(); }
       else { flashInvalid($('bGravurText')); }
+      flagStepError(iv);
       return;
     }
     var badge = document.querySelector('.header .badge'); if (badge) badge.textContent = (parseInt(badge.textContent, 10) || 0) + 1;
