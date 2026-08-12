@@ -2386,7 +2386,7 @@ var MZSwipe = (function () {
 (function () {
   'use strict';
   var htmlCls = document.documentElement.classList;
-  if (!htmlCls.contains('flow-b') && !htmlCls.contains('flow-c')) return;   /* v2 + v3 share this module */
+  if (!htmlCls.contains('flow-b') && !htmlCls.contains('flow-c') && !htmlCls.contains('flow-d')) return;   /* v2 + v3 + v4 share this module */
   var grid = document.getElementById('pdpSwatches');
   var link = document.getElementById('colorListLink');   /* v2 opener – "Alle Farben" text link */
   var card = document.getElementById('colorCardLink');   /* v3 opener – selected-finish summary card */

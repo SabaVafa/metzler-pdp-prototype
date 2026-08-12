@@ -275,6 +275,31 @@
 .pdp-b .pdp-swatch:hover img { border-color: var(--color-graphite-400); }
 .pdp-b .pdp-swatch[aria-pressed="true"] img { border-width: 2px; border-color: var(--color-teal); }
 
+/* ── Selected swatch · high-visibility state (v2 · v3 · v4) ──────────────────
+   A lone 2px teal border read poorly on dark finishes (Eisenglimmer, Tiefschwarz).
+   The teal border below is made authoritative so it reliably reads as chosen. The
+   filled check badge is an EXTRA cue reserved for v4's material swatches only (they
+   have no product photo, so the badge helps confirm the pick); v2/v3 keep the plain
+   teal border. v1 stays as-is. */
+.pdp-b .pdp-swatch { position: relative; }
+.flow-b .pdp-swatch[aria-pressed="true"] img,
+.flow-c .pdp-swatch[aria-pressed="true"] img,
+.flow-d .pdp-swatch[aria-pressed="true"] {
+  border-width: 2px; border-color: var(--color-teal);   /* teal inner edge (authoritative – wins the cascade) */
+}
+
+.pdp-swatch__check {
+  position: absolute; top: 0.3rem; right: 0.3rem; z-index: 3;
+  width: 1rem; height: 1rem; display: none; place-items: center;
+  background: var(--color-teal); color: var(--color-white); border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--color-white), 0 1px 3px rgba(26,23,27,0.35);
+  animation: swatch-check-in .3s cubic-bezier(.22,1,.36,1);
+}
+.pdp-swatch__check svg { width: 0.66rem; height: 0.66rem; }
+.flow-d .pdp-swatch[aria-pressed="true"] .pdp-swatch__check { display: grid; }   /* v4 material swatches only */
+@keyframes swatch-check-in { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.15); opacity: 1; } 100% { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .pdp-swatch__check { animation: none; } }
+
 /* ============================================================
    V4 (flow-d) – material-texture swatches. Every finish renders its actual colour +
    surface texture (a square, pre-cropped WebP) instead of the small product photo.
@@ -298,6 +323,17 @@
 .flow-d .pdp-swatch[data-article="31106"] { background-image: url("assets/materials/edelstahl.webp"); }       /* Edelstahl */
 .flow-d .pdp-swatch[data-article="31107"] { background-image: url("assets/materials/linen-tex-black.webp"); } /* Linen Tex Black */
 .flow-d .pdp-swatch[data-article="31108"] { background-image: url("assets/materials/wunschfarbe.webp"); }     /* Wunschfarbe – RAL fan */
+
+/* v4 opener: the labelled-list field (shared markup, styled in the flow-c block) sits
+   UNDER the swatch grid here – not above as in v3. .bx-color is a flex column, so we
+   reorder its children with `order` and leave the shared DOM untouched.
+   Visible order: head · swatches · list-field · RAL picker · note. */
+.flow-d .bx-color__head { order: 0; }
+.flow-d .pdp-swatches   { order: 1; }
+.flow-d .bx-listfield   { order: 2; }
+.flow-d #ralPick        { order: 3; }
+.flow-d .bx-color__note { order: 4; }
+
 .bx-color__note { font-size: 0.75rem; line-height: 1.5; color: var(--text-muted); margin: 0; max-width: 46ch; }
 .bx-color__note b { color: var(--color-graphite-700); font-weight: 600; }
 
@@ -906,6 +942,11 @@
   body:not(.swtouch) .pdp-b .pdp-swatch:active { transform: translateY(-0.0625rem) scale(.95); transition-duration: .09s; }
   /* real keyboard focus ring – offset so it never clips the product image */
   body:not(.swtouch) .pdp-b .pdp-swatch:focus-visible img { outline: 2px solid var(--color-teal); outline-offset: 3px; }
+  /* ALL versions: the selected tile no longer LIFTS at rest – its resting translate +
+     shadow are dropped, so it sits flat. Only the lift is removed: the magic-line
+     indicator above it and the normal hover lift are left untouched. */
+  body:not(.swtouch) .pdp-b .bx-swatches:not(:hover) .pdp-swatch[aria-pressed="true"] { transform: none; }
+  body:not(.swtouch) .pdp-b .bx-swatches:not(:hover) .pdp-swatch[aria-pressed="true"] img { box-shadow: none; }
 }
 .swtouch .pdp-b .pdp-swatch.is-labeled { transform: translateY(-0.125rem); }
 .swtouch .pdp-b .pdp-swatch.is-labeled img { box-shadow: var(--shadow-md); }
@@ -2837,16 +2878,28 @@ body.is-scrolled #quickbar {
 .flow-c .bx-color { gap: 1rem; }
 .flow-c #ralPick { margin-top: 0; }
 .flow-c #cfgbPanel { margin-top: -0.75rem; }
+/* v3: the list-field opener sits UNDER the swatch grid (matches v4). .bx-color is a
+   flex column, so reorder its children with `order` – the shared DOM stays put.
+   Visible order: colour label · swatches · list-field · RAL picker · note. */
+.flow-c .bx-colorsel   { order: 0; }
+.flow-c .pdp-swatches  { order: 1; }
+.flow-c .bx-listfield  { order: 2; }
+.flow-c #ralPick       { order: 3; }
+.flow-c .bx-color__note { order: 4; }
 
-/* select-style field that opens the full labelled colour list */
-.flow-c .bx-listfield {
+/* select-style field that opens the full labelled colour list.
+   Shared by v3 (flow-c) and v4 (flow-d) – see the flow-d note below. */
+.flow-c .bx-listfield,
+.flow-d .bx-listfield {
   display: flex; align-items: center; gap: 0.7rem; width: 100%;
   padding: 0.7rem 0.85rem; text-align: left; font: inherit; cursor: pointer;
   background: var(--color-white); border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg);
   transition: border-color .18s cubic-bezier(.22,1,.36,1), box-shadow .18s cubic-bezier(.22,1,.36,1);
 }
-.flow-c .bx-listfield:hover { border-color: var(--color-teal); box-shadow: 0 1px 2px rgba(26,23,27,0.06); }
-.flow-c .bx-listfield:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
+.flow-c .bx-listfield:hover,
+.flow-d .bx-listfield:hover { border-color: var(--color-teal); box-shadow: 0 1px 2px rgba(26,23,27,0.06); }
+.flow-c .bx-listfield:focus-visible,
+.flow-d .bx-listfield:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
 .bx-listfield__icon { flex: none; width: 1.15rem; height: 1.15rem; color: var(--color-teal); }
 .bx-listfield__text { flex: 0 1 auto; min-width: 0; font-size: 0.9375rem; font-weight: 700; color: var(--color-digital-black);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -2859,7 +2912,8 @@ body.is-scrolled #quickbar {
 .bx-listfield__thumb:empty { display: none; }
 .bx-listfield__chev { flex: none; margin-left: auto; width: 1.15rem; height: 1.15rem; color: var(--color-graphite-500);
   transition: transform .18s cubic-bezier(.22,1,.36,1), color .18s ease; }
-.flow-c .bx-listfield:hover .bx-listfield__chev { color: var(--color-teal); transform: translateX(0.125rem); }
+.flow-c .bx-listfield:hover .bx-listfield__chev,
+.flow-d .bx-listfield:hover .bx-listfield__chev { color: var(--color-teal); transform: translateX(0.125rem); }
 
 /* selected-finish label (FARBE / <name>), directly above the swatches */
 .flow-c .bx-colorsel { display: flex; flex-direction: column; gap: 0.05rem; min-width: 0; }
