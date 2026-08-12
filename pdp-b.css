@@ -3007,6 +3007,21 @@ body.is-scrolled #quickbar {
 .colorwin__sw img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .colorwin__row:hover .colorwin__sw { transform: translateY(-0.125rem); box-shadow: var(--shadow-md); }
 .colorwin__row.is-selected .colorwin__sw { border-color: var(--color-teal); border-width: 2px; }
+
+/* v4 (flow-d) ONLY: the side-window swatches use the SAME material texture as the grid
+   (not the product photo), so a finish looks identical inside and outside the list.
+   Mirrors the grid's per-article material map (.flow-d .pdp-swatch). Other versions keep
+   the product-photo thumbnails unchanged. */
+.flow-d .colorwin__sw { background-repeat: no-repeat; background-size: cover; background-position: center; }
+.flow-d .colorwin__sw img { display: none; }
+.flow-d .colorwin__row[data-article="31101"] .colorwin__sw { background-image: url("assets/materials/anthrazit.webp"); }      /* Anthrazit */
+.flow-d .colorwin__row[data-article="31102"] .colorwin__sw { background-image: url("assets/materials/verkehrsweiss.webp"); }   /* Verkehrsweiß */
+.flow-d .colorwin__row[data-article="31103"] .colorwin__sw { background-image: url("assets/materials/graualuminium.webp"); }   /* Graualuminium */
+.flow-d .colorwin__row[data-article="31104"] .colorwin__sw { background-image: url("assets/materials/eisenglimmer.webp"); }    /* Eisenglimmer */
+.flow-d .colorwin__row[data-article="31105"] .colorwin__sw { background-image: url("assets/materials/tiefschwarz.webp"); }     /* Tiefschwarz */
+.flow-d .colorwin__row[data-article="31106"] .colorwin__sw { background-image: url("assets/materials/edelstahl.webp"); }       /* Edelstahl */
+.flow-d .colorwin__row[data-article="31107"] .colorwin__sw { background-image: url("assets/materials/linen-tex-black.webp"); } /* Linen Tex Black */
+.flow-d .colorwin__row[data-article="31108"] .colorwin__sw { background-image: url("assets/materials/wunschfarbe.webp"); }     /* Wunschfarbe – RAL fan */
 .colorwin__text { flex: 1 1 auto; min-width: 0; }
 .colorwin__name { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .colorwin__code { font-size: 0.9rem; font-weight: 500; color: var(--color-graphite-600); }
