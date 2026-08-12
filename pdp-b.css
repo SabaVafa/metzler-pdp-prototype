@@ -1157,25 +1157,24 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .cfgb-dock .cfgb-bar__step.is-current .cfgb-bar__label { font-weight: 800; }
 
 /* error – a required step wasn't answered when the user tried to proceed. The chevron
-   turns Metzler Rot (the third validation cue, alongside the card's red border + the red
-   "erforderlich" pill), pointing to WHERE in the flow the gap is. Wins over is-filled /
-   is-current (declared after them); lifted above its neighbours so the red isn't notched
-   by the overlapping chevrons. Persists until the requirement is met; re-pulses on each
-   failed attempt. */
+   takes the design system's error language (red-50 fill + Metzler-Rot text, same as the
+   "erforderlich" pill) – a quiet third cue that points to WHERE in the flow the gap is,
+   not a loud block. Wins over is-filled / is-current (declared after them); lifted above
+   its neighbours so the tint isn't notched by the overlapping chevrons. Persists until
+   the requirement is met; re-pulses gently on each failed attempt. */
 .cfgb-dock .cfgb-bar__step.is-error,
 .cfgb-dock .cfgb-bar__step.is-error:hover {
   position: relative; z-index: 2;
-  background: var(--color-red); color: var(--color-white);
+  background: var(--color-red-50); color: var(--color-red);
 }
-.cfgb-dock .cfgb-bar__step.is-error .cfgb-bar__num { opacity: 1; color: var(--color-white); }
+.cfgb-dock .cfgb-bar__step.is-error .cfgb-bar__num { opacity: 1; color: var(--color-red); }
 .cfgb-dock .cfgb-bar__step.is-error .cfgb-bar__label { font-weight: 800; }
-/* attention pulse on each failed attempt – a scale + brightness beat (box-shadow can't
-   be used: the chevron's clip-path would crop any glow). */
-.cfgb-dock .cfgb-bar__step.is-error.is-error-pulse { animation: cfgb-tab-error 0.9s cubic-bezier(.22,1,.36,1); }
+/* attention pulse on each failed attempt – a small scale beat (box-shadow can't be used:
+   the chevron's clip-path would crop any glow). */
+.cfgb-dock .cfgb-bar__step.is-error.is-error-pulse { animation: cfgb-tab-error 0.6s ease; }
 @keyframes cfgb-tab-error {
-  0%   { transform: scale(1);    filter: brightness(1); }
-  22%  { transform: scale(1.05); filter: brightness(1.14); }
-  100% { transform: scale(1);    filter: brightness(1); }
+  0%, 100% { transform: scale(1); }
+  40%      { transform: scale(1.035); }
 }
 @media (prefers-reduced-motion: reduce) {
   .cfgb-dock .cfgb-bar__step.is-error.is-error-pulse { animation: none; }
