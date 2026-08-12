@@ -3049,6 +3049,13 @@ body.is-scrolled #quickbar {
 .colorwin__check svg { width: 0.9rem; height: 0.9rem; }
 .colorwin__row.is-selected .colorwin__check { opacity: 1; transform: scale(1); }
 
+/* v4 (flow-d) ONLY: the row's selected checkmark matches the grid's corner badge
+   (.pdp-swatch__check) – same 1rem size, white ring + soft shadow, same glyph size –
+   so the "chosen" marker reads identically inside the list and out on the swatches. */
+.flow-d .colorwin__check { width: 1rem; height: 1rem;
+  box-shadow: 0 0 0 2px var(--color-white), 0 1px 3px rgba(26,23,27,0.35); }
+.flow-d .colorwin__check svg { width: 0.66rem; height: 0.66rem; }
+
 /* ── Tall screens: fill the drawer, enlarge the swatch ──────────────────────
    On short viewports the list scrolls (~770px of rows). On a tall monitor the
    drawer has height to spare, leaving dead space under the last colour. Here the
