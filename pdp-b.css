@@ -208,9 +208,32 @@
 /* flush the floating toggle to the media column's left edge so it lines up with the
    breadcrumb / page content above (base pdp.css insets it 0.75rem) */
 .pdp-b .pdp-media__toggle { left: 0; }
-/* Mobile "3D" chip – periodic 3D turn of the cube (see the max-width:560px block). The
-   perspective gives real foreshortening; brief holds at each end make it read as a
-   deliberate reveal, not a constant spin. */
+
+/* ── View toggle → a single inviting "3D" chip (ALL breakpoints) ─────────────
+   The segmented Fotos|3D pill is collapsed to ONE button that shows the view you're
+   NOT in – "3D" while on photos, "Fotos" while on 3D. The wrapper chrome is dropped so
+   each option is a standalone chip; the "enter 3D" chip gets a teal accent + a cube that
+   turns once in 3D (rotateY + perspective) to hint the interactive view. The "back to
+   Fotos" chip stays neutral. Positioning still differs by breakpoint (desktop floats it
+   over the image; mobile stacks it above – see the max-width:560px block). */
+.pdp-b .pdp-media__toggle { background: none; border: 0; padding: 0; gap: 0; }
+.pdp-b .pdp-media__toggle button[aria-pressed="true"] { display: none; }   /* show only the alternative view */
+.pdp-b .pdp-media__toggle button {
+  padding: 0.5rem 0.9rem; border-radius: var(--radius);
+  background: var(--color-white); border: 1px solid var(--color-graphite-300);
+}
+.pdp-b .pdp-media__toggle button:last-child {
+  color: var(--color-teal); border-color: var(--color-teal); background: var(--color-teal-50);
+  font-weight: 800; box-shadow: 0 2px 7px rgba(1,82,83,0.16);
+}
+@media (hover: hover) {
+  .pdp-b .pdp-media__toggle button:last-child:hover { box-shadow: 0 4px 12px rgba(1,82,83,0.22); transform: translateY(-1px); }
+}
+.pdp-b .pdp-media__toggle button:last-child:active { transform: scale(0.96); }
+.pdp-b .pdp-media__toggle button:last-child svg {
+  color: var(--color-teal); transform-origin: 50% 50%;
+  animation: media3d-spin 1.3s ease-in-out;   /* one turn on load, then settles */
+}
 @keyframes media3d-spin {
   from { transform: perspective(80px) rotateY(0deg); }
   to   { transform: perspective(80px) rotateY(360deg); }
@@ -830,29 +853,9 @@
      as a clean control bar above a fully-visible product shot. ── */
   .pdp-b .pdp-media__stage { display: flex; flex-direction: column; align-items: center;
     gap: 0.7rem; aspect-ratio: auto; }
+  /* Mobile: stack the toggle above the image (the single-"3D"-chip design itself is now
+     global – see the view-toggle block up top). */
   .pdp-b .pdp-media__toggle { position: static; align-self: flex-start; }
-  /* Mobile: the Fotos/3D segmented toggle is redundant (photos are the default view),
-     so collapse it to a SINGLE button showing the OTHER view – "3D" while on photos,
-     "Fotos" while on 3D. The active option is simply hidden. */
-  .pdp-b .pdp-media__toggle button[aria-pressed="true"] { display: none; }
-  /* …and make that lone button an inviting control, not a plain grey label. Drop the
-     segmented wrapper chrome so each option is a standalone chip. */
-  .pdp-b .pdp-media__toggle { background: none; border: 0; padding: 0; gap: 0; }
-  .pdp-b .pdp-media__toggle button {
-    padding: 0.5rem 0.9rem; border-radius: var(--radius);   /* square-ish, same as the desktop toggle buttons */
-    background: var(--color-white); border: 1px solid var(--color-graphite-300);
-  }
-  /* the "enter 3D" chip – teal accent + a cube that slowly turns in 3D (rotateY with
-     perspective), hinting the interactive view. The "back to Fotos" chip stays neutral. */
-  .pdp-b .pdp-media__toggle button:last-child {
-    color: var(--color-teal); border-color: var(--color-teal); background: var(--color-teal-50);
-    font-weight: 800; box-shadow: 0 2px 7px rgba(1,82,83,0.16);
-  }
-  .pdp-b .pdp-media__toggle button:last-child svg {
-    color: var(--color-teal); transform-origin: 50% 50%;
-    animation: media3d-spin 1.3s ease-in-out;   /* one turn on load, then settles */
-  }
-  .pdp-b .pdp-media__toggle button:last-child:active { transform: scale(0.96); }
   .pdp-b .pdp-media__img { max-height: 52vh; }
 
   /* ── THUMBNAIL FILMSTRIP → lighter so it stops dominating the media block;
