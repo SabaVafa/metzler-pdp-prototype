@@ -2940,7 +2940,7 @@ body.is-scrolled #quickbar {
 .flow-d .bx-listfield:hover .bx-listfield__chev { color: var(--color-teal); transform: translateX(0.125rem); }
 
 /* selected-finish label (FARBE / <name>), directly above the swatches */
-.flow-c .bx-colorsel { display: flex; flex-direction: column; gap: 0.05rem; min-width: 0; }
+.flow-c .bx-colorsel { display: flex; flex-direction: row; align-items: baseline; gap: 0.5rem; min-width: 0; }
 .bx-colorsel__cap { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-graphite-600); }
 .bx-colorsel__name { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
