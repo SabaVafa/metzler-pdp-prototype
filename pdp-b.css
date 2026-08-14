@@ -212,9 +212,8 @@
    perspective gives real foreshortening; brief holds at each end make it read as a
    deliberate reveal, not a constant spin. */
 @keyframes media3d-spin {
-  0%   { transform: perspective(80px) rotateY(0deg); }
-  35%  { transform: perspective(80px) rotateY(360deg); }   /* one smooth turn… */
-  100% { transform: perspective(80px) rotateY(360deg); }   /* …then rest before the next */
+  from { transform: perspective(80px) rotateY(0deg); }
+  to   { transform: perspective(80px) rotateY(360deg); }
 }
 @media (prefers-reduced-motion: reduce) {
   .pdp-b .pdp-media__toggle button:last-child svg { animation: none; }
@@ -840,7 +839,7 @@
      segmented wrapper chrome so each option is a standalone chip. */
   .pdp-b .pdp-media__toggle { background: none; border: 0; padding: 0; gap: 0; }
   .pdp-b .pdp-media__toggle button {
-    padding: 0.5rem 0.9rem; border-radius: var(--radius-pill);
+    padding: 0.5rem 0.9rem; border-radius: var(--radius);   /* square-ish, same as the desktop toggle buttons */
     background: var(--color-white); border: 1px solid var(--color-graphite-300);
   }
   /* the "enter 3D" chip – teal accent + a cube that slowly turns in 3D (rotateY with
@@ -851,7 +850,7 @@
   }
   .pdp-b .pdp-media__toggle button:last-child svg {
     color: var(--color-teal); transform-origin: 50% 50%;
-    animation: media3d-spin 4s ease-in-out infinite;
+    animation: media3d-spin 1.3s ease-in-out;   /* one turn on load, then settles */
   }
   .pdp-b .pdp-media__toggle button:last-child:active { transform: scale(0.96); }
   .pdp-b .pdp-media__img { max-height: 52vh; }
