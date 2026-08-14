@@ -821,6 +821,10 @@
   .pdp-b .pdp-media__stage { display: flex; flex-direction: column; align-items: center;
     gap: 0.7rem; aspect-ratio: auto; }
   .pdp-b .pdp-media__toggle { position: static; align-self: flex-start; }
+  /* Mobile: the Fotos/3D segmented toggle is redundant (photos are the default view),
+     so collapse it to a SINGLE button showing the OTHER view – "3D" while on photos,
+     "Fotos" while on 3D. Same pill styling; the active option is simply hidden. */
+  .pdp-b .pdp-media__toggle button[aria-pressed="true"] { display: none; }
   .pdp-b .pdp-media__img { max-height: 52vh; }
 
   /* ── THUMBNAIL FILMSTRIP → lighter so it stops dominating the media block;
