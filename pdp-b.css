@@ -208,6 +208,17 @@
 /* flush the floating toggle to the media column's left edge so it lines up with the
    breadcrumb / page content above (base pdp.css insets it 0.75rem) */
 .pdp-b .pdp-media__toggle { left: 0; }
+/* Mobile "3D" chip – periodic 3D turn of the cube (see the max-width:560px block). The
+   perspective gives real foreshortening; brief holds at each end make it read as a
+   deliberate reveal, not a constant spin. */
+@keyframes media3d-spin {
+  0%   { transform: perspective(80px) rotateY(0deg); }
+  35%  { transform: perspective(80px) rotateY(360deg); }   /* one smooth turn… */
+  100% { transform: perspective(80px) rotateY(360deg); }   /* …then rest before the next */
+}
+@media (prefers-reduced-motion: reduce) {
+  .pdp-b .pdp-media__toggle button:last-child svg { animation: none; }
+}
 .pdp-b .pdp-thumbs button { width: 4.5rem; height: 4.5rem; border-radius: var(--radius); box-sizing: border-box; }
 /* selection recolours & thickens the existing border to a clean 2px teal – same
    treatment as the colour swatches; border-box keeps the footprint identical */
@@ -823,8 +834,26 @@
   .pdp-b .pdp-media__toggle { position: static; align-self: flex-start; }
   /* Mobile: the Fotos/3D segmented toggle is redundant (photos are the default view),
      so collapse it to a SINGLE button showing the OTHER view – "3D" while on photos,
-     "Fotos" while on 3D. Same pill styling; the active option is simply hidden. */
+     "Fotos" while on 3D. The active option is simply hidden. */
   .pdp-b .pdp-media__toggle button[aria-pressed="true"] { display: none; }
+  /* …and make that lone button an inviting control, not a plain grey label. Drop the
+     segmented wrapper chrome so each option is a standalone chip. */
+  .pdp-b .pdp-media__toggle { background: none; border: 0; padding: 0; gap: 0; }
+  .pdp-b .pdp-media__toggle button {
+    padding: 0.5rem 0.9rem; border-radius: var(--radius-pill);
+    background: var(--color-white); border: 1px solid var(--color-graphite-300);
+  }
+  /* the "enter 3D" chip – teal accent + a cube that slowly turns in 3D (rotateY with
+     perspective), hinting the interactive view. The "back to Fotos" chip stays neutral. */
+  .pdp-b .pdp-media__toggle button:last-child {
+    color: var(--color-teal); border-color: var(--color-teal); background: var(--color-teal-50);
+    font-weight: 800; box-shadow: 0 2px 7px rgba(1,82,83,0.16);
+  }
+  .pdp-b .pdp-media__toggle button:last-child svg {
+    color: var(--color-teal); transform-origin: 50% 50%;
+    animation: media3d-spin 4s ease-in-out infinite;
+  }
+  .pdp-b .pdp-media__toggle button:last-child:active { transform: scale(0.96); }
   .pdp-b .pdp-media__img { max-height: 52vh; }
 
   /* ── THUMBNAIL FILMSTRIP → lighter so it stops dominating the media block;
