@@ -2940,9 +2940,12 @@ body.is-scrolled #quickbar {
 .flow-d .bx-listfield:hover .bx-listfield__chev { color: var(--color-teal); transform: translateX(0.125rem); }
 
 /* selected-finish label (FARBE / <name>), directly above the swatches */
-.flow-c .bx-colorsel { display: flex; flex-direction: row; align-items: baseline; gap: 0.5rem; min-width: 0; }
-.bx-colorsel__cap { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-graphite-600); }
-.bx-colorsel__name { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black);
+.flow-c .bx-colorsel { display: flex; flex-direction: row; align-items: baseline; gap: 0.45rem; min-width: 0; }
+/* Inline label + value: the eyebrow is nudged up (11→12px) so it doesn't read as tiny
+   next to the value, and the value – the chosen-finish readout, the section's key info –
+   gets a touch more presence (16→17px). Baseline-aligned so the size step reads clean. */
+.bx-colorsel__cap { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-graphite-600); }
+.bx-colorsel__name { font-size: 1.0625rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* Side window – premium right drawer + backdrop.
