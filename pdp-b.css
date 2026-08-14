@@ -2896,8 +2896,8 @@ body.is-scrolled #quickbar {
    LABEL directly above the swatch grid. Order: field · label · swatches.
    Rendered in Metzler's own language. Markup: index.html · JS: pdp-b.js.
    ============================================================ */
-.bx-listfield, .bx-colorsel { display: none; }        /* v3-only elements – hidden in v1/v2 */
-.flow-c .bx-color__head { display: none; }            /* replaced by the .bx-colorsel label */
+.bx-listfield, .bx-colorsel { display: none; }        /* v3/v4 list-field + (retired) v3 eyebrow – hidden by default */
+/* v3 keeps the SAME "Farbe: <value>" head as v1/v2/v4 – no bespoke eyebrow label. */
 .flow-c .bx-color__listlink { display: none !important; }   /* replaced by the .bx-listfield */
 .flow-c .bx-color { gap: 1rem; }
 .flow-c #ralPick { margin-top: 0; }
@@ -2905,7 +2905,7 @@ body.is-scrolled #quickbar {
 /* v3: the list-field opener sits UNDER the swatch grid (matches v4). .bx-color is a
    flex column, so reorder its children with `order` – the shared DOM stays put.
    Visible order: colour label · swatches · list-field · RAL picker · note. */
-.flow-c .bx-colorsel   { order: 0; }
+.flow-c .bx-color__head { order: 0; }
 .flow-c .pdp-swatches  { order: 1; }
 .flow-c .bx-listfield  { order: 2; }
 .flow-c #ralPick       { order: 3; }
@@ -2939,14 +2939,6 @@ body.is-scrolled #quickbar {
 .flow-c .bx-listfield:hover .bx-listfield__chev,
 .flow-d .bx-listfield:hover .bx-listfield__chev { color: var(--color-teal); transform: translateX(0.125rem); }
 
-/* selected-finish label (FARBE / <name>), directly above the swatches */
-.flow-c .bx-colorsel { display: flex; flex-direction: row; align-items: baseline; gap: 0.45rem; min-width: 0; }
-/* Inline label + value: the eyebrow is nudged up (11→12px) so it doesn't read as tiny
-   next to the value, and the value – the chosen-finish readout, the section's key info –
-   gets a touch more presence (16→17px). Baseline-aligned so the size step reads clean. */
-.bx-colorsel__cap { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-graphite-600); }
-.bx-colorsel__name { font-size: 1.0625rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* Side window – premium right drawer + backdrop.
    Stays in the DOM (visibility, not display) so BOTH open AND close animate – with
