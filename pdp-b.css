@@ -3027,6 +3027,13 @@ body.is-scrolled #quickbar {
 .colorwin__row:focus-visible { outline: 2px solid var(--color-teal); outline-offset: -2px; }
 .colorwin__row.is-selected { background: var(--color-teal-50); }
 .colorwin__row.is-selected::before { transform: scaleY(1); }
+/* Hairline divider between finishes – inset from the panel edges so it reads as a light
+   item separator; the full-width rule above the "Individuell" group stays the stronger
+   section break. Sits at the top of every row after the first. */
+.colorwin__row + .colorwin__row::after {
+  content: ""; position: absolute; top: 0; left: 1.25rem; right: 1.25rem; height: 1px;
+  background: var(--color-graphite-200); pointer-events: none;
+}
 /* The side-window chip shares the inline swatch's language exactly – same white
    ground, graphite-300 frame, flat-at-rest → lift-on-hover, teal frame when
    chosen – so a colour looks identical whether picked in the grid or the list. */
