@@ -662,20 +662,19 @@
   .pdp-price--lead .pdp-offer { position: absolute; top: 1rem; right: 1.15rem; z-index: 1; align-self: auto; margin: 0; }
 }
 
-/* ── v4 (flow-d) · modern-minimal sale tag ───────────────────────────────────
-   Modern split tag: the discount sits in a compact SOLID-red chip (a saturated,
-   pre-attentive anchor so the offer still catches the eye) with the validity date quiet
-   and muted beside it. Flat, squared corners, no wrapper chrome. flow-d only. */
+/* ── v4 (flow-d) · modern sale badge ──────────────────────────────────────────
+   ONE cohesive badge (not a chip + loose text): a single solid-red unit – saturated so
+   it catches the eye – modernised with squared corners and a white hairline dividing the
+   discount from the validity date. Flat, no shadow. flow-d only. */
 .flow-d .pdp-offer {
-  background: none; color: var(--color-graphite-600);
-  border: 0; border-radius: 0; padding: 0; gap: 0.45rem;
+  background: var(--color-red); color: var(--color-white);
+  border: 0; border-radius: var(--radius); padding: 0.32rem 0.62rem; gap: 0.5rem;
 }
-.flow-d .pdp-offer__pct {
-  font-weight: 800; font-size: 0.8125rem; letter-spacing: -0.01em;
-  color: var(--color-white); background: var(--color-red);
-  padding: 0.18rem 0.44rem; border-radius: var(--radius);
+.flow-d .pdp-offer__pct { font-weight: 800; font-size: 0.8125rem; letter-spacing: -0.01em; }
+.flow-d .pdp-offer__dur {
+  font-weight: 500; font-size: 0.75rem; opacity: 0.92;
+  padding-left: 0.5rem; border-left: 1px solid rgba(255, 255, 255, 0.35);
 }
-.flow-d .pdp-offer__dur { font-weight: 600; font-size: 0.75rem; opacity: 1; color: var(--color-graphite-600); }
 /* current price + struck original share the row */
 .pdp-price--lead .pdp-price__row { flex-wrap: wrap; }
 .pdp-price__was { font-size: 1.125rem; font-weight: 600; color: var(--color-graphite-500);
