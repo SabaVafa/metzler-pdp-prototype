@@ -850,7 +850,7 @@
   }
   .pdp-b .pdp-media__toggle button:last-child {
     color: var(--color-teal); border-color: var(--color-teal); background: var(--color-teal-50);
-    font-weight: 800; box-shadow: 0 2px 7px rgba(1,82,83,0.16);
+    font-weight: 800; box-shadow: 0 1px 2px rgba(1,82,83,0.08);
   }
   .pdp-b .pdp-media__img { max-height: 52vh; }
 
