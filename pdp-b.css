@@ -663,19 +663,19 @@
 }
 
 /* ── v4 (flow-d) · modern-minimal sale tag ───────────────────────────────────
-   An alternative to the solid-red pill: an OUTLINED tag (no fill) – the discount reads
-   as a quiet red hero and the validity date is divided off by a hairline. Flat, squared
-   corners, no shadow. Reuses the same markup; flow-d only. */
+   Modern split tag: the discount sits in a compact SOLID-red chip (a saturated,
+   pre-attentive anchor so the offer still catches the eye) with the validity date quiet
+   and muted beside it. Flat, squared corners, no wrapper chrome. flow-d only. */
 .flow-d .pdp-offer {
-  background: none; color: var(--color-red);
-  gap: 0.5rem; padding: 0.3rem 0.55rem;
-  border: 1px solid rgba(212, 41, 36, 0.30); border-radius: var(--radius);
+  background: none; color: var(--color-graphite-600);
+  border: 0; border-radius: 0; padding: 0; gap: 0.45rem;
 }
-.flow-d .pdp-offer__pct { font-weight: 800; font-size: 0.875rem; letter-spacing: -0.01em; }
-.flow-d .pdp-offer__dur {
-  font-weight: 600; font-size: 0.75rem; opacity: 1; color: var(--color-graphite-600);
-  padding-left: 0.5rem; border-left: 1px solid rgba(212, 41, 36, 0.20);
+.flow-d .pdp-offer__pct {
+  font-weight: 800; font-size: 0.8125rem; letter-spacing: -0.01em;
+  color: var(--color-white); background: var(--color-red);
+  padding: 0.18rem 0.44rem; border-radius: var(--radius);
 }
+.flow-d .pdp-offer__dur { font-weight: 600; font-size: 0.75rem; opacity: 1; color: var(--color-graphite-600); }
 /* current price + struck original share the row */
 .pdp-price--lead .pdp-price__row { flex-wrap: wrap; }
 .pdp-price__was { font-size: 1.125rem; font-weight: 600; color: var(--color-graphite-500);
