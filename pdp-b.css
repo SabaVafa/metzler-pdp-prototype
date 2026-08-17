@@ -648,33 +648,22 @@
    designated sale/discount colour, used sparingly: a tinted pill + a solid-red
    −% chip (the number is the pre-attentive hook), the struck-through original
    price inline, and a quiet validity line. No starburst, no shouting. */
-/* Angebot – ONE reusable offer label: a single compact pill carrying the discount
-   AND the duration (clock cue). Self-contained → drop it into any page/surface
-   (price panel, product card, set summary). Only the price-panel context tucks it
-   into the top-right corner on desktop; on mobile it flows at the top of the block. */
-.pdp-offer { display: inline-flex; align-items: center; gap: 0.35rem; align-self: flex-start; margin-bottom: 0.15rem;
-  padding: 0.24rem 0.6rem; background: var(--color-red); color: var(--color-white);
-  border-radius: var(--radius-pill); font-size: 0.75rem; line-height: 1.1; letter-spacing: 0.01em; white-space: nowrap; }
+/* Angebot – ONE reusable sale badge: a single solid-red unit (eye-catching) carrying the
+   discount AND the validity date, modernised with squared corners and a white hairline
+   dividing the two. Self-contained → drop it into any page/surface (price panel, product
+   card, set summary). Only the price-panel context tucks it into the top-right corner on
+   desktop; on mobile it flows at the top of the block. */
+.pdp-offer { display: inline-flex; align-items: center; gap: 0.5rem; align-self: flex-start; margin-bottom: 0.15rem;
+  padding: 0.32rem 0.62rem; background: var(--color-red); color: var(--color-white);
+  border-radius: var(--radius); font-size: 0.75rem; line-height: 1.1; letter-spacing: 0.01em; white-space: nowrap; }
 .pdp-offer__clock { width: 0.85rem; height: 0.85rem; flex: none; }
-.pdp-offer__pct { font-weight: 800; font-variant-numeric: tabular-nums; }
-.pdp-offer__dur { font-weight: 500; opacity: 0.92; }
+.pdp-offer__pct { font-weight: 800; font-size: 0.8125rem; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.pdp-offer__dur { font-weight: 500; font-size: 0.75rem; opacity: 0.92;
+  padding-left: 0.5rem; border-left: 1px solid rgba(255, 255, 255, 0.35); }
 @media (min-width: 561px) {
   .pdp-price--lead .pdp-offer { position: absolute; top: 1rem; right: 1.15rem; z-index: 1; align-self: auto; margin: 0; }
 }
 
-/* ── v4 (flow-d) · modern sale badge ──────────────────────────────────────────
-   ONE cohesive badge (not a chip + loose text): a single solid-red unit – saturated so
-   it catches the eye – modernised with squared corners and a white hairline dividing the
-   discount from the validity date. Flat, no shadow. flow-d only. */
-.flow-d .pdp-offer {
-  background: var(--color-red); color: var(--color-white);
-  border: 0; border-radius: var(--radius); padding: 0.32rem 0.62rem; gap: 0.5rem;
-}
-.flow-d .pdp-offer__pct { font-weight: 800; font-size: 0.8125rem; letter-spacing: -0.01em; }
-.flow-d .pdp-offer__dur {
-  font-weight: 500; font-size: 0.75rem; opacity: 0.92;
-  padding-left: 0.5rem; border-left: 1px solid rgba(255, 255, 255, 0.35);
-}
 /* current price + struck original share the row */
 .pdp-price--lead .pdp-price__row { flex-wrap: wrap; }
 .pdp-price__was { font-size: 1.125rem; font-weight: 600; color: var(--color-graphite-500);
