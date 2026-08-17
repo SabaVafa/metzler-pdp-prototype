@@ -1897,5 +1897,54 @@
 
 <script src="chrome.js?v=2"></script>
 <script src="pdp-b.js?v=235"></script>
+
+<!-- ===== Review-only variant switcher (shown only with ?review=1) ============
+     Lets reviewers jump between the PDP variants (v1–v4) and open the gallery.
+     Never renders for real visitors. Self-contained; no product-code coupling. -->
+<style>
+  .rvsw[hidden] { display: none; }   /* the class sets display, which would otherwise defeat [hidden] */
+  .rvsw { position: fixed; left: 1rem; bottom: 1rem; z-index: 99999;
+    display: inline-flex; align-items: center; gap: 0.15rem;
+    padding: 0.3rem 0.35rem; border-radius: 999px;
+    background: rgba(20, 22, 25, 0.92); color: #fff;
+    box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.35);
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    font: 600 0.8125rem/1 -apple-system, "Segoe UI", Roboto, system-ui, sans-serif; }
+  .rvsw__cap { padding: 0 0.35rem 0 0.5rem; font-size: 0.625rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6; }
+  .rvsw__btn { display: inline-grid; place-items: center; min-width: 2rem; height: 1.9rem;
+    padding: 0 0.55rem; border-radius: 999px; color: #fff; text-decoration: none;
+    transition: background .15s ease; }
+  .rvsw__btn:hover { background: rgba(255,255,255,0.14); }
+  .rvsw__btn[aria-current="true"] { background: #015253; }
+  .rvsw__sep { width: 1px; height: 1.2rem; margin: 0 0.2rem; background: rgba(255,255,255,0.18); }
+  .rvsw__all { display: inline-grid; place-items: center; height: 1.9rem; padding: 0 0.7rem;
+    border-radius: 999px; color: #fff; text-decoration: none; font-size: 0.75rem;
+    border: 1px solid rgba(255,255,255,0.28); transition: background .15s ease; }
+  .rvsw__all:hover { background: rgba(255,255,255,0.14); }
+  @media (max-width: 560px) { .rvsw__cap { display: none; } }
+</style>
+<nav class="rvsw" id="reviewSwitcher" hidden aria-label="PDP-Variante wechseln">
+  <span class="rvsw__cap">Variante</span>
+  <a class="rvsw__btn" data-v="1" href="?review=1" title="v1 · Basis">V1</a>
+  <a class="rvsw__btn" data-v="b" href="?flow=b&amp;review=1" title="v2 · Farb-Seitenfenster">V2</a>
+  <a class="rvsw__btn" data-v="c" href="?flow=c&amp;review=1" title="v3 · Auswahlfeld">V3</a>
+  <a class="rvsw__btn" data-v="d" href="?flow=d&amp;review=1" title="v4 · Material-Swatches">V4</a>
+  <span class="rvsw__sep" aria-hidden="true"></span>
+  <a class="rvsw__all" href="variants.html" title="Alle Varianten im Überblick">Übersicht</a>
+</nav>
+<script>
+  (function () {
+    var p = new URLSearchParams(location.search);
+    if (p.get('review') !== '1') return;                 /* gated – hidden for real visitors */
+    var sw = document.getElementById('reviewSwitcher');
+    if (!sw) return;
+    sw.hidden = false;
+    var cur = p.get('flow') || '1';                       /* '1' = v1 (no flow param) */
+    var active = sw.querySelector('.rvsw__btn[data-v="' + cur + '"]');
+    if (active) active.setAttribute('aria-current', 'true');
+    try { localStorage.setItem('pdpVariant', cur); } catch (e) {}
+  })();
+</script>
 </body>
 </html>
