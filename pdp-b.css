@@ -2164,8 +2164,8 @@ body.is-scrolled #quickbar {
 .rvw-howto__title { margin: 0; font-size: 1rem; font-weight: 700; color: var(--color-digital-black); }
 .rvw-howto__text { margin: 0.55rem 0 0; font-size: 0.875rem; line-height: 1.55; color: var(--color-graphite-700); }
 /* inline verified badge inside the explainer copy (replaces the old „Verifizierter Kauf" text) */
-.rvw-howto__badge { display: inline-flex; align-items: center; gap: 0.25rem; font-weight: 700; color: var(--color-teal); white-space: nowrap; vertical-align: -0.25em; }
-.rvw-howto__badge svg { width: 1.1rem; height: 1.1rem; flex: none; }
+.rvw-howto__badge { display: inline-flex; align-items: center; gap: 0.2rem; font-weight: 700; color: var(--color-teal); white-space: nowrap; line-height: 1; vertical-align: -0.15em; }
+.rvw-howto__badge svg { width: 1rem; height: 1rem; flex: none; }
 .rvw-howto__link { display: inline-block; margin-top: 0.6rem; font-size: 0.8125rem; font-weight: 600;
   color: var(--color-teal); text-decoration: underline; text-underline-offset: 2px; }
 .rvw-howto__link:hover { color: var(--color-teal-600); }
@@ -2178,7 +2178,8 @@ body.is-scrolled #quickbar {
 /* stars: top-right, opposite the title */
 .rvw-review__head { grid-column: 2; grid-row: 1; justify-self: end; display: flex; align-items: center; gap: 0.85rem; margin: 0; }
 .rvw-review__title { grid-column: 1; grid-row: 1; margin: 0 0 0.2rem; font-size: 1.125rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
-.rvw-review__text, .rvw-review__media, .rvw-review__foot { grid-column: 1 / -1; }
+.rvw-review__text, .rvw-review__media, .rvw-review__foot, .rvw-review__more { grid-column: 1 / -1; }
+.rvw-review__more { justify-self: start; }   /* JS injects this after the text; keep it left, not stretched/centred in the grid */
 .rvw-review__text { margin: 0; font-size: 1rem; line-height: 1.65; color: var(--color-graphite-700);
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; line-clamp: 4; overflow: hidden; }
 /* tap/click a truncated review to expand it in place (a real button gives keyboard access) */
