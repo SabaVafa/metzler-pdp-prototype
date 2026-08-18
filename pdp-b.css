@@ -2137,11 +2137,11 @@ body.is-scrolled #quickbar {
 
 /* detailed list + sticky summary sidebar */
 .rvw-main { display: grid; grid-template-columns: minmax(0,1fr) 20rem; gap: clamp(1.5rem,3.5vw,3.5rem); align-items: start; }
-/* Centre the sticky rating box in the viewport on tall screens (top = half the
-   viewport minus half the ~25rem box), same treatment as the Beschreibung sticky
-   image, so it doesn't cling to the top leaving a big gap below. max() keeps the
-   original 7.75rem offset on normal-height screens. */
-.rvw-summary { grid-column: 2; grid-row: 1; position: sticky; top: max(7.75rem, calc(50vh - 12.5rem)); }
+/* Vertically centre the sticky rating box in the viewport as the page scrolls:
+   top = half the viewport minus half the box height (~34.8rem tall → 17.4rem half),
+   so the whole card stays centred instead of clinging to the top. max() keeps the
+   top edge (the "4,5" score) on-screen on short viewports where it can't fully centre. */
+.rvw-summary { grid-column: 2; grid-row: 1; position: sticky; top: max(7.75rem, calc(50vh - 17.4rem)); }
 .rvw-summary__inner { background: var(--color-paper); border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg); padding: clamp(1.5rem,2.5vw,2rem); }
 .rvw-summary__top { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
 .rvw-summary__score { font-size: 3rem; font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: var(--color-digital-black); }
@@ -2350,6 +2350,12 @@ body.is-scrolled #quickbar {
   .rvw-main { grid-template-columns: 1fr; }
   .rvw-summary, .rvw-list { grid-column: 1; grid-row: auto; }
   .rvw-summary { position: static; margin-bottom: 2rem; }
+}
+/* mobile: stack the review card – star rating on its own row ABOVE the title */
+@media (max-width: 47.9375rem) {
+  .rvw-review { grid-template-columns: 1fr; }
+  .rvw-review__head { grid-column: 1; grid-row: auto; justify-self: start; margin-bottom: 0.35rem; }
+  .rvw-review__title { grid-column: 1; grid-row: auto; }
 }
 .psx-story__scenes { display: flex; flex-direction: column; }
 .psx-story__scene { min-height: 68vh; display: flex; flex-direction: column; justify-content: center; gap: 0.6rem;
