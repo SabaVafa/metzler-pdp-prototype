@@ -2342,10 +2342,9 @@ body.is-scrolled #quickbar {
 .rvw-review__foot .rvw-author { font-size: 0.875rem; }
 .rvw-review__foot time { color: var(--color-graphite-700); }
 .rvw-review__foot time::before { content: ""; display: inline-block; width: 1px; height: 0.85em; margin-right: 0.6rem; vertical-align: -0.1em; background: var(--color-graphite-300); }   /* line divider between name and date */
-/* verified badge now lives in the byline row, pushed to the far right – opposite the name/date */
-.rvw-review__foot .rvw-verified { margin-left: auto; gap: 0.4rem; font-size: 0.875rem; }
+/* verified seal in the byline row: icon only (label stays visually hidden), sitting
+   right after the name/date instead of pushed to the far right */
 .rvw-review__foot .rvw-verified svg { width: 1.25rem; height: 1.25rem; }
-.rvw-review__foot .rvw-vlabel { position: static; width: auto; height: auto; overflow: visible; clip: auto; margin: 0; white-space: nowrap; }
 .rvw-list__more { align-self: flex-start; margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 700; color: var(--color-teal); text-decoration: none; }
 .rvw-list__more svg { width: 1.1rem; height: 1.1rem; transition: transform .15s ease; }
 .rvw-list__more:hover svg { transform: translateX(3px); }
