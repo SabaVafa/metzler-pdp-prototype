@@ -1833,7 +1833,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .rv__feature-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .rv__feature-quote { flex: none; width: 3rem; height: 3rem; color: var(--color-teal-50); pointer-events: none; }
 .rv__feature-stars { position: relative; }
-.rv__feature-stars svg { width: 1.2rem; height: 1.2rem; }
+.rv__feature-stars svg { width: 1.5rem; height: 1.5rem; }
 .rv__feature-title { margin: 0; font-size: clamp(1.2rem, 2vw, 1.5rem); font-weight: 700; letter-spacing: -0.015em; line-height: 1.2; color: var(--color-digital-black); }
 .rv__feature-text { margin: 0; font-size: 1rem; line-height: 1.6; color: var(--color-graphite-700);
   display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }   /* max 3 lines, truncate rest */
