@@ -2143,7 +2143,7 @@ body.is-scrolled #quickbar {
 .rvw-summary__top { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
 .rvw-summary__score { font-size: 3rem; font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: var(--color-digital-black); }
 .rvw-summary__scoremeta { display: flex; flex-direction: column; gap: 0.35rem; }
-.rvw-summary__count { margin: 0; font-size: 0.75rem; color: var(--color-graphite-700); }
+.rvw-summary__count { margin: 0; font-size: 0.8125rem; color: var(--color-graphite-700); }
 .rvw-dist { display: grid; gap: 0.5rem; margin-bottom: 1.5rem; }
 .rvw-dist-row { display: grid; grid-template-columns: 3.75rem 1fr 1.75rem; align-items: center; gap: 0.6rem; font-size: 0.875rem; color: var(--color-graphite-700); }
 .rvw-dist-bar { height: 6px; border-radius: var(--radius-pill); background: var(--color-graphite-200); overflow: hidden; }
