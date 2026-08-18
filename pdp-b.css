@@ -2347,7 +2347,9 @@ body.is-scrolled #quickbar {
 @media (max-width: 56.25rem) {
   .rvw-main { grid-template-columns: 1fr; }
   .rvw-summary, .rvw-list { grid-column: 1; grid-row: auto; }
-  .rvw-summary { position: static; margin-bottom: 2rem; }
+  /* small screens: pin the summary to the top so it stays visible while the
+     review list scrolls under it (top clears the sticky header + section tabs) */
+  .rvw-summary { position: sticky; top: 7.75rem; z-index: 10; margin-bottom: 2rem; }
 }
 .psx-story__scenes { display: flex; flex-direction: column; }
 .psx-story__scene { min-height: 68vh; display: flex; flex-direction: column; justify-content: center; gap: 0.6rem;
