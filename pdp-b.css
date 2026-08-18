@@ -2258,8 +2258,8 @@ body.is-scrolled #quickbar {
 .rvw-lb__date::before { content: "|"; margin-right: 0.5rem; color: var(--color-graphite-300); }
 /* verified label – identical to the review-list .rvw-verified (no pill) */
 .rvw-lb__badge { margin-left: auto; display: inline-flex; align-items: center; gap: 0.3rem; flex: none;
-  font-size: 0.75rem; font-weight: 700; white-space: nowrap; color: var(--color-teal); }
-.rvw-lb__badge svg { width: 0.85rem; height: 0.85rem; }
+  font-size: 0.8125rem; font-weight: 700; white-space: nowrap; color: var(--color-teal); }
+.rvw-lb__badge svg { width: 0.95rem; height: 0.95rem; }
 /* text is the scroll region: it grows to fill the space so the photo gallery
    always sits pinned at the bottom; scrolls internally when the review is long */
 .rvw-lb__text { flex: 1 1 auto; min-height: 0; overflow-y: auto; margin: 1.15rem 0 0; padding-right: 0.5rem;
