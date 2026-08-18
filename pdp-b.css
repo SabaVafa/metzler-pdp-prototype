@@ -2092,6 +2092,7 @@ body.is-scrolled #quickbar {
 .rvw-stars { display: inline-flex; gap: 2px; color: var(--color-star); line-height: 0; }
 .rvw-stars svg { width: 1rem; height: 1rem; display: block; }
 .rvw-stars--lg svg { width: 1.35rem; height: 1.35rem; }
+.rvw-summary__scoremeta .rvw-stars svg { width: 0.8125rem; height: 0.8125rem; }   /* summary stars – 13px (not the lightbox) */
 .rvw-review__head .rvw-stars svg { width: 1.35rem; height: 1.35rem; }   /* review-list rating – was tiny at 1rem */
 /* Icon-only verified badge: the seal alone (label kept for screen readers + a hover
    tooltip via title). No text, so no gap and the box shrinks to the seal. */
@@ -2150,7 +2151,7 @@ body.is-scrolled #quickbar {
 .rvw-dist-bar { height: 6px; border-radius: var(--radius-pill); background: var(--color-graphite-200); overflow: hidden; }
 .rvw-dist-bar i { display: block; height: 100%; background: var(--color-star); border-radius: var(--radius-pill); }
 .rvw-dist-val { text-align: right; font-variant-numeric: tabular-nums; }
-.rvw-cta { display: inline-flex; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; gap: 0.5rem; padding: 0.7rem 1.25rem; border: 2px solid var(--color-teal); border-radius: var(--radius); background: var(--color-white); color: var(--color-teal); font-size: 0.875rem; font-weight: 700; text-decoration: none; cursor: pointer; transition: background .15s ease, color .15s ease; }
+.rvw-cta { display: inline-flex; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; gap: 0.5rem; padding: 0.7rem 1.25rem; border: 2px solid var(--color-teal); border-radius: var(--radius); background: var(--color-white); color: var(--color-teal); font-size: 1rem; font-weight: 700; text-decoration: none; cursor: pointer; transition: background .15s ease, color .15s ease; }
 .rvw-cta:hover { background: var(--color-teal); color: var(--color-white); }
 /* "Wie funktionieren Bewertungen?" disclosure – quiet explanatory note under the
    CTA, divided by a hairline so it reads as secondary to the score + write-review
@@ -2158,8 +2159,8 @@ body.is-scrolled #quickbar {
    on open and the chevron rotates to signal state. */
 .rvw-howto { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--color-graphite-300); }
 /* Legally required info – always visible (no longer a collapsible disclosure) */
-.rvw-howto__title { margin: 0; font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black); }
-.rvw-howto__text { margin: 0.55rem 0 0; font-size: 0.8125rem; line-height: 1.55; color: var(--color-graphite-700); }
+.rvw-howto__title { margin: 0; font-size: 1rem; font-weight: 700; color: var(--color-digital-black); }
+.rvw-howto__text { margin: 0.55rem 0 0; font-size: 0.875rem; line-height: 1.55; color: var(--color-graphite-700); }
 .rvw-howto__link { display: inline-block; margin-top: 0.6rem; font-size: 0.8125rem; font-weight: 600;
   color: var(--color-teal); text-decoration: underline; text-underline-offset: 2px; }
 .rvw-howto__link:hover { color: var(--color-teal-600); }
@@ -2167,7 +2168,11 @@ body.is-scrolled #quickbar {
 .rvw-review { padding: clamp(1.25rem,2.5vw,1.75rem) 0; border-top: 1px solid var(--color-graphite-300); }
 .rvw-review:first-child { border-top: 0; padding-top: 0; }
 .rvw-review__head { display: flex; align-items: center; gap: 0.85rem; margin-bottom: 0.55rem; }
-.rvw-review__head .rvw-verified { margin-left: 0; }   /* seal sits with the stars (was pinned far right) */
+/* review-list: the verified badge shows its TEXT and sits on the RIGHT of the header –
+   opposite the name/date (bottom-left). Carousel/list icon-only rules don't apply here. */
+.rvw-review__head .rvw-verified { margin-left: auto; gap: 0.35rem; font-size: 0.8125rem; }
+.rvw-review__head .rvw-verified svg { width: 0.95rem; height: 0.95rem; }
+.rvw-review__head .rvw-vlabel { position: static; width: auto; height: auto; overflow: visible; clip: auto; margin: 0; white-space: nowrap; }
 .rvw-review__title { margin: 0 0 0.4rem; font-size: 1.125rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .rvw-review__text { margin: 0; font-size: 1rem; line-height: 1.65; color: var(--color-graphite-700);
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; line-clamp: 4; overflow: hidden; }
