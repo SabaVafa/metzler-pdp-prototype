@@ -1839,8 +1839,8 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
   display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }   /* max 3 lines, truncate rest */
 .rv__feature-foot { display: flex; align-items: center; gap: 0.7rem; margin-top: 0.5rem; flex-wrap: wrap; }
 .rv__feature-who { display: flex; flex-direction: column; line-height: 1.25; }
-.rv__feature-who b { font-size: 0.875rem; font-weight: 700; color: var(--color-digital-black); }
-.rv__feature-who time { font-size: 0.75rem; color: var(--text-muted); }
+.rv__feature-who b { font-size: 0.8125rem; font-weight: 700; color: var(--color-digital-black); }
+.rv__feature-who time { font-size: 0.8125rem; color: var(--text-muted); }
 
 /* crossfade when switching reviews */
 .rv__feature-media img, .rv__feature-stars, .rv__feature-title, .rv__feature-text, .rv__feature-foot { transition: opacity .2s ease; }
