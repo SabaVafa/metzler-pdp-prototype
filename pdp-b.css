@@ -2332,6 +2332,7 @@ body.is-scrolled #quickbar {
 .rvw-review__foot { margin-top: 0.7rem; display: flex; align-items: center; gap: 0.6rem; font-size: 0.875rem; }
 .rvw-review__foot .rvw-author { font-size: 0.875rem; }
 .rvw-review__foot time { color: var(--color-graphite-700); }
+.rvw-review__foot time::before { content: "·"; margin-right: 0.6rem; color: var(--color-graphite-400); }   /* divider between name and date */
 .rvw-list__more { align-self: flex-start; margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 700; color: var(--color-teal); text-decoration: none; }
 .rvw-list__more svg { width: 1.1rem; height: 1.1rem; transition: transform .15s ease; }
 .rvw-list__more:hover svg { transform: translateX(3px); }
