@@ -2173,16 +2173,12 @@ body.is-scrolled #quickbar {
   color: var(--color-teal); text-decoration: underline; text-underline-offset: 2px; }
 .rvw-howto__link:hover { color: var(--color-teal-600); }
 .rvw-list { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; }
-/* review card: two-column grid so the star rating sits opposite the title (top row),
-   while text/media/byline span the full width below. */
-.rvw-review { padding: clamp(1.25rem,2.5vw,1.75rem) 0; border-top: 1px solid var(--color-graphite-300);
-  display: grid; grid-template-columns: 1fr auto; column-gap: 1rem; align-items: center; }
+/* review card: block flow – the star rating sits on its own row ABOVE the title
+   (head precedes the title in the DOM), everything left-aligned and full width. */
+.rvw-review { padding: clamp(1.25rem,2.5vw,1.75rem) 0; border-top: 1px solid var(--color-graphite-300); }
 .rvw-review:first-child { border-top: 0; padding-top: 0; }
-/* stars: top-right, opposite the title */
-.rvw-review__head { grid-column: 2; grid-row: 1; justify-self: end; display: flex; align-items: center; gap: 0.85rem; margin: 0; }
-.rvw-review__title { grid-column: 1; grid-row: 1; margin: 0 0 0.2rem; font-size: 1.125rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
-.rvw-review__text, .rvw-review__media, .rvw-review__foot, .rvw-review__more { grid-column: 1 / -1; }
-.rvw-review__more { justify-self: start; }   /* JS injects this after the text; keep it left, not stretched/centred in the grid */
+.rvw-review__head { display: flex; align-items: center; gap: 0.85rem; margin: 0 0 0.35rem; }
+.rvw-review__title { margin: 0 0 0.4rem; font-size: 1.125rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
 .rvw-review__text { margin: 0; font-size: 1rem; line-height: 1.65; color: var(--color-graphite-700);
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; line-clamp: 4; overflow: hidden; }
 /* tap/click a truncated review to expand it in place (a real button gives keyboard access) */
@@ -2352,12 +2348,6 @@ body.is-scrolled #quickbar {
   .rvw-main { grid-template-columns: 1fr; }
   .rvw-summary, .rvw-list { grid-column: 1; grid-row: auto; }
   .rvw-summary { position: static; margin-bottom: 2rem; }
-}
-/* mobile: stack the review card – star rating on its own row ABOVE the title */
-@media (max-width: 47.9375rem) {
-  .rvw-review { grid-template-columns: 1fr; }
-  .rvw-review__head { grid-column: 1; grid-row: auto; justify-self: start; margin-bottom: 0.35rem; }
-  .rvw-review__title { grid-column: 1; grid-row: auto; }
 }
 .psx-story__scenes { display: flex; flex-direction: column; }
 .psx-story__scene { min-height: 68vh; display: flex; flex-direction: column; justify-content: center; gap: 0.6rem;
