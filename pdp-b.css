@@ -2092,6 +2092,7 @@ body.is-scrolled #quickbar {
 .rvw-stars { display: inline-flex; gap: 2px; color: var(--color-star); line-height: 0; }
 .rvw-stars svg { width: 1rem; height: 1rem; display: block; }
 .rvw-stars--lg svg { width: 1.35rem; height: 1.35rem; }
+.rvw-review__head .rvw-stars svg { width: 1.35rem; height: 1.35rem; }   /* review-list rating – was tiny at 1rem */
 /* Icon-only verified badge: the seal alone (label kept for screen readers + a hover
    tooltip via title). No text, so no gap and the box shrinks to the seal. */
 .rvw-verified { display: inline-flex; align-items: center; gap: 0; font-size: 0.8125rem; font-weight: 700; color: var(--color-teal); white-space: nowrap; }
@@ -2144,7 +2145,7 @@ body.is-scrolled #quickbar {
 .rvw-summary__scoremeta { display: flex; flex-direction: column; gap: 0.35rem; }
 .rvw-summary__count { margin: 0; font-size: 0.75rem; color: var(--color-graphite-700); }
 .rvw-dist { display: grid; gap: 0.5rem; margin-bottom: 1.5rem; }
-.rvw-dist-row { display: grid; grid-template-columns: 3.75rem 1fr 1.75rem; align-items: center; gap: 0.6rem; font-size: 0.75rem; color: var(--color-graphite-700); }
+.rvw-dist-row { display: grid; grid-template-columns: 3.75rem 1fr 1.75rem; align-items: center; gap: 0.6rem; font-size: 0.875rem; color: var(--color-graphite-700); }
 .rvw-dist-bar { height: 6px; border-radius: var(--radius-pill); background: var(--color-graphite-200); overflow: hidden; }
 .rvw-dist-bar i { display: block; height: 100%; background: var(--color-star); border-radius: var(--radius-pill); }
 .rvw-dist-val { text-align: right; font-variant-numeric: tabular-nums; }
@@ -2167,13 +2168,13 @@ body.is-scrolled #quickbar {
 .rvw-review__head { display: flex; align-items: center; gap: 0.85rem; margin-bottom: 0.6rem; }
 .rvw-review__head .rvw-verified { margin-left: auto; }   /* push the badge to the right edge, consistent across reviews */
 .rvw-review__title { margin: 0 0 0.4rem; font-size: 1.125rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
-.rvw-review__text { margin: 0; font-size: 0.875rem; line-height: 1.65; color: var(--color-graphite-700);
+.rvw-review__text { margin: 0; font-size: 1rem; line-height: 1.65; color: var(--color-graphite-700);
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; line-clamp: 4; overflow: hidden; }
 /* tap/click a truncated review to expand it in place (a real button gives keyboard access) */
 .rvw-review__text.is-clamped { cursor: pointer; }
 .rvw-review__text.is-expanded { -webkit-line-clamp: unset; line-clamp: unset; overflow: visible; cursor: pointer; }
 .rvw-review__more { display: inline-block; margin-top: 0.45rem; padding: 0; background: none; border: 0; cursor: pointer;
-  font: inherit; font-size: 0.75rem; font-weight: 700; color: var(--color-teal); }
+  font: inherit; font-size: 0.8125rem; font-weight: 700; color: var(--color-teal); }
 .rvw-review__more:hover { color: var(--color-teal-600); }
 .rvw-review__more:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; border-radius: var(--radius-sm); }
 /* Customer-uploaded photos – a compact thumbnail strip between the review text and
@@ -2322,8 +2323,8 @@ body.is-scrolled #quickbar {
 @media (max-width: 767px) {
   .quickbar .qa, .quickbar .qa-cta { pointer-events: none; cursor: default; }
 }
-.rvw-review__foot { margin-top: 0.7rem; display: flex; align-items: center; gap: 0.6rem; font-size: 0.75rem; }
-.rvw-review__foot .rvw-author { font-size: 0.75rem; }
+.rvw-review__foot { margin-top: 0.7rem; display: flex; align-items: center; gap: 0.6rem; font-size: 0.8125rem; }
+.rvw-review__foot .rvw-author { font-size: 0.8125rem; }
 .rvw-review__foot time { color: var(--color-graphite-700); }
 .rvw-list__more { align-self: flex-start; margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 700; color: var(--color-teal); text-decoration: none; }
 .rvw-list__more svg { width: 1.1rem; height: 1.1rem; transition: transform .15s ease; }
