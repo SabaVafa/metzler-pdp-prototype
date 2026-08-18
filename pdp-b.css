@@ -1763,7 +1763,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .rv__score-num span { font-size: 0.35em; font-weight: 700; color: var(--color-graphite-500); margin-left: 0.15em; }
 .rv__score-stars { margin: 0.65rem 0 0.5rem; justify-content: center; }
 .rv__score-stars svg { width: 1.35rem; height: 1.35rem; }
-.rv__score-count { margin: 0; font-size: 0.875rem; color: var(--color-graphite-700); }
+.rv__score-count { margin: 0; font-size: 1rem; color: var(--color-graphite-700); }
 .rv__score-count b { color: var(--color-digital-black); font-weight: 800; }
 .rv__verified { display: inline-flex; align-items: center; gap: 0.4rem; margin: 0.75rem 0 0;
   font-size: 0.75rem; font-weight: 700; color: var(--color-teal); }
