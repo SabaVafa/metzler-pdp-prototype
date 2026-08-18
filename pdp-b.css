@@ -2146,6 +2146,7 @@ body.is-scrolled #quickbar {
 .rvw-summary__count { margin: 0; font-size: 0.8125rem; color: var(--color-graphite-700); }
 .rvw-dist { display: grid; gap: 0.5rem; margin-bottom: 1.5rem; }
 .rvw-dist-row { display: grid; grid-template-columns: 3.75rem 1fr 1.75rem; align-items: center; gap: 0.6rem; font-size: 0.875rem; color: var(--color-graphite-700); }
+.rvw-dist-label { font-weight: 700; }   /* match the top summary card's "5 Sterne" labels */
 .rvw-dist-bar { height: 6px; border-radius: var(--radius-pill); background: var(--color-graphite-200); overflow: hidden; }
 .rvw-dist-bar i { display: block; height: 100%; background: var(--color-star); border-radius: var(--radius-pill); }
 .rvw-dist-val { text-align: right; font-variant-numeric: tabular-nums; }
@@ -2163,18 +2164,8 @@ body.is-scrolled #quickbar {
   color: var(--color-teal); text-decoration: underline; text-underline-offset: 2px; }
 .rvw-howto__link:hover { color: var(--color-teal-600); }
 .rvw-list { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; }
-.rvw-review { padding: clamp(1.25rem,2.5vw,1.75rem) 0; border-top: 1px solid var(--color-graphite-300); display: flex; flex-direction: column; }
+.rvw-review { padding: clamp(1.25rem,2.5vw,1.75rem) 0; border-top: 1px solid var(--color-graphite-300); }
 .rvw-review:first-child { border-top: 0; padding-top: 0; }
-/* Group the meta at the top so it doesn't scatter – and so it stays tidy even when the
-   verified badge is ABSENT (e.g. the Italian site): rating (+ seal if present), then the
-   title, then the reviewer byline directly under it. Ordered via flex so the byline needn't
-   be moved in the markup. */
-.rvw-review__head  { order: 0; }
-.rvw-review__title { order: 1; }
-.rvw-review__foot  { order: 2; }
-.rvw-review__text  { order: 3; }
-.rvw-review__more  { order: 4; }
-.rvw-review__media { order: 5; }
 .rvw-review__head { display: flex; align-items: center; gap: 0.85rem; margin-bottom: 0.55rem; }
 .rvw-review__head .rvw-verified { margin-left: 0; }   /* seal sits with the stars (was pinned far right) */
 .rvw-review__title { margin: 0 0 0.4rem; font-size: 1.125rem; font-weight: 700; letter-spacing: -0.01em; color: var(--color-digital-black); }
@@ -2333,8 +2324,8 @@ body.is-scrolled #quickbar {
 @media (max-width: 767px) {
   .quickbar .qa, .quickbar .qa-cta { pointer-events: none; cursor: default; }
 }
-.rvw-review__foot { margin-top: 0.7rem; display: flex; align-items: center; gap: 0.6rem; font-size: 0.8125rem; }
-.rvw-review__foot .rvw-author { font-size: 0.8125rem; }
+.rvw-review__foot { margin-top: 0.7rem; display: flex; align-items: center; gap: 0.6rem; font-size: 0.875rem; }
+.rvw-review__foot .rvw-author { font-size: 0.875rem; }
 .rvw-review__foot time { color: var(--color-graphite-700); }
 .rvw-list__more { align-self: flex-start; margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 700; color: var(--color-teal); text-decoration: none; }
 .rvw-list__more svg { width: 1.1rem; height: 1.1rem; transition: transform .15s ease; }
