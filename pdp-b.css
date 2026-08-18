@@ -2092,7 +2092,6 @@ body.is-scrolled #quickbar {
 .rvw-stars { display: inline-flex; gap: 2px; color: var(--color-star); line-height: 0; }
 .rvw-stars svg { width: 1rem; height: 1rem; display: block; }
 .rvw-stars--lg svg { width: 1.35rem; height: 1.35rem; }
-.rvw-summary__scoremeta .rvw-stars svg { width: 0.8125rem; height: 0.8125rem; }   /* summary stars – 13px (not the lightbox) */
 .rvw-review__head .rvw-stars svg { width: 1.35rem; height: 1.35rem; }   /* review-list rating – was tiny at 1rem */
 /* Icon-only verified badge: the seal alone (label kept for screen readers + a hover
    tooltip via title). No text, so no gap and the box shrinks to the seal. */
@@ -2332,7 +2331,7 @@ body.is-scrolled #quickbar {
 .rvw-review__foot { margin-top: 0.7rem; display: flex; align-items: center; gap: 0.6rem; font-size: 0.875rem; }
 .rvw-review__foot .rvw-author { font-size: 0.875rem; }
 .rvw-review__foot time { color: var(--color-graphite-700); }
-.rvw-review__foot time::before { content: "·"; margin-right: 0.6rem; color: var(--color-graphite-400); }   /* divider between name and date */
+.rvw-review__foot time::before { content: ""; display: inline-block; width: 1px; height: 0.85em; margin-right: 0.6rem; vertical-align: -0.1em; background: var(--color-graphite-300); }   /* line divider between name and date */
 .rvw-list__more { align-self: flex-start; margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 700; color: var(--color-teal); text-decoration: none; }
 .rvw-list__more svg { width: 1.1rem; height: 1.1rem; transition: transform .15s ease; }
 .rvw-list__more:hover svg { transform: translateX(3px); }
