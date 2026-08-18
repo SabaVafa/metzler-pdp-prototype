@@ -2136,12 +2136,13 @@ body.is-scrolled #quickbar {
 .rvw-happy-foot .rvw-verified { order: 3; margin-left: auto; }   /* right-aligned seal */
 
 /* detailed list + sticky summary sidebar */
-.rvw-main { display: grid; grid-template-columns: minmax(0,1fr) 20rem; gap: clamp(1.5rem,3.5vw,3.5rem); align-items: start; }
-/* Vertically centre the sticky rating box in the viewport as the page scrolls:
-   top = half the viewport minus half the box height (~34.8rem tall → 17.4rem half),
-   so the whole card stays centred instead of clinging to the top. max() keeps the
-   top edge (the "4,5" score) on-screen on short viewports where it can't fully centre. */
-.rvw-summary { grid-column: 2; grid-row: 1; position: sticky; top: max(7.75rem, calc(50vh - 17.4rem)); }
+.rvw-main { display: grid; grid-template-columns: minmax(0,1fr) 24rem; gap: clamp(1.5rem,3.5vw,3.5rem); align-items: start; }
+/* Vertically centre the sticky rating box in the space BELOW the sticky header
+   (header + section tabs ≈ 7.75rem/124px) as the page scrolls. Card is ~519px
+   (32.4rem) tall at the 24rem column, so centred top = 50vh − cardH/2 + headerH/2
+   = 50vh − 16.2rem + 3.87rem ≈ 50vh − 12.35rem. max() keeps the "4,5" score just
+   below the header on short viewports where the card can't fully centre. */
+.rvw-summary { grid-column: 2; grid-row: 1; position: sticky; top: max(7.75rem, calc(50vh - 12.35rem)); }
 .rvw-summary__inner { background: var(--color-paper); border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg); padding: clamp(1.5rem,2.5vw,2rem); }
 .rvw-summary__top { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
 .rvw-summary__score { font-size: 3rem; font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: var(--color-digital-black); }
@@ -2163,9 +2164,11 @@ body.is-scrolled #quickbar {
 /* Legally required info – always visible (no longer a collapsible disclosure) */
 .rvw-howto__title { margin: 0; font-size: 1rem; font-weight: 700; color: var(--color-digital-black); }
 .rvw-howto__text { margin: 0.55rem 0 0; font-size: 0.875rem; line-height: 1.55; color: var(--color-graphite-700); }
-/* inline verified badge inside the explainer copy (replaces the old „Verifizierter Kauf" text) */
-.rvw-howto__badge { display: inline-flex; align-items: center; gap: 0.2rem; font-size: 0.8125rem; font-weight: 700; color: var(--color-teal); white-space: nowrap; line-height: 1; vertical-align: -0.15em; }
-.rvw-howto__badge svg { width: 1rem; height: 1rem; flex: none; }
+/* inline verified badge inside the explainer copy (replaces the old „Verifizierter Kauf" text).
+   Rendered as plain inline text (not an atomic inline-flex chip) so the sentence wraps
+   word-by-word; the seal icon is glued to the first word (no whitespace between them). */
+.rvw-howto__badge { font-size: 0.8125rem; font-weight: 700; color: var(--color-teal); }
+.rvw-howto__badge svg { display: inline-block; width: 1rem; height: 1rem; margin-right: 0.2rem; vertical-align: -0.15em; }
 .rvw-howto__link { display: inline-block; margin-top: 0.6rem; font-size: 0.8125rem; font-weight: 600;
   color: var(--color-teal); text-decoration: underline; text-underline-offset: 2px; }
 .rvw-howto__link:hover { color: var(--color-teal-600); }
