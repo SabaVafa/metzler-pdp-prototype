@@ -2092,8 +2092,8 @@ body.is-scrolled #quickbar {
 .rvw-stars { display: inline-flex; gap: 2px; color: var(--color-star); line-height: 0; }
 .rvw-stars svg { width: 1rem; height: 1rem; display: block; }
 .rvw-stars--lg svg { width: 1.35rem; height: 1.35rem; }
-.rvw-verified { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.75rem; font-weight: 700; color: var(--color-teal); white-space: nowrap; }
-.rvw-verified svg { width: 0.85rem; height: 0.85rem; }
+.rvw-verified { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.8125rem; font-weight: 700; color: var(--color-teal); white-space: nowrap; }
+.rvw-verified svg { width: 0.95rem; height: 0.95rem; }
 .rvw-author { font-weight: 800; color: var(--color-digital-black); }
 
 /* happy carousel */
