@@ -1774,10 +1774,9 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
   padding: 1.25rem 0; border-top: 1px solid var(--color-graphite-200); border-bottom: 1px solid var(--color-graphite-200); }
 .rv__dist-row { display: grid; grid-template-columns: 4.75rem 1fr 2rem; align-items: center; gap: 0.7rem; }
 .rv__dist-label { font-size: 0.875rem; font-weight: 700; color: var(--color-graphite-700); white-space: nowrap; }
-/* empty track: a low-opacity dark groove (not pure white) so it reads as a recessed
-   channel that inherits the mint panel's hue, instead of a bright white pill that
-   over-emphasises the near-empty low-star rows */
-.rv__dist-bar { height: 0.5rem; background: rgba(0,0,0,0.06); border-radius: var(--radius-pill); overflow: hidden; }
+/* empty track: same treatment as the CTA button – white fill + graphite outline –
+   so the tracks read as consistent with the "Alle Bewertungen" button */
+.rv__dist-bar { height: 0.5rem; background: var(--color-white); border: 1px solid var(--color-graphite-200); border-radius: var(--radius-pill); overflow: hidden; }
 .rv__dist-bar i { display: block; height: 100%; border-radius: var(--radius-pill);
   background: var(--color-star); }
 .rv__dist-val { font-size: 0.8125rem; font-weight: 700; color: var(--text-muted); text-align: right; }
