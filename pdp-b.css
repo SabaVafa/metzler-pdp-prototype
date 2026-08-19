@@ -2140,12 +2140,16 @@ body.is-scrolled #quickbar {
 
 /* detailed list + sticky summary sidebar */
 .rvw-main { display: grid; grid-template-columns: minmax(0,1fr) 24rem; gap: clamp(1.5rem,3.5vw,3.5rem); align-items: start; }
-/* Vertically centre the sticky rating box in the space BELOW the sticky header
-   (header + section tabs ≈ 7.75rem/124px) as the page scrolls. Card is ~519px
-   (32.4rem) tall at the 24rem column, so centred top = 50vh − cardH/2 + headerH/2
-   = 50vh − 16.2rem + 3.87rem ≈ 50vh − 12.35rem. max() keeps the "4,5" score just
-   below the header on short viewports where the card can't fully centre. */
-.rvw-summary { grid-column: 2; grid-row: 1; position: sticky; top: max(7.75rem, calc(50vh - 12.35rem)); }
+/* Sticky rating box. Default: pinned 2px below the sticky top bar (compacting site
+   header var + the 61px section-tabs nav), so it sits just under the bar and slides
+   underneath it on scroll (the nav's z-index 50 keeps it on top). Tracks the header
+   as it compacts, so the gap stays 2px instead of drifting. */
+.rvw-summary { grid-column: 2; grid-row: 1; position: sticky; top: calc(var(--pdp-header-h) + 61px + 2px); }
+/* Only on roomy (tall) desktop windows: vertically centre it in the space below the
+   header, so big screens keep the balanced look without a large gap under the card. */
+@media (min-width: 56.3125rem) and (min-height: 56.25rem) {
+  .rvw-summary { top: calc(50vh - 12.35rem); }
+}
 .rvw-summary__inner { background: var(--color-paper); border: 1px solid var(--color-graphite-300); border-radius: var(--radius-lg); padding: clamp(1.5rem,2.5vw,2rem); }
 .rvw-summary__top { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
 .rvw-summary__score { font-size: 3rem; font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: var(--color-digital-black); }
@@ -2351,7 +2355,7 @@ body.is-scrolled #quickbar {
   .rvw-main { grid-template-columns: 1fr; }
   .rvw-summary, .rvw-list { grid-column: 1; grid-row: auto; }
   /* mobile/tablet: summary stacks above the list and scrolls normally (NOT pinned);
-     the sticky-centred behaviour is desktop-only (base rule). */
+     the sticky behaviour is desktop-only (base rule). */
   .rvw-summary { position: static; margin-bottom: 2rem; }
 }
 .psx-story__scenes { display: flex; flex-direction: column; }
