@@ -1229,6 +1229,10 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
   .cfgb-dock .cfgb-bar__step { min-height: 2.55rem; padding: 0.3rem 0.5rem 0.35rem 0.9rem; }
   .cfgb-dock .cfgb-bar__step:not(.is-current) .cfgb-bar__label { display: none; }
   .cfgb-dock .cfgb-bar__step.is-current { flex-grow: 3; }
+  /* only the numbers + the current step's label show here, so scale them up from the
+     12px base — they read as tiny on phones otherwise */
+  .cfgb-dock .cfgb-bar__num { font-size: 0.875rem; }                        /* 14px chevron numbers */
+  .cfgb-dock .cfgb-bar__step.is-current .cfgb-bar__label { font-size: 0.9375rem; }   /* 15px current label */
 
   /* Once the configurator scrolls under the site header, JS adds .is-fixed and the
      step ribbon detaches as a FULL-WIDTH bar pinned to the top, persisting across
