@@ -1174,6 +1174,11 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 /* standard middot divider between number and label – same "·" used across the UI
    (rating, price, availability); inherits each state's text colour */
 .cfgb-dock .cfgb-bar__label::before { content: none; }   /* separator dropped to give the larger label more room in the ribbon */
+/* large screens: the step ribbon has room, so scale the tiny 12px labels up for legibility */
+@media (min-width: 56.25rem) {
+  .cfgb-dock .cfgb-bar__label { font-size: 0.9375rem; }
+  .cfgb-dock .cfgb-bar__num { font-size: 0.875rem; }
+}
 
 /* ahead (not yet reached) – quiet neutral */
 .cfgb-dock .cfgb-bar__step:hover { background: var(--color-graphite-300); color: var(--color-graphite-800); }
