@@ -1174,10 +1174,14 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 /* standard middot divider between number and label – same "·" used across the UI
    (rating, price, availability); inherits each state's text colour */
 .cfgb-dock .cfgb-bar__label::before { content: none; }   /* separator dropped to give the larger label more room in the ribbon */
-/* large screens: the step ribbon has room, so scale the tiny 12px labels up for legibility */
-@media (min-width: 56.25rem) {
-  .cfgb-dock .cfgb-bar__label { font-size: 0.9375rem; }
-  .cfgb-dock .cfgb-bar__num { font-size: 0.875rem; }
+/* scale the 12px base up gradually: a modest bump on small/medium screens so the
+   ribbon labels aren't oversized, and only a touch larger on genuinely wide screens */
+@media (min-width: 48rem) {
+  .cfgb-dock .cfgb-bar__label { font-size: 0.8125rem; }   /* 13px */
+}
+@media (min-width: 75rem) {
+  .cfgb-dock .cfgb-bar__label { font-size: 0.875rem; }    /* 14px */
+  .cfgb-dock .cfgb-bar__num { font-size: 0.8125rem; }     /* 13px */
 }
 
 /* ahead (not yet reached) – quiet neutral */
