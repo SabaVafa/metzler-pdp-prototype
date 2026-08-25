@@ -3000,16 +3000,15 @@ body.is-scrolled #quickbar {
 .flow-c .bx-listfield:focus-visible,
 .flow-d .bx-listfield:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
 .bx-listfield__icon { flex: none; width: 1.15rem; height: 1.15rem; color: var(--color-teal); }
-.bx-listfield__text { flex: 0 1 auto; min-width: 0; font-size: 0.9375rem; font-weight: 700; color: var(--color-digital-black);
+.bx-listfield__text { flex: 1 1 auto; min-width: 0; font-size: 0.9375rem; font-weight: 700; color: var(--color-digital-black);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-/* selected-finish preview – sits directly after the "Alle Farben …" label with the
-   same 0.7rem field gap; hidden until a colour is chosen. The chevron is pushed to
-   the far right (margin-left:auto) so the thumb hugs the label, not the chevron. */
+/* selected-finish preview – hidden until a colour is chosen. The text grows to fill,
+   so the thumb sits at the RIGHT, directly next to the chevron (0.7rem field gap). */
 .bx-listfield__thumb { flex: none; width: 1.85rem; height: 1.85rem; box-sizing: border-box;
   border-radius: var(--radius); overflow: hidden; background: var(--color-paper); border: 1px solid var(--color-graphite-200); }
 .bx-listfield__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .bx-listfield__thumb:empty { display: none; }
-.bx-listfield__chev { flex: none; margin-left: auto; width: 1.15rem; height: 1.15rem; color: var(--color-graphite-500);
+.bx-listfield__chev { flex: none; width: 1.15rem; height: 1.15rem; color: var(--color-graphite-500);
   transition: transform .18s cubic-bezier(.22,1,.36,1), color .18s ease; }
 .flow-c .bx-listfield:hover .bx-listfield__chev,
 .flow-d .bx-listfield:hover .bx-listfield__chev { color: var(--color-teal); transform: translateX(0.125rem); }
