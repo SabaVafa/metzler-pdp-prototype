@@ -1,0 +1,7 @@
+# Keep this internal prototype out of search engines.
+# NOTE: this is a GitHub Pages *project* site (sabavafa.github.io/metzler-pdp-prototype/).
+# Crawlers read robots.txt from the domain root (sabavafa.github.io/robots.txt), not from
+# this sub-path, so the authoritative control is the <meta name="robots" content="noindex">
+# in index.html. This file scopes the disallow correctly in case a crawler does fetch it.
+User-agent: *
+Disallow: /metzler-pdp-prototype/

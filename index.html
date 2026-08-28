@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- keep this internal prototype out of search results (direct visits + link previews still work) -->
+<meta name="robots" content="noindex, nofollow" />
 <title>Metzler PDP – Version B (Inline-Konfiguration)</title>
 <!-- Pflicht: Metzler-Favicon (rotes M-Quadrat) – self-contained data-URI aus dem Design System -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 184.3 184.3'%3E%3Crect width='184.3' height='184.3' rx='5.75' fill='%23cc322b'/%3E%3Cpath fill='%23fff' d='M70.19,34.81l19.04,32.98-9.58,16.57-28.59-49.55h19.13ZM70.28,108.58h0l-23.45-40.64v85.89h-16.57V34.81h16.57l33.02,57.21L123.92,15.65h19.13l-63.22,109.52-9.58-16.57.02-.02ZM153.14,153.83h-16.57v-85.87l-33,57.14h-19.13l52.11-90.28h16.57v119.02l.02-.02Z'/%3E%3C/svg%3E" />
@@ -18,7 +20,7 @@
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=35" />
 <!-- Version B – inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=703" />
+<link rel="stylesheet" href="pdp-b.css?v=704" />
 <!-- Prototype variant switch – append ?flow=b (v2) or ?flow=c (v3) to load an alternative
      color-selection flow. Default (no param) renders v1 exactly as-is. Runs in <head> so the
      class is set before paint. v2 = "Alle Farben" text link → side window; v3 = a selected-
@@ -1896,6 +1898,6 @@
 </div>
 
 <script src="chrome.js?v=2"></script>
-<script src="pdp-b.js?v=271"></script>
+<script src="pdp-b.js?v=272"></script>
 </body>
 </html>
