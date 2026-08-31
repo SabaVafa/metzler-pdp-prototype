@@ -1343,7 +1343,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .cfgb-nav__back:hover { border-color: var(--color-teal); color: var(--color-teal); }
 .cfgb-nav__fwd { flex: 1; border: 0; background: var(--color-digital-black); color: var(--color-white); border-radius: var(--radius);
   padding: 0.8rem 1.4rem; font-family: inherit; font-size: 0.875rem; font-weight: 700; cursor: pointer;
-  transition: background .15s; box-shadow: 0 0.5rem 1.25rem rgba(26,23,27,0.18); }
+  transition: background .15s; box-shadow: 0 0.125rem 0.375rem rgba(26,23,27,0.10); }
 .cfgb-nav__fwd:hover { background: var(--color-black); }
 .cfgb-nav__back[hidden], .cfgb-nav__fwd[hidden] { display: none; }
 
@@ -1538,7 +1538,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .cfgb .cfg-opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr)); gap: 0.6rem; }
 /* height:auto (not 100%) – grid align-items:stretch equalises card heights per row */
 .cfgb .cfg-opt { position: relative; flex-direction: column; align-items: stretch; gap: 0.5rem; padding: 0.85rem; text-align: left; }
-.cfgb .cfg-opt__mark { position: absolute; top: 0.65rem; right: 0.65rem; margin: 0; z-index: 2; background: var(--color-white); }
+.cfgb .cfg-opt__mark { position: absolute; top: 0.65rem; left: 0.65rem; margin: 0; z-index: 2; background: var(--color-white); }   /* selection control (radio/checkbox) → top-left */
 /* keep the selection fill dead-centered in the mark box (robust vs grid/box-sizing drift) */
 .cfgb .cfg-opt.is-selected .cfg-opt__mark::after { position: absolute; inset: 0; margin: auto; }
 /* "Empfohlen" pill – same format as the availability badges, in primary teal */
@@ -1556,6 +1556,30 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
 .cfgb .cfg-opt__body { flex: 0 0 auto; min-width: 0; padding-right: 1.5rem; }
 .cfgb .cfg-opt__desc { color: var(--color-graphite-700); }   /* rgb(84,84,92) – darker than base; weight unchanged */
 .cfgb .cfg-opt__price { align-self: flex-start; margin-top: auto; padding-top: 0.15rem; text-align: left; }
+
+/* ── TEST (Anschluss step only): radio top-left, info icon top-right, "Empfohlen"
+   overlaid on the image so it never shifts the text → all cards share one
+   image→title→desc→price flow (perfect alignment, no reserved-slot gap) ── */
+#bAnschluss .cfg-opt__info { position: absolute; top: 0.5rem; right: 0.55rem; z-index: 2;
+  width: 1.4rem; height: 1.4rem; display: grid; place-items: center; padding: 0;
+  color: var(--color-graphite-500); background: var(--color-white); border-radius: 50%; }
+#bAnschluss .cfg-opt__info svg { width: 1.2rem; height: 1.2rem; }
+#bAnschluss .cfg-opt:hover .cfg-opt__info { color: var(--color-graphite-700); }
+#bAnschluss .cfg-opt__body { padding-right: 0; }                        /* full width for long title/desc */
+#bAnschluss .cfg-opt { overflow: hidden; }                             /* clip the bar to the card's rounded corners */
+/* Both cards carry a full-width bottom bar, so grid-stretch keeps them EQUAL HEIGHT
+   with the bar as part of each card – no taller card, no empty gap. The content above
+   (title/desc/price) stays aligned; the price is pushed to just above the bar on both.
+   Recommended bar keeps the original pill colours (light-teal fill, teal text, hairline). */
+#bAnschluss .cfg-opt__rec { position: static; z-index: auto; display: block;
+  margin: 0 -0.85rem -0.85rem; padding: 0.45rem 0.85rem; max-width: none;
+  border: 0; border-radius: 0; text-align: center;
+  background: rgba(1,82,83,0.08); color: var(--color-teal);
+  font-size: 0.75rem; font-weight: 600; letter-spacing: normal; }
+/* non-recommended card's bar – neutral grey counterpart (keeps heights consistent) */
+#bAnschluss .cfg-opt__rec--muted { background: rgba(26,23,27,0.04); color: var(--color-graphite-700); }
+/* NB: no teal border on the recommended card – the teal "Empfohlen" bar is the signal;
+   a border here would clash with the 2px teal border used for hover/selected state. */
 /* inner option drops its own card chrome – the choice wrapper carries it now */
 .cfgb .cfg-choice .cfg-opt { flex: 1 1 auto; border: 0; border-radius: 0; background: none; box-shadow: none; }
 /* selected card: teal border/ring only – no grey fill */
@@ -1581,7 +1605,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
   gap: 0.85rem; padding: 0.8rem 1rem; }
 /* relative (not static) so the absolutely-centered selection fill (::after, line ~982)
    stays inside the mark box instead of escaping to the row's centre */
-.cfgb .cfg-opt--plain .cfg-opt__mark { position: relative; top: auto; right: auto; margin: 0; flex: none; }
+.cfgb .cfg-opt--plain .cfg-opt__mark { position: relative; top: auto; left: auto; right: auto; margin: 0; flex: none; }
 .cfgb .cfg-opt--plain .cfg-opt__body { flex: 1 1 auto; padding-right: 0; }
 .cfgb .cfg-opt--plain .cfg-opt__price { margin: 0 0 0 auto; align-self: center; padding-top: 0; white-space: nowrap; }
 /* Opt-out / "without" tile – a MEANINGFUL duotone medallion of the alternative,
@@ -1607,7 +1631,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
    unavailable option still reads at a glance (red = sold out, neutral = needs
    another connection). */
 .cfg-opt__badge {
-  position: absolute; top: 0.6rem; left: 0.6rem; z-index: 3;
+  position: absolute; top: 0.6rem; right: 0.6rem; z-index: 3;   /* moved to top-right, clear of the left-side selection control */
   display: inline-flex; align-items: center; gap: 0.34rem; max-width: calc(100% - 1.2rem);
   padding: 0.28rem 0.6rem; border-radius: var(--radius-pill); line-height: 1.2;
   font-size: 0.75rem; font-weight: 600; letter-spacing: normal; text-transform: none;
@@ -1621,7 +1645,7 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
    the full image-tile treatment is too heavy for a plain option ── */
 .cfgb .cfg-opts--rows { grid-template-columns: 1fr; gap: 0.5rem; }
 .cfgb .cfg-opts--rows .cfg-opt { flex-direction: row; align-items: center; gap: 0.75rem; padding: 0.7rem 0.85rem; }
-.cfgb .cfg-opts--rows .cfg-opt__mark { position: relative; top: auto; right: auto; z-index: auto; background: none; flex: none; }
+.cfgb .cfg-opts--rows .cfg-opt__mark { position: relative; top: auto; left: auto; right: auto; z-index: auto; background: none; flex: none; }
 .cfgb .cfg-opts--rows .cfg-opt__body { flex: 1 1 auto; padding-right: 0; }
 .cfgb .cfg-opts--rows .cfg-opt__price { margin: 0 0 0 auto; padding-top: 0; align-self: center; text-align: right; white-space: nowrap; }
 
@@ -2797,7 +2821,7 @@ body.is-scrolled #quickbar {
   .cfgb .cfg-opts .cfg-opt__desc { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .cfgb .cfg-opts .cfg-opt__price { margin: 0 0 0 auto; align-self: center; padding-top: 0; text-align: right; white-space: nowrap; }
   /* show the selection control (checkbox / radio) on mobile too – parity with desktop */
-  .cfgb .cfg-opts .cfg-opt__mark { display: grid; position: relative; top: auto; right: auto; flex: none; margin: 0; }
+  .cfgb .cfg-opts .cfg-opt__mark { display: grid; position: relative; top: auto; left: auto; right: auto; flex: none; margin: 0; }
   .cfgb .cfg-opts .cfg-opt__rec { position: static; margin: 0 0 0 auto; align-self: center; }
 
   /* Product cards (Anschluss, Innenstationen – not the plain Gravur rows): the status
