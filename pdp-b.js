@@ -184,17 +184,17 @@ var MZSwipe = (function () {
     '7000|Fehgrau|78858B 7001|Silbergrau|8A9597 7002|Olivgrau|817863 7003|Moosgrau|7A7B6D 7004|Signalgrau|9EA0A1 ' +
     '7005|Mausgrau|6B716F 7006|Beigegrau|756857 7008|Khakigrau|6D6552 7009|Grüngrau|4F5951 7010|Zeltgrau|4C514A ' +
     '7011|Eisengrau|434B4D 7012|Basaltgrau|575D5E 7013|Braungrau|464531 7015|Schiefergrau|434750 7016|Anthrazitgrau|383E42 ' +
-    '7021|Schwarzgrau|23282B 7022|Umbragrau|403A3A 7023|Betongrau|808076 7024|Graphitgrau|474A50 7026|Granitgrau|2F353B ' +
+    '7021|Schwarzgrau|23282B 7022|Umbragrau|4B4640 7023|Betongrau|808076 7024|Graphitgrau|474A50 7026|Granitgrau|2F353B ' +
     '7030|Steingrau|8B8C7A 7031|Blaugrau|474B4E 7032|Kieselgrau|B8B799 7033|Zementgrau|7D8471 7034|Gelbgrau|8F8B66 ' +
     '7035|Lichtgrau|D7D7D7 7036|Platingrau|7F7679 7037|Staubgrau|7D7F7D 7038|Achatgrau|B5B8B1 7039|Quarzgrau|6B665E ' +
     '7040|Fenstergrau|9DA1AA 7042|Verkehrsgrau A|8D948D 7043|Verkehrsgrau B|4E5754 7044|Seidengrau|CAC4B0 7045|Telegrau 1|909090 ' +
     '7046|Telegrau 2|82898F 7047|Telegrau 4|D0D0D0 7048|Perlmausgrau|898176 ' +
     '8000|Grünbraun|826C34 8001|Ockerbraun|955F20 8002|Signalbraun|6C3B2A 8003|Lehmbraun|734222 8004|Kupferbraun|8E402A ' +
     '8007|Rehbraun|59351F 8008|Olivbraun|6F4F28 8011|Nussbraun|5B3A29 8012|Rotbraun|592321 8014|Sepiabraun|382C1E ' +
-    '8015|Kastanienbraun|633A34 8016|Mahagonibraun|4C2F27 8017|Schokoladenbraun|45322E 8019|Graubraun|403A3A 8022|Schwarzbraun|212121 ' +
+    '8015|Kastanienbraun|633A34 8016|Mahagonibraun|4C2F27 8017|Schokoladenbraun|45322E 8019|Graubraun|3D3635 8022|Schwarzbraun|212121 ' +
     '8023|Orangebraun|A65E2E 8024|Beigebraun|79553D 8025|Blassbraun|755C48 8028|Terrabraun|4E3B31 8029|Perlkupfer|763C28 ' +
     '9001|Cremeweiß|FDF4E3 9002|Grauweiß|E7EBDA 9003|Signalweiß|F4F4F4 9004|Signalschwarz|282828 9005|Tiefschwarz|000000 ' +
-    '9006|Weißaluminium|A5A5A5 9007|Graualuminium|AFAFAF 9010|Reinweiß|FFFFFF 9011|Graphitschwarz|1C1C1C 9016|Verkehrsweiß|FFFFFF ' +
+    '9006|Weißaluminium|A5A5A5 9007|Graualuminium|AFAFAF 9010|Reinweiß|FFFFFF 9011|Graphitschwarz|1C1C1C 9016|Verkehrsweiß|F6F6F6 ' +
     '9017|Verkehrsschwarz|1E1E1E 9018|Papyrusweiß|CFD3CD 9022|Perlhellgrau|9C9C9C 9023|Perldunkelgrau|828282')
     .split(/\s+(?=\d{4}\|)/).map(function (s) { var p = s.split('|'); return { code: p[0], name: p[1], hex: '#' + p[2], fam: p[0].charAt(0) }; })
     /* keep only the tones actually offered (real product list, see RAL_OFFERED) */
@@ -202,6 +202,9 @@ var MZSwipe = (function () {
   /* DB 703 (Eisenglimmer) – a Deutsche-Bahn anthracite that's offered but isn't a RAL Classic
      code; grouped with the greys */
   RAL.push({ code: 'DB 703', name: 'Eisenglimmer', hex: '#4A4E51', fam: '7' });
+  /* RAL 2021 is offered but is NOT a standard RAL Classic code (the 2xxx range ends at 2013),
+     so name + hex are approximations – REPLACE with the official values when available */
+  RAL.push({ code: '2021', name: 'Orange', hex: '#F39200', fam: '2' });
   /* arrange for the eye, not the catalogue. Bands: the achromatics (white/black 9xxx +
      grey 7xxx) merge into ONE greyscale ramp so the blacks sit at the BOTTOM of the neutral
      block rather than mid-grid; then brown; then the warm→cool chromatic spectrum. WITHIN
