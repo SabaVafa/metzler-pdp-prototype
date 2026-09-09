@@ -2385,6 +2385,12 @@ body.is-scrolled #quickbar {
 /* verified seal in the byline row: icon only (label stays visually hidden), sitting
    right after the name/date instead of pushed to the far right */
 .rvw-review__foot .rvw-verified svg { width: 1.25rem; height: 1.25rem; }
+/* provenance – quiet secondary metadata under the byline (how the review reached us):
+   translation note + origin shop. Muted + small so it reads as fine print, not content. */
+.rvw-review__prov { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 1.1rem;
+  margin-top: 0.45rem; font-size: 0.75rem; line-height: 1.35; color: var(--color-graphite-500); }
+.rvw-prov { display: inline-flex; align-items: center; gap: 0.4rem; }
+.rvw-prov svg { width: 0.9rem; height: 0.9rem; flex: none; color: var(--color-graphite-400); }
 .rvw-list__more { align-self: flex-start; margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 700; color: var(--color-teal); text-decoration: none; }
 .rvw-list__more svg { width: 1.1rem; height: 1.1rem; transition: transform .15s ease; }
 .rvw-list__more:hover svg { transform: translateX(3px); }

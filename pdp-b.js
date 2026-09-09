@@ -1779,6 +1779,28 @@ var MZSwipe = (function () {
 })();
 
 /* ============================================================
+   Review provenance – a quiet secondary metadata line under each
+   review's byline: how the review reached this page (translation +
+   origin shop). Kept muted so it reads as fine print, not content.
+   ============================================================ */
+(function () {
+  'use strict';
+  var reviews = [].slice.call(document.querySelectorAll('.rvw-list .rvw-review'));
+  if (!reviews.length) return;
+  var globe = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.7 2.6 15.3 0 18M12 3c-2.6 2.7-2.6 15.3 0 18"/></svg>';
+  var shop = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h16v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9z"/><path d="M3 9l1.6-4.5A1 1 0 0 1 5.5 4h13a1 1 0 0 1 .9.5L21 9"/><path d="M4 9a2.2 2.2 0 0 0 4 0 2.2 2.2 0 0 0 4 0 2.2 2.2 0 0 0 4 0 2.2 2.2 0 0 0 4 0"/></svg>';
+  reviews.forEach(function (r) {
+    if (r.querySelector('.rvw-review__prov')) return;
+    var el = document.createElement('div');
+    el.className = 'rvw-review__prov';
+    el.innerHTML =
+      '<span class="rvw-prov">' + globe + '<span>Übersetzt aus dem Deutschen</span></span>' +
+      '<span class="rvw-prov">' + shop + '<span>Herkunft: Shop Frankreich</span></span>';
+    r.appendChild(el);
+  });
+})();
+
+/* ============================================================
    Review photo lightbox – a premium two-pane viewer. The clicked
    photo opens on a dark image stage (left) beside the full review
    context (right): customer identity, star rating, verified badge,
