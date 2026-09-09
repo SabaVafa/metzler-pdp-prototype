@@ -202,12 +202,15 @@ var MZSwipe = (function () {
   /* DB 703 (Eisenglimmer) – a Deutsche-Bahn anthracite that's offered but isn't a RAL Classic
      code; grouped with the greys */
   RAL.push({ code: 'DB 703', name: 'Eisenglimmer', hex: '#4A4E51', fam: '7' });
-  /* arrange for the eye, not the catalogue: neutrals band (white/black, grey, brown) then
-     the warm→cool spectrum; WITHIN each family lightest → darkest, so every family reads
-     as a clean tonal ramp (search covers code lookup, so numeric order isn't needed) */
+  /* arrange for the eye, not the catalogue. Bands: the achromatics (white/black 9xxx +
+     grey 7xxx) merge into ONE greyscale ramp so the blacks sit at the BOTTOM of the neutral
+     block rather than mid-grid; then brown; then the warm→cool chromatic spectrum. WITHIN
+     every band, lightest → darkest by luminance – a clean tonal ramp (search covers code
+     lookup, so numeric order isn't needed). Family tabs stay separate; this is the grid order. */
+  function ralBand(fam) { return (fam === '9' || fam === '7') ? 0 : 1 + '8123456'.indexOf(fam); }
   RAL.sort(function (a, b) {
-    var o = '978123456', fd = o.indexOf(a.fam) - o.indexOf(b.fam);
-    return fd !== 0 ? fd : ralLum(b.hex) - ralLum(a.hex);
+    var bd = ralBand(a.fam) - ralBand(b.fam);
+    return bd !== 0 ? bd : ralLum(b.hex) - ralLum(a.hex);
   });
 
   var ralUI = null;   /* set by setupRalPicker() – { open, close, flash, sync } */
