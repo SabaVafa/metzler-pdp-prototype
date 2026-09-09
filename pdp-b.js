@@ -1191,6 +1191,7 @@ var MZSwipe = (function () {
       fTitle.textContent = d.title; fText.textContent = d.text;
       fAuthor.textContent = d.author; fDate.textContent = d.date;
       if (fAvatar) fAvatar.textContent = initials(d.author);
+      if (fProv) fProv.hidden = idx !== 0;   /* provenance sample: first review only */
     }
     /* Slide the thumbnail strip so the active thumb is fully in view (mobile scroller).
        Centre it, then clamp to [0, maxScroll] so the arrows can always reach – and fully
@@ -1219,11 +1220,12 @@ var MZSwipe = (function () {
     }
     if (prev) prev.addEventListener('click', function () { show((idx - 1 + data.length) % data.length); scrollFeaturedIntoView(); });
     if (next) next.addEventListener('click', function () { show((idx + 1) % data.length); scrollFeaturedIntoView(); });
-    /* provenance is the same for every featured review (all machine-translated, same
-       origin shop), so inject the shared pills once beneath the author/date byline */
+    /* inject the shared provenance pills once beneath the author/date byline; apply()
+       toggles them so they only show for the first (sample) review as you page through */
     var fFoot = card.querySelector('.rv__feature-foot');
-    if (fFoot && !card.querySelector('.rvw-review__prov')) {
-      var fProv = window.MZ_PROV_EL(); fProv.classList.add('rv__feature-prov');
+    var fProv = card.querySelector('.rvw-review__prov');
+    if (fFoot && !fProv) {
+      fProv = window.MZ_PROV_EL(); fProv.classList.add('rv__feature-prov');
       fFoot.parentNode.insertBefore(fProv, fFoot.nextSibling);
     }
     show(0);
