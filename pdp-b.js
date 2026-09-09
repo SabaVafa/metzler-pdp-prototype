@@ -144,6 +144,13 @@ var MZSwipe = (function () {
   /* ── RAL Classic palette (Wunschfarbe picker) – code | German name | hex ── */
   var WUNSCHFARBE = 'Wunschfarbe nach RAL';
   var RAL_FAMS = [['all', 'Alle'], ['7', 'Grau'], ['9', 'Weiß/Schwarz'], ['1', 'Gelb'], ['2', 'Orange'], ['3', 'Rot'], ['4', 'Violett'], ['5', 'Blau'], ['6', 'Grün'], ['8', 'Braun']];
+  /* the RAL tones Metzler actually offers for the Wunschfarbe (real product list) */
+  var RAL_OFFERED = new Set(('1001 1002 1003 1004 1011 1013 1014 1015 1016 1018 1019 1023 1028 1033 ' +
+    '2000 2002 2003 2004 2009 2010 2011 2021 3000 3001 3002 3003 3004 3007 3012 3013 3016 3020 3031 ' +
+    '4004 4005 4008 5000 5002 5003 5005 5007 5010 5011 5012 5013 5015 5017 5018 5019 5020 5021 5022 5023 5024 ' +
+    '6000 6001 6002 6003 6005 6007 6009 6011 6015 6016 6017 6018 6021 6024 6025 6026 6028 6029 6032 6033 6034 ' +
+    '7000 7001 7002 7003 7004 7005 7006 7009 7010 7011 7012 7013 7015 7016 7021 7022 7024 7030 7031 7032 7035 7036 7037 7038 7039 7040 7042 7043 7044 7046 7047 ' +
+    '8001 8002 8003 8004 8012 8016 8017 8019 8022 8023 8024 8028 9001 9002 9003 9005 9006 9007 9010 9016 9017 9018').split(' '));
   var RAL = ('1000|Grünbeige|CDBA88 1001|Beige|D0B084 1002|Sandgelb|D2AA6D 1003|Signalgelb|F9A800 1004|Goldgelb|E49E00 ' +
     '1005|Honiggelb|CB8E00 1006|Maisgelb|E29000 1007|Narzissengelb|E88C00 1011|Braunbeige|AF804F 1012|Zitronengelb|DDAF27 ' +
     '1013|Perlweiß|E3D9C6 1014|Elfenbein|DDC49A 1015|Hellelfenbein|E6D2B5 1016|Schwefelgelb|F1DD38 1017|Safrangelb|F6A950 ' +
@@ -189,9 +196,14 @@ var MZSwipe = (function () {
     '9006|Weißaluminium|A5A5A5 9007|Graualuminium|AFAFAF 9010|Reinweiß|FFFFFF 9011|Graphitschwarz|1C1C1C 9016|Verkehrsweiß|FFFFFF ' +
     '9017|Verkehrsschwarz|1E1E1E 9018|Papyrusweiß|CFD3CD 9022|Perlhellgrau|9C9C9C 9023|Perldunkelgrau|828282')
     .split(/\s+(?=\d{4}\|)/).map(function (s) { var p = s.split('|'); return { code: p[0], name: p[1], hex: '#' + p[2], fam: p[0].charAt(0) }; })
-    /* neutral tones first (Grau 7xxx, then Weiß/Schwarz 9xxx), then the chromatic
-       families; stable sort keeps ascending code order within each family */
-    .sort(function (a, b) { var o = '791234568'; return o.indexOf(a.fam) - o.indexOf(b.fam); });
+    /* keep only the tones actually offered (real product list, see RAL_OFFERED) */
+    .filter(function (c) { return RAL_OFFERED.has(c.code); });
+  /* DB 703 (Eisenglimmer) – a Deutsche-Bahn anthracite that's offered but isn't a RAL Classic
+     code; grouped with the greys */
+  RAL.push({ code: 'DB 703', name: 'Eisenglimmer', hex: '#4A4E51', fam: '7' });
+  /* neutral tones first (Grau 7xxx, then Weiß/Schwarz 9xxx), then the chromatic families;
+     stable sort keeps ascending code order within each family */
+  RAL.sort(function (a, b) { var o = '791234568'; return o.indexOf(a.fam) - o.indexOf(b.fam); });
 
   var ralUI = null;   /* set by setupRalPicker() – { open, close, flash, sync } */
   var state = {
@@ -232,7 +244,7 @@ var MZSwipe = (function () {
   /* ── Wunschfarbe helpers ── */
   /* the finish as displayed everywhere: a chosen RAL expands the generic "Wunschfarbe nach RAL" */
   function finishText() {
-    if (state.finish === WUNSCHFARBE && state.ral) return 'Wunschfarbe · RAL ' + state.ral.code + ' ' + state.ral.name;
+    if (state.finish === WUNSCHFARBE && state.ral) return 'Wunschfarbe · ' + ralCodeLabel(state.ral.code) + ' ' + state.ral.name;
     return state.finish;
   }
   /* Wunschfarbe picked but no RAL chosen yet → the colour choice is incomplete */
@@ -249,6 +261,8 @@ var MZSwipe = (function () {
           + 0.0722 * lin(parseInt(hex.substr(5, 2), 16));
     return (L + 0.05) / 0.05 >= 1.05 / (L + 0.05) ? 'rgba(0,0,0,0.85)' : 'rgba(255,255,255,0.96)';
   }
+  /* "RAL 7016" for numeric RAL codes, plain "DB 703" for the Deutsche-Bahn tone */
+  function ralCodeLabel(code) { return /^[0-9]/.test(code) ? 'RAL ' + code : code; }
 
   /* ── Central refresh ── */
   var priceOpenedOnce = false;   /* auto-expand Preisdetails once, on the first paid add-on */
@@ -696,16 +710,41 @@ var MZSwipe = (function () {
     }).join('');
     var famBtns = fams ? [].slice.call(fams.querySelectorAll('.ralpick__fam')) : [];
 
+    /* flanking scroll chevrons + edge fades for the family strip: each side is shown/faded
+       only while the strip can still scroll that way, so the row never looks abruptly cut */
+    var famPrev = $('ralFamPrev'), famNext = $('ralFamNext');
+    function updateFamNav() {
+      if (!fams) return;
+      var max = fams.scrollWidth - fams.clientWidth;
+      var canL = fams.scrollLeft > 2, canR = fams.scrollLeft < max - 2;
+      fams.classList.toggle('can-left', canL);
+      fams.classList.toggle('can-right', canR);
+      if (famPrev) famPrev.classList.toggle('is-shown', canL);
+      if (famNext) famNext.classList.toggle('is-shown', canR);
+    }
+    /* scroll the strip ~70% of its width toward the arrow. Direct scrollLeft assignment –
+       not scrollBy/scrollTo({behavior:'smooth'}), whose animation pauses in background tabs –
+       and no scroll-behavior:smooth on the strip itself (that would make the 1:1 drag lag). */
+    function scrollFams(dir) {
+      if (!fams) return;
+      var amt = Math.max(120, fams.clientWidth * 0.7) * dir;
+      fams.scrollLeft = Math.max(0, Math.min(fams.scrollWidth - fams.clientWidth, fams.scrollLeft + amt));
+      updateFamNav();   /* refresh arrow visibility immediately (don't wait on the scroll event) */
+    }
+    if (famPrev) famPrev.addEventListener('click', function () { scrollFams(-1); });
+    if (famNext) famNext.addEventListener('click', function () { scrollFams(1); });
+    if (fams) fams.addEventListener('scroll', updateFamNav, { passive: true });
+
     function chipHTML(c) {
       return '<button type="button" class="ral-chip" role="option" aria-selected="false" data-code="' + c.code + '" data-fam="' + c.fam + '"'
-        + ' style="--chip:' + c.hex + ';color:' + ralInk(c.hex) + '" title="RAL ' + c.code + ' ' + esc(c.name) + '">'
-        + '<span class="ral-chip__code">RAL ' + c.code + '</span><span class="ral-chip__name">' + esc(c.name) + '</span></button>';
+        + ' style="--chip:' + c.hex + ';color:' + ralInk(c.hex) + '" title="' + ralCodeLabel(c.code) + ' ' + esc(c.name) + '">'
+        + '<span class="ral-chip__code">' + ralCodeLabel(c.code) + '</span><span class="ral-chip__name">' + esc(c.name) + '</span></button>';
     }
     function filteredList() {
       var q = curQ.trim().toLowerCase();
       return RAL.filter(function (c) {
         var famOk = curFam === 'all' || c.fam === curFam;
-        var qOk = !q || c.code.indexOf(q) > -1 || c.name.toLowerCase().indexOf(q) > -1 || ('ral ' + c.code).indexOf(q) > -1;
+        var qOk = !q || c.code.toLowerCase().indexOf(q) > -1 || c.name.toLowerCase().indexOf(q) > -1 || (ralCodeLabel(c.code).toLowerCase()).indexOf(q) > -1;
         return famOk && qOk;
       });
     }
@@ -816,7 +855,7 @@ var MZSwipe = (function () {
       if (state.ral) {
         trigSwatch.classList.remove('ralpick__swatch--empty');
         trigSwatch.style.background = state.ral.hex; trigSwatch.innerHTML = '';
-        trigLabel.textContent = 'RAL ' + state.ral.code;
+        trigLabel.textContent = ralCodeLabel(state.ral.code);
         trigSub.textContent = state.ral.name;
       } else {
         trigSwatch.classList.add('ralpick__swatch--empty');
@@ -891,6 +930,7 @@ var MZSwipe = (function () {
         /* Don't auto-focus the search on any breakpoint – the picker opens in its
            default (unfocused) state; the user taps the field when they want to search. */
         goTo(pageOfSelected());
+        window.setTimeout(updateFamNav, 380);   /* strip clientWidth is known once the panel has expanded */
         /* only nudge the page on mobile (where the open picker runs past the viewport);
            on desktop it fits, so don't auto-scroll */
         if (mqMobile.matches) scrollPickerIntoView();
@@ -973,7 +1013,7 @@ var MZSwipe = (function () {
     var rz;
     window.addEventListener('resize', function () {
       if (!panel.classList.contains('is-open')) return;
-      clearTimeout(rz); rz = window.setTimeout(function () { renderPages(false); }, 150);
+      clearTimeout(rz); rz = window.setTimeout(function () { renderPages(false); updateFamNav(); }, 150);
     });
 
     ralUI = {

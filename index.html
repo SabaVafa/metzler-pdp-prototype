@@ -20,7 +20,7 @@
 <!-- New PDP sections -->
 <link rel="stylesheet" href="pdp.css?v=35" />
 <!-- Version B – inline build panel -->
-<link rel="stylesheet" href="pdp-b.css?v=711" />
+<link rel="stylesheet" href="pdp-b.css?v=713" />
 <!-- Prototype variant switch – append ?flow=b (v2) or ?flow=c (v3) to load an alternative
      color-selection flow. Default (no param) renders v1 exactly as-is. Runs in <head> so the
      class is set before paint. v2 = "Alle Farben" text link → side window; v3 = a selected-
@@ -513,7 +513,11 @@
                   <span class="ralpick__count" id="ralCount"></span>
                   <button type="button" class="ralpick__clear" id="ralClear" hidden aria-label="Suche löschen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
                 </div>
-                <div class="ralpick__fams" id="ralFams" role="tablist" aria-label="Farbfamilie"></div>
+                <div class="ralpick__famsbar">
+                  <button type="button" class="ralpick__famnav ralpick__famnav--prev" id="ralFamPrev" tabindex="-1" aria-label="Farbfamilien zurückscrollen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+                  <div class="ralpick__fams" id="ralFams" role="tablist" aria-label="Farbfamilie"></div>
+                  <button type="button" class="ralpick__famnav ralpick__famnav--next" id="ralFamNext" tabindex="-1" aria-label="Weitere Farbfamilien"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+                </div>
                 <div class="ralpick__viewport" id="ralViewport">
                   <div class="ralpick__track" id="ralGrid" role="listbox" aria-label="RAL-Farben"></div>
                 </div>
@@ -1898,6 +1902,6 @@
 </div>
 
 <script src="chrome.js?v=2"></script>
-<script src="pdp-b.js?v=284"></script>
+<script src="pdp-b.js?v=286"></script>
 </body>
 </html>

@@ -434,8 +434,18 @@
 .ralpick__clear[hidden] { display: none; }
 
 /* colour-family filter – minimal borderless chips; quiet grey hover, soft teal-tint active */
-.ralpick__fams { display: flex; gap: 0.15rem; margin: 0.75rem 0 0.65rem; padding-bottom: 0.15rem; overflow-x: auto;
+/* strip + flanking scroll chevrons */
+.ralpick__famsbar { display: flex; align-items: center; gap: 0.2rem; margin: 0.8rem 0 0.7rem; }
+.ralpick__famnav { flex: none; display: none; place-items: center; width: 1.85rem; height: 1.85rem; padding: 0;
+  color: var(--color-graphite-600); background: var(--color-white); cursor: pointer; box-shadow: none;
+  border: 1px solid var(--color-graphite-200); border-radius: var(--radius);
+  transition: color .15s ease, background .15s ease, border-color .15s ease; }
+.ralpick__famnav.is-shown { display: grid; }              /* revealed only when the strip overflows that way */
+.ralpick__famnav:hover { color: var(--color-white); background: var(--color-teal); border-color: var(--color-teal); }
+.ralpick__famnav svg { width: 1rem; height: 1rem; }
+.ralpick__fams { flex: 1 1 auto; min-width: 0; display: flex; gap: 0.35rem; padding: 0.15rem 0.1rem 0.4rem; overflow-x: auto;
   overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+/* no edge fade – the flanking chevrons are the scroll affordance, so the strip stays crisp */
 .ralpick__fams::-webkit-scrollbar { display: none; }
 /* desktop: draggable strip – grab cursor + no text selection while dragging */
 @media (hover: hover) {
@@ -443,13 +453,18 @@
   .ralpick__fams.is-dragging { cursor: grabbing; user-select: none; }
   .ralpick__fams.is-dragging .ralpick__fam { cursor: grabbing; }
 }
-.ralpick__fam { flex: none; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.32rem 0.7rem;
-  font: inherit; font-size: 0.75rem; font-weight: 600; letter-spacing: -0.005em; color: var(--color-graphite-600);
-  cursor: pointer; white-space: nowrap; background: transparent; border: 0; border-radius: var(--radius-pill);
-  transition: color .15s ease, background .15s ease; }
-.ralpick__fam:hover { color: var(--color-digital-black); background: var(--color-graphite-100); }
-.ralpick__fam.is-active { color: var(--color-teal); font-weight: 700; background: var(--color-graphite-100); }
-.ralpick__famdot { flex: none; width: 0.5rem; height: 0.5rem; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.14); }
+/* resting: defined outlined chip; hover: crisper edge; active: on-brand teal-tint fill
+   + teal ring + a soft teal halo on the dot – a clear, premium selected state */
+.ralpick__fam { flex: none; display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.38rem 0.78rem;
+  font: inherit; font-size: 0.75rem; font-weight: 600; letter-spacing: -0.005em; color: var(--color-graphite-700);
+  cursor: pointer; white-space: nowrap; background: var(--color-white);
+  border: 1px solid var(--color-graphite-200); border-radius: var(--radius-pill);
+  transition: color .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease; }
+.ralpick__fam:hover { color: var(--color-digital-black); border-color: var(--color-graphite-400); }
+.ralpick__fam.is-active { color: var(--color-teal); font-weight: 700; background: rgba(1,82,83,0.07);
+  border-color: rgba(1,82,83,0.32); box-shadow: none; }   /* border + tint carry it – no drop shadow */
+.ralpick__fam.is-active .ralpick__famdot { box-shadow: inset 0 0 0 1px rgba(0,0,0,0.18), 0 0 0 2px rgba(1,82,83,0.16); }
+.ralpick__famdot { flex: none; width: 0.58rem; height: 0.58rem; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.18); }
 
 /* paged slider – replaces the internal scroll so there is no nested scrollbar to
    conflict with the page. Swatches page horizontally (Prev/Next, swipe); vertical
