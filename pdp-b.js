@@ -172,7 +172,7 @@ var MZSwipe = (function () {
     '5000|Violettblau|354D73 5001|Grünblau|1F3438 5002|Ultramarinblau|20214F 5003|Saphirblau|1D1E33 5004|Schwarzblau|18171C ' +
     '5005|Signalblau|1E2460 5007|Brillantblau|3E5F8A 5008|Graublau|26252D 5009|Azurblau|025669 5010|Enzianblau|0E294B ' +
     '5011|Stahlblau|231A24 5012|Lichtblau|3B83BD 5013|Kobaltblau|1E213D 5014|Taubenblau|606E8C 5015|Himmelblau|2271B3 ' +
-    '5017|Verkehrsblau|063971 5018|Türkisblau|3F888F 5019|Capriblau|1B5583 5020|Ozeanblau|1F3A3D 5021|Wasserblau|256D7B ' +
+    '5017|Verkehrsblau|063971 5018|Türkisblau|3F888F 5019|Capriblau|1B5583 5020|Ozeanblau|00414B 5021|Wasserblau|256D7B ' +
     '5022|Nachtblau|252850 5023|Fernblau|49678D 5024|Pastellblau|5D9B9B 5025|Perlenzian|2A6478 5026|Perlnachtblau|102C54 ' +
     '6000|Patinagrün|327662 6001|Smaragdgrün|28713E 6002|Laubgrün|276235 6003|Olivgrün|4B573E 6004|Blaugrün|0E4243 ' +
     '6005|Moosgrün|114232 6006|Grauoliv|3E3B32 6007|Flaschengrün|283424 6008|Braungrün|35382E 6009|Tannengrün|26392F ' +
