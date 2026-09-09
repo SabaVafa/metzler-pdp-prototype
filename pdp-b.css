@@ -1586,15 +1586,13 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
    with the bar as part of each card – no taller card, no empty gap. The content above
    (title/desc/price) stays aligned; the price is pushed to just above the bar on both.
    Recommended bar keeps the original pill colours (light-teal fill, teal text, hairline). */
-/* premium label treatment: an uppercase, letter-spaced tag; the recommended bar carries a
-   teal check-circle so the endorsement reads instantly, the alternative stays a quiet tag */
-#bAnschluss .cfg-opt__rec { position: static; z-index: auto;
-  display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+/* premium label treatment: an uppercase, letter-spaced tag – teal for the recommended
+   bar, a quiet muted grey for the alternative */
+#bAnschluss .cfg-opt__rec { position: static; z-index: auto; display: block;
   margin: 0 -0.85rem -0.85rem; padding: 0.5rem 0.85rem; max-width: none;
   border: 0; border-radius: 0; text-align: center;
   background: rgba(1,82,83,0.08); color: var(--color-teal);
   font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
-#bAnschluss .cfg-opt__rec-ic { width: 0.9rem; height: 0.9rem; flex: none; }
 /* non-recommended card's bar – neutral grey counterpart (keeps heights consistent) */
 #bAnschluss .cfg-opt__rec--muted { background: rgba(26,23,27,0.04); color: var(--color-graphite-600); }
 /* NB: no teal border on the recommended card – the teal "Empfohlen" bar is the signal;
