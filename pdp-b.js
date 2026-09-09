@@ -211,9 +211,18 @@ var MZSwipe = (function () {
      every band, lightest → darkest by luminance – a clean tonal ramp (search covers code
      lookup, so numeric order isn't needed). Family tabs stay separate; this is the grid order. */
   function ralBand(fam) { return (fam === '9' || fam === '7') ? 0 : 1 + '8123456'.indexOf(fam); }
+  /* chroma = how tinted a tone is (0 = neutral grey/white) */
+  function ralChroma(hex) { var r = parseInt(hex.substr(1, 2), 16), g = parseInt(hex.substr(3, 2), 16), b = parseInt(hex.substr(5, 2), 16); return (Math.max(r, g, b) - Math.min(r, g, b)) / 255; }
   RAL.sort(function (a, b) {
     var bd = ralBand(a.fam) - ralBand(b.fam);
-    return bd !== 0 ? bd : ralLum(b.hex) - ralLum(a.hex);
+    if (bd !== 0) return bd;
+    var dl = ralLum(b.hex) - ralLum(a.hex);                 /* light → dark */
+    if (Math.abs(dl) > 0.02) return dl;
+    /* near-equal lightness → the cleaner / more neutral tone first (so a tinted white like
+       Cremeweiß doesn't sit ahead of a neutral Signalweiß it only pips on raw luminance);
+       equally neutral → keep the lighter one first */
+    var dc = ralChroma(a.hex) - ralChroma(b.hex);
+    return dc !== 0 ? dc : dl;
   });
 
   var ralUI = null;   /* set by setupRalPicker() – { open, close, flash, sync } */
