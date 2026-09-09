@@ -12,6 +12,34 @@
    ============================================================ */
 
 /* ============================================================
+   Shared review provenance – how the review reached this page
+   (machine translation + origin shop). Rendered as identical
+   pill/chip metadata beneath the byline in EVERY surface that
+   shows a review: the list cards, the photo lightbox and the
+   featured testimonial preview. One source, one look.
+   ============================================================ */
+window.MZ_PROV = (function () {
+  /* icons in the Metzler design-system style (inline SVG, no external libs, stroke 1.8,
+     currentColor, round caps) – universal glyphs: a globe for translation/language, the
+     DS tag for provenance/origin */
+  var globe = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>';
+  var store = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9h18l-1.2-4.28A1 1 0 0 0 18.83 4H5.17a1 1 0 0 0-.96.72L3 9Z"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M9.5 20v-4a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v4"/></svg>';
+  return {
+    translated: '<span class="rvw-prov">' + globe + '<span>Übersetzt aus dem Deutschen</span></span>',
+    origin: '<span class="rvw-prov">' + store + '<span class="rvw-prov__txt"><span class="rvw-prov__label">Herkunft:</span> <span class="rvw-prov__val">Shop Frankreich</span></span></span>'
+  };
+})();
+/* both pills, in reading order – the default provenance block */
+window.MZ_PROV_HTML = window.MZ_PROV.translated + window.MZ_PROV.origin;
+/* build a provenance block; pass a custom pill string to show a subset */
+window.MZ_PROV_EL = function (html) {
+  var el = document.createElement('div');
+  el.className = 'rvw-review__prov';
+  el.innerHTML = html || window.MZ_PROV_HTML;
+  return el;
+};
+
+/* ============================================================
    Shared modal scroll-lock. overflow:hidden on <body> does NOT lock
    the page when <html> is the scroll root, and iOS Safari ignores it
    outright – so an open modal lets the page scroll behind it. Pin the
@@ -1191,6 +1219,13 @@ var MZSwipe = (function () {
     }
     if (prev) prev.addEventListener('click', function () { show((idx - 1 + data.length) % data.length); scrollFeaturedIntoView(); });
     if (next) next.addEventListener('click', function () { show((idx + 1) % data.length); scrollFeaturedIntoView(); });
+    /* provenance is the same for every featured review (all machine-translated, same
+       origin shop), so inject the shared pills once beneath the author/date byline */
+    var fFoot = card.querySelector('.rv__feature-foot');
+    if (fFoot && !card.querySelector('.rvw-review__prov')) {
+      var fProv = window.MZ_PROV_EL(); fProv.classList.add('rv__feature-prov');
+      fFoot.parentNode.insertBefore(fProv, fFoot.nextSibling);
+    }
     show(0);
   })();
 
@@ -1785,19 +1820,20 @@ var MZSwipe = (function () {
    ============================================================ */
 (function () {
   'use strict';
-  var reviews = [].slice.call(document.querySelectorAll('.rvw-list .rvw-review'));
-  if (!reviews.length) return;
-  var globe = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.7 2.6 15.3 0 18M12 3c-2.6 2.7-2.6 15.3 0 18"/></svg>';
-  var shop = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h16v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9z"/><path d="M3 9l1.6-4.5A1 1 0 0 1 5.5 4h13a1 1 0 0 1 .9.5L21 9"/><path d="M4 9a2.2 2.2 0 0 0 4 0 2.2 2.2 0 0 0 4 0 2.2 2.2 0 0 0 4 0 2.2 2.2 0 0 0 4 0"/></svg>';
-  reviews.forEach(function (r) {
-    if (r.querySelector('.rvw-review__prov')) return;
-    var el = document.createElement('div');
-    el.className = 'rvw-review__prov';
-    el.innerHTML =
-      '<span class="rvw-prov">' + globe + '<span>Übersetzt aus dem Deutschen</span></span>' +
-      '<span class="rvw-prov">' + shop + '<span>Herkunft: Shop Frankreich</span></span>';
-    r.appendChild(el);
-  });
+  /* review list: show the provenance on the FIRST review only – a representative sample,
+     so the metadata isn't repeated down every card */
+  var firstReview = document.querySelector('.rvw-list .rvw-review');
+  if (firstReview && !firstReview.querySelector('.rvw-review__prov')) {
+    firstReview.appendChild(window.MZ_PROV_EL());
+  }
+  /* photo-carousel ("Das schätzen Kunden am meisten"): on the first (lead) card only,
+     under its byline – and just the origin pill, to keep the compact strip clean */
+  var lead = document.querySelector('.rvw-carousel .rvw-happy-card');
+  if (lead && !lead.querySelector('.rvw-review__prov')) {
+    var body = lead.querySelector('.rvw-happy-card__body') || lead;
+    var el = window.MZ_PROV_EL(window.MZ_PROV.origin); el.classList.add('rvw-happy-prov');
+    body.appendChild(el);
+  }
 })();
 
 /* ============================================================
@@ -1837,6 +1873,7 @@ var MZSwipe = (function () {
           '<span class="rvw-stars rvw-stars--lg rvw-lb__stars" role="img"></span>' +
         '</div>' +
         '<p class="rvw-lb__meta"><span class="rvw-lb__author"></span><time class="rvw-lb__date"></time><span class="rvw-lb__badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg><span class="rvw-vlabel">Verifizierter Kauf</span></span></p>' +
+        '<div class="rvw-review__prov rvw-lb__prov">' + window.MZ_PROV_HTML + '</div>' +
         '<div class="rvw-lb__text"></div>' +
         '<div class="rvw-lb__gallery">' +
           '<span class="rvw-lb__gallery-label"></span>' +

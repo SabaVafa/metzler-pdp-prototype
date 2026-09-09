@@ -2388,10 +2388,22 @@ body.is-scrolled #quickbar {
 /* provenance – quiet secondary metadata under the byline (how the review reached us):
    translation note + origin shop. Uses the DS caption/metadata token (--text-muted,
    graphite-600) so it reads as fine print yet meets WCAG AA contrast. */
-.rvw-review__prov { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 1.1rem;
-  margin-top: 0.45rem; font-size: 0.75rem; line-height: 1.35; color: var(--text-muted); }
-.rvw-prov { display: inline-flex; align-items: center; gap: 0.4rem; }
+.rvw-review__prov { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.5rem;
+  margin-top: 0.55rem; font-size: 0.75rem; line-height: 1.35; color: var(--text-muted); }
+/* each note as a soft pill/chip so the provenance reads as discrete metadata tags.
+   Same surface language as the review summary side container (.rvw-summary__inner):
+   #F5F6FA fill + a 1px graphite-300 border. */
+.rvw-prov { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0.7rem;
+  border-radius: 999px; background: #F5F6FA; border: 1px solid var(--color-graphite-300); }
 .rvw-prov svg { width: 0.9rem; height: 0.9rem; flex: none; color: inherit; }
+/* label/value hierarchy inside the origin pill: "Herkunft:" is the emphasised title,
+   "Shop Frankreich" the quiet value */
+.rvw-prov__label { color: var(--text-secondary); font-weight: 600; }   /* graphite-700 #54545C */
+.rvw-prov__val { color: var(--text-muted); font-weight: 400; }
+/* per-surface fit: keep the pill row from stretching/shrinking in the flex columns of
+   the lightbox body and the featured card, and hug the byline it belongs to */
+.rvw-lb__prov { flex: none; }
+.rv__feature-prov { margin-top: 0.6rem; }
 .rvw-list__more { align-self: flex-start; margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 700; color: var(--color-teal); text-decoration: none; }
 .rvw-list__more svg { width: 1.1rem; height: 1.1rem; transition: transform .15s ease; }
 .rvw-list__more:hover svg { transform: translateX(3px); }
