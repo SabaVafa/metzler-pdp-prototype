@@ -143,7 +143,8 @@ var MZSwipe = (function () {
 
   /* ── RAL Classic palette (Wunschfarbe picker) – code | German name | hex ── */
   var WUNSCHFARBE = 'Wunschfarbe nach RAL';
-  var RAL_FAMS = [['all', 'Alle'], ['7', 'Grau'], ['9', 'Weiß/Schwarz'], ['1', 'Gelb'], ['2', 'Orange'], ['3', 'Rot'], ['4', 'Violett'], ['5', 'Blau'], ['6', 'Grün'], ['8', 'Braun']];
+  /* order = neutrals band (white/black, grey, brown) then the warm→cool spectrum */
+  var RAL_FAMS = [['all', 'Alle'], ['9', 'Weiß/Schwarz'], ['7', 'Grau'], ['8', 'Braun'], ['1', 'Gelb'], ['2', 'Orange'], ['3', 'Rot'], ['4', 'Violett'], ['5', 'Blau'], ['6', 'Grün']];
   /* the RAL tones Metzler actually offers for the Wunschfarbe (real product list) */
   var RAL_OFFERED = new Set(('1001 1002 1003 1004 1011 1013 1014 1015 1016 1018 1019 1023 1028 1033 ' +
     '2000 2002 2003 2004 2009 2010 2011 2021 3000 3001 3002 3003 3004 3007 3012 3013 3016 3020 3031 ' +
@@ -201,9 +202,13 @@ var MZSwipe = (function () {
   /* DB 703 (Eisenglimmer) – a Deutsche-Bahn anthracite that's offered but isn't a RAL Classic
      code; grouped with the greys */
   RAL.push({ code: 'DB 703', name: 'Eisenglimmer', hex: '#4A4E51', fam: '7' });
-  /* neutral tones first (Grau 7xxx, then Weiß/Schwarz 9xxx), then the chromatic families;
-     stable sort keeps ascending code order within each family */
-  RAL.sort(function (a, b) { var o = '791234568'; return o.indexOf(a.fam) - o.indexOf(b.fam); });
+  /* arrange for the eye, not the catalogue: neutrals band (white/black, grey, brown) then
+     the warm→cool spectrum; WITHIN each family lightest → darkest, so every family reads
+     as a clean tonal ramp (search covers code lookup, so numeric order isn't needed) */
+  RAL.sort(function (a, b) {
+    var o = '978123456', fd = o.indexOf(a.fam) - o.indexOf(b.fam);
+    return fd !== 0 ? fd : ralLum(b.hex) - ralLum(a.hex);
+  });
 
   var ralUI = null;   /* set by setupRalPicker() – { open, close, flash, sync } */
   var state = {
@@ -250,15 +255,18 @@ var MZSwipe = (function () {
   /* Wunschfarbe picked but no RAL chosen yet → the colour choice is incomplete */
   function needsRal() { return state.finish === WUNSCHFARBE && !state.ral; }
   /* legible ink (dark/light) for a swatch background, by perceived luminance */
-  function ralInk(hex) {
-    /* Pick black or white by actual WCAG contrast ratio against the swatch – not a simple
-       brightness threshold, which underrates saturated yellows/oranges/golds (they'd get
-       unreadable white text). WCAG relative luminance (sRGB → linear), then compare the
-       contrast of black vs white and keep whichever reads better. */
+  /* WCAG relative luminance (sRGB → linear) – drives both the contrast-adaptive label
+     colour and the light→dark ordering within a colour family */
+  function ralLum(hex) {
     function lin(c) { c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
-    var L = 0.2126 * lin(parseInt(hex.substr(1, 2), 16))
-          + 0.7152 * lin(parseInt(hex.substr(3, 2), 16))
-          + 0.0722 * lin(parseInt(hex.substr(5, 2), 16));
+    return 0.2126 * lin(parseInt(hex.substr(1, 2), 16))
+         + 0.7152 * lin(parseInt(hex.substr(3, 2), 16))
+         + 0.0722 * lin(parseInt(hex.substr(5, 2), 16));
+  }
+  /* black or white ink by actual WCAG contrast against the swatch – not a brightness
+     threshold, which underrates saturated yellows/oranges/golds (they'd get white text) */
+  function ralInk(hex) {
+    var L = ralLum(hex);
     return (L + 0.05) / 0.05 >= 1.05 / (L + 0.05) ? 'rgba(0,0,0,0.85)' : 'rgba(255,255,255,0.96)';
   }
   /* "RAL 7016" for numeric RAL codes, plain "DB 703" for the Deutsche-Bahn tone */
