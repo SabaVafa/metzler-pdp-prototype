@@ -1597,6 +1597,14 @@ body.kbd-open .cfgb-dock.is-fixed { display: none !important; }
   font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
 /* non-recommended card's bar – neutral grey counterpart (keeps heights consistent) */
 #bAnschluss .cfg-opt__rec--muted { background: rgba(26,23,27,0.05); color: var(--color-graphite-600); }
+/* desktop: the label sits at the TOP edge of the card (order:-1 + negative top margin);
+   the radio + info drop below it onto the image so they don't collide with the tag bar.
+   Mobile keeps its own row layout untouched. */
+@media (min-width: 48rem) {
+  #bAnschluss .cfg-opt__rec { order: -1; margin: -0.85rem -0.85rem 0; }
+  #bAnschluss .cfg-opt__mark { top: 2.6rem; }
+  #bAnschluss .cfg-opt__info { top: 2.5rem; }
+}
 /* NB: no teal border on the recommended card – the teal "Empfohlen" bar is the signal;
    a border here would clash with the 2px teal border used for hover/selected state. */
 /* inner option drops its own card chrome – the choice wrapper carries it now */
